@@ -1,0 +1,233 @@
+/* =========================
+   Premium Subscription Page
+   ========================= */
+
+.premium-page {
+    padding: 18px 20px 40px;
+}
+
+.premium-container {
+    width: min(580px, 100%);
+    margin: 0 auto;
+}
+
+
+/* =========================
+   Premium Heading
+   ========================= */
+
+.premium-page-heading {
+    text-align: center;
+}
+
+.premium-crown-icon {
+    font-size: 44px;
+    line-height: 1;
+}
+
+.premium-page-heading h1 {
+    margin-top: 6px;
+    font-size: 34px;
+    line-height: 1.1;
+}
+
+.premium-page-heading p {
+    margin-top: 2px;
+    color: #777;
+    font-size: 16px;
+}
+
+
+/* =========================
+   Billing Options
+   ========================= */
+
+.premium-billing-options {
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.premium-billing-button {
+    min-height: 34px;
+    padding: 0 14px;
+
+    border: 1px solid #111;
+    border-radius: 8px;
+
+    background-color: #fff;
+
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.premium-billing-button-active {
+    background-color: #c5c5c5;
+}
+
+.premium-save-label {
+    margin-left: 4px;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   Premium Plan Card
+   ========================= */
+
+.premium-plan-card {
+    margin-top: 24px;
+    padding: 38px;
+
+    border: 2px solid #111;
+    border-radius: 24px;
+}
+
+.premium-plan-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.premium-plan-header h2 {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.premium-plan-header p {
+    margin-top: 4px;
+    color: #777;
+    font-size: 16px;
+}
+
+.premium-plan-price {
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
+}
+
+.premium-plan-price strong {
+    font-size: 29px;
+}
+
+.premium-plan-price span {
+    margin-left: 5px;
+    color: #777;
+    font-size: 15px;
+}
+
+.premium-plan-divider {
+    height: 1px;
+    margin: 14px 0 20px;
+    background-color: #999;
+}
+
+
+/* =========================
+   Premium Features
+   ========================= */
+
+.premium-features-list {
+    list-style: none;
+}
+
+.premium-features-list li {
+    margin-bottom: 8px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    font-size: 20px;
+    line-height: 1.25;
+}
+
+.premium-feature-check {
+    flex-shrink: 0;
+    font-size: 28px;
+    line-height: 1;
+}
+
+
+/* =========================
+   Continue Button
+   ========================= */
+
+.premium-continue-button {
+    width: 100%;
+    min-height: 55px;
+    margin-top: 16px;
+
+    border: 1px solid #111;
+    border-radius: 12px;
+
+    background-color: #fff;
+
+    font-size: 19px;
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.premium-continue-button:hover {
+    background-color: #f3f3f3;
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   Account Information
+   ========================= */
+
+.premium-account-information {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.premium-account-information p {
+    margin-top: 5px;
+    color: #777;
+    font-size: 15px;
+}
+
+.premium-account-information p:last-child {
+    color: #111;
+}
+
+.premium-account-information a {
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 620px) {
+
+    .premium-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .premium-plan-card {
+        padding: 24px;
+    }
+
+    .premium-plan-header {
+        flex-direction: column;
+    }
+
+    .premium-features-list li {
+        font-size: 17px;
+    }
+
+}
