@@ -4,67 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Engineering Awareness Platform for Remote Workers</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/home.css">
   </head>
+
   <body>
-    <header>
-        <h1>Social Engineering Awareness Platform</h1>
-        <p>For Remote Workers</p>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#modules">Modules</a>
-            <a href="#premium-modules">Premium Modules</a>
-            <a href="#contact">Contact</a>
-        </nav>
+
+    <header class="site-header">
+      <nav class="navbar">
+
+        <div class="nav-left">
+          <a href="#home" class="nav-link active">Home</a>
+          <a href="#about" class="nav-link">About</a>
+        </div>
+
+        <div class="nav-right">
+          <div class="search-box">
+            <input type="text" placeholder="Search">
+          </div>
+
+          <a href="login.html" class="btn btn-login">Log in</a>
+          <a href="premium.html" class="btn btn-premium">Go Premium</a>
+        </div>
+
+      </nav>
     </header>
-    
-    <section id="hero">
-      <h2>Learn to recognize malicious content before it harms you</h2>
-      <p>Social engineering attacks never assume you have prior knowledge. They strike the moment you take the bait. They know exactly how to destroy you: your reputation, your integrity, your self-trust. On this platform, you will learn to recognize phishing, spear phishing, smishing, pretexting, and vishing, along with essential safety practices including what to do and what never to do.</p>
-      <p class="callout">Ready to begin? Let's get started!</p>
-      <button>Start Learning</button>
-      <button>About Us</button>
-    </section>
 
-    <section id="free-modules-preview">
-      <h2>Preview of Free Modules</h2>
-      <p>Have you ever received a sweet letter or a kind offer that seemed too good to be true? Phishing is one of the most common online tricks, and it is like theft but happens digitally. Phishing does use technology flaws, but it mostly targets your trust. Think of it like someone pretending to be a suitor or a trusted person sending you a beautiful letter or a wonderful offer that looks so real and sincere. They seem so caring and honest, just like someone asking for your heart or your trust, so you happily agree and let them in. But hidden inside is something dangerous, just like powder that looks harmless at first but brings harm once you accept it. Online phishing works the exact same way. Attackers send emails, fake websites, texts, and calls that look perfectly real and kind. They trick you into agreeing and sharing your private information willingly, and once you do, that is when your hardship begins. It slowly destroys your reputation, your integrity, and even the trust you have in yourself. To stay safe, always research and verify their credentials before you say yes to anyone, even if they seem familiar. Never agree or decide on something without knowing their true character, because you may know them on the surface but not who they really are. Most of all, remember that your future and your future family’s well-being depend on the choices you make, so take your time, confirm everything first, and never rush into trust.</p>
-      <div class="preview-container">
-        <article> Phishing </article>
-        <article> Safety practices </article>
-      </div>
-    </section>
+    <main>
 
-    <section id="premium-modules-preview">
-      <h2>Preview of Premium Modules</h2>
-      <p>Have you ever wondered how freelancers, clients, co-workers, and even someone pretending to be your boss could trick you through everyday interactions? This Role-based module puts you directly into realistic scenarios built around common scams and deceptive situations. You will step into different roles and experience exactly how these tricks unfold, whether they come from outside or someone hiding behind a false identity. You might meet a client who agrees to every term and sends what looks like payment, only for it to turn out fake later. You could also encounter someone with impressive work who asks for money upfront then disappears. Most surprisingly, someone may even pretend to be your boss or a company leader, sending urgent messages and giving orders that seem completely real just to make you act fast and share what they want. Every scenario is designed to show you exactly what to watch for, so you can recognize threats early no matter who they claim to be, and protect yourself confidently.</p>
-      <p>Then comes your Personalized Dashboard that clearly shows your progress, quiz history, and areas where you need more practice. Its smart AI system analyzes your results to suggest the most relevant lessons and point out exactly where to improve, so you receive guidance made just for you and your role, and your training always adapts to help you grow.</p>
-      <div class="preview-container">
-        <article> Role-based modules </article>
-        <article> Personalized dashboard </article>
-      </div>
-    </section>
+      <section id="home" class="home-section">
 
-    <section id="modules">
-      <h2>Free Modules</h2>
-      <p>This is completely free, no account or sign-up required. In each module, you will learn how to spot malicious threats such as Phishing, Spear Phishing, Smishing, Pretexting, Vishing, and Safety Practices. Each module comes with a guide, so you can choose which ones you want to pick to study.</p>
-      <div class="modules-container">
-        <article> Phishing </article>
-        <article> Spear Phishing </article>
-        <article> Smishing </article>
-        <article> Pretexting </article>
-        <article> Vishing </article>
-        <article> Safety Practices </article>
-      </div>
-    </section>
+        <div class="home-heading">
+          <h1>Social Engineering Awareness Platform</h1>
+          <p>Hello! Where do you need help in?</p>
+        </div>
 
-    <section id="premium-modules">
-      <h2>Premium Modules</h2>
-      <p>Ready to unlock even more powerful learning? Premium Modules gives you three simple subscription plans to choose from: Basic includes 10 lessons each month, access to Role-Based Modules, and limited chatbot help; Pro doubles your lessons to 20, opens up your Personalized Dashboard, and gives you unlimited chatbot plus email support; and Enterprise gives you unlimited lessons with every premium module, priority support, and admin panel access. Just click “Upgrade to Premium,” log in and agree to our terms, then pick the plan that fits you best. You will get instant access right away, and your lessons refresh every month just like your favorite streaming service</p>
-      <div class="premium-modules-container">
-        <article> Role-based modules </article>
-        <article> Personalized dashboard </article>
-        <article> Awareness assessment </article>
-      </div>
-    </section>
+        <section id="modules" class="modules-section">
+
+          <div class="section-heading">
+            <h2>Free modules</h2>
+            <p>Foundations of social engineering for remote workers</p>
+          </div>
+
+          <div class="modules-grid">
+
+            <a href="modules/phishing.html" class="module-card">
+              <div>
+                <h3>Phishing</h3>
+                <p>Email, Fake login pages, QR phishing, etc.</p>
+              </div>
+              <span class="module-icon">✉</span>
+            </a>
+
+            <a href="modules/spear-phishing.html" class="module-card">
+              <div>
+                <h3>Spear Phishing</h3>
+                <p>Targeted attacks on individuals</p>
+              </div>
+              <span class="module-icon">◎</span>
+            </a>
+
+            <a href="modules/smishing.html" class="module-card">
+              <div>
+                <h3>Smishing</h3>
+                <p>SMS phishing</p>
+              </div>
+              <span class="module-icon">▣</span>
+            </a>
+
+            <a href="modules/pretexting.html" class="module-card">
+              <div>
+                <h3>Pretexting</h3>
+                <p>Fabricated scenarios to gain trust</p>
+              </div>
+              <span class="module-icon">◌</span>
+            </a>
+
+            <a href="modules/vishing.html" class="module-card">
+              <div>
+                <h3>Vishing</h3>
+                <p>Voice phishing</p>
+              </div>
+              <span class="module-icon">◉</span>
+            </a>
+
+            <a href="modules/safety-practices.html" class="module-card">
+              <div>
+                <h3>Safe practices</h3>
+                <p>For remote workers</p>
+              </div>
+              <span class="module-icon">◇</span>
+            </a>
+
+          </div>
+        </section>
+
+        <section id="premium-modules" class="premium-section">
+
+          <div class="section-heading premium-heading">
+            <h2>
+              Premium
+              <span class="premium-badge">Pro</span>
+            </h2>
+
+            <p>
+              Role-based modules, personalized assessment and dashboard
+            </p>
+          </div>
+
+          <div class="premium-grid">
+
+            <article class="premium-card">
+              <div>
+                <h3>Role-based<br>modules</h3>
+                <p>Freelancer and client scam scenarios</p>
+              </div>
+              <span class="lock-icon">♙</span>
+            </article>
+
+            <article class="premium-card">
+              <div>
+                <h3>Personalized<br>dashboard</h3>
+                <p>Tracking progress, quiz history, weak areas</p>
+              </div>
+              <span class="lock-icon">♙</span>
+            </article>
+
+            <article class="premium-card">
+              <div>
+                <h3>Awareness<br>assessment</h3>
+                <p>Find your current cybersecurity awareness level</p>
+              </div>
+              <span class="lock-icon">♙</span>
+            </article>
+
+          </div>
+
+          <div class="premium-action">
+            <a href="premium.html" class="btn btn-upgrade">
+              Upgrade to premium
+            </a>
+          </div>
+
+        </section>
+
+      </section>
+
+    </main>
+
+    <button class="chatbot-button">
+      AI chatbot
+    </button>
+
   </body>
 </html>
