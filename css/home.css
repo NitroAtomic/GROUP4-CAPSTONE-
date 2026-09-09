@@ -1,0 +1,239 @@
+/* =========================
+   Homepage Layout
+   ========================= */
+
+.home-section {
+  width: min(940px, calc(100% - 40px));
+  margin: 32px auto;
+}
+
+
+/* =========================
+   Homepage Heading
+   ========================= */
+
+.home-heading {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.home-heading h1 {
+  font-size: 42px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.home-heading p {
+  margin-top: 16px;
+  font-size: 20px;
+}
+
+
+/* =========================
+   Section Headings
+   ========================= */
+
+.modules-section,
+.premium-section {
+  margin-top: 14px;
+}
+
+.section-heading h2 {
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.section-heading p {
+  margin-top: 3px;
+  color: #777;
+  font-size: 16px;
+}
+
+
+/* =========================
+   Free Modules
+   ========================= */
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+
+  margin-top: 10px;
+}
+
+.module-card {
+  min-height: 112px;
+  padding: 20px;
+
+  border: 2px solid #111;
+  border-radius: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  transition: transform 0.15s ease,
+              background-color 0.15s ease;
+}
+
+.module-card:hover {
+  transform: translateY(-2px);
+  background-color: #f7f7f7;
+}
+
+.module-card h3 {
+  font-size: 29px;
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.module-card p {
+  margin-top: 10px;
+  color: #777;
+  font-size: 15px;
+}
+
+.module-icon {
+  margin-left: 10px;
+  font-size: 32px;
+}
+
+
+/* =========================
+   Premium Modules
+   ========================= */
+
+.premium-section {
+  margin-top: 20px;
+}
+
+.premium-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.premium-badge {
+  padding: 3px 9px;
+
+  border: 1px solid #111;
+  border-radius: 999px;
+
+  background-color: #bdbdbd;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.premium-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+
+  margin-top: 10px;
+}
+
+.premium-card {
+  min-height: 112px;
+  padding: 15px 18px;
+
+  border: 2px dashed #111;
+  border-radius: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.premium-card h3 {
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.premium-card p {
+  margin-top: 8px;
+  color: #777;
+  font-size: 13px;
+}
+
+.lock-icon {
+  margin-left: 10px;
+  font-size: 27px;
+}
+
+
+/* =========================
+   Premium Button
+   ========================= */
+
+.premium-action {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 24px;
+}
+
+
+/* =========================
+   AI Chatbot
+   ========================= */
+
+.chatbot-button {
+  position: fixed;
+  right: 26px;
+  bottom: 14px;
+
+  padding: 10px 20px;
+
+  background-color: #fff;
+
+  border: 1px solid #111;
+  border-radius: 7px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   Responsive Layout
+   ========================= */
+
+@media (max-width: 900px) {
+  .modules-grid,
+  .premium-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .search-box {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .home-heading h1 {
+    font-size: 32px;
+  }
+
+  .modules-grid,
+  .premium-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    padding: 0 12px;
+  }
+
+  .nav-left,
+  .nav-right {
+    gap: 10px;
+  }
+
+  .btn {
+    padding: 0 12px;
+  }
+}
