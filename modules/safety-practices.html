@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Safe Practices for Remote Workers - A Cybersecurity Awareness Guide</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="../index.html">Home</a>
+            </nav>
+            <h1>Safe Practices for Remote Workers</h1>
+            <p>Module 6 of 6</p>
+        </header>
+
+        <section id="introduction">
+            <h2>Introduction to Safe Practices</h2>
+            <p>Now that you understand how attackers use social engineering tactics, it's time to learn practical actions you can take to protect yourself. This module focuses on four core defensive practices that remote workers can apply immediately to reduce their risk.</p>
+            <p>You'll learn how to:</p>
+            <ul>
+                <li>Enable secure multi-factor authentication (MFA) on your accounts.</li>
+                <li>Create and manage strong passwords.</li>
+                <li>Verify suspicious requests before responding.</li>
+                <li>Report potential social engineering attempts.</li>
+            </ul>
+        </section>
+
+        <section id="topic-1-mfa">
+            <h2>Topic 1: Multi-Factor Authentication (MFA)</h2>
+
+            <article>
+                <h3>What is Multi-Factor Authentication?</h3>
+                <p>Multi-factor authentication (MFA) is a security method that requires you to provide two or more pieces of evidence to prove you are who you claim to be. Instead of just entering a password, MFA adds an extra layer of protection by requiring something you know (password) plus something you have (phone, authenticator app) or something you are (fingerprint).</p>
+                <p>Even if an attacker steals your password through phishing or other social engineering tactics, they cannot access your account without the second factor. This dramatically reduces the risk of unauthorized access.</p>
+            </article>
+
+            <article>
+                <h3>Why MFA Matters for Remote Workers?</h3>
+                <p>Remote workers often access sensitive company data from various locations and devices. This increased exposure makes your accounts an attractive target for attackers. MFA is one of the most effective defenses because it requires attackers to have physical access to your second factor (like your phone) in addition to knowing your password.</p>
+                <p>Many remote work platforms now require or strongly recommend MFA. By enabling it on all your accounts, you protect not just yourself but also the organizations you work with.</p>
+            </article>
+
+            <article>
+                <h3>Common MFA Methods</h3>
+                <p><strong>SMS Text Messages:</strong> A code is sent to your phone via text. This method is widely available but can be vulnerable to SIM swapping attacks where attackers trick your phone company into transferring your number to a new device.</p>
+                <p><strong>Authenticator Apps:</strong> Apps like Google Authenticator or Microsoft Authenticator generate time-based codes on your phone. These are more secure than SMS because the codes are generated locally on your device and cannot be intercepted like text messages.</p>
+                <p><strong>Email Verification:</strong> A code is sent to your email address. This is convenient but only as secure as your email account, which could be compromised if attackers gain access to it.</p>
+                <p><strong>Biometric Authentication:</strong> Fingerprint or facial recognition. This is highly secure because it's unique to you and cannot be stolen or guessed.</p>
+            </article>
+
+            <article>
+                <h2>Video: Understanding MFA</h2>
+                <p>Watch this video to see how MFA works in real-world scenarios:</p>
+                <div class="safety-practices-video ">
+                    <p>[Video Placeholder - MFA Awareness Video will be embedded here]</p>
+                </div>
+            </article>
+
+            <article>
+                <h2>Are you ready for Practice?</h2>
+                <p>Now that you understand MFA, test your knowledge with an interactive exercise:</p>
+                <a href="./module-6/exercise-1-mfa.html" class="exercise-1-mfa">Go to Exercise 1: MFA Setup Challenge →</a>
+            </article>
+        </section>
+
+        <section id="topic-2-password">
+            <h2>Topic 2: Password Security</h2>
+
+            <article>
+                <h3>What Makes a Strong Password?</h3>
+                <p>A strong password is one that is difficult for attackers to guess or crack using automated tools. Strong passwords typically have at least 12 characters and include a mix of uppercase letters, lowercase letters, numbers, and special characters (like @, #, $, %).</p>
+                <p>Weak passwords like "password123" or "123456" can be cracked in seconds. Strong passwords like "Tr0pic@lSunset#2024" would take years for attackers to crack through brute force attacks.</p>
+            </article>
+
+            <article>
+                <h3>Why Password Security Matters for Remote Workers?</h3>
+                <p>Remote workers use passwords to access email, cloud storage, project management tools, banking systems, and more. If attackers crack one password, they may try the same password on your other accounts. Strong, unique passwords for each account ensure that if one account is compromised, your other accounts remain safe.</p>
+                <p>Additionally, remote work often involves accessing company systems from public networks or personal devices, making password strength even more critical for protecting sensitive information.</p>
+            </article>
+
+            <article>
+                <h3>Password Security: The Best Practices</h3>
+                <p><strong>Use a Unique Password for Each Account:</strong> Never reuse the same password across multiple accounts. If attackers get your password from one service, they cannot access your other accounts.</p>
+                <p><strong>Avoid Personal Information:</strong> Don't use names, birthdays, or other personal information that can be found on social media or through a quick search.</p>
+                <p><strong>Avoid Dictionary Words:</strong> Don't use common words or predictable patterns. Attackers use dictionary attacks that try common words first.</p>
+                <p><strong>Use a Password Manager:</strong> Password managers like Bitwarden, 1Password, or LastPass can securely store and generate strong passwords for you, so you don't have to remember them all.</p>
+                <p><strong>Change Passwords Regularly:</strong> Update important passwords every 90 days, especially if you suspect compromise.</p>
+            </article>
+
+            <article>
+                <h2>Video: Creating a Strong Passwords</h2>
+                <p>Watch this video to learn password strength techniques and how to create passwords that are both secure and memorable:</p>
+                <div class="safety-practices-video">
+                    <p>[Video Placeholder - Password Security Video will be embedded here]</p>
+                </div>
+            </article>
+
+            <article>
+                <h2>Are you ready for Practice?</h2>
+                <p>Now that you understand password security, test your knowledge with an interactive exercise:</p>
+                <a href="./module-6/exercise-2-password.html" class="exercise-2-password">Go to Exercise 2: Password Strength Tester →</a>
+            </article>
+        </section>
+
+        <section id="topic-3-verification">
+            <h2>Topic 3: Verifying Suspicious Requests</h2>
+
+            <article>
+                <h3>What Does It Mean to Verify a Request?</h3>
+                <p>Verification means taking steps to confirm that a request (email, phone call, or message) is actually coming from who it claims to be from. Before you respond to any request for sensitive information or action, you should verify the sender's identity through an independent method.</p>
+                <p>Attackers often impersonate legitimate people, organizations, or systems. By verifying requests before acting on them, you prevent falling victim to social engineering attacks like phishing, pretexting, and vishing.</p>
+            </article>
+
+            <article>
+                <h3>Why Verification Matters for Remote Workers?</h3>
+                <p>Remote workers communicate primarily through digital channels like email, chat, and video calls. This makes it easier for attackers to impersonate colleagues, managers, or vendors without face-to-face contact to confirm identity. A single verification step can prevent credential theft, financial fraud, or data breaches.</p>
+                <p>Many high-profile attacks succeed because employees skipped the verification step and trusted that a request was legitimate based on surface-level details like a matching email address or caller ID.</p>
+            </article>
+
+            <article>
+                <h3>How to Verify Suspicious Requests</h3>
+                <p><strong>For Email Requests:</strong> If an email asks you to click a link or provide information, don't use the link in the email. Instead, go directly to the official website by typing the URL yourself or use a bookmark. Then check if there's a notification about account activity.</p>
+                <p><strong>For Phone Calls:</strong> If someone calls claiming to be from your bank or company, hang up and call the official phone number on your bank statement or the company's official website. Never use a phone number provided by the caller.</p>
+                <p><strong>For Messages or Chat:</strong> If a colleague asks for sensitive information through chat, verify by asking them in person or through a different communication channel. Attackers sometimes compromise accounts or create fake profiles.</p>
+                <p><strong>Check the Sender's Email Address:</strong> Look carefully at the full email address, not just the display name. Attackers use addresses that look similar to legitimate ones (like "support@bankk.com" instead of "support@bank.com").</p>
+                <p><strong>Look for Urgency and Pressure:</strong> Legitimate organizations rarely pressure you to act immediately without verification. If someone is pressuring you to act fast without time to verify, it's likely a scam.</p>
+            </article>
+
+            <article>
+                <h2>Video: Recognizing Phishing Emails</h2>
+                <p>Watch this video to learn how to spot fake emails and verify the authenticity of requests:</p>
+                <div class="safety-practices-video">
+                    <p>[Video Placeholder - Phishing Recognition Video will be embedded here]</p>
+                </div>
+            </article>
+
+            <article>
+                <h2>Are you ready for Practice?</h2>
+                <p>Now that you understand how to verify requests, test your knowledge with an interactive exercise:</p>
+                <a href="./module-6/exercise-3-phishing.html" class="exercise-3-phishing">Go to Exercise 3: Phishing Email Analyzer →</a>
+            </article>
+        </section>
+
+        <section id="topic-4-reporting">
+            <h2>Topic 4: Reporting Social Engineering Attempts</h2>
+
+            <article>
+                <h3>Why Should You Report Social Engineering Attempts?</h3>
+                <p>Reporting suspicious emails, calls, or messages helps protect not just yourself, but also your organization and colleagues. When you report an attack, security teams can investigate the threat, block the attacker, and alert other potential victims.</p>
+                <p>Many people worry about reporting false alarms, but security teams would rather investigate legitimate concerns than have a real attack go undetected. Reporting is the right action, even if you're not 100% certain.</p>
+            </article>
+
+            <article>
+                <h3>Why Reporting Matters for Remote Workers?</h3>
+                <p>Remote workers are often the first line of defense against cyberattacks. Because you work from personal devices and networks, you may encounter threats that office-based security systems never see. Your reports of suspicious activity provide critical information to your organization's security team.</p>
+                <p>Additionally, many remote work organizations track security incidents to identify patterns and improve their defenses. Your report contributes to this collective learning and helps prevent future attacks.</p>
+            </article>
+
+            <article>
+                <h3>How to Report Social Engineering Attempts</h3>
+                <p><strong>Report Phishing Emails:</strong> Most email platforms have a "Report Phishing" or "Report Spam" button. Use it. Don't just delete the email. Your report helps the email provider identify and block similar attacks.</p>
+                <p><strong>Report to Your Organization:</strong> If you work for a company, they likely have a security team or help desk email (like security@company.com). Forward the suspicious email and include details about when you received it and why you think it's suspicious.</p>
+                <p><strong>Report Suspicious Calls:</strong> If you receive a vishing call, note the phone number, what they said, and when they called. Report this to your organization's security team immediately.</p>
+                <p><strong>Report to Authorities:</strong> If you believe you've been a victim of fraud or identity theft, report it to your local law enforcement or the FBI's Internet Crime Complaint Center (IC3) at ic3.gov.</p>
+                <p><strong>Don't Engage Further:</strong> Once you suspect an attack, stop engaging with the attacker. Don't respond to emails, don't call back phone numbers, and don't provide any information. Report and move on.</p>
+            </article>
+
+            <article>
+                <h2>Video: Reporting Security Incidents</h2>
+                <p>Watch this video to learn the proper steps for reporting suspicious activity and social engineering attempts:</p>
+                <div class="safety-practices-video">
+                    <p>[Video Placeholder - Incident Reporting Video will be embedded here]</p>
+                </div>
+            </article>
+
+            <article>
+                <h2>Are you ready for Practice?</h2>
+                <p>Now that you understand how to report social engineering attempts, test your knowledge with an interactive exercise:</p>
+                <a href="./module-6/exercise-4-incident.html" class="exercise-4-incident">Go to Exercise 4: Incident Response Decision Tree →</a>
+            </article>
+        </section>
+
+        <section id="application-checklist">
+            <h2>Real-World Application Checklist</h2>
+            <p>Now that you've learned about Safe Practices, here are concrete actions you can take immediately to protect yourself:</p>
+
+            <article>
+                <h3>Do This Today</h3>
+                <ul>
+                    <li>Enable multi-factor authentication (MFA) on at least one important account (email, banking, or work account).</li>
+                    <li>Review one of your current passwords and change it to a strong password if it doesn't meet the 12+ character requirement with mixed case, numbers, and special characters.</li>
+                    <li>Test your verification skills: Check the email address of your last received email carefully. Does it match exactly what you expected?</li>
+                </ul>
+            </article>
+
+            <article>
+                <h3>Do This Week</h3>
+                <ul>
+                    <li>Enable MFA on all your important accounts (email, banking, work systems, social media).</li>
+                    <li>Update passwords for your top 5 most important accounts to strong, unique passwords.</li>
+                    <li>Set up a password manager (like Bitwarden or 1Password) to securely store and generate passwords for future accounts.</li>
+                    <li>Locate your organization's security contact information and bookmark it for future reference.</li>
+                </ul>
+            </article>
+
+            <article>
+                <h3>Moving Forward</h3>
+                <ul>
+                    <li>Pause for 10 seconds before clicking any link or opening any attachment in emails from unknown senders.</li>
+                    <li>When in doubt, verify the sender by contacting them through a different communication channel before responding to requests.</li>
+                    <li>Report any suspicious emails, calls, or messages to your organization's security team immediately.</li>
+                    <li>Update your important passwords every 90 days or when you suspect a compromise.</li>
+                    <li>Stay informed about new social engineering tactics by reading security awareness updates from your organization.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section id="module-complete-message">
+            <h2>You've Completed Module 6!</h2>
+            <p>Congratulations! You've learned the four core safe practices for remote workers: Multi-Factor Authentication, Password Security, Request Verification, and Incident Reporting. These practices form the foundation of your personal cybersecurity defense.</p>
+            <p>Remember: cybersecurity is not a one-time effort but an ongoing practice. Stay vigilant, stay informed, and protect yourself and your organization from social engineering attacks.</p>
+            <p><strong>Thank you for completing this module. Stay safe online!</strong></p>
+        </section>
+    </body>
+</html>
