@@ -1,0 +1,166 @@
+/* =========================
+   Quiz Results Page
+   ========================= */
+
+.quiz-results-page {
+  width: min(700px, calc(100% - 40px));
+  margin: 86px auto;
+}
+
+.quiz-results-container {
+  text-align: center;
+}
+
+
+/* =========================
+   Completion Icon
+   ========================= */
+
+.quiz-results-icon {
+  width: 46px;
+  height: 46px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #111;
+  border-radius: 50%;
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   Results Heading
+   ========================= */
+
+.quiz-results-container h1 {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+
+/* =========================
+   Quiz Score
+   ========================= */
+
+.quiz-score {
+  margin-top: 26px;
+
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.quiz-score-earned {
+  font-size: 64px;
+  font-weight: 800;
+}
+
+.quiz-score-total {
+  margin-left: 6px;
+
+  color: #777;
+
+  font-size: 34px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   Score Breakdown
+   ========================= */
+
+.quiz-results-breakdown {
+  margin-top: 62px;
+
+  border: 1px solid #111;
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  text-align: left;
+}
+
+.quiz-result-row {
+  min-height: 42px;
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 17px;
+}
+
+.quiz-result-row:not(:last-child) {
+  border-bottom: 1px solid #777;
+}
+
+
+/* =========================
+   Result Actions
+   ========================= */
+
+.quiz-results-actions {
+  margin-top: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quiz-results-button {
+  min-width: 164px;
+  min-height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 16px;
+
+  border: 1px solid #111;
+  border-radius: 8px;
+
+  background-color: #fff;
+
+  font-size: 16px;
+}
+
+.quiz-results-primary-button {
+  background-color: #c5c5c5;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 620px) {
+  .quiz-results-page {
+    margin-top: 48px;
+  }
+
+  .quiz-score-earned {
+    font-size: 54px;
+  }
+
+  .quiz-score-total {
+    font-size: 28px;
+  }
+
+  .quiz-results-actions {
+    margin-top: 54px;
+    gap: 14px;
+  }
+
+  .quiz-results-button {
+    min-width: 0;
+    width: 100%;
+  }
+}

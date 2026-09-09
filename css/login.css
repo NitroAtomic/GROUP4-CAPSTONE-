@@ -1,0 +1,156 @@
+/* =========================
+   Login Page
+   ========================= */
+
+.login-page {
+  width: min(460px, calc(100% - 40px));
+  margin: 80px auto;
+}
+
+
+/* =========================
+   Login Container
+   ========================= */
+
+.login-container {
+  padding: 36px;
+
+  border: 1px solid #111;
+  border-radius: 18px;
+}
+
+.login-container h1 {
+  text-align: center;
+
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.login-description {
+  margin-top: 8px;
+
+  text-align: center;
+
+  color: #666;
+  font-size: 16px;
+}
+
+
+/* =========================
+   Login Form
+   ========================= */
+
+.login-form {
+  margin-top: 32px;
+}
+
+.login-form-field {
+  margin-bottom: 20px;
+}
+
+.login-form-field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.login-form-field input {
+  width: 100%;
+  height: 46px;
+
+  padding: 0 14px;
+
+  border: 1px solid #111;
+  border-radius: 8px;
+
+  outline: none;
+  font-size: 16px;
+}
+
+.login-form-field input:focus {
+  border-width: 2px;
+}
+
+
+/* =========================
+   Forgot Password
+   ========================= */
+
+.forgot-password-link {
+  display: block;
+
+  margin-top: -6px;
+
+  text-align: right;
+
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+
+/* =========================
+   Login Button
+   ========================= */
+
+.login-submit-button {
+  width: 100%;
+  height: 46px;
+
+  margin-top: 26px;
+
+  border: 1px solid #111;
+  border-radius: 8px;
+
+  background-color: #c5c5c5;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.login-submit-button:hover {
+  background-color: #b5b5b5;
+}
+
+
+/* =========================
+   Create Account
+   ========================= */
+
+.create-account-text {
+  margin-top: 24px;
+
+  text-align: center;
+
+  color: #666;
+  font-size: 14px;
+}
+
+.create-account-text a {
+  color: #111;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 520px) {
+  .login-page {
+    margin-top: 40px;
+  }
+
+  .login-container {
+    padding: 26px 20px;
+  }
+
+  .login-container h1 {
+    font-size: 28px;
+  }
+}
