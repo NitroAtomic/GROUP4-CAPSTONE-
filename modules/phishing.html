@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>A Phishing Awareness Guide: Recognize and Protect Against Malicious Emails, Texts, and Messaging Platform Scams</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="../index.html">Home</a>
+            </nav>
+            <h1>Phishing</h1>
+            <p>Module 1 of 6</p>
+        </header>
+
+        <section id="phishing-awareness-guide">
+            <article>
+                <h2>Learning Outcomes</h2>
+                <p>By the end of this module, you will be able to:</p>
+                <ul>
+                    <li>Identify common phishing attack techniques used against remote workers including email spoofing, credential harvesting, and malware distribution</li>
+                    <li>Recognize red flags and warning signs in suspicious emails, texts, and messages specific to remote work environments</li>
+                    <li>Understand role-specific vulnerabilities that different remote workers face (freelancers, client-facing staff, payment handlers, administrative staff)</li>
+                </ul>
+
+            </article>
+            <article>
+                <h2>Introduction to Phishing</h2>
+                <p>Phishing is a type of social engineering attack where cybercriminals impersonate legitimate organizations to trick people into revealing sensitive information.</p>
+            </article>
+
+            <article>
+                <h2>Key Concepts to Know</h2>
+                <p>Understanding these core concepts will help you identify phishing attempts:</p>
+                <div class="phishing-concepts-list">
+                    <div class="phishing-concept">
+                        <h4>Email Spoofing</h4>
+                        <p>Forging the sender's email address to make a malicious email appear to come from a trusted source (e.g., paypa1.com instead of paypal.com).</p>
+                    </div>
+                    <div class="phishing-concept">
+                        <h4>Credential Harvesting</h4>
+                        <p>Tricking users into entering their username, password, or other sensitive information on fake login pages that look legitimate.</p>
+                    </div>
+                    <div class="phishing-concept">
+                        <h4>Malware Distribution</h4>
+                        <p>Sending attachments or links that, when clicked, install malicious software on your device (viruses, spyware, ransomware).</p>
+                    </div>
+                    <div class="phishing-concept">
+                        <h4>Social Engineering</h4>
+                        <p>Manipulating people into divulging confidential information by exploiting trust, urgency, fear, or authority.</p>
+                    </div>
+                    <div class="phishing-concept">
+                        <h4>Vishing & Smishing</h4>
+                        <p>Voice phishing (calls) and SMS phishing (texts) - extending phishing attacks beyond email to phones and messaging apps.</p>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <h2>Real-World Examples</h2>
+                <p>Learn from actual examples of phishing attacks and how to spot them.</p>
+
+                <div class="phishing-list-examples">
+                    <div class="phishing-example">
+                        <h3>Example 1: The Bank Account Verification</h3>
+                        <p><strong>What happened:</strong> Employees received emails claiming their bank account needed immediate verification due to "suspicious activity."</p>
+                        <p><strong>Red flags:</strong> Generic greeting, urgent language, link to external website, request for sensitive info.</p>
+                        <p><strong>Why it worked:</strong> Banks do send security alerts, so this seemed legitimate at first glance.</p>
+                    </div>
+
+                    <div class="phishing-example">
+                        <h3>Example 2: The Fake IT Support Request</h3>
+                        <p><strong>What happened:</strong> Employees received emails from "IT Support" asking them to update their password due to a system upgrade.</p>
+                        <p><strong>Red flags:</strong> Legitimate IT would never ask for passwords via email, generic subject line, urgency tactic.</p>
+                        <p><strong>Why it worked:</strong> Most employees are used to IT requests and didn't question it.</p>
+                    </div>
+
+                    <div class="phishing-example">
+                        <h3>Example 3: The Compromised Colleague</h3>
+                        <p><strong>What happened:</strong> An email appeared to come from a colleague asking to urgently transfer funds to a new vendor account.</p>
+                        <p><strong>Red flags:</strong> Unusual request from colleague, asking to keep it secret, unusual urgency, new vendor account.</p>
+                        <p><strong>Why it worked:</strong> The attacker compromised the colleague's email account first.</p>
+                    </div>
+
+                    <div class="phishing-example">
+                        <h3>Example 4: The Prize Notification</h3>
+                        <p><strong>What happened:</strong> Employees received text messages saying they won a free gift card and needed to "claim prize now" via a link.</p>
+                        <p><strong>Red flags:</strong> Unsolicited prize, shortened URL (can hide real destination), urgency tactic, no expectation of winning.</p>
+                        <p><strong>Why it worked:</strong> People got excited about a "free" item without thinking.</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section id="phishing-awareness-guide-video">
+            <h2>Video: Understanding Phishing Attacks</h2>
+            <p>To learn more how phishing attacks work and how attackers put their messages to deceive an individual person.</p>
+            <div class="video-player">
+                <!-- We will insert the video on here as soon as possible -->
+                <p>[Video Placeholder - Phishing Awareness Video will be embedded here]</p>
+            </div>
+        </section>
+        
+        <section id="role-identification">
+            <h2>Tell Us About Your Work Role</h2>
+            <p>This helps us provide personalized recommendations based on threats specific to your situation.</p>
+
+            <div class="role-type">
+                <label>
+                    <input type="radio" name="user-role" value="freelancer">
+                    <span class="role-label">💼 Freelancer</span>
+                    <span class="role-description">Self-employed professional working with multiple clients remotely.</span>
+                </label>
+
+                <label>
+                    <input type="radio" name="user-role" value="client-facing">
+                    <span class="role-label">👤 Client-Facing Staff</span>
+                    <span class="role-description">Employee who regularly communicates with external clients and partners.</span>
+                </label>
+
+                <label>
+                    <input type="radio" name="user-role" value="payment-handler">
+                    <span class="role-label">💳 Payment Handler</span>
+                    <span class="role-description">Employee who processes payments and financial transactions.</span>
+                </label>
+
+                <label>
+                    <input type="radio" name="user-role" value="admin-staff">
+                    <span class="role-label">📋 Administrative Staff</span>
+                    <span class="role-description">Employee who manages operations, access control, and sensitive information.</span>
+                </label>
+            </div>
+        </section>
+
+        <section id="phishing-awareness-guide-quiz">
+            <h2>Quiz: Phishing Awareness Literacy</h2>
+            <p>Test your knowledge with these phishing scenarios. Read each situation carefully and select the best answer.</p>
+
+            <div class="quiz-question"
+                data-question-id="1"
+                data-question-type="scenario-based"
+                data-concepts="email-spoofing,credential-harvesting">
+
+                <h3>Question 1 of 5 <span class="question-type">(Scenario-based)</span></h3>
+                <p class="question-text">You receive an email from your bank asking you to "verify your account information" by clicking a link. The email looks professional and has your bank's logo. What should you do?</p>
+                <div class="answer-choices">
+                    <label>
+                        <input type="radio" name="question-1" value="a" data-is-correct="false">
+                        <span class="answer-choice">A) Click the link and update your information immediately</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-1" value="b" data-is-correct="true">
+                        <span class="answer-choice">B) Call your bank directly using the number on the back of your card</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-1" value="c" data-is-correct="false">
+                        <span class="answer-choice">C) Reply to the email with your account details</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-1" value="d" data-is-correct="false">
+                        <span class="answer-choice">D) Ignore the email and delete it without any action</span>
+                    </label>
+                </div>
+                <button class="submit-answer">Submit Answer</button>
+            </div>
+
+            <div class="quiz-question"
+                data-question-id="2"
+                data-question-type="scenario-based"
+                data-concepts="email-spoofing,credential-harvesting">
+
+                <h3>Question 2 of 5 <span class="question-type">(Scenario-based)</span></h3>
+                <p class="question-text">A colleague sends you a message on Slack with a link to "review the latest project updates." The message seems urgent and slightly different in tone from their usual messages. What's the red flag?</p>
+                <div class="answer-choices">
+                    <label>
+                        <input type="radio" name="question-2" value="a" data-is-correct="false">
+                        <span class="answer-choice">A) Nothing - it's from a colleague so it must be safe</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-2" value="b" data-is-correct="false">
+                        <span class="answer-choice">B) The tone is different and urgency can be a social engineering tactic</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-2" value="c" data-is-correct="true">
+                        <span class="answer-choice">C) Slack messages can never contain malicious links</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-2" value="d" data-is-correct="false">
+                        <span class="answer-choice">D) Project updates are always safe to click on</span>
+                    </label>
+                </div>
+                <button class="submit-answer">Submit Answer</button>
+            </div>
+
+            <div class="quiz-question"
+                data-question-id="3"
+                data-question-type="scenario-based"
+                data-concepts="email-spoofing,credential-harvesting">
+
+                <h3>Question 3 of 5 <span class="question-type">(Scenario-based)</span></h3>
+                <p class="question-text">You receive a text message claiming you've won a free Amazon gift card. The message includes a shortened link and says "Claim your prize now!" What should you do?</p>
+                <div class="answer-choices">
+                    <label>
+                        <input type="radio" name="question-3" value="a" data-is-correct="true">
+                        <span class="answer-choice">A) Click the link immediately to claim your prize</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-3" value="b" data-is-correct="false">
+                        <span class="answer-choice">B) This is likely a scam - don't click and delete the message</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-3" value="c" data-is-correct="false">
+                        <span class="answer-choice">C) Forward it to all your contacts to warn them</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-3" value="d" data-is-correct="false">
+                        <span class="answer-choice">D) Reply asking for more details about the prize</span>
+                    </label>
+                </div>
+                <button class="submit-answer">Submit Answer</button>
+            </div>
+
+            <div class="quiz-question"
+                data-question-id="4"
+                data-question-type="scenario-based"
+                data-concepts="email-spoofing,credential-harvesting">
+
+                <h3>Question 4 of 5 <span class="question-type">(Scenario-based)</span></h3>
+                <p class="question-text">An email arrives from "PayPal" saying your account has been compromised and asking you to confirm your password. The email address looks slightly off (paypa1.com instead of paypal.com). What is this an example of?</p>
+                <div class="answer-choices">
+                    <label>
+                        <input type="radio" name="question-4" value="a" data-is-correct="false">
+                        <span class="answer-choice">A) A legitimate security alert from PayPal</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-4" value="b" data-is-correct="false">
+                        <span class="answer-choice">B) Email spoofing - where the sender's address is forged to look legitimate</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-4" value="c" data-is-correct="false">
+                        <span class="answer-choice">C) A marketing campaign</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-4" value="d" data-is-correct="true">
+                        <span class="answer-choice">D) An authentic PayPal notification</span>
+                    </label>
+                </div>
+                <button class="submit-answer">Submit Answer</button>
+            </div>
+
+            <div class="quiz-question"
+                data-question-id="5"
+                data-question-type="scenario-based"
+                data-concepts="email-spoofing,credential-harvesting">
+
+                <h3>Question 5 of 5 <span class="question-type">(Scenario-based)</span></h3>
+                <p class="question-text">Your manager asks you via email to process an urgent wire transfer to a new vendor. The email is marked urgent and says "Don't tell anyone about this yet." This request has several red flags. Which is NOT a red flag?</p>
+                <div class="answer-choices">
+                    <label>
+                        <input type="radio" name="question-5" value="a" data-is-correct="true">
+                        <span class="answer-choice">A) Asking you to keep it secret from others</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-5" value="b" data-is-correct="false">
+                        <span class="answer-choice">B) Creating artificial urgency</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-5" value="c" data-is-correct="false">
+                        <span class="answer-choice">C) A request to make a financial transaction</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="question-5" value="d" data-is-correct="false">
+                        <span class="answer-choice">D) The sender is your manager, so it's automatically trustworthy</span>
+                    </label>
+                </div>
+                <button class="submit-answer">Submit Answer</button>
+            </div>
+
+            <div id="quiz-summary">
+            </div>
+        </section>
+
+        <section id="phishing-assessment-results">
+            <h2>Quiz Results & Personalized Insight</h2>
+            <div class="results-score-display">
+                <div class="score-indicator">
+                    <span class="score-value">5</span>
+                    <span class="total-score">/ 5</span>
+                </div>
+                <div class="score-text">
+                    <h3>Excellent Work!</h3>
+                    <p>You've demonstrated strong phishing awareness skills.</p>
+                </div>
+            </div>
+
+            <div class="phishing-concept-results">
+                <h3>Phishing Concept Proficiency</h3>
+
+                <div class="phishing-concept-breakdown">
+                    <div class="phishing-concept-lists">
+                        <h4>✅ Phishing Concepts You Mastered!</h4>
+                        <ul class="phishing-mastered-concepts">
+                            <li><strong>Email Spoofing:</strong> You successfully identified fake sender addresses and understood how attackers impersonate legitimate organizations.</li>
+                            <li><strong>Credential Harvesting:</strong> You recognized the danger of fake login pages and understood why sensitive information should never be entered on unfamiliar websites.</li>
+                            <li><strong>Social Engineering:</strong> You identified how attackers manipulate trust and urgency to trick people into revealing confidential information.</li>
+                        </ul>
+                    </div>
+
+                    <div class="phishing-concept-lists">
+                        <h4>⚠️ Phishing Concepts to Strengthen</h4>
+                        <ul class="phishing-weak-concepts">
+                            <li><strong>Malware Distribution:</strong> Focus on understanding how malicious attachments and links can install ransomware or spyware on devices.</li>
+                            <li><strong>Vishing & Smishing:</strong> Learn how phishing extends beyond email to voice calls and text messages as attack vectors.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-retake-option">
+                <h3>Want to Try Again?</h3>
+                <p>You scored <span class="score-display">SCORE_PERCENTAGE%</span>. You're close! Retake this quiz to reach 70% 
+                   and to proceed to Module 2: Spear Phishing.</p>
+                <button class="retake-button">Retake Quiz</button>
+            </div>
+
+            <div class="results-learning-gain">
+                <h3>Your Learning Progress</h3>
+                <div class="learning-stats">
+                    <div class="stat">
+                        <h4>Current Score</h4>
+                        <p class="score-value">CURRENT_SCORE%</p>
+                    </div>
+
+                    <div class="stat">
+                        <h4>Initial Score</h4>
+                        <p class="score-value">INITIAL_SCORE%</p>
+                        <p class="score-description">(Your first attempt score)</p>
+                    </div>
+
+                    <div class="stat">
+                        <h4>Learning Gain</h4>
+                        <p class="score-value">LEARNING_GAIN%</p>
+                        <p class="score-description">Subtract INITIAL_SCORE from CURRENT_SCORE, divide by INITIAL_SCORE, multiply by 100 to get the learning gain percentage.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="proficiency-results">
+                <h3>Proficiency Results</h3>
+                <div class="proficiency-status">
+                    <p class="proficiency-score">You scored <strong>SCORE_PERCENTAGE%</strong> on this module.</p>
+                    <p class="proficiency-message">
+                        <strong>✅ EXCELLENT ACHIEVED!</strong> You have unlocked Module 2: Spear Phishing.
+                    </p>
+                    <p class="proficiency-note">You must score 70% or higher to progress.</p>
+                </div>     
+            </div>
+
+            <div class="proficiency-results">
+                <h3>Proficiency Results</h3>
+                <div class="proficiency-status">
+                    <p class="proficiency-score">You scored <strong>SCORE_PERCENTAGE%</strong> on this module.</p>
+                    <p class="proficiency-message">
+                        <strong>⚠️ Not Yet!</strong> You scored SCORE_PERCENTAGE%. You need 70% to unlock Module 2.
+                    </p>
+                    <p class="proficiency-note">Retake this quiz to reach 70% mastery.</p>
+                </div>     
+            </div>
+
+            <div class="results-what-you-learned">
+                <h3>What You Learned in This Guide</h3>
+                <ul class="key-takeaways">
+                    <li>How to identify phishing emails and their common tactics</li>
+                    <li>The importance of verifying sender information before clicking links.</li>
+                    <li>The danger of email spoofing and how to spot suspicious sender addresses.</li>
+                    <li>How urgency and secrecy are used as social engineering tactics.</li>
+                    <li>Why calling organizations directly is safer than clicking email links.</li>
+                </ul>
+            </div>
+            
+            <div class="results-learning-style">
+                <h3>Your Identified Learning Style</h3>
+                <div class="learning-style">
+                    <p class="learning-style-type">Visual Learner</p>
+                    <p class="learning-style-description">You learn best through diagrams, videos, and visual examples. The screenshots and real-world examples in this module were likely very helpful for you.</p>
+                </div>
+            </div>
+
+            <div class="results-recommendations">
+                <h3> Your Personalized Recommendations</h3>
+                <div class="recommendations-list">
+                    <h4> Your Learning Style-Based Recommendations</h4>
+                    <p>Continue building your awareness by:</p>
+                    <div class="style-recommendation">
+                        <ul>
+                            <li>Taking part in interactive phishing simulations.</li>
+                            <li>Watching real phishing simulations and case studies.</li>
+                            <li>Reviewing visual guides showing email red flags.</li>
+                        </ul>
+                    </div>
+                    <div class="style-recommendation">
+                        <h4>Your Areas to Strengthen</h4>
+                        <p>Although you did great, you may strengthen these areas:</p>
+                        <ul>
+                            <li>How to report phishing attempts at your organization.</li>
+                            <li>Creating strong passwords and two-factor authentication.</li>
+                            <li>Advanced social engineering tactics in other Modules.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-learning-style">
+                <h3>Your Identified Learning Style</h3>
+                <div class="learning-style">
+                    <p class="learning-style-type">Auditory Learner</p>
+                    <p class="learning-style-description">You learn best through listening, discussions, and verbal explanations. Podcasts, webinars, and group discussions were likely the most helpful for you in this module.</p>
+                </div>
+            </div>
+
+            <div class="results-recommendations">
+                <h3>Your Personalized Recommendations</h3>
+                <div class="recommendations-list">
+                    <h4>Your Learning Style-Based Recommendations</h4>
+                    <p>Continue building your awareness by:</p>
+                    <div class="style-recommendation">
+                        <ul>
+                            <li>Listening to cybersecurity podcasts about phishing tactics.</li>
+                            <li>Participating in team security awareness discussions.</li>
+                            <li>Attending live webinars on phishing prevention.</li>
+                            <li>Discussing phishing scenarios with your colleagues.</li>
+                        </ul>
+                    </div>
+                    <div class="style-recommendation">
+                        <h4>Your Areas to Strengthen</h4>
+                        <p>Although you did great, you may strengthen these areas:</p>
+                        <ul>
+                            <li>Reading detailed case studies on phishing campaign.</li>
+                            <li>Reviewing written documentation about email authentication.</li>
+                            <li>Advanced tactics covered in other Modules.</li>
+                        </ul>   
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-learning-style">
+                <h3>Your Identified Learning Style</h3>
+                <div class="learning-style">
+                    <p class="learning-style-type">Reading/Writing Learner</p>
+                    <p class="learning-style-description">You learn best through reading and writing. The detailed text explanations, case studies, and note-taking activities in this module were most beneficial for your learning style.</p>
+                </div>
+            </div>
+
+            <div class="results-recommendations">
+                <h3>Your Personalized Recommendations</h3>
+                <div class="recommendations-list">
+                    <h4>Your Learning Style-Based Recommendations</h4>
+                    <p>Continue building your awareness by:</p>
+                    <div class="style-recommendation">
+                        <ul>
+                            <li>Reading detailed case studies of real phishing campaigns.</li>
+                            <li>Studying written guides on email authentication methods (SPF, DKIM, DMARC.)</li>
+                            <li>Taking notes on common phishing tactics and red flags.</li>
+                            <li>Reviewing company security policies and procedures documentation.</li>
+                        </ul>
+                    </div>
+                    <div class="style-recommendation">
+                        <h4>Your Areas to Strengthen</h4>
+                        <p>Although you did great, you may strengthen these areas:</p>
+                        <ul>
+                            <li>Watching video demonstrations of phishing simulations.</li>
+                            <li>Participating in group discussions about security threats.</li>
+                            <li>Hands-on practice with interactive security scenarios.</li>
+                        </ul>   
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-learning-style">
+                <h3>Your Identified Learning Style</h3>
+                <div class="learning-style">
+                    <p class="learning-style-type">Kinesthetic Learner</p>
+                    <p class="learning-style-description">You learn best through doing and hands-on practice. Interactive simulations and practical activities were most effective for your learning style in this module.</p>
+                </div>
+            </div>
+
+            <div class="results-recommendations">
+                <h3>Your Personalized Recommendations</h3>
+                <div class="recommendations-list">
+                    <h4>Your Learning Style-Based Recommendations</h4>
+                    <p>Continue building your awareness by:</p>
+                    <div class="style-recommendation">
+                        <ul>
+                            <li>Practicing with interactive phishing simulation platforms.</li>
+                            <li>Conducting hands-on email security audits.</li>
+                            <li>Role-playing scenarios to identify and respond to phishing attempts.</li>
+                            <li>Participating in security drill exercises.</li>
+                        </ul>
+                    </div>
+                    <div class="style-recommendation">
+                        <h4>Your Areas to Strengthen</h4>
+                        <p>Although you did great, you may strengthen these areas:</p>
+                        <ul>
+                            <li>Reading written security documentation and policies.</li>
+                            <li>Watching educational videos on advanced phishing techniques.</li>
+                            <li>Learning theoretical concepts in other Modules.</li>
+                        </ul>   
+                    </div>
+                </div>
+            </div>
+
+            <!--📝 Scenario 1: Scored 70% or Higher 
+            The learner met the requirement! Since they scored at least 70% in this module, the next module is now unlocked and ready to continue-->
+            <div class="results-learning-progression" id="module-status-available">
+                <h3>🗺️ Your Learning Journey</h3>
+                <p>Complete each module and score at least 70% to unlock the next one.</p>
+                <div class="learner-progress-status">
+                    <!--ADD TO THIS, EACH MODULE LATER ON-->
+                    <div class="module-status">
+                        <span class="module-id">Module 1</span>
+                        <span class="module-name">Phishing</span>
+                        <span class="module-status-label">🏆 EXCELLENT</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 2</span>
+                        <span class="module-name">Spear Phishing</span>
+                        <span class="module-status-label available">🔓 AVAILABLE</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 3</span>
+                        <span class="module-name">Smishing</span>
+                        <span class="module-status-label not-available">🔒 LOCKED (You need to pass Module 2 to be available.)</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 4</span>
+                        <span class="module-name">Pretexting</span>
+                        <span class="module-status-label not-available">🔒 LOCKED (You need to pass Module 3 to be available.)</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 5</span>
+                        <span class="module-name">Vishing</span>
+                        <span class="module-status-label not-available">🔒 LOCKED (You need to pass Module 4 to be available.)</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 6</span>
+                        <span class="module-name">Safety Practices</span>
+                        <span class="module-status-label not-available">🔒 LOCKED (You need to pass Module 5 to be available.)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--Scenario 2: Below 70% — Not Yet Unlocked
+            You need a score of 70% or higher to proceed to the next module. -->
+            <div class="results-learning-progression" id="module-status-locked">
+                <h3>🗺️ Your Learning Journey</h3>
+                <p>Complete each module and score at least 70% to unlock the next one.</p>
+                <div class="learner-progress-status">
+                    <!--IN PROGRESS-->
+                    <div class="module-status">
+                        <span class="module-id">Module 1</span>
+                        <span class="module-name">Phishing</span>
+                        <span class="module-status-label">⏳ IN PROGRESS (Retake to achieve atleast 70% of the score)</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 2</span>
+                        <span class="module-name">Spear Phishing</span>
+                        <span class="module-status-label available">🔒 LOCKED (You need to pass Module 1 to be available.)</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 3</span>
+                        <span class="module-name">Smishing</span>
+                        <span class="module-status-label not-available">🔒 LOCKED (You need to pass Module 2 to be available.)</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 4</span>
+                        <span class="module-name">Pretexting</span>
+                        <span class="module-status-label not-available">🔒 LOCKED (You need to pass Module 3 to be available.)</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 5</span>
+                        <span class="module-name">Vishing</span>
+                        <span class="module-status-label not-available">🔒 LOCKED (You need to pass Module 4 to be available.)</span>
+                    </div>
+
+                    <div class="module-status">
+                        <span class="module-id">Module 6</span>
+                        <span class="module-name">Safety Practices</span>
+                        <span class="module-status-label not-available">🔒 LOCKED (You need to pass Module 5 to be available.)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-navigation">
+                <span class="progress-arrow-icon">→</span>
+                <a href="spear-phishing.html" class="next-module-button">Continue to Module 2: Spear Phishing</a>
+            </div>
+        </section>
+    </body>
+</html>
