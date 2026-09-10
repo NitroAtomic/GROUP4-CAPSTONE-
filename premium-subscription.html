@@ -18,7 +18,7 @@
 
             <div class="nav-left">
                 <a href="index.html" class="nav-link">Home</a>
-                <a href="#" class="nav-link">About</a>
+                <a href="about.html" class="nav-link">About</a>
             </div>
 
             <div class="nav-right">
@@ -67,6 +67,7 @@
                 <button
                     type="button"
                     class="premium-billing-button premium-billing-button-active"
+                    data-billing="monthly"
                 >
                     Monthly
                 </button>
@@ -74,6 +75,7 @@
                 <button
                     type="button"
                     class="premium-billing-button"
+                    data-billing="yearly"
                 >
                     Yearly
 
@@ -96,15 +98,26 @@
                     <div>
                         <h2>Premium plan</h2>
 
-                        <p>
+                        <p id="premium-billing-description">
                             Billed monthly, cancel anytime
+                        </p>
+
+                        <p
+                            id="premium-yearly-savings"
+                            class="premium-yearly-savings"
+                            hidden
+                        >
+                            Save compared to paying monthly
                         </p>
                     </div>
 
 
                     <div class="premium-plan-price">
                         <strong>Price TBD</strong>
-                        <span>/month</span>
+
+                        <span id="premium-price-period">
+                            /month
+                        </span>
                     </div>
 
                 </div>
@@ -127,7 +140,6 @@
                         </span>
                     </li>
 
-
                     <li>
                         <span class="premium-feature-check">✓</span>
 
@@ -135,7 +147,6 @@
                             Personalized learning dashboard
                         </span>
                     </li>
-
 
                     <li>
                         <span class="premium-feature-check">✓</span>
@@ -145,7 +156,6 @@
                         </span>
                     </li>
 
-
                     <li>
                         <span class="premium-feature-check">✓</span>
 
@@ -153,7 +163,6 @@
                             Cybersecurity awareness assessment
                         </span>
                     </li>
-
 
                     <li>
                         <span class="premium-feature-check">✓</span>
@@ -171,12 +180,12 @@
                      Continue Button
                      ========================= -->
 
-                <button
-                    type="button"
+                <a
+                    href="create-account.html"
                     class="premium-continue-button"
                 >
                     Continue
-                </button>
+                </a>
 
             </section>
 

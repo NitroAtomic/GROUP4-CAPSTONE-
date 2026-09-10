@@ -1,0 +1,266 @@
+/* =========================
+   Payment Page
+   ========================= */
+
+.payment-page {
+    padding: 28px 20px 40px;
+}
+
+.payment-container {
+    width: min(580px, 100%);
+    margin: 0 auto;
+}
+
+
+/* =========================
+   Premium Heading
+   ========================= */
+
+.payment-heading {
+    text-align: center;
+}
+
+.premium-crown-icon {
+    font-size: 42px;
+    line-height: 1;
+}
+
+.payment-heading h1 {
+    margin-top: 4px;
+
+    font-size: 34px;
+    line-height: 1.1;
+}
+
+
+/* =========================
+   Subscription Progress
+   ========================= */
+
+.subscription-progress {
+    margin-top: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subscription-progress-step {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #777;
+
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.subscription-progress-active {
+    color: #111;
+    font-weight: 700;
+}
+
+.subscription-progress-complete {
+    color: #111;
+}
+
+.subscription-progress-number {
+    width: 20px;
+    height: 20px;
+
+    border: 1px solid #777;
+    border-radius: 50%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+}
+
+.subscription-progress-active .subscription-progress-number,
+.subscription-progress-complete .subscription-progress-number {
+    background-color: #c5c5c5;
+    border-color: #111;
+}
+
+.subscription-progress-line {
+    width: 100px;
+    height: 1px;
+    margin: 0 12px;
+
+    background-color: #999;
+}
+
+
+/* =========================
+   Selected Plan Summary
+   ========================= */
+
+.selected-plan-summary {
+    min-height: 34px;
+    margin-top: 22px;
+    padding: 0 10px;
+
+    border: 1px solid #111;
+    border-radius: 7px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 14px;
+}
+
+.selected-plan-summary small {
+    margin-left: 3px;
+
+    color: #777;
+}
+
+
+/* =========================
+   Payment Card
+   ========================= */
+
+.payment-card {
+    margin-top: 30px;
+    padding: 28px 58px;
+
+    border: 2px solid #111;
+    border-radius: 24px;
+}
+
+.payment-card-heading {
+    text-align: center;
+}
+
+.payment-card-heading h2 {
+    font-size: 29px;
+    line-height: 1.1;
+}
+
+.payment-card-heading p {
+    margin-top: 5px;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   Payment Form
+   ========================= */
+
+.payment-form {
+    margin-top: 24px;
+}
+
+.payment-form-field {
+    margin-bottom: 12px;
+}
+
+.payment-form-field label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #777;
+
+    font-size: 16px;
+}
+
+.payment-form-field input {
+    width: 100%;
+    height: 32px;
+
+    padding: 0 9px;
+
+    border: 1px solid #111;
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+.payment-form-field input::placeholder {
+    color: #c5c5c5;
+}
+
+.payment-form-field input:focus {
+    border-width: 2px;
+}
+
+
+/* =========================
+   Card Details
+   ========================= */
+
+.payment-card-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+
+/* =========================
+   Subscribe Button
+   ========================= */
+
+.payment-subscribe-button {
+    width: 100%;
+    min-height: 47px;
+    margin-top: 8px;
+
+    border: 1px solid #111;
+    border-radius: 11px;
+
+    background-color: #bdbdbd;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.payment-subscribe-button:hover {
+    background-color: #adadad;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 620px) {
+
+    .payment-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .subscription-progress-line {
+        width: 35px;
+        margin: 0 6px;
+    }
+
+    .subscription-progress-step {
+        font-size: 11px;
+    }
+
+    .payment-card {
+        padding: 24px 20px;
+    }
+
+    .payment-card-details {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+}
