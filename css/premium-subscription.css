@@ -27,13 +27,16 @@
 
 .premium-page-heading h1 {
     margin-top: 6px;
+
     font-size: 34px;
     line-height: 1.1;
 }
 
 .premium-page-heading p {
     margin-top: 2px;
+
     color: #777;
+
     font-size: 16px;
 }
 
@@ -61,15 +64,29 @@
     background-color: #fff;
 
     font-size: 15px;
+
     cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.premium-billing-button:hover {
+    background-color: #f3f3f3;
 }
 
 .premium-billing-button-active {
     background-color: #c5c5c5;
 }
 
+.premium-billing-button-active:hover {
+    background-color: #c5c5c5;
+}
+
 .premium-save-label {
     margin-left: 4px;
+
     font-size: 9px;
     font-weight: 700;
 }
@@ -101,13 +118,16 @@
 
 .premium-plan-header p {
     margin-top: 4px;
+
     color: #777;
+
     font-size: 16px;
 }
 
 .premium-plan-price {
     display: flex;
     align-items: baseline;
+
     white-space: nowrap;
 }
 
@@ -117,14 +137,34 @@
 
 .premium-plan-price span {
     margin-left: 5px;
+
     color: #777;
+
     font-size: 15px;
 }
 
 .premium-plan-divider {
     height: 1px;
     margin: 14px 0 20px;
+
     background-color: #999;
+}
+
+
+/* =========================
+   Yearly Subscription State
+   ========================= */
+
+.premium-yearly-savings {
+    margin-top: 2px;
+
+    color: #159415 !important;
+
+    font-size: 14px !important;
+}
+
+.premium-yearly-savings[hidden] {
+    display: none;
 }
 
 
@@ -134,6 +174,7 @@
 
 .premium-features-list {
     list-style: none;
+    padding-left: 0;
 }
 
 .premium-features-list li {
@@ -149,6 +190,7 @@
 
 .premium-feature-check {
     flex-shrink: 0;
+
     font-size: 28px;
     line-height: 1;
 }
@@ -163,12 +205,19 @@
     min-height: 55px;
     margin-top: 16px;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     border: 1px solid #111;
     border-radius: 12px;
 
     background-color: #fff;
+    color: #111;
 
     font-size: 19px;
+    text-decoration: none;
+
     cursor: pointer;
 
     transition:
@@ -188,12 +237,15 @@
 
 .premium-account-information {
     margin-top: 10px;
+
     text-align: center;
 }
 
 .premium-account-information p {
     margin-top: 5px;
+
     color: #777;
+
     font-size: 15px;
 }
 
@@ -202,8 +254,10 @@
 }
 
 .premium-account-information a {
-    text-decoration: underline;
+    color: #111;
+
     font-weight: 600;
+    text-decoration: underline;
 }
 
 
