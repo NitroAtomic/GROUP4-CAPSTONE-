@@ -1,0 +1,347 @@
+/* =========================
+   Dashboard Page
+   ========================= */
+
+.dashboard-page {
+    padding: 18px 20px 40px;
+}
+
+.dashboard-container {
+    width: min(930px, 100%);
+    margin: 0 auto;
+}
+
+
+/* =========================
+   Dashboard Heading
+   ========================= */
+
+.dashboard-heading h1 {
+    font-size: 40px;
+    line-height: 1.05;
+}
+
+.dashboard-heading p {
+    margin-top: 2px;
+
+    font-size: 20px;
+}
+
+
+/* =========================
+   Dashboard Summary
+   ========================= */
+
+.dashboard-summary-grid {
+    margin-top: 8px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.dashboard-summary-card {
+    min-height: 104px;
+    padding: 18px 30px;
+
+    border: 2px solid #111;
+    border-radius: 22px;
+}
+
+.dashboard-summary-label {
+    color: #777;
+
+    font-size: 18px;
+}
+
+.dashboard-summary-value {
+    margin-top: 8px;
+
+    font-size: 30px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   Shared Dashboard Section
+   ========================= */
+
+.dashboard-section {
+    margin-top: 16px;
+}
+
+.dashboard-section-heading h2 {
+    font-size: 29px;
+    line-height: 1.1;
+}
+
+.dashboard-section-heading p {
+    margin-top: 1px;
+
+    font-size: 19px;
+}
+
+.dashboard-section-heading-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.dashboard-assessment-link {
+    margin-top: 7px;
+
+    color: #111;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    text-decoration: underline;
+}
+
+
+/* =========================
+   Recommendations
+   ========================= */
+
+.dashboard-recommendations-grid {
+    margin-top: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.dashboard-recommendation-card {
+    min-height: 104px;
+    padding: 18px 26px;
+
+    border: 2px solid #111;
+    border-radius: 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dashboard-recommended-label {
+    width: fit-content;
+
+    margin-bottom: 4px;
+    padding: 2px 6px;
+
+    border: 1px solid #111;
+    border-radius: 999px;
+
+    background-color: #c5c5c5;
+
+    font-size: 9px;
+}
+
+.dashboard-recommendation-card h3 {
+    font-size: 19px;
+    line-height: 1.1;
+}
+
+.dashboard-recommendation-card p {
+    margin-top: 1px;
+
+    color: #777;
+
+    font-size: 17px;
+}
+
+
+/* =========================
+   Weak Areas
+   ========================= */
+
+.dashboard-weak-areas-list {
+    margin-top: 8px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dashboard-weak-area {
+    min-height: 46px;
+    padding: 0 22px;
+
+    border: 1px solid #111;
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.dashboard-score-badge {
+    min-width: 118px;
+    padding: 4px 14px;
+
+    border: 1px solid #111;
+    border-radius: 999px;
+
+    background-color: #bdbdbd;
+
+    text-align: center;
+
+    color: #555;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   Quiz History
+   ========================= */
+
+.dashboard-quiz-history {
+    margin-top: 10px;
+
+    border: 1px solid #111;
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+.dashboard-quiz-history-row {
+    min-height: 42px;
+    padding: 0 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 18px;
+}
+
+.dashboard-quiz-history-row:not(:last-child) {
+    border-bottom: 1px solid #777;
+}
+
+.dashboard-low-score {
+    color: #777;
+}
+
+
+/* =========================
+   Dashboard Navbar User
+   ========================= */
+
+.dashboard-user-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 19px;
+}
+
+.dashboard-user-icon {
+    width: 28px;
+    height: 28px;
+
+    border: 1px solid #111;
+    border-radius: 50%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+.dashboard-premium-badge {
+    padding: 8px 14px;
+
+    border: 1px solid #111;
+    border-radius: 999px;
+
+    background-color: #c5c5c5;
+
+    color: #555;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   AI Chatbot
+   ========================= */
+
+.chatbot-button {
+    position: fixed;
+    right: 26px;
+    bottom: 14px;
+
+    padding: 10px 20px;
+
+    border: 1px solid #111;
+    border-radius: 7px;
+
+    background-color: #fff;
+
+    color: #111;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 850px) {
+
+    .dashboard-summary-grid,
+    .dashboard-recommendations-grid {
+        gap: 14px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .dashboard-heading h1 {
+        font-size: 34px;
+    }
+
+    .dashboard-summary-grid,
+    .dashboard-recommendations-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-section-heading-row {
+        flex-direction: column;
+    }
+
+    .dashboard-assessment-link {
+        margin-top: 0;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .dashboard-weak-area,
+    .dashboard-quiz-history-row {
+        font-size: 15px;
+    }
+
+    .dashboard-score-badge {
+        min-width: 90px;
+
+        font-size: 11px;
+    }
+
+}
