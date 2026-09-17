@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from './stores/auth.js'
 
 // Import page components
 import Home from './pages/Home.vue'
@@ -57,17 +58,20 @@ const routes = [
   {
     path: '/create-account',
     name: 'CreateAccount',
-    component: CreateAccount
+    component: CreateAccount,
+    meta: { minimalNav: true }
   },
   {
     path: '/payment',
     name: 'Payment',
-    component: Payment
+    component: Payment,
+    meta: { minimalNav: true }
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: { requiresAuth: true }
   },
   // Module routes
   {
@@ -116,6 +120,13 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to) => {
+  if (!to.meta.requiresAuth) return true
+  const authStore = useAuthStore()
+  if (authStore.isAuthenticated) return true
+  return { name: 'Login', query: { redirect: to.fullPath } }
 })
 
 export default router

@@ -1,0 +1,118 @@
+@layer components {
+
+  /* =========================
+     About Page
+     Converted from css/about.css using the mapping table in
+     FRONTEND_IMPLEMENTATION_PROTOTYPE_DEFENSE_GUIDE.md §4.4.
+     .chatbot-button is skipped — ChatbotWidget.vue already covers it.
+     ========================= */
+
+  .about-page {
+    @apply pt-[30px] px-5 pb-10;
+  }
+
+  .about-container {
+    @apply w-[min(1010px,100%)] my-0 mx-auto;
+  }
+
+
+  /* =========================
+     Page Heading
+     ========================= */
+
+  .about-page-heading {
+    @apply text-center;
+  }
+
+  .about-page-heading h1 {
+    @apply text-[42px] leading-[1.1] font-extrabold max-[700px]:text-[34px];
+  }
+
+  .about-page-heading p {
+    @apply mt-3 text-[20px] leading-snug max-[700px]:text-[17px];
+  }
+
+
+  /* =========================
+     Mission
+     ========================= */
+
+  .about-mission-section {
+    @apply mt-[18px];
+  }
+
+  .about-mission-section h2 {
+    @apply text-[30px] leading-[1.1];
+  }
+
+  .about-mission-section p {
+    @apply mt-0.5 text-[20px] leading-tight max-[700px]:text-[17px];
+  }
+
+
+  /* =========================
+     Audience
+     ========================= */
+
+  .about-audience-section {
+    @apply mt-[30px];
+  }
+
+  .about-audience-section h2 {
+    @apply mb-2 text-[30px] leading-[1.1];
+  }
+
+  .about-audience-grid {
+    @apply grid grid-cols-3 gap-14 max-[900px]:gap-4 max-[700px]:grid-cols-1;
+  }
+
+  .about-audience-card {
+    @apply min-h-[104px] p-[18px] border-[2px] border-black rounded-[22px] flex flex-col justify-between;
+  }
+
+  /* Wrapper is the JS/CSS hook — icon assets are temporary (Handoff Notes). */
+  .about-audience-icon {
+    @apply w-10 h-10;
+  }
+
+  .about-audience-icon img {
+    @apply w-full h-full object-contain block;
+  }
+
+  .about-audience-card h3 {
+    @apply text-[20px] leading-[1.1];
+  }
+
+
+  /* =========================
+     Team
+     ========================= */
+
+  .about-team-section {
+    @apply mt-[30px];
+  }
+
+  .about-team-section h2 {
+    @apply text-[30px] leading-[1.1];
+  }
+
+  .about-team-grid {
+    @apply mt-[18px] grid grid-cols-5 gap-7 max-[900px]:grid-cols-3 max-[700px]:grid-cols-2 max-[480px]:grid-cols-1;
+  }
+
+  .about-team-member {
+    @apply text-center;
+  }
+
+  .about-team-member-image {
+    @apply w-[68px] h-[68px] mt-0 mx-auto mb-2.5 border-[2px] border-black rounded-full flex items-center justify-center text-[38px] leading-none;
+  }
+
+  .about-team-member h3 {
+    @apply text-[16px] leading-[1.15];
+  }
+
+  .about-team-member p {
+    @apply mt-0.5 text-gray-500 text-[14px] leading-[1.15];
+  }
+}

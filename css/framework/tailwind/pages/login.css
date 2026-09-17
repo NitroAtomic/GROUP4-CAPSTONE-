@@ -1,0 +1,122 @@
+@layer components {
+
+  /* =========================
+     Login Page
+     Converted from css/login.css using the mapping table in
+     FRONTEND_IMPLEMENTATION_PROTOTYPE_DEFENSE_GUIDE.md §4.4.
+     ========================= */
+
+  .login-page {
+    @apply w-[min(460px,calc(100%-40px))] my-20 mx-auto max-[520px]:mt-10;
+  }
+
+
+  /* =========================
+     Login Container
+     ========================= */
+
+  .login-container {
+    @apply p-9 border border-black rounded-[18px] max-[520px]:py-[26px] max-[520px]:px-5;
+  }
+
+  .login-container h1 {
+    @apply text-center text-[32px] font-semibold max-[520px]:text-[28px];
+  }
+
+  .login-description {
+    @apply mt-2 text-center text-gray-500 text-[16px];
+  }
+
+
+  /* =========================
+     Login Form
+     ========================= */
+
+  .login-form {
+    @apply mt-8;
+  }
+
+  .login-form-field {
+    @apply mb-5;
+  }
+
+  .login-form-field label {
+    @apply block mb-2 text-[16px] font-semibold;
+  }
+
+  .login-form-field input {
+    @apply w-full h-[46px] py-0 px-3.5 border border-black rounded-lg outline-none text-[16px] focus:border-2;
+  }
+
+
+  /* =========================
+     Forgot Password
+     ========================= */
+
+  .forgot-password-link {
+    @apply block mt-[-6px] text-right text-[14px] underline;
+  }
+
+
+  /* =========================
+     Login Button
+     ========================= */
+
+  .login-submit-button {
+    @apply w-full h-[46px] mt-[26px] border border-black rounded-lg bg-gray-300 text-[16px] font-semibold cursor-pointer hover:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+
+  /* =========================
+     Create Account (OTP-step "Didn't get a code?" reuses this too)
+     ========================= */
+
+  .create-account-text {
+    @apply mt-6 text-center text-gray-500 text-[14px];
+  }
+
+  .create-account-text a {
+    @apply text-black font-semibold underline;
+  }
+
+
+  /* =========================
+     "No account yet?" divider + Go-Premium CTA button
+     Matches Login Page.png (UI/UX zip): a labeled horizontal rule, then a
+     single premium-framed button — replaces the plain "Create an account"
+     text link, since per the Capstone Paper (FR-07) account creation is a
+     Premium-only action; there is no separate "Free account" to sign up for.
+     ========================= */
+
+  .login-divider {
+    @apply mt-6 flex items-center gap-3 text-gray-400 text-[13px];
+  }
+
+  .login-divider::before,
+  .login-divider::after {
+    content: '';
+    @apply flex-1 h-px bg-gray-300;
+  }
+
+  .btn-login-create-account {
+    @apply w-full mt-4 bg-gray-300 font-semibold hover:bg-gray-400;
+  }
+
+  .btn-login-create-account .inline-crown-icon {
+    @apply mr-1.5;
+  }
+
+
+  /* =========================
+     Form-level status message (new — not in the legacy CSS, since the
+     legacy page had no wired submit handler to fail or succeed yet)
+     ========================= */
+
+  .form-error-message {
+    @apply mt-4 py-2 px-3 border border-black rounded-lg bg-gray-100 text-[14px] text-center;
+  }
+
+  .form-helper-text {
+    @apply mt-2 text-center text-gray-500 text-[13px];
+  }
+}

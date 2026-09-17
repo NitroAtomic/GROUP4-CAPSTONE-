@@ -1,0 +1,174 @@
+@layer components {
+
+  /* =========================
+     Dashboard Page
+     Converted from css/dashboard.css using the mapping table in
+     FRONTEND_IMPLEMENTATION_PROTOTYPE_DEFENSE_GUIDE.md §4.4.
+     Navbar user/premium classes live here too so SiteHeader.vue can
+     reuse the same hooks. .chatbot-button is skipped — ChatbotWidget.vue
+     already covers it.
+     ========================= */
+
+  .dashboard-page {
+    @apply pt-[18px] px-5 pb-10;
+  }
+
+  .dashboard-container {
+    @apply w-[min(930px,100%)] my-0 mx-auto;
+  }
+
+
+  /* =========================
+     Dashboard Heading
+     ========================= */
+
+  .dashboard-heading h1 {
+    @apply text-[40px] leading-[1.05] max-[700px]:text-[34px];
+  }
+
+  .dashboard-heading p {
+    @apply mt-0.5 text-[20px];
+  }
+
+  .dashboard-account-status {
+    @apply mt-2 text-[16px] text-gray-500;
+  }
+
+
+  /* =========================
+     Dashboard Summary
+     ========================= */
+
+  .dashboard-summary-grid {
+    @apply mt-2 grid grid-cols-3 gap-[30px] max-[850px]:gap-3.5 max-[700px]:grid-cols-1;
+  }
+
+  .dashboard-summary-card {
+    @apply min-h-[104px] py-[18px] px-[30px] border-[2px] border-black rounded-[22px];
+  }
+
+  .dashboard-summary-label {
+    @apply text-gray-500 text-[18px];
+  }
+
+  .dashboard-summary-value {
+    @apply mt-2 text-[30px] font-bold;
+  }
+
+
+  /* =========================
+     Shared Dashboard Section
+     ========================= */
+
+  .dashboard-section {
+    @apply mt-4;
+  }
+
+  .dashboard-section-heading h2 {
+    @apply text-[29px] leading-[1.1];
+  }
+
+  .dashboard-section-heading p {
+    @apply mt-px text-[19px];
+  }
+
+  .dashboard-section-heading-row {
+    @apply flex items-start justify-between gap-5 max-[700px]:flex-col;
+  }
+
+  .dashboard-assessment-link {
+    @apply mt-[7px] text-black text-[17px] font-semibold underline bg-transparent border-0 cursor-default max-[700px]:mt-0;
+  }
+
+
+  /* =========================
+     Recommendations
+     ========================= */
+
+  .dashboard-recommendations-grid {
+    @apply mt-2.5 grid grid-cols-3 gap-[30px] max-[850px]:gap-3.5 max-[700px]:grid-cols-1;
+  }
+
+  .dashboard-recommendation-card {
+    @apply min-h-[104px] py-[18px] px-[26px] border-[2px] border-black rounded-[22px] flex flex-col justify-center text-inherit;
+  }
+
+  .dashboard-recommended-label {
+    @apply w-fit mb-1 py-0.5 px-1.5 border border-black rounded-full bg-gray-300 text-[9px];
+  }
+
+  .dashboard-recommendation-card h3 {
+    @apply text-[19px] leading-[1.1];
+  }
+
+  .dashboard-recommendation-card p {
+    @apply mt-px text-gray-500 text-[17px];
+  }
+
+  .dashboard-empty-copy {
+    @apply mt-2 text-[17px] text-gray-500;
+  }
+
+
+  /* =========================
+     Weak Areas
+     ========================= */
+
+  .dashboard-weak-areas-list {
+    @apply mt-2 flex flex-col gap-2;
+  }
+
+  .dashboard-weak-area {
+    @apply min-h-[46px] py-0 px-[22px] border border-black rounded-[14px] flex items-center justify-between text-[18px] font-semibold max-[480px]:text-[15px];
+  }
+
+  .dashboard-score-badge {
+    @apply min-w-[118px] py-1 px-3.5 border border-black rounded-full bg-gray-400 text-center text-gray-600 text-[12px] max-[480px]:min-w-[90px] max-[480px]:text-[11px];
+  }
+
+
+  /* =========================
+     Quiz History
+     ========================= */
+
+  .dashboard-quiz-history {
+    @apply mt-2.5 border border-black rounded-[14px] overflow-hidden;
+  }
+
+  .dashboard-quiz-history-row {
+    @apply min-h-[42px] py-0 px-[22px] flex items-center justify-between text-[18px] max-[480px]:text-[15px];
+  }
+
+  .dashboard-quiz-history-row:not(:last-child) {
+    @apply border-b border-gray-500;
+  }
+
+  .dashboard-low-score {
+    @apply text-gray-500;
+  }
+
+
+  /* =========================
+     Dashboard Navbar User
+     ========================= */
+
+  .dashboard-user-area {
+    @apply flex items-center gap-2 text-[19px];
+  }
+
+  .dashboard-user-icon {
+    @apply w-7 h-7 border border-black rounded-full inline-flex items-center justify-center text-[19px];
+  }
+
+  .dashboard-user-name {
+    @apply whitespace-nowrap;
+  }
+
+  .dashboard-premium-badge {
+    @apply py-2 px-3.5 border border-black rounded-full bg-gray-300 text-gray-600 text-[13px] font-semibold;
+  }
+
+  .form-error-message {
+    @apply mt-4 text-red-700 text-[16px];
+  }
+}
