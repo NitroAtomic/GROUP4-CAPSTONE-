@@ -1,31 +1,5 @@
+// javascript/framework/vue/pages/Dashboard.js
 import { useAuthStore } from '../stores/auth.js'
-import { apiFetch } from '../lib/api.js'
-
-const FREE_MODULE_ROUTES = {
-  phishing: '/modules/quishing',
-  quishing: '/modules/quishing',
-  'spear-phishing': '/modules/spear-phishing',
-  smishing: '/modules/smishing',
-  vishing: '/modules/vishing',
-  pretexting: '/modules/pretexting',
-  'safety-practices': '/modules/essential-safe-practices-remote-environments'
-}
-
-function parseJsonField(value) {
-  if (value == null || value === '') return null
-  if (typeof value === 'object') return value
-  try {
-    return JSON.parse(value)
-  } catch {
-    return null
-  }
-}
-
-function formatTopicLabel(topic) {
-  return String(topic)
-    .replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, (letter) => letter.toUpperCase())
-}
 
 export default {
   name: 'Dashboard',
@@ -34,153 +8,117 @@ export default {
     return {
       isLoading: true,
       errorMessage: '',
-      progress: [],
-      quizHistory: [],
-      assessment: null,
+      firstName: '',
+      planLabel: '',
+      accountStatusLabel: '',
+      completedModulesCount: 0,
+      totalModulesCount: 0,
+      averageQuizScoreLabel: '0%',
+      weakAreas: [],
       recommendations: [],
-      availableModules: []
+      quizHistoryRows: []
     }
   },
 
-  computed: {
-    authStore() {
-      return useAuthStore()
-    },
-
-    firstName() {
-      return this.authStore.firstName || 'User'
-    },
-
-    planLabel() {
-      return this.authStore.isPremium ? 'Premium' : 'Free'
-    },
-
-    accountStatusLabel() {
-      const status = this.authStore.user && this.authStore.user.subscription_status
-      if (!status) return this.authStore.isPremium ? 'Active' : 'Free'
-      return String(status).replace(/_/g, ' ')
-    },
-
-    completedModulesCount() {
-      return this.progress.filter((row) => String(row.completion_status).toLowerCase() === 'completed').length
-    },
-
-    totalModulesCount() {
-      if (this.availableModules.length) return this.availableModules.length
-      return this.progress.length || 0
-    },
-
-    averageQuizScore() {
-      if (!this.quizHistory.length) return null
-      const percentages = this.quizHistory.map((row) => this.quizPercentage(row)).filter((value) => value != null)
-      if (!percentages.length) return null
-      return Math.round(percentages.reduce((sum, value) => sum + value, 0) / percentages.length)
-    },
-
-    averageQuizScoreLabel() {
-      return this.averageQuizScore == null ? '—' : `${this.averageQuizScore}%`
-    },
-
-    weakAreas() {
-      const assessment = this.assessment
-      if (!assessment) return []
-
-      const byTopic = parseJsonField(assessment.by_topic) || {}
-      const rawWeakAreas = parseJsonField(assessment.weak_areas)
-
-      if (Array.isArray(rawWeakAreas) && rawWeakAreas.length) {
-        return rawWeakAreas.map((item) => {
-          if (item && typeof item === 'object') {
-            const topic = item.topic || item.name || item.category || 'Topic'
-            const score = item.score ?? item.percentage ?? byTopic[topic]
-            return {
-              topic: formatTopicLabel(topic),
-              scoreLabel: score == null ? 'Needs review' : `${Math.round(Number(score))}% score`
-            }
-          }
-          const score = byTopic[item]
-          return {
-            topic: formatTopicLabel(item),
-            scoreLabel: score == null ? 'Needs review' : `${Math.round(Number(score))}% score`
-          }
-        })
-      }
-
-      return Object.entries(byTopic)
-        .filter(([, score]) => Number(score) < 70)
-        .map(([topic, score]) => ({
-          topic: formatTopicLabel(topic),
-          scoreLabel: `${Math.round(Number(score))}% score`
-        }))
-    },
-
-    quizHistoryRows() {
-      return this.quizHistory.map((row) => {
-        const percentage = this.quizPercentage(row)
-        return {
-          slug: row.slug,
-          title: `${row.module_title} quiz`,
-          percentageLabel: percentage == null ? '—' : `${percentage}%`,
-          isLowScore: percentage != null && percentage < 70
-        }
-      })
-    }
-  },
-
-  created() {
-    this.loadDashboard()
+  async mounted() {
+    await this.loadDashboardData()
   },
 
   methods: {
-    quizPercentage(row) {
-      const total = Number(row.total)
-      const score = Number(row.score)
-      if (!total || Number.isNaN(score)) return null
-      return Math.round((score / total) * 100)
-    },
-
-    recommendationPath(module) {
-      return FREE_MODULE_ROUTES[module.slug] || null
-    },
-
-    recommendationTag(module) {
-      return this.recommendationPath(module) ? 'router-link' : 'article'
-    },
-
-    recommendationBind(module) {
-      const path = this.recommendationPath(module)
-      return path ? { to: path } : {}
-    },
-
-    recommendationKind(module) {
-      if (module.category === 'role-based' || module.module_type === 'Premium') {
-        return 'Role-based module'
-      }
-      return 'Foundational module'
-    },
-
-    async loadDashboard() {
-      this.errorMessage = ''
+    async loadDashboardData() {
       this.isLoading = true
-      const token = this.authStore.token
+      this.errorMessage = ''
 
       try {
-        const [dashboard, recommendations, modules] = await Promise.all([
-          apiFetch('/api/dashboard', { token }),
-          apiFetch('/api/dashboard/recommendations', { token }),
-          apiFetch('/api/modules', { token })
-        ])
+        const authStore = useAuthStore()
+        
+        // Load dashboard data from backend
+        const response = await fetch('/api/dashboard', {
+          headers: {
+            'Authorization': `Bearer ${authStore.token}`
+          }
+        })
 
-        this.progress = dashboard.progress || []
-        this.quizHistory = dashboard.quiz_history || []
-        this.assessment = dashboard.assessment || null
-        this.recommendations = Array.isArray(recommendations) ? recommendations : []
-        this.availableModules = Array.isArray(modules) ? modules : []
+        if (!response.ok) {
+          if (response.status === 403) {
+            throw new Error('A Premium subscription is required to view the dashboard.')
+          }
+          throw new Error('Failed to load dashboard data.')
+        }
+
+        const data = await response.json()
+        
+        // Set user data
+        this.firstName = authStore.user?.firstName || 'User'
+        this.planLabel = authStore.user?.subscriptionType || 'Free'
+        this.accountStatusLabel = authStore.user?.subscriptionStatus || 'inactive'
+
+        // Calculate completed modules
+        this.completedModulesCount = data.progress?.filter(p => p.completion_status === 'completed').length || 0
+        this.totalModulesCount = 6 // Total free modules
+
+        // Calculate average quiz score
+        const quizHistory = data.quiz_history || []
+        if (quizHistory.length > 0) {
+          const totalScore = quizHistory.reduce((sum, q) => sum + (q.score / q.total) * 100, 0)
+          this.averageQuizScoreLabel = Math.round(totalScore / quizHistory.length) + '%'
+        }
+
+        // Set weak areas from assessment
+        if (data.assessment?.weak_areas) {
+          this.weakAreas = data.assessment.weak_areas.map(area => ({
+            topic: area.charAt(0).toUpperCase() + area.slice(1),
+            scoreLabel: 'Needs improvement'
+          }))
+        }
+
+        // Set quiz history rows
+        this.quizHistoryRows = quizHistory.map(q => ({
+          slug: q.slug,
+          title: q.module_title,
+          percentageLabel: Math.round((q.score / q.total) * 100) + '%',
+          isLowScore: (q.score / q.total) < 0.7
+        }))
+
+        // Load recommendations
+        await this.loadRecommendations()
+
       } catch (error) {
         this.errorMessage = error.message
       } finally {
         this.isLoading = false
       }
+    },
+
+    async loadRecommendations() {
+      try {
+        const authStore = useAuthStore()
+        const response = await fetch('/api/dashboard/recommendations', {
+          headers: {
+            'Authorization': `Bearer ${authStore.token}`
+          }
+        })
+
+        if (response.ok) {
+          this.recommendations = await response.json()
+        }
+      } catch (error) {
+        console.error('Failed to load recommendations:', error)
+      }
+    },
+
+    recommendationTag(module) {
+      return 'router-link'
+    },
+
+    recommendationBind(module) {
+      return {
+        to: `/modules/${module.slug}`
+      }
+    },
+
+    recommendationKind(module) {
+      return module.category || 'Free module'
     }
   }
 }

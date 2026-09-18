@@ -1,7 +1,7 @@
 <template>
   <SiteHeader />
   <router-view />
-  <ChatbotWidget />
+  <ChatbotWidget v-if="!isAssessmentRoute" />
 </template>
 
 <script>
@@ -12,6 +12,12 @@ export default {
   components: {
     SiteHeader,
     ChatbotWidget
+  },
+  computed: {
+    isAssessmentRoute() {
+      // Hide chatbot on assessment routes to maintain assessment integrity
+      return this.$route.path.startsWith('/assessment')
+    }
   }
 }
 </script>

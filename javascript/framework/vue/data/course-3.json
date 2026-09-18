@@ -1,0 +1,173 @@
+{
+  "moduleId": "course-3",
+  "moduleName": "Remote Recruitment, HR Impersonation & Onboarding Scams",
+  "totalQuestions": 10,
+  "standardCount": 5,
+  "scenarioBasedCount": 5,
+  "questions": [
+    {
+      "id": 1,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is the primary goal of scammers running fake remote job outreach campaigns?",
+      "options": [
+        { "value": "a", "text": "To help workers improve their resumes." },
+        { "value": "b", "text": "To steal Personally Identifiable Information (PII), commit identity theft, or execute equipment check fraud." },
+        { "value": "c", "text": "To provide free laptops to remote contractors." },
+        { "value": "d", "text": "To test local internet connection speeds." }
+      ],
+      "explanation": "Fake job scams harvest PII and run advance-fee equipment check schemes (Ravenelle et al., 2022)."
+    },
+    {
+      "id": 2,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A legitimate international company will routinely hire remote employees for high-paying roles based purely on a 10-minute text conversation on Telegram without any video or voice interviews.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Text-only \"interviews\" on anonymous messaging apps are major indicators of recruitment fraud."
+    },
+    {
+      "id": 3,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You are hired for a remote position. The company mails you a $3,000 check and instructs you to deposit it, keep $500 as a sign-on bonus, and wire $2,500 to an \"approved software vendor.\" What should you do?",
+      "options": [
+        { "value": "a", "text": "Wire the $2,500 immediately." },
+        { "value": "b", "text": "Recognize this as a fake check scam; do not wire any money and report the fraudulent offer." },
+        { "value": "c", "text": "Keep the full $3,000 and buy personal items." },
+        { "value": "d", "text": "Mail $2,500 in cash to the vendor." }
+      ],
+      "explanation": "Fake check scams rely on victims wiring real money before the bank identifies the deposited check as fraudulent."
+    },
+    {
+      "id": 4,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": ["a", "b"],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following details indicate that a remote job offer may be fraudulent? (Select TWO)",
+      "options": [
+        { "value": "a", "text": "The recruiter asks for your online banking login credentials to set up direct deposit." },
+        { "value": "b", "text": "The job offer comes from an email address using a lookalike domain (careers-google-jobs.com)." },
+        { "value": "c", "text": "The interview was conducted via a scheduled video conference with HR personnel." },
+        { "value": "d", "text": "The job contract clearly states working hours and payment terms." }
+      ],
+      "explanation": "Requesting bank passwords and using lookalike email domains indicate recruitment fraud."
+    },
+    {
+      "id": 5,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Legitimate employers require new hires to pay application fees or background check fees upfront via cryptocurrency.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Legitimate employers cover hiring and background check costs; demanding crypto payments indicates fraud."
+    },
+    {
+      "id": 6,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What type of sensitive data is targeted during pre-employment PII harvesting scams?",
+      "options": [
+        { "value": "a", "text": "Public social media posts" },
+        { "value": "b", "text": "Passport scans, government ID numbers, home addresses, and bank account numbers" },
+        { "value": "c", "text": "Favorite movie genres" },
+        { "value": "d", "text": "Public software documentation" }
+      ],
+      "explanation": "PII is harvested to commit identity theft, open fraudulent credit lines, or breach accounts."
+    },
+    {
+      "id": 7,
+      "category": "hard",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You receive an email from hr@microsoft-remote-careers.site inviting you to apply for an administrative position. How can you verify if this domain belongs to Microsoft?",
+      "options": [
+        { "value": "a", "text": "Trust it because it has \"Microsoft\" in the name." },
+        { "value": "b", "text": "Check Microsoft's official corporate website (microsoft.com/careers) or contact their verified talent team directly." },
+        { "value": "c", "text": "Reply to the email asking if they are real." },
+        { "value": "d", "text": "Click all links in the email footer." }
+      ],
+      "explanation": "Always cross-reference job outreach domains against official corporate career portals."
+    },
+    {
+      "id": 8,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "How does the fake equipment check scam operate?",
+      "options": [
+        { "value": "a", "text": "The employer sends real laptops that do not work." },
+        { "value": "b", "text": "The employer sends a counterfeit check, instructs the worker to wire money to a fake vendor, and the check bounces later." },
+        { "value": "c", "text": "The employer steals the worker's home furniture." },
+        { "value": "d", "text": "The employer installs free antivirus software on the worker's phone." }
+      ],
+      "explanation": "The counterfeit check bounces after the victim has already transferred real personal funds to the scammer."
+    },
+    {
+      "id": 9,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Scammers frequently copy authentic logos, employee photos, and executive names from LinkedIn to create convincing fake recruiter profiles.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Copied branding assets build false credibility and lower applicant vigilance."
+    },
+    {
+      "id": 10,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is the primary risk of uploading your full unredacted driver's license or passport scan to an unverified job portal?",
+      "options": [
+        { "value": "a", "text": "It consumes cloud storage space." },
+        { "value": "b", "text": "It enables threat actors to execute identity theft, register fraudulent accounts, or conduct loan fraud in your name." },
+        { "value": "c", "text": "It changes your computer screen brightness." },
+        { "value": "d", "text": "It automatically cancels your driver's license." }
+      ],
+      "explanation": "Unredacted government IDs are primary assets used in identity fraud and unauthorized account creation."
+    }
+  ]
+}

@@ -52,13 +52,12 @@
               <h2>Recommended for you</h2>
               <p>Based on your assessment results</p>
             </div>
-            <button
-              type="button"
+            <router-link
+              to="/assessment/question"
               class="dashboard-assessment-link"
-              title="The Awareness Assessment is not available yet"
             >
               Retake assessment
-            </button>
+            </router-link>
           </div>
 
           <div v-if="recommendations.length" class="dashboard-recommendations-grid">
@@ -129,4 +128,4 @@
   </main>
 </template>
 
-<script src="./Dashboard.js"></script>
+<script src="./dashboard.js"></script>

@@ -68,9 +68,12 @@
   }
 
   .module-awareness-guide ul,
-  .module-page ul,
+  .module-page ul {
+    @apply mt-2.5 pl-6 list-disc;
+  }
+
   .module-page ol {
-    @apply mt-2.5 pl-6;
+    @apply mt-2.5 pl-6 list-decimal;
   }
 
   .module-awareness-guide li,

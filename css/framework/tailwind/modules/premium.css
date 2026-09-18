@@ -1,0 +1,450 @@
+@layer components {
+
+  /* =========================
+     Shared container width (module header + all sections)
+     ========================= */
+
+  .module-header,
+  .module-awareness-guide,
+  .module-video-section,
+  .module-exercise-section,
+  .module-completion-section,
+  .module-page > section:not(.module-quiz-section),
+  .module-page > article {
+    @apply w-[min(1130px,calc(100%-40px))] ml-auto mr-auto;
+  }
+
+
+  /* =========================
+     Premium Badge Treatment
+     (visually consistent with crown/lock iconography from
+     premium-subscription.css and homepage .premium-card/.lock-icon)
+     ========================= */
+
+  .premium-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 border border-amber-300 rounded-full text-amber-700 text-[14px] font-semibold mb-4;
+  }
+
+  .premium-badge-icon {
+    @apply text-amber-600;
+  }
+
+
+  /* =========================
+     Module Header
+     ========================= */
+
+  .module-header {
+    @apply pt-6 pb-[18px];
+  }
+
+  .module-header nav {
+    @apply mb-6;
+  }
+
+  .module-header nav a {
+    @apply text-[17px] text-gray-600;
+  }
+
+  .module-header h1 {
+    @apply text-[44px] leading-[1.1] font-medium;
+  }
+
+  .module-header > p {
+    @apply mt-1.5 text-gray-500 text-[16px];
+  }
+
+
+  /* =========================
+     Course Metadata Block
+     (target stakeholders, target_role tag, access tier)
+     ========================= */
+
+  .course-metadata {
+    @apply mt-4 mb-6 p-4 bg-gray-50 border border-gray-200 rounded-lg;
+  }
+
+  .course-metadata dt {
+    @apply text-[14px] font-semibold text-gray-700 mb-1;
+  }
+
+  .course-metadata dd {
+    @apply text-[15px] text-gray-600 mb-3;
+  }
+
+  .course-metadata dd:last-child {
+    @apply mb-0;
+  }
+
+
+  /* =========================
+     Learning Objectives
+     ========================= */
+
+  .learning-objectives {
+    @apply mt-6 mb-6 p-5 bg-blue-50 border border-blue-200 rounded-lg;
+  }
+
+  .learning-objectives h3 {
+    @apply mb-3 text-[20px] font-medium text-blue-900;
+  }
+
+  .learning-objectives ol {
+    @apply pl-6 list-decimal;
+  }
+
+  .learning-objectives li {
+    @apply mb-2 text-[16px] text-blue-800 leading-relaxed;
+  }
+
+  .learning-objectives li:last-child {
+    @apply mb-0;
+  }
+
+
+  /* =========================
+     Awareness Guide
+     ========================= */
+
+  .module-awareness-guide article {
+    @apply mb-[30px];
+  }
+
+  .module-awareness-guide h2,
+  .module-video-section h2,
+  .module-exercise-section h2,
+  .module-completion-section h2 {
+    @apply mb-2.5 text-[28px];
+  }
+
+  .module-awareness-guide p,
+  .module-awareness-guide li,
+  .module-video-section p,
+  .module-exercise-section p,
+  .module-completion-section p {
+    @apply text-[17px] leading-[1.6];
+  }
+
+  .module-awareness-guide ul,
+  .module-page ul {
+    @apply mt-2.5 pl-6 list-disc;
+  }
+
+  .module-page ol {
+    @apply mt-2.5 pl-6 list-decimal;
+  }
+
+  .module-awareness-guide li,
+  .module-page li {
+    @apply mb-1.5;
+  }
+
+  .module-page h2,
+  .module-page h3 {
+    @apply mb-2.5 text-[28px];
+  }
+
+  .module-page h3 {
+    @apply text-[22px];
+  }
+
+  .module-page p,
+  .module-page li {
+    @apply text-[17px] leading-[1.6];
+  }
+
+  .module-page > section,
+  .module-page > article {
+    @apply mt-9 mb-9;
+  }
+
+  .module-page figure img {
+    @apply mt-4 w-full max-w-full h-auto border-[2px] border-black;
+  }
+
+  .module-page figcaption {
+    @apply mt-2 text-gray-500 text-[14px] leading-snug;
+  }
+
+  .module-concepts-list,
+  .module-examples-list {
+    @apply grid grid-cols-2 gap-3.5 mt-4 max-[760px]:grid-cols-1;
+  }
+
+  .module-concept,
+  .module-example {
+    @apply p-[18px] border border-black rounded-[14px];
+  }
+
+  .module-concept h4 {
+    @apply mb-2 text-[18px];
+  }
+
+  .module-concept p {
+    @apply text-gray-600;
+  }
+
+  .module-example h3 {
+    @apply mb-2.5 text-[19px];
+  }
+
+  .module-example p {
+    @apply mb-2;
+  }
+
+
+  /* =========================
+     Scenario Stages (Decision-Point Structure)
+     ========================= */
+
+  .scenario-section {
+    @apply mt-9 mb-9 p-6 border-2 border-amber-200 bg-amber-50 rounded-[14px];
+  }
+
+  .scenario-section h2 {
+    @apply mb-4 text-[26px] font-medium text-amber-900;
+  }
+
+  .scenario-stage {
+    @apply mb-6 p-5 bg-white border border-amber-300 rounded-lg;
+  }
+
+  .scenario-stage h3 {
+    @apply mb-3 text-[20px] font-semibold text-amber-800;
+  }
+
+  .scenario-stage p {
+    @apply mb-3 text-[16px] text-gray-700 leading-relaxed;
+  }
+
+  .scenario-decision {
+    @apply mt-4 p-4 bg-amber-100 border border-amber-400 rounded-lg;
+  }
+
+  .scenario-decision h4 {
+    @apply mb-2 text-[17px] font-semibold text-amber-900;
+  }
+
+  .scenario-decision ul {
+    @apply pl-5 list-disc;
+  }
+
+  .scenario-decision li {
+    @apply mb-1.5 text-[15px] text-amber-800;
+  }
+
+
+  /* =========================
+     Red-Flag Checklist
+     (checkbox-style items)
+     ========================= */
+
+  .red-flag-checklist {
+    @apply mt-6 mb-6 p-5 bg-red-50 border border-red-200 rounded-lg;
+  }
+
+  .red-flag-checklist h3 {
+    @apply mb-4 text-[20px] font-medium text-red-900;
+  }
+
+  .red-flag-checklist ul {
+    @apply pl-0 list-none;
+  }
+
+  .red-flag-checklist li {
+    @apply mb-3 pl-8 relative text-[16px] text-red-800 leading-relaxed;
+  }
+
+  .red-flag-checklist li::before {
+    @apply absolute left-0 top-0.5 w-5 h-5 border-2 border-red-400 rounded bg-white content-[''];
+  }
+
+
+  /* =========================
+     Mitigation Checklist
+     (ordered list)
+     ========================= */
+
+  .mitigation-checklist {
+    @apply mt-6 mb-6 p-5 bg-green-50 border border-green-200 rounded-lg;
+  }
+
+  .mitigation-checklist h3 {
+    @apply mb-4 text-[20px] font-medium text-green-900;
+  }
+
+  .mitigation-checklist ol {
+    @apply pl-6 list-decimal;
+  }
+
+  .mitigation-checklist li {
+    @apply mb-2 text-[16px] text-green-800 leading-relaxed;
+  }
+
+  .mitigation-checklist li:last-child {
+    @apply mb-0;
+  }
+
+
+  /* =========================
+     Curated Resources
+     ========================= */
+
+  .curated-resources {
+    @apply mt-6 mb-6 p-5 bg-gray-50 border border-gray-200 rounded-lg;
+  }
+
+  .curated-resources h3 {
+    @apply mb-4 text-[20px] font-medium text-gray-900;
+  }
+
+  .curated-resources ul {
+    @apply pl-6 list-disc;
+  }
+
+  .curated-resources li {
+    @apply mb-2 text-[16px] text-gray-700;
+  }
+
+  .curated-resources li:last-child {
+    @apply mb-0;
+  }
+
+  .curated-resources a {
+    @apply text-blue-600 underline hover:text-blue-800;
+  }
+
+
+  /* =========================
+     Video Section
+     ========================= */
+
+  .module-video-section {
+    @apply mt-9 mb-9;
+  }
+
+  .video-player {
+    @apply min-h-[280px] mt-4 border-[2px] border-black flex items-center justify-center text-center;
+  }
+
+  .video-player p {
+    @apply text-gray-500;
+  }
+
+
+  /* =========================
+     Quiz CTA Section
+     ========================= */
+
+  .module-quiz-section {
+    @apply w-[min(1130px,calc(100%-40px))] my-10 mx-auto p-7 border border-black rounded-2xl text-center;
+  }
+
+  .module-quiz-section h2 {
+    @apply mb-2.5 text-[28px];
+  }
+
+  .module-quiz-section p {
+    @apply max-w-[620px] mt-0 mx-auto mb-5 text-gray-600 text-[16px] leading-normal;
+  }
+
+  .take-quiz-button {
+    @apply inline-flex items-center justify-center min-w-40 min-h-11 py-0 px-6 border border-black rounded-lg bg-gray-300 font-semibold transition-all duration-150 ease-in-out;
+  }
+
+  .take-quiz-button:hover {
+    @apply bg-gray-400 -translate-y-[1px];
+  }
+
+
+  /* =========================
+     Exercise Section
+     ========================= */
+
+  .module-exercise-section {
+    @apply mt-[30px] mb-10 p-6 border border-black rounded-[14px];
+  }
+
+  .module-exercise-button {
+    @apply inline-flex items-center justify-center mt-4 min-h-[42px] py-0 px-5 border border-black rounded-lg bg-gray-300 font-semibold;
+  }
+
+  .module-exercise-button:hover {
+    @apply bg-gray-400;
+  }
+
+
+  /* =========================
+     Completion Section
+     ========================= */
+
+  .module-completion-section {
+    @apply mt-10 mb-10 p-7 border border-black rounded-2xl text-center;
+  }
+
+  .module-completion-section p {
+    @apply max-w-[760px] mt-2.5 mx-auto mb-0;
+  }
+
+
+  /* =========================
+     Responsive Rules
+     ========================= */
+
+  @media (max-width: 768px) {
+    .module-header h1 {
+      @apply text-[32px];
+    }
+
+    .module-awareness-guide h2,
+    .module-video-section h2,
+    .module-exercise-section h2,
+    .module-completion-section h2,
+    .module-page h2 {
+      @apply text-[24px];
+    }
+
+    .module-page h3 {
+      @apply text-[19px];
+    }
+
+    .module-header,
+    .module-awareness-guide,
+    .module-video-section,
+    .module-exercise-section,
+    .module-completion-section,
+    .module-page > section:not(.module-quiz-section),
+    .module-page > article {
+      @apply w-[calc(100%-32px)];
+    }
+
+    .module-quiz-section {
+      @apply w-[calc(100%-32px)] p-5;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .module-header h1 {
+      @apply text-[28px];
+    }
+
+    .module-awareness-guide p,
+    .module-awareness-guide li,
+    .module-video-section p,
+    .module-exercise-section p,
+    .module-completion-section p,
+    .module-page p,
+    .module-page li {
+      @apply text-[15px];
+    }
+
+    .scenario-section {
+      @apply p-4;
+    }
+
+    .scenario-stage {
+      @apply p-4;
+    }
+  }
+
+}

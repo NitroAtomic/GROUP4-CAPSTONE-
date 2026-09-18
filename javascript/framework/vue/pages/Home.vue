@@ -82,7 +82,13 @@
 
         <div class="premium-grid">
 
-          <article class="premium-card">
+          <router-link v-if="isPremium" to="/dashboard" class="premium-card">
+            <div>
+              <h3>Role-based<br>modules</h3>
+              <p>Freelancer and client scam scenarios</p>
+            </div>
+          </router-link>
+          <article v-else class="premium-card">
             <div>
               <h3>Role-based<br>modules</h3>
               <p>Freelancer and client scam scenarios</p>
@@ -90,7 +96,13 @@
             <img class="lock-icon" src="/images/icons/padlock.png" alt="">
           </article>
 
-          <article class="premium-card">
+          <router-link v-if="isPremium" to="/dashboard" class="premium-card">
+            <div>
+              <h3>Personalized<br>dashboard</h3>
+              <p>Tracking progress, quiz history, weak areas</p>
+            </div>
+          </router-link>
+          <article v-else class="premium-card">
             <div>
               <h3>Personalized<br>dashboard</h3>
               <p>Tracking progress, quiz history, weak areas</p>
@@ -108,7 +120,7 @@
 
         </div>
 
-        <div class="premium-action">
+        <div v-if="!isPremium" class="premium-action">
           <router-link to="/premium-subscription" class="btn btn-upgrade">
             Upgrade to premium
           </router-link>

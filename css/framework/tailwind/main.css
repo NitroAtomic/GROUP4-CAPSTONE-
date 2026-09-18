@@ -30,6 +30,7 @@
 @import './quiz/quiz.css';
 @import './quiz/quiz-results.css';
 @import './modules/modules.css';
+@import './modules/premium.css';
 @import './chatbot/chatbot-tailwind.css';
 
 @tailwind base;

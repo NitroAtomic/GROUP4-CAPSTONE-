@@ -1,0 +1,173 @@
+{
+  "moduleId": "course-4",
+  "moduleName": "Remote BEC, Invoice Manipulation & Payment Fraud",
+  "totalQuestions": 10,
+  "standardCount": 5,
+  "scenarioBasedCount": 5,
+  "questions": [
+    {
+      "id": 1,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is the primary objective of a Business Email Compromise (BEC) attack targeting remote finance workers?",
+      "options": [
+        { "value": "a", "text": "To update computer graphic drivers." },
+        { "value": "b", "text": "To manipulate remote workers into transferring corporate funds or changing payment details to attacker-controlled accounts." },
+        { "value": "c", "text": "To improve internet routing speeds." },
+        { "value": "d", "text": "To send free software licenses to employees." }
+      ],
+      "explanation": "BEC targets financial communications to divert payments to fraudulent accounts (Lazarus, 2024)."
+    },
+    {
+      "id": 2,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "An email requesting an urgent update to a vendor's bank account details should always be verified by calling a phone number from the original master contract.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Out-of-band verification using known contract phone numbers prevents invoice manipulation fraud."
+    },
+    {
+      "id": 3,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A remote employee emails HR from john.smith-work@gmail.com asking to change their direct deposit bank account before Friday's payroll. What should HR do?",
+      "options": [
+        { "value": "a", "text": "Update the direct deposit details immediately." },
+        { "value": "b", "text": "Require the employee to submit the request through the secure internal HR portal or verify the request via a direct phone/video call." },
+        { "value": "c", "text": "Email the employee's password to gmail.com." },
+        { "value": "d", "text": "Delete the employee's payroll history." }
+      ],
+      "explanation": "Direct deposit changes sent via personal email accounts are primary targets for payroll interception."
+    },
+    {
+      "id": 4,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": ["a", "b"],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following indicate that an invoice update request may be a BEC attempt? (Select TWO)",
+      "options": [
+        { "value": "a", "text": "The invoice email comes from a domain with a slight typo (supplier-billing.co instead of supplier-billing.com)." },
+        { "value": "b", "text": "The request insists that payment MUST be wired within 2 hours to prevent account closure." },
+        { "value": "c", "text": "The vendor's banking details match the historical records on file." },
+        { "value": "d", "text": "The request was submitted through your company's secure vendor portal." }
+      ],
+      "explanation": "Typosquatted domains and extreme artificial time pressure are indicators of BEC fraud."
+    },
+    {
+      "id": 5,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Calling the phone number listed on a suspicious new invoice is a safe way to verify if the invoice's bank account changes are real.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "If the invoice is fake, the phone number on it leads directly to the scammer. Use trusted numbers from master contracts."
+    },
+    {
+      "id": 6,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What internal financial control requires two separate individuals to review and approve wire transfers above a designated threshold?",
+      "options": [
+        { "value": "a", "text": "Single-user sign-off" },
+        { "value": "b", "text": "Dual-Custody / Dual-Control Authorization" },
+        { "value": "c", "text": "Automatic password expiration" },
+        { "value": "d", "text": "Anonymous payment processing" }
+      ],
+      "explanation": "Dual-custody ensures that a single manipulated employee cannot execute unauthorized transfers alone."
+    },
+    {
+      "id": 7,
+      "category": "hard",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A long-time vendor emails an invoice for $22,000. The invoice matches the expected amount, but a note says: \"Our bank is undergoing an audit. Wire payment to our new overseas account.\" What is the safest response?",
+      "options": [
+        { "value": "a", "text": "Wire the $22,000 to the overseas account to avoid late fees." },
+        { "value": "b", "text": "Hold the payment and contact the vendor's CFO/accounting lead using your established, verified phone directory." },
+        { "value": "c", "text": "Pay the invoice in cash." },
+        { "value": "d", "text": "Forward the email to 5 random contacts." }
+      ],
+      "explanation": "Audit excuses for sudden overseas account changes are common BEC pretexts requiring verification."
+    },
+    {
+      "id": 8,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "In an email header, what field shows the actual mail server that sent the message, helping reveal domain spoofing?",
+      "options": [
+        { "value": "a", "text": "Subject:" },
+        { "value": "b", "text": "Return-Path: / Originating IP Header" },
+        { "value": "c", "text": "Font-Family:" },
+        { "value": "d", "text": "Attachment-Size:" }
+      ],
+      "explanation": "Email headers reveal true server origins, exposing sender address spoofing."
+    },
+    {
+      "id": 9,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Business Email Compromise (BEC) attacks only use fake domains; they never involve real, compromised vendor email accounts.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Attackers frequently compromise real vendor accounts (Vendor Email Compromise) to send fraudulent invoices from actual mailboxes."
+    },
+    {
+      "id": 10,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Why do BEC scammers target remote finance workers right before weekends or major holidays?",
+      "options": [
+        { "value": "a", "text": "Internet speeds are faster on weekends." },
+        { "value": "b", "text": "Staff are rushing to finish tasks and are more likely to bypass verification steps under time pressure." },
+        { "value": "c", "text": "Banks are closed on weekends so money transfers are free." },
+        { "value": "d", "text": "Computers automatically turn off on holidays." }
+      ],
+      "explanation": "Rushing before deadlines reduces vigilance, increasing the likelihood that security protocols will be skipped."
+    }
+  ]
+}

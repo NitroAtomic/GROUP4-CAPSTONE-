@@ -18,7 +18,8 @@ most likely to ask.
 |---|---|
 | FR-09 | Account creation, login, logout |
 | FR-10 | Subscription and plan management (plan state only, no payment processing) |
-| FR-20 | Two-step email verification for Premium accounts |
+| FR-12 | Personalized Dashboard — `GET /api/dashboard` and `GET /api/dashboard/recommendations`, both Premium-gated server-side (added 2026-09-18; see §7) |
+| — | Two-step email verification (OTP) for Premium accounts — **implementation addition, beyond paper scope**. The Capstone paper's requirements run FR-01–FR-19 only; there is no FR-20, and neither the paper nor the UI/UX mockups (Login/Account Creation) describe an OTP step. It complements FR-09 rather than replacing it, but is not itself a paper requirement, so it is marked "—" like the other non-FR rows below (resolved 2026-09-18, previously mislabeled "FR-20") |
 | — | Password reset by emailed code |
 | — | Role and access checking (user vs admin, Free vs Premium) |
 
@@ -58,7 +59,7 @@ justify them individually.
 | `awarenessassessment.weak_areas`, `.by_topic`, `.total` | FR-15 recommended modules, and the dashboard's weak-areas count |
 | `module.slug` | Linking `modules/phishing.html` to its row without matching on a title an admin can rename |
 | `quizquestion` table | Storing quiz questions in the database so the admin panel can edit them |
-| `otpcode` table | Premium two-step login (FR-20) and password reset |
+| `otpcode` table | Premium two-step login (implementation addition, beyond paper scope — §1) and password reset |
 | `progress` unique key | Prevents duplicate rows when a module is completed twice |
 
 ### On the `administrator` table
@@ -241,6 +242,16 @@ access, the original passwords cannot be read.
 **Premium content is gated on the server, not just hidden in the interface.**
 A Free account calling `/api/modules/client-impersonation` directly receives
 `403 Forbidden`. Hiding a button only stops people who do not look.
+The same pattern gates `GET /api/dashboard` and `GET /api/dashboard/recommendations`
+(added 2026-09-18) — both call the same `hasPremiumAccess(user)` check
+`modules.js` uses, and 403 a Free account's own token before querying any
+data. Before this fix, `requireAuth` alone (login-only, no plan check)
+protected both routes, so a logged-in Free-tier user could call the API
+directly and receive full Premium dashboard data — the frontend's router
+guard (`meta: { requiresPremium: true }`) stopped normal navigation but not
+a direct API call. FR-12 explicitly scopes the dashboard to Premium users,
+so this closes a real gap between that requirement and what the server
+enforced.
 
 **Admin routes check the role server-side** for the same reason. Reaching the
 admin page in the browser is not the same as being allowed to change anything.

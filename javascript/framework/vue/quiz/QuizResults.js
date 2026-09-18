@@ -3,13 +3,21 @@ import module2 from '../data/module-2.json'
 import module3 from '../data/module-3.json'
 import module4 from '../data/module-4.json'
 import module5 from '../data/module-5.json'
+import course1 from '../data/course-1.json'
+import course2 from '../data/course-2.json'
+import course3 from '../data/course-3.json'
+import course4 from '../data/course-4.json'
 
 const MODULE_DATA = {
   'module-1': module1,
   'module-2': module2,
   'module-3': module3,
   'module-4': module4,
-  'module-5': module5
+  'module-5': module5,
+  'course-1': course1,
+  'course-2': course2,
+  'course-3': course3,
+  'course-4': course4
 }
 
 const MODULE_PATHS = {
@@ -17,7 +25,11 @@ const MODULE_PATHS = {
   'module-2': '/modules/spear-phishing',
   'module-3': '/modules/smishing',
   'module-4': '/modules/vishing',
-  'module-5': '/modules/pretexting'
+  'module-5': '/modules/pretexting',
+  'course-1': '/modules/premium/client-impersonation',
+  'course-2': '/modules/premium/client-data',
+  'course-3': '/modules/premium/fake-recruiters',
+  'course-4': '/modules/premium/invoice-scams'
 }
 
 const NEXT_MODULE = {

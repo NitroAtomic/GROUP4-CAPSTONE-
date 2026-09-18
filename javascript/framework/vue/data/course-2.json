@@ -1,0 +1,173 @@
+{
+  "moduleId": "course-2",
+  "moduleName": "Executive Support & VA Impersonation Defense",
+  "totalQuestions": 10,
+  "standardCount": 5,
+  "scenarioBasedCount": 5,
+  "questions": [
+    {
+      "id": 1,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Why do cybercriminals frequently target Virtual Assistants (VAs) in executive impersonation attacks?",
+      "options": [
+        { "value": "a", "text": "VAs are responsible for writing all company software code." },
+        { "value": "b", "text": "VAs possess administrative access, schedule control, and are socialized to respond rapidly to executive commands." },
+        { "value": "c", "text": "VAs do not use internet connections." },
+        { "value": "d", "text": "VAs are legally responsible for company tax payments." }
+      ],
+      "explanation": "VAs hold central administrative access and high-level trust, making them high-value targets (Lazarus, 2024)."
+    },
+    {
+      "id": 2,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "An email from a CEO requesting that a Virtual Assistant purchase $1,000 in Apple gift cards for a \"client emergency\" is almost certainly a social engineering scam.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Requesting gift card purchases is a primary financial scam tactic; legitimate businesses do not use gift cards for emergency corporate transactions."
+    },
+    {
+      "id": 3,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You receive a message on Telegram from your remote boss: \"I am on a plane with no voice signal. Send me the MFA code that was just sent to your phone so I can access my email.\" What should you do?",
+      "options": [
+        { "value": "a", "text": "Send the MFA code immediately via Telegram." },
+        { "value": "b", "text": "Do not send the MFA code. MFA passcodes must never be shared, and the request is a credential interception attempt." },
+        { "value": "c", "text": "Post the MFA code on LinkedIn." },
+        { "value": "d", "text": "Email the code to the entire company." }
+      ],
+      "explanation": "MFA tokens grant account access and must never be shared, even if the requester claims to be an executive."
+    },
+    {
+      "id": 4,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": ["a", "c"],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following elements are red flags indicative of executive impersonation? (Select TWO)",
+      "options": [
+        { "value": "a", "text": "The sender instructs you NOT to call them to verify the request because they are \"in an urgent meeting.\"" },
+        { "value": "b", "text": "The request arrives via an official internal ticketing system with manager approval." },
+        { "value": "c", "text": "The message comes from a personal webmail address like ceo.companyname@gmail.com." },
+        { "value": "d", "text": "The request asks you to follow standard, documented procurement policies." }
+      ],
+      "explanation": "Prohibiting voice verification and using external webmail accounts are classic executive spoofing indicators."
+    },
+    {
+      "id": 5,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Threat actors use psychological authority pressure to make Virtual Assistants feel that questioning an executive's request will lead to immediate firing.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Fear of disciplinary action is manipulated to force VAs to bypass security checks."
+    },
+    {
+      "id": 6,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is \"Out-of-Band (OOB) Verification\" in the context of Virtual Assistant workflows?",
+      "options": [
+        { "value": "a", "text": "Verifying a request using a different, independent communication method than the one used to send the request." },
+        { "value": "b", "text": "Replying to an email using ALL CAPS." },
+        { "value": "c", "text": "Sending a text message to the same scammer." },
+        { "value": "d", "text": "Deleting your email inbox." }
+      ],
+      "explanation": "OOB verification confirms identity via a separate, trusted channel (e.g., calling a known phone number)."
+    },
+    {
+      "id": 7,
+      "category": "hard",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You manage the calendar for a remote Vice President. An external consultant emails asking you to add a Zoom link to the VP's calendar for a \"confidential acquisition meeting.\" The email attachment is Meeting_Agenda.docm. What should you do?",
+      "options": [
+        { "value": "a", "text": "Open the attachment and click \"Enable Macros\" to see the agenda." },
+        { "value": "b", "text": "Do not open the attachment; verify the meeting request directly with the VP or your internal team lead before updating the calendar." },
+        { "value": "c", "text": "Share the VP's personal home address with the consultant." },
+        { "value": "d", "text": "Forward the file to your personal family members." }
+      ],
+      "explanation": "Unsolicited macro-enabled files (.docm) are common malware delivery vectors."
+    },
+    {
+      "id": 8,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What term describes an attacker flooding a Virtual Assistant's phone with dozens of login push notifications late at night in hopes the VA will tap \"Approve\"?",
+      "options": [
+        { "value": "a", "text": "Credential stuffing" },
+        { "value": "b", "text": "Push Bombing / MFA Fatigue Attack" },
+        { "value": "c", "text": "Port Scanning" },
+        { "value": "d", "text": "SQL Injection" }
+      ],
+      "explanation": "MFA fatigue exploits distraction and frustration to coerce push approvals."
+    },
+    {
+      "id": 9,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "If an executive texts you from a new, unverified phone number claiming they lost their device, you should immediately grant them full access to all company cloud drives without secondary verification.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Identity must be independently verified through official channels before granting access from new devices."
+    },
+    {
+      "id": 10,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Why do pretexters impersonating executives create artificial time emergencies (\"Need this done in 15 minutes before board meeting\")?",
+      "options": [
+        { "value": "a", "text": "To help the Virtual Assistant finish work early." },
+        { "value": "b", "text": "To induce panic and reduce the VA's time to perform critical verification checks." },
+        { "value": "c", "text": "To reduce internet server usage." },
+        { "value": "d", "text": "Because executives cannot wait more than 15 minutes for anything." }
+      ],
+      "explanation": "Artificial time pressure suppresses analytical thinking and security protocol adherence."
+    }
+  ]
+}

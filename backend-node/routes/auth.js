@@ -64,10 +64,15 @@ router.post('/register', async (req, res) => {
 });
 
 // FR-09: Login
-// FR-20: Premium accounts require a second factor (emailed OTP) before a
+// —: Premium accounts require a second factor (emailed OTP) before a
 // real session is issued. Free accounts log in the same single step as
 // before -- this asymmetry is intentional, part of what differentiates
 // the Premium tier's account security, not an oversight.
+// (Resolved 2026-09-18: this was previously labeled "FR-20." The Capstone
+// paper's requirements run FR-01–FR-19 only — there is no FR-20. Both
+// BACKEND_DEFENSE_GUIDE.md and FRONTEND_IMPLEMENTATION_PROTOTYPE_DEFENSE_GUIDE.md
+// already mark this "—", an implementation addition beyond paper scope;
+// this comment just hadn't been updated to match until now.)
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {

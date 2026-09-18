@@ -24,6 +24,10 @@ import EssentialSafePracticesRemoteEnv from './modules/EssentialSafePracticesRem
 import QuizQuestion from './quiz/QuizQuestion.vue'
 import QuizResults from './quiz/QuizResults.vue'
 
+// Import assessment components
+import AwarenessAssessment from './pages/AwarenessAssessment.vue'
+import AssessmentResults from './pages/AssessmentResults.vue'
+
 const routes = [
   {
     path: '/',
@@ -71,7 +75,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    meta: { requiresAuth: true }
+    // FR-12: Dashboard is Premium-only, not just "logged in" — requiresPremium
+    // catches a logged-in Free user the same way requiresAuth catches a
+    // logged-out visitor. The 4 upcoming /modules/premium/... routes (Phase B)
+    // will set the same two meta flags and reuse this same guard below.
+    meta: { requiresAuth: true, requiresPremium: true }
   },
   // Module routes
   {
@@ -104,6 +112,31 @@ const routes = [
     name: 'EssentialSafePracticesRemoteEnv',
     component: EssentialSafePracticesRemoteEnv
   },
+  // Premium module routes (FR-16 - Role-Based Modules)
+  {
+    path: '/modules/premium/client-impersonation',
+    name: 'ClientImpersonation',
+    component: () => import('./modules/premium/ClientImpersonation.vue'),
+    meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
+    path: '/modules/premium/client-data',
+    name: 'ClientData',
+    component: () => import('./modules/premium/ClientData.vue'),
+    meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
+    path: '/modules/premium/fake-recruiters',
+    name: 'FakeRecruiters',
+    component: () => import('./modules/premium/FakeRecruiters.vue'),
+    meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
+    path: '/modules/premium/invoice-scams',
+    name: 'InvoiceScams',
+    component: () => import('./modules/premium/InvoiceScams.vue'),
+    meta: { requiresAuth: true, requiresPremium: true }
+  },
   // Quiz routes
   {
     path: '/quiz/:moduleId/question',
@@ -114,6 +147,19 @@ const routes = [
     path: '/quiz/:moduleId/results',
     name: 'QuizResults',
     component: QuizResults
+  },
+  // Assessment routes (FR-11 - Awareness Assessment)
+  {
+    path: '/assessment/question',
+    name: 'AwarenessAssessment',
+    component: AwarenessAssessment,
+    meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
+    path: '/assessment/results',
+    name: 'AssessmentResults',
+    component: AssessmentResults,
+    meta: { requiresAuth: true, requiresPremium: true }
   }
 ]
 
@@ -123,10 +169,19 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  if (!to.meta.requiresAuth) return true
   const authStore = useAuthStore()
-  if (authStore.isAuthenticated) return true
-  return { name: 'Login', query: { redirect: to.fullPath } }
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    return { name: 'Login', query: { redirect: to.fullPath } }
+  }
+
+  // Logged in, but not Premium — send to the sign-up funnel, not Login,
+  // since the person already has an account.
+  if (to.meta.requiresPremium && !authStore.isPremium) {
+    return { name: 'PremiumSubscription' }
+  }
+
+  return true
 })
 
 export default router

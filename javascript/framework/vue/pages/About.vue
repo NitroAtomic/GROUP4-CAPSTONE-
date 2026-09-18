@@ -59,31 +59,41 @@
         <div class="about-team-grid">
 
           <article class="about-team-member">
-            <div class="about-team-member-image" aria-hidden="true">●</div>
+            <div class="about-team-member-image" aria-hidden="true">
+              <img src="/images/icons/team-member-girl-1.png" alt="">
+            </div>
             <h3>Shane Mishael Abrasaldo</h3>
             <p>Project Manager, Frontend Developer, UI/UX, AI Lead</p>
           </article>
 
           <article class="about-team-member">
-            <div class="about-team-member-image" aria-hidden="true">●</div>
+            <div class="about-team-member-image" aria-hidden="true">
+              <img src="/images/icons/team-member-boy-1.png" alt="">
+            </div>
             <h3>Juan Paolo Dente</h3>
             <p>Backend Developer</p>
           </article>
 
           <article class="about-team-member">
-            <div class="about-team-member-image" aria-hidden="true">●</div>
+            <div class="about-team-member-image" aria-hidden="true">
+              <img src="/images/icons/team-member-boy-2.png" alt="">
+            </div>
             <h3>Joshua Ricohermozo</h3>
             <p>Frontend Developer</p>
           </article>
 
           <article class="about-team-member">
-            <div class="about-team-member-image" aria-hidden="true">●</div>
+            <div class="about-team-member-image" aria-hidden="true">
+              <img src="/images/icons/team-member-boy-3.png" alt="">
+            </div>
             <h3>Jyan Estanislao</h3>
             <p>Database Developer, Content Manager, QA Tester</p>
           </article>
 
           <article class="about-team-member">
-            <div class="about-team-member-image" aria-hidden="true">●</div>
+            <div class="about-team-member-image" aria-hidden="true">
+              <img src="/images/icons/team-member-girl-2.png" alt="">
+            </div>
             <h3>Kim Charlotte Anicete</h3>
             <p>Content Manager, QA Tester</p>
           </article>

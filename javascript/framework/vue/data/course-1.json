@@ -1,0 +1,173 @@
+{
+  "moduleId": "course-1",
+  "moduleName": "Freelancer Exploitation & Client Verification",
+  "totalQuestions": 10,
+  "standardCount": 5,
+  "scenarioBasedCount": 5,
+  "questions": [
+    {
+      "id": 1,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Why are independent freelancers particularly attractive targets for social engineering scams?",
+      "options": [
+        { "value": "a", "text": "They possess administrative access to enterprise military networks." },
+        { "value": "b", "text": "They operate without corporate IT security perimeters and face financial pressure to secure new client contracts." },
+        { "value": "c", "text": "Freelancers are legally required to accept all incoming client files." },
+        { "value": "d", "text": "Freelancing platforms block all security software." }
+      ],
+      "explanation": "Income unpredictability and isolation from corporate IT oversight increase vulnerability to fake client lures (Ticona, 2022)."
+    },
+    {
+      "id": 2,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A client demanding that you log into a third-party website using your personal Google or Microsoft credentials to view a project brief is a major indicator of portfolio credential harvesting.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Legitimate project briefs do not require logging in with personal OAuth credentials on unverified third-party domains."
+    },
+    {
+      "id": 3,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A prospective client offers you a $5,000 project but insists on moving communications off Upwork to Telegram before a contract is started. They offer to pay via an unverified check. What should you do?",
+      "options": [
+        { "value": "a", "text": "Move to Telegram immediately to secure the contract." },
+        { "value": "b", "text": "Decline to move off-platform and insist on using platform-based contracts and escrow funding." },
+        { "value": "c", "text": "Send the client your banking account password so they can deposit the funds directly." },
+        { "value": "d", "text": "Accept the check and send completed work before the check clears." }
+      ],
+      "explanation": "Luring freelancers off-platform removes contract enforcement and escrow protections, exposing them to payment fraud."
+    },
+    {
+      "id": 4,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": ["b", "c"],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following indicate that an incoming freelance inquiry is a social engineering scam? (Select TWO)",
+      "options": [
+        { "value": "a", "text": "The client provides a clear project scope and agrees to use platform escrow." },
+        { "value": "b", "text": "The client sends an advance payment check exceeding the project price and requests an immediate wire refund of the difference." },
+        { "value": "c", "text": "The client demands your staging server login credentials before signing a contract or funding escrow." },
+        { "value": "d", "text": "The client verified their payment method on a recognized freelancing platform." }
+      ],
+      "explanation": "Overpayment refund demands and premature requests for administrative server credentials are key fraud indicators."
+    },
+    {
+      "id": 5,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Escrow services on freelance platforms protect freelancers by holding client funds in a neutral account until agreed project milestones are met.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Escrow ensures funds are verified and set aside before work begins, reducing non-payment risks."
+    },
+    {
+      "id": 6,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is the primary objective of a \"Portfolio Credential Harvesting\" attack targeting freelancers?",
+      "options": [
+        { "value": "a", "text": "To optimize the freelancer's search engine ranking." },
+        { "value": "b", "text": "To steal the freelancer's primary account passwords, cloud storage logins, or platform access tokens." },
+        { "value": "c", "text": "To automatically update the freelancer's operating system." },
+        { "value": "d", "text": "To pay the freelancer in advance." }
+      ],
+      "explanation": "Fake login portals capture credentials to compromise professional accounts and cloud repositories."
+    },
+    {
+      "id": 7,
+      "category": "hard",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You receive a $2,000 advance payment check from a new client. Two days later, the client emails: \"Our accountant made a mistake and sent $3,500. Please Zelle us back the $1,500 difference right away.\" What is the safest course of action?",
+      "options": [
+        { "value": "a", "text": "Send the $1,500 via Zelle immediately to maintain good client relations." },
+        { "value": "b", "text": "Do not send any funds; alert your bank that the check is likely fraudulent and wait for it to fully clear or bounce." },
+        { "value": "c", "text": "Send $750 as a compromise." },
+        { "value": "d", "text": "Cash the check at a grocery store." }
+      ],
+      "explanation": "Fake check overpayment scams rely on the victim wiring real money before the bank discovers the deposited check is counterfeit."
+    },
+    {
+      "id": 8,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which domain name represents a typosquatted domain designed to trick a freelancer using Figma for client design reviews?",
+      "options": [
+        { "value": "a", "text": "figma.com/file/12345/project" },
+        { "value": "b", "text": "figma-verify-review.net/login" },
+        { "value": "c", "text": "help.figma.com" },
+        { "value": "d", "text": "community.figma.com" }
+      ],
+      "explanation": "Adding words like -verify-review.net creates a lookalike domain to capture OAuth credentials."
+    },
+    {
+      "id": 9,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Legitimate corporate clients will routinely ask freelancers to purchase gift cards as part of their initial onboarding duties.",
+      "options": [
+        { "value": "a", "text": "True" },
+        { "value": "b", "text": "False" }
+      ],
+      "explanation": "Requesting gift card purchases during onboarding is a classic financial scam."
+    },
+    {
+      "id": 10,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What should a freelancer do before opening a zip file sent by a new, unverified client?",
+      "options": [
+        { "value": "a", "text": "Open the zip file immediately on a production server." },
+        { "value": "b", "text": "Inspect the file extension, run an antivirus scan, and verify the client's identity through independent channels." },
+        { "value": "c", "text": "Forward the file to all contacts in their address book." },
+        { "value": "d", "text": "Rename the file extension to .exe." }
+      ],
+      "explanation": "Unverified attachments can contain malicious scripts or executable payloads."
+    }
+  ]
+}

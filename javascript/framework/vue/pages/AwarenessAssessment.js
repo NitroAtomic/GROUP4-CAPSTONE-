@@ -1,30 +1,8 @@
-// Static import of all 5 built modules' question data.
-// Vite bundles .json imports automatically — no extra config needed.
-import module1 from '../data/module-1.json'
-import module2 from '../data/module-2.json'
-import module3 from '../data/module-3.json'
-import module4 from '../data/module-4.json'
-import module5 from '../data/module-5.json'
-import course1 from '../data/course-1.json'
-import course2 from '../data/course-2.json'
-import course3 from '../data/course-3.json'
-import course4 from '../data/course-4.json'
-
-const MODULE_DATA = {
-  'module-1': module1,
-  'module-2': module2,
-  'module-3': module3,
-  'module-4': module4,
-  'module-5': module5,
-  'course-1': course1,
-  'course-2': course2,
-  'course-3': course3,
-  'course-4': course4
-}
+import assessmentData from '../data/assessment-data.js'
 
 // Fisher-Yates shuffle — randomizes ORDER only.
-// We never drop or add questions here; all 10 always appear,
-// just in a different sequence each attempt (per Capstone paper requirement).
+// We never drop or add questions here; all 15 always appear,
+// just in a different sequence each attempt.
 function shuffleOrder(array) {
   const shuffled = [...array]
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -35,28 +13,19 @@ function shuffleOrder(array) {
 }
 
 export default {
-  name: 'QuizQuestion',
+  name: 'AwarenessAssessment',
 
   data() {
     return {
-      moduleData: null,        // the loaded module-N.json (name, totals, etc.)
-      shuffledQuestions: [],   // the 10 questions, order randomized for this attempt
-      currentIndex: 0,         // which question (0-9) is currently shown
-      answers: {},             // { [questionId]: 'b' }  or  { [questionId]: ['a','b'] }
-      checkedIds: {}           // { [questionId]: true } — has this question been "checked" (feedback flashed) yet?
+      assessmentData: null,
+      shuffledQuestions: [],
+      currentIndex: 0,
+      answers: {},
+      checkedIds: {}
     }
   },
 
   computed: {
-    // Reads the moduleId straight from the URL (e.g. /quiz/module-1)
-    moduleId() {
-      return this.$route.params.moduleId
-    },
-
-    moduleTitle() {
-      return this.moduleData ? this.moduleData.moduleName : ''
-    },
-
     totalQuestions() {
       return this.shuffledQuestions.length
     },
@@ -74,7 +43,6 @@ export default {
       return ((this.currentIndex + 1) / this.totalQuestions) * 100
     },
 
-    // Has the CURRENT question been answered? Controls whether "Check Answer" is enabled.
     isCurrentAnswered() {
       if (!this.currentQuestion) return false
       const saved = this.answers[this.currentQuestion.id]
@@ -84,16 +52,10 @@ export default {
       return !!saved
     },
 
-    // Has the CURRENT question already been "checked" (feedback flashed) this attempt?
-    // Persists across Back/Next so returning to an earlier question re-shows its feedback
-    // instead of asking the user to check it again.
     isCurrentChecked() {
       return this.currentQuestion ? !!this.checkedIds[this.currentQuestion.id] : false
     },
 
-    // Per-question feedback shown immediately after "Check Answer" is clicked.
-    // Built entirely from data already in the module JSON (correctAnswer + explanation) —
-    // no new content needed.
     currentFeedback() {
       if (!this.currentQuestion || !this.isCurrentChecked) return null
       const selected = this.answers[this.currentQuestion.id]
@@ -105,9 +67,6 @@ export default {
       }
     },
 
-    // v-model target for single-answer (radio) questions.
-    // Getter reads from `answers`, setter writes back into `answers` —
-    // this is how the selection survives clicking Back and returning later.
     selectedAnswer: {
       get() {
         return this.currentQuestion ? this.answers[this.currentQuestion.id] || null : null
@@ -117,7 +76,6 @@ export default {
       }
     },
 
-    // v-model target for multi-answer (checkbox) questions.
     selectedAnswers: {
       get() {
         if (!this.currentQuestion) return []
@@ -131,33 +89,23 @@ export default {
   },
 
   created() {
-    this.loadModule()
+    this.loadAssessment()
   },
 
   methods: {
-    loadModule() {
-      const data = MODULE_DATA[this.moduleId]
-      if (!data) {
-        console.error(`No question data found for "${this.moduleId}"`)
-        return
-      }
-      this.moduleData = data
-      this.shuffledQuestions = shuffleOrder(data.questions)
+    loadAssessment() {
+      this.assessmentData = assessmentData
+      this.shuffledQuestions = shuffleOrder(assessmentData.questions)
       this.currentIndex = 0
       this.answers = {}
       this.checkedIds = {}
     },
 
-    // Flashes the correct/incorrect feedback for the current question.
-    // The answer is locked in at this point (inputs get :disabled once checked)
-    // so a user can't see the correct answer and then quietly switch to it.
     checkAnswer() {
       if (!this.currentQuestion || !this.isCurrentAnswered) return
       this.checkedIds = { ...this.checkedIds, [this.currentQuestion.id]: true }
     },
 
-    // Used to highlight the correct option (and the user's wrong pick, if any)
-    // once a question has been checked.
     isOptionCorrect(value) {
       if (!this.currentQuestion) return false
       const correct = this.currentQuestion.correctAnswer
@@ -222,23 +170,46 @@ export default {
       return values.map((value) => this.optionLabel(question, value)).join('; ')
     },
 
-    submitQuiz() {
+    submitAssessment() {
       const typeTotals = {
-        standard: { correct: 0, total: 0 },
-        'scenario-based': { correct: 0, total: 0 },
-        simulation: { correct: 0, total: 0 }
+        phishing: { correct: 0, total: 0 },
+        'spear-phishing': { correct: 0, total: 0 },
+        vishing: { correct: 0, total: 0 },
+        smishing: { correct: 0, total: 0 },
+        pretexting: { correct: 0, total: 0 },
+        quishing: { correct: 0, total: 0 },
+        'safe-practices': { correct: 0, total: 0 }
       }
 
       let correctCount = 0
       const review = []
 
+      // Topic mapping based on question ID ranges
+      const topicMap = {
+        'assessment-1': 'phishing',
+        'assessment-2': 'phishing',
+        'assessment-3': 'spear-phishing',
+        'assessment-4': 'spear-phishing',
+        'assessment-5': 'vishing',
+        'assessment-6': 'vishing',
+        'assessment-7': 'smishing',
+        'assessment-8': 'smishing',
+        'assessment-9': 'pretexting',
+        'assessment-10': 'pretexting',
+        'assessment-11': 'quishing',
+        'assessment-12': 'quishing',
+        'assessment-13': 'safe-practices',
+        'assessment-14': 'safe-practices',
+        'assessment-15': 'safe-practices'
+      }
+
       for (const question of this.shuffledQuestions) {
-        const typeKey = typeTotals[question.questionType] ? question.questionType : 'standard'
-        typeTotals[typeKey].total += 1
+        const topic = topicMap[question.id] || 'standard'
+        typeTotals[topic].total += 1
         const selectedAnswer = this.answers[question.id]
         const isCorrect = this.answersMatch(question.correctAnswer, selectedAnswer)
         if (isCorrect) {
-          typeTotals[typeKey].correct += 1
+          typeTotals[topic].correct += 1
           correctCount += 1
         }
 
@@ -259,25 +230,41 @@ export default {
         ? 0
         : Math.round((correctCount / totalQuestions) * 100)
 
+      // Determine awareness level based on score
+      let level = 'Beginner'
+      let levelKey = 'beginner'
+      if (percentageScore >= 80) {
+        level = 'Advanced'
+        levelKey = 'advanced'
+      } else if (percentageScore >= 60) {
+        level = 'Intermediate'
+        levelKey = 'intermediate'
+      }
+
+      // Calculate weak areas (topics with < 70% correct)
+      const weakAreas = []
+      for (const [topic, stats] of Object.entries(typeTotals)) {
+        if (stats.total > 0) {
+          const topicPercent = Math.round((stats.correct / stats.total) * 100)
+          if (topicPercent < 70) {
+            weakAreas.push({ topic, percentage: topicPercent })
+          }
+        }
+      }
+
       const results = {
-        moduleId: this.moduleId,
-        moduleName: this.moduleTitle,
         score: correctCount,
         totalPoints: totalQuestions,
         percentageScore,
-        passed: percentageScore >= 70,
-        breakdown: typeTotals,
+        level,
+        levelKey,
+        by_topic: typeTotals,
+        weak_areas: weakAreas,
         review
       }
 
-      sessionStorage.setItem(`quiz-results-${this.moduleId}`, JSON.stringify(results))
-      this.$router.push(`/quiz/${this.moduleId}/results`)
-    }
-  },
-
-  watch: {
-    moduleId() {
-      this.loadModule()
+      sessionStorage.setItem('assessment-results', JSON.stringify(results))
+      this.$router.push('/assessment/results')
     }
   }
 }
