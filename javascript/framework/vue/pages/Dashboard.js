@@ -1,5 +1,24 @@
 // javascript/framework/vue/pages/Dashboard.js
 import { useAuthStore } from '../stores/auth.js'
+import { apiFetch } from '../lib/api.js'
+
+// Backend module slugs (backend-node/sql/03-seed.sql) → the actual frontend
+// route for each module. Two of them differ from the slug (the Phishing page
+// is the Quishing component; Safety Practices uses a longer route name), and
+// Premium modules live under /modules/premium/, so a bare /modules/:slug
+// cannot be assumed to exist.
+const MODULE_ROUTE_BY_SLUG = {
+  'phishing': '/modules/quishing',
+  'spear-phishing': '/modules/spear-phishing',
+  'smishing': '/modules/smishing',
+  'vishing': '/modules/vishing',
+  'pretexting': '/modules/pretexting',
+  'safety-practices': '/modules/essential-safe-practices-remote-environments',
+  'client-impersonation': '/modules/premium/client-impersonation',
+  'client-data': '/modules/premium/client-data',
+  'fake-recruiters': '/modules/premium/fake-recruiters',
+  'invoice-scams': '/modules/premium/invoice-scams'
+}
 
 export default {
   name: 'Dashboard',
@@ -31,27 +50,15 @@ export default {
 
       try {
         const authStore = useAuthStore()
-        
-        // Load dashboard data from backend
-        const response = await fetch('/api/dashboard', {
-          headers: {
-            'Authorization': `Bearer ${authStore.token}`
-          }
-        })
 
-        if (!response.ok) {
-          if (response.status === 403) {
-            throw new Error('A Premium subscription is required to view the dashboard.')
-          }
-          throw new Error('Failed to load dashboard data.')
-        }
-
-        const data = await response.json()
+        // Load dashboard data from backend (apiFetch already throws on
+        // non-2xx with the backend's own error message)
+        const data = await apiFetch('/api/dashboard', { token: authStore.token })
         
         // Set user data
-        this.firstName = authStore.user?.firstName || 'User'
-        this.planLabel = authStore.user?.subscriptionType || 'Free'
-        this.accountStatusLabel = authStore.user?.subscriptionStatus || 'inactive'
+        this.firstName = authStore.user?.first_name || 'User'
+        this.planLabel = authStore.user?.subscription_type || 'Free'
+        this.accountStatusLabel = authStore.user?.subscription_status || 'inactive'
 
         // Calculate completed modules
         this.completedModulesCount = data.progress?.filter(p => p.completion_status === 'completed').length || 0
@@ -64,12 +71,21 @@ export default {
           this.averageQuizScoreLabel = Math.round(totalScore / quizHistory.length) + '%'
         }
 
-        // Set weak areas from assessment
+        // Set weak areas from assessment — weak_areas is a JSON array of
+        // topic slugs (['spear-phishing', ...]); the matching module category
+        // lives in the module table. Older stored results may be objects
+        // ({topic, percentage}) — tolerate both, then title-case for display.
         if (data.assessment?.weak_areas) {
-          this.weakAreas = data.assessment.weak_areas.map(area => ({
-            topic: area.charAt(0).toUpperCase() + area.slice(1),
-            scoreLabel: 'Needs improvement'
-          }))
+          this.weakAreas = data.assessment.weak_areas.map(area => {
+            const slug = typeof area === 'string' ? area : area && area.topic
+            return {
+              topic: String(slug || '')
+                .split('-')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' '),
+              scoreLabel: 'Needs improvement'
+            }
+          })
         }
 
         // Set quiz history rows
@@ -93,15 +109,9 @@ export default {
     async loadRecommendations() {
       try {
         const authStore = useAuthStore()
-        const response = await fetch('/api/dashboard/recommendations', {
-          headers: {
-            'Authorization': `Bearer ${authStore.token}`
-          }
+        this.recommendations = await apiFetch('/api/dashboard/recommendations', {
+          token: authStore.token
         })
-
-        if (response.ok) {
-          this.recommendations = await response.json()
-        }
       } catch (error) {
         console.error('Failed to load recommendations:', error)
       }
@@ -113,7 +123,7 @@ export default {
 
     recommendationBind(module) {
       return {
-        to: `/modules/${module.slug}`
+        to: MODULE_ROUTE_BY_SLUG[module.slug] || `/modules/${module.slug}`
       }
     },
 

@@ -1,8 +1,6 @@
 import assessmentData from '../data/assessment-data.js'
 
 // Fisher-Yates shuffle — randomizes ORDER only.
-// We never drop or add questions here; all 15 always appear,
-// just in a different sequence each attempt.
 function shuffleOrder(array) {
   const shuffled = [...array]
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -10,6 +8,12 @@ function shuffleOrder(array) {
     ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
   }
   return shuffled
+}
+
+// Select N random questions from the pool
+function selectRandomQuestions(array, count) {
+  const shuffled = shuffleOrder(array)
+  return shuffled.slice(0, count)
 }
 
 export default {
@@ -95,7 +99,8 @@ export default {
   methods: {
     loadAssessment() {
       this.assessmentData = assessmentData
-      this.shuffledQuestions = shuffleOrder(assessmentData.questions)
+      const questionsPerAttempt = assessmentData.questionsPerAttempt || 10
+      this.shuffledQuestions = selectRandomQuestions(assessmentData.questions, questionsPerAttempt)
       this.currentIndex = 0
       this.answers = {}
       this.checkedIds = {}
@@ -188,14 +193,19 @@ export default {
       const topicMap = {
         'assessment-1': 'phishing',
         'assessment-2': 'phishing',
+        'assessment-16': 'phishing',
         'assessment-3': 'spear-phishing',
         'assessment-4': 'spear-phishing',
+        'assessment-17': 'spear-phishing',
         'assessment-5': 'vishing',
         'assessment-6': 'vishing',
+        'assessment-18': 'vishing',
         'assessment-7': 'smishing',
         'assessment-8': 'smishing',
+        'assessment-19': 'smishing',
         'assessment-9': 'pretexting',
         'assessment-10': 'pretexting',
+        'assessment-20': 'pretexting',
         'assessment-11': 'quishing',
         'assessment-12': 'quishing',
         'assessment-13': 'safe-practices',
@@ -241,13 +251,16 @@ export default {
         levelKey = 'intermediate'
       }
 
-      // Calculate weak areas (topics with < 70% correct)
+      // Weak areas: topics scoring < 70%. Stored as plain topic slugs —
+      // the backend's recommendations endpoint binds this array directly
+      // against module.category, so objects would never match. Per-topic
+      // percentages stay available in by_topic for display.
       const weakAreas = []
       for (const [topic, stats] of Object.entries(typeTotals)) {
         if (stats.total > 0) {
           const topicPercent = Math.round((stats.correct / stats.total) * 100)
           if (topicPercent < 70) {
-            weakAreas.push({ topic, percentage: topicPercent })
+            weakAreas.push(topic)
           }
         }
       }

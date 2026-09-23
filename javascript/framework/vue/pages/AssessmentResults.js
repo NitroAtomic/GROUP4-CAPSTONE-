@@ -1,4 +1,5 @@
 import assessmentData from '../data/assessment-data.js'
+import { apiFetch } from '../lib/api.js'
 
 export default {
   name: 'AssessmentResults',
@@ -31,7 +32,21 @@ export default {
     },
 
     weakAreas() {
-      return this.results && this.results.weak_areas ? this.results.weak_areas : []
+      // weak_areas is stored as topic slugs (['spear-phishing', ...]);
+      // results saved by older versions may still be {topic, percentage}
+      // objects — normalize both to { topic, percentage } for the template,
+      // pulling the percentage back out of by_topic when needed.
+      const stored = (this.results && this.results.weak_areas) || []
+      return stored.map((entry) => {
+        if (typeof entry === 'string') {
+          const stats = (this.results.by_topic || {})[entry] || { correct: 0, total: 0 }
+          return {
+            topic: entry,
+            percentage: stats.total ? Math.round((stats.correct / stats.total) * 100) : 0
+          }
+        }
+        return entry
+      })
     },
 
     byTopic() {
@@ -106,25 +121,18 @@ export default {
         const authStore = this.$pinia ? this.$pinia.state.value.auth : null
         const token = authStore ? authStore.token : localStorage.getItem('token')
 
-        const response = await fetch('/api/assessments/submit', {
+        await apiFetch('/api/assessment/submit', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token && { Authorization: `Bearer ${token}` })
-          },
-          body: JSON.stringify({
+          token,
+          body: {
             score: this.results.score,
             total: this.results.totalPoints,
             level: this.results.level,
             level_key: this.results.levelKey,
             by_topic: this.results.by_topic,
             weak_areas: this.results.weak_areas
-          })
+          }
         })
-
-        if (!response.ok) {
-          console.error('Failed to submit assessment to backend:', response.statusText)
-        }
       } catch (error) {
         console.error('Error submitting assessment:', error)
       }
@@ -137,6 +145,14 @@ export default {
 
     goToDashboard() {
       this.$router.push('/dashboard')
+    },
+
+    formatTopic(topic) {
+      if (!topic) return ''
+      return topic
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
     }
   },
 

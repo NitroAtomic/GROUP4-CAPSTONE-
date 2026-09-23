@@ -1,15 +1,13 @@
 // AWARENESS ASSESSMENT DATA
 // ========================
-// PLACEHOLDER CONTENT - NOT FINAL
-// This file contains 15 placeholder questions for the Awareness Assessment.
-// These are clearly marked as placeholders and should be replaced with
-// researched, scenario-based questions before production use.
+// This file contains 20 questions for the Awareness Assessment.
+// 10 questions are randomly selected per attempt from this 20-question pool.
 //
 // Topics covered: phishing, spear phishing, vishing, smishing, pretexting,
 // quishing (QR phishing), safe practices
 //
 // Contract (per backend-node/routes/assessments.js):
-// - Fixed 15-question bank
+// - 20-question pool, 10 questions per attempt
 // - Scored client-side
 // - Submit payload: { score, total, level, level_key, by_topic, weak_areas }
 // - Levels: Beginner, Intermediate, Advanced
@@ -17,14 +15,15 @@
 export default {
   moduleName: 'Cybersecurity Awareness Assessment',
   moduleId: 'assessment',
-  totalQuestions: 15,
-  standardCount: 8,
-  scenarioBasedCount: 7,
+  totalQuestions: 20,
+  questionsPerAttempt: 10,
+  standardCount: 10,
+  scenarioBasedCount: 10,
   questions: [
-    // PHISHING (2 questions)
+    // PHISHING (3 questions)
     {
       id: 'assessment-1',
-      questionText: '[PLACEHOLDER] You receive an email from your bank asking you to verify your account by clicking a link. What should you do?',
+      questionText: 'You receive an email from your bank asking you to verify your account by clicking a link. What should you do?',
       questionType: 'standard',
       answerType: 'single',
       options: [
@@ -34,11 +33,11 @@ export default {
         { value: 'd', text: 'Forward to colleagues for verification' }
       ],
       correctAnswer: 'b',
-      explanation: '[PLACEHOLDER EXPLANATION] Never click links in unsolicited emails. Contact the bank through official channels.'
+      explanation: 'Never click links in unsolicited emails. Contact the bank through official channels.'
     },
     {
       id: 'assessment-2',
-      questionText: '[PLACEHOLDER] Which of these is a common sign of a phishing email?',
+      questionText: 'Which of these is a common sign of a phishing email?',
       questionType: 'standard',
       answerType: 'multiple',
       options: [
@@ -48,13 +47,27 @@ export default {
         { value: 'd', text: 'All of the above' }
       ],
       correctAnswer: ['a', 'b', 'c', 'd'],
-      explanation: '[PLACEHOLDER EXPLANATION] Phishing emails often use urgency, generic greetings, and suspicious sender addresses.'
+      explanation: 'Phishing emails often use urgency, generic greetings, and suspicious sender addresses.'
+    },
+    {
+      id: 'assessment-16',
+      questionText: 'An email claims your account will be locked unless you act within 15 minutes. What is this technique called?',
+      questionType: 'standard',
+      answerType: 'single',
+      options: [
+        { value: 'a', text: 'Social engineering urgency' },
+        { value: 'b', text: 'Standard security procedure' },
+        { value: 'c', text: 'Account maintenance notification' },
+        { value: 'd', text: 'Automated system alert' }
+      ],
+      correctAnswer: 'a',
+      explanation: 'Creating artificial urgency is a common social engineering tactic to bypass critical thinking.'
     },
 
-    // SPEAR PHISHING (2 questions)
+    // SPEAR PHISHING (3 questions)
     {
       id: 'assessment-3',
-      questionText: '[PLACEHOLDER] How does spear phishing differ from regular phishing?',
+      questionText: 'How does spear phishing differ from regular phishing?',
       questionType: 'standard',
       answerType: 'single',
       options: [
@@ -64,11 +77,11 @@ export default {
         { value: 'd', text: 'It is always sent via SMS' }
       ],
       correctAnswer: 'a',
-      explanation: '[PLACEHOLDER EXPLANATION] Spear phishing is highly targeted, using personal information to appear legitimate.'
+      explanation: 'Spear phishing is highly targeted, using personal information to appear legitimate.'
     },
     {
       id: 'assessment-4',
-      questionText: '[PLACEHOLDER] A colleague sends you an urgent request to transfer funds to a new account. What should you verify first?',
+      questionText: 'A colleague sends you an urgent request to transfer funds to a new account. What should you verify first?',
       questionType: 'scenario-based',
       answerType: 'single',
       options: [
@@ -78,13 +91,27 @@ export default {
         { value: 'd', text: 'Check if the email signature looks official' }
       ],
       correctAnswer: 'c',
-      explanation: '[PLACEHOLDER EXPLANATION] Always verify urgent requests through a different channel (phone call, in-person) before taking action.'
+      explanation: 'Always verify urgent requests through a different channel (phone call, in-person) before taking action.'
+    },
+    {
+      id: 'assessment-17',
+      questionText: 'You receive an email from your CEO asking for sensitive company data, addressed to you by name. What should you do?',
+      questionType: 'scenario-based',
+      answerType: 'single',
+      options: [
+        { value: 'a', text: 'Send the data immediately since the CEO requested it' },
+        { value: 'b', text: 'Reply to confirm the request' },
+        { value: 'c', text: 'Verify the request through a known, trusted channel' },
+        { value: 'd', text: 'Forward to your supervisor' }
+      ],
+      correctAnswer: 'c',
+      explanation: 'Spear phishing often impersonates executives. Always verify through a separate channel.'
     },
 
-    // VISHING (2 questions)
+    // VISHING (3 questions)
     {
       id: 'assessment-5',
-      questionText: '[PLACEHOLDER] What is vishing?',
+      questionText: 'What is vishing?',
       questionType: 'standard',
       answerType: 'single',
       options: [
@@ -94,11 +121,11 @@ export default {
         { value: 'd', text: 'Phishing via QR codes' }
       ],
       correctAnswer: 'b',
-      explanation: '[PLACEHOLDER EXPLANATION] Vishing uses phone calls to deceive victims into revealing sensitive information.'
+      explanation: 'Vishing uses phone calls to deceive victims into revealing sensitive information.'
     },
     {
       id: 'assessment-6',
-      questionText: '[PLACEHOLDER] You receive a call from "tech support" claiming your computer is infected. They ask for remote access. What should you do?',
+      questionText: 'You receive a call from "tech support" claiming your computer is infected. They ask for remote access. What should you do?',
       questionType: 'scenario-based',
       answerType: 'single',
       options: [
@@ -108,13 +135,27 @@ export default {
         { value: 'd', text: 'Ask them to call back later' }
       ],
       correctAnswer: 'c',
-      explanation: '[PLACEHOLDER EXPLANATION] Legitimate tech support never makes unsolicited calls asking for remote access.'
+      explanation: 'Legitimate tech support never makes unsolicited calls asking for remote access.'
+    },
+    {
+      id: 'assessment-18',
+      questionText: 'A caller claims to be from the IRS and demands immediate payment via gift cards. What should you do?',
+      questionType: 'scenario-based',
+      answerType: 'single',
+      options: [
+        { value: 'a', text: 'Pay immediately to avoid legal trouble' },
+        { value: 'b', text: 'Ask for their badge number' },
+        { value: 'c', text: 'Hang up and contact the IRS directly' },
+        { value: 'd', text: 'Negotiate a payment plan' }
+      ],
+      correctAnswer: 'c',
+      explanation: 'Government agencies never demand payment via gift cards. This is a classic vishing scam.'
     },
 
-    // SMISHING (2 questions)
+    // SMISHING (3 questions)
     {
       id: 'assessment-7',
-      questionText: '[PLACEHOLDER] What is smishing?',
+      questionText: 'What is smishing?',
       questionType: 'standard',
       answerType: 'single',
       options: [
@@ -124,11 +165,11 @@ export default {
         { value: 'd', text: 'Phishing via voice calls' }
       ],
       correctAnswer: 'b',
-      explanation: '[PLACEHOLDER EXPLANATION] Smishing uses text messages to trick victims into clicking malicious links or sharing information.'
+      explanation: 'Smishing uses text messages to trick victims into clicking malicious links or sharing information.'
     },
     {
       id: 'assessment-8',
-      questionText: '[PLACEHOLDER] You receive a text message claiming you won a prize and need to click a link to claim it. What should you do?',
+      questionText: 'You receive a text message claiming you won a prize and need to click a link to claim it. What should you do?',
       questionType: 'scenario-based',
       answerType: 'single',
       options: [
@@ -138,13 +179,27 @@ export default {
         { value: 'd', text: 'Forward to friends' }
       ],
       correctAnswer: 'c',
-      explanation: '[PLACEHOLDER EXPLANATION] Unsolicited prize claims via text are almost always smishing scams.'
+      explanation: 'Unsolicited prize claims via text are almost always smishing scams.'
+    },
+    {
+      id: 'assessment-19',
+      questionText: 'You receive a text from your bank asking you to verify a transaction by clicking a link. What should you do?',
+      questionType: 'scenario-based',
+      answerType: 'single',
+      options: [
+        { value: 'a', text: 'Click the link to verify immediately' },
+        { value: 'b', text: 'Reply with your account number' },
+        { value: 'c', text: 'Contact the bank using the official number' },
+        { value: 'd', text: 'Ignore the message' }
+      ],
+      correctAnswer: 'c',
+      explanation: 'Banks never ask you to click links in text messages. Always use official contact methods.'
     },
 
-    // PRETEXTING (2 questions)
+    // PRETEXTING (3 questions)
     {
       id: 'assessment-9',
-      questionText: '[PLACEHOLDER] What is pretexting?',
+      questionText: 'What is pretexting?',
       questionType: 'standard',
       answerType: 'single',
       options: [
@@ -154,11 +209,11 @@ export default {
         { value: 'd', text: 'Installing malware' }
       ],
       correctAnswer: 'a',
-      explanation: '[PLACEHOLDER EXPLANATION] Pretexting involves inventing a fabricated scenario to manipulate victims into revealing information.'
+      explanation: 'Pretexting involves inventing a fabricated scenario to manipulate victims into revealing information.'
     },
     {
       id: 'assessment-10',
-      questionText: '[PLACEHOLDER] Someone claiming to be from IT asks for your password to "fix your account." What should you do?',
+      questionText: 'Someone claiming to be from IT asks for your password to "fix your account." What should you do?',
       questionType: 'scenario-based',
       answerType: 'single',
       options: [
@@ -168,13 +223,27 @@ export default {
         { value: 'd', text: 'Give a temporary password' }
       ],
       correctAnswer: 'c',
-      explanation: '[PLACEHOLDER EXPLANATION] Legitimate IT staff never ask for passwords. Report this immediately.'
+      explanation: 'Legitimate IT staff never ask for passwords. Report this immediately.'
+    },
+    {
+      id: 'assessment-20',
+      questionText: 'A delivery person asks for your name and birth date to verify a package. What should you do?',
+      questionType: 'scenario-based',
+      answerType: 'single',
+      options: [
+        { value: 'a', text: 'Provide the information to receive the package' },
+        { value: 'b', text: 'Ask for their company ID' },
+        { value: 'c', text: 'Refuse and verify through official delivery channels' },
+        { value: 'd', text: 'Give only your name' }
+      ],
+      correctAnswer: 'c',
+      explanation: 'Legitimate delivery services do not need personal information like birth dates to verify packages.'
     },
 
     // QUISHING (2 questions)
     {
       id: 'assessment-11',
-      questionText: '[PLACEHOLDER] What is quishing?',
+      questionText: 'What is quishing?',
       questionType: 'standard',
       answerType: 'single',
       options: [
@@ -184,11 +253,11 @@ export default {
         { value: 'd', text: 'Phishing via quotes' }
       ],
       correctAnswer: 'a',
-      explanation: '[PLACEHOLDER EXPLANATION] Quishing uses QR codes to direct victims to malicious websites or download malware.'
+      explanation: 'Quishing uses QR codes to direct victims to malicious websites or download malware.'
     },
     {
       id: 'assessment-12',
-      questionText: '[PLACEHOLDER] You see a QR code on a flyer promising a free gift. What should you do before scanning?',
+      questionText: 'You see a QR code on a flyer promising a free gift. What should you do before scanning?',
       questionType: 'scenario-based',
       answerType: 'single',
       options: [
@@ -198,13 +267,13 @@ export default {
         { value: 'd', text: 'Ask friends to scan first' }
       ],
       correctAnswer: 'c',
-      explanation: '[PLACEHOLDER EXPLANATION] Always verify the source of QR codes and use security-aware scanners.'
+      explanation: 'Always verify the source of QR codes and use security-aware scanners.'
     },
 
     // SAFE PRACTICES (3 questions)
     {
       id: 'assessment-13',
-      questionText: '[PLACEHOLDER] Which password practice is most secure?',
+      questionText: 'Which password practice is most secure?',
       questionType: 'standard',
       answerType: 'single',
       options: [
@@ -214,11 +283,11 @@ export default {
         { value: 'd', text: 'Share passwords with trusted colleagues' }
       ],
       correctAnswer: 'b',
-      explanation: '[PLACEHOLDER EXPLANATION] Password managers generate and store unique, complex passwords for each account.'
+      explanation: 'Password managers generate and store unique, complex passwords for each account.'
     },
     {
       id: 'assessment-14',
-      questionText: '[PLACEHOLDER] What is two-factor authentication (2FA)?',
+      questionText: 'What is two-factor authentication (2FA)?',
       questionType: 'standard',
       answerType: 'single',
       options: [
@@ -228,11 +297,11 @@ export default {
         { value: 'd', text: 'Having two email accounts' }
       ],
       correctAnswer: 'b',
-      explanation: '[PLACEHOLDER EXPLANATION] 2FA requires something you know (password) and something you have (code, device).'
+      explanation: '2FA requires something you know (password) and something you have (code, device).'
     },
     {
       id: 'assessment-15',
-      questionText: '[PLACEHOLDER] You receive a file attachment from an unknown sender. What should you do?',
+      questionText: 'You receive a file attachment from an unknown sender. What should you do?',
       questionType: 'scenario-based',
       answerType: 'single',
       options: [
@@ -242,7 +311,7 @@ export default {
         { value: 'd', text: 'Forward to security team' }
       ],
       correctAnswer: 'c',
-      explanation: '[PLACEHOLDER EXPLANATION] Never open attachments from unknown senders. Delete immediately.'
+      explanation: 'Never open attachments from unknown senders. Delete immediately.'
     }
   ]
 }

@@ -4,7 +4,7 @@ export default {
     startQuiz() {
       this.$router.push({
         name: 'QuizQuestion',
-        params: { moduleId: 'course-2' }
+        params: { moduleId: 'client-data' }
       });
     }
   }

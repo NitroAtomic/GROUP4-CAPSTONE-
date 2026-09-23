@@ -16,10 +16,10 @@ const MODULE_DATA = {
   'module-3': module3,
   'module-4': module4,
   'module-5': module5,
-  'course-1': course1,
-  'course-2': course2,
-  'course-3': course3,
-  'course-4': course4
+  'client-impersonation': course1,
+  'client-data': course2,
+  'fake-recruiters': course3,
+  'invoice-scams': course4
 }
 
 // Fisher-Yates shuffle — randomizes ORDER only.

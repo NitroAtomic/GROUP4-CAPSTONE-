@@ -38,8 +38,7 @@ export const useAuthStore = defineStore('auth', {
         state.user &&
         state.user.subscription_type === 'Premium' &&
         state.user.subscription_status === 'active'
-      ),
-    firstName: (state) => (state.user ? state.user.first_name : '')
+      )
   },
 
   actions: {

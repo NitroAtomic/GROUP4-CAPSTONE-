@@ -42,7 +42,7 @@ export default {
     },
 
     firstName() {
-      return this.authStore.firstName
+      return this.authStore.user?.first_name || ''
     },
 
     isPremium() {

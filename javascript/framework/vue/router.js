@@ -163,6 +163,16 @@ const routes = [
   }
 ]
 
+// Quiz routes take a dynamic :moduleId, so the premium check can't live in
+// static route meta — these are the frontend quiz ids whose question banks
+// (and Premium entitlement) belong to the four Premium modules.
+const PREMIUM_QUIZ_MODULE_IDS = new Set([
+  'client-impersonation',
+  'client-data',
+  'fake-recruiters',
+  'invoice-scams'
+])
+
 const router = createRouter({
   history: createWebHistory(),
   routes
@@ -171,13 +181,18 @@ const router = createRouter({
 router.beforeEach((to) => {
   const authStore = useAuthStore()
 
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+  const isPremiumQuizRoute =
+    to.path.startsWith('/quiz/') && PREMIUM_QUIZ_MODULE_IDS.has(String(to.params.moduleId))
+  const requiresAuth = to.meta.requiresAuth || isPremiumQuizRoute
+  const requiresPremium = to.meta.requiresPremium || isPremiumQuizRoute
+
+  if (requiresAuth && !authStore.isAuthenticated) {
     return { name: 'Login', query: { redirect: to.fullPath } }
   }
 
   // Logged in, but not Premium — send to the sign-up funnel, not Login,
   // since the person already has an account.
-  if (to.meta.requiresPremium && !authStore.isPremium) {
+  if (requiresPremium && !authStore.isPremium) {
     return { name: 'PremiumSubscription' }
   }
 
