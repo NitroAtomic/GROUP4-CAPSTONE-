@@ -1,7 +1,7 @@
 <template>
   <SiteHeader />
   <router-view />
-  <ChatbotWidget v-if="!isAssessmentRoute" />
+  <ChatbotWidget v-if="!isQuizOrAssessmentRoute" />
   <BackToTop />
 </template>
 
@@ -17,9 +17,9 @@ export default {
     BackToTop
   },
   computed: {
-    isAssessmentRoute() {
-      // Hide chatbot on assessment routes to maintain assessment integrity
-      return this.$route.path.startsWith('/assessment')
+    isQuizOrAssessmentRoute() {
+      const path = this.$route.path
+      return path.startsWith('/assessment') || path.startsWith('/quiz')
     }
   }
 }
