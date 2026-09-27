@@ -1,5 +1,6 @@
 import assessmentData from '../data/assessment-data.js'
 import { apiFetch } from '../lib/api.js'
+import { useAuthStore } from '../stores/auth.js'
 
 export default {
   name: 'AssessmentResults',
@@ -118,8 +119,8 @@ export default {
       if (!this.results) return
 
       try {
-        const authStore = this.$pinia ? this.$pinia.state.value.auth : null
-        const token = authStore ? authStore.token : localStorage.getItem('token')
+        const authStore = useAuthStore()
+        const token = authStore.token
 
         await apiFetch('/api/assessment/submit', {
           method: 'POST',
