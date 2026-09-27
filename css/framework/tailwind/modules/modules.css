@@ -176,6 +176,14 @@
     @apply bg-gray-400 -translate-y-[1px];
   }
 
+  .module-home-button {
+    @apply inline-flex items-center justify-center min-w-40 min-h-11 py-0 px-6 ml-3.5 border border-black rounded-lg bg-white font-semibold transition-all duration-150 ease-in-out max-[620px]:ml-0 max-[620px]:mt-3 max-[620px]:w-full;
+  }
+
+  .module-home-button:hover {
+    @apply bg-gray-100 -translate-y-[1px];
+  }
+
 
   /* =========================
      Exercise Section

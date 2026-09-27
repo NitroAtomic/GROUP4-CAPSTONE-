@@ -1,0 +1,9 @@
+@layer components {
+  /* =========================
+     Back To Top Button
+     ========================= */
+
+  .back-to-top-button {
+    @apply fixed right-24 bottom-5 z-[990] w-11 h-11 border border-black rounded-full bg-white text-black text-xl font-bold flex items-center justify-center cursor-pointer shadow-md transition-all duration-150 ease-in-out hover:bg-gray-100 hover:-translate-y-[2px] max-[480px]:right-20 max-[480px]:bottom-3.5 max-[480px]:w-10 max-[480px]:h-10;
+  }
+}

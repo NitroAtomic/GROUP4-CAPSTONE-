@@ -208,6 +208,10 @@
             Take a Quiz
         </router-link>
 
+        <router-link to="/" class="module-home-button">
+            Back to Homepage
+        </router-link>
+
     </section>
 
         <!-- =========================

@@ -69,6 +69,10 @@
         >
           Back to module
         </router-link>
+
+        <router-link to="/" class="quiz-results-button">
+          Back to Homepage
+        </router-link>
       </div>
     </section>
 

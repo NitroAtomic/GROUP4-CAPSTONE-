@@ -32,6 +32,8 @@
 @import './modules/modules.css';
 @import './modules/premium.css';
 @import './chatbot/chatbot-tailwind.css';
+@import './layout/back-to-top.css';
+
 
 @tailwind base;
 @tailwind components;
