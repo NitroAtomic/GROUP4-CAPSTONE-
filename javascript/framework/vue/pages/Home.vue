@@ -82,7 +82,7 @@
 
         <div class="premium-grid">
 
-          <router-link v-if="isPremium" to="/dashboard" class="premium-card">
+          <router-link v-if="isPremium" to="/modules/premium" class="premium-card">
             <div>
               <h3>Role-based<br>modules</h3>
               <p>Freelancer and client scam scenarios</p>
@@ -110,7 +110,15 @@
             <img class="lock-icon" src="/images/icons/padlock.png" alt="">
           </article>
 
-          <article class="premium-card">
+          <!-- Dati laging naka-lock tong card kahit premium ka na, kasi
+               article sya palagi, hindi router-link. -->
+          <router-link v-if="isPremium" to="/assessment/question" class="premium-card">
+            <div>
+              <h3>Awareness<br>assessment</h3>
+              <p>Find your current cybersecurity awareness level</p>
+            </div>
+          </router-link>
+          <article v-else class="premium-card">
             <div>
               <h3>Awareness<br>assessment</h3>
               <p>Find your current cybersecurity awareness level</p>

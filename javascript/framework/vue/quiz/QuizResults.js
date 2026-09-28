@@ -50,7 +50,10 @@ const NEXT_MODULE = {
 // quiz by slug, so sending 'module-1' would 404. The Phishing module's
 // frontend page is Quishing.vue — the seed uses slug 'phishing'.
 const RECORD_ATTEMPT_SLUGS = {
-  'module-1': 'phishing',
+  // Yung module-1 ay Quishing, hindi 'phishing'. Dati magkaiba yung slug dito
+  // at yung nasa database, kaya hindi kailanman mairekomenda yung Quishing
+  // module kahit mahina dun yung user.
+  'module-1': 'quishing',
   'module-2': 'spear-phishing',
   'module-3': 'smishing',
   'module-4': 'vishing',

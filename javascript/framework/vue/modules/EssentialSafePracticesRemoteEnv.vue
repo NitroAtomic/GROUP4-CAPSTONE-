@@ -262,15 +262,6 @@
     
 
 
-    <section class="module-quiz-section">
-        <h2>Module complete</h2>
-        <p>
-            This foundational module has no quiz. Return to the homepage to continue with the remaining free modules.
-        </p>
-        <router-link to="/" class="take-quiz-button">
-            Back to Home
-        </router-link>
-    </section>
   </main>
 </template>
 

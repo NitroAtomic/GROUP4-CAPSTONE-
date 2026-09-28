@@ -41,12 +41,12 @@ export default {
       return this.authStore.isAuthenticated
     },
 
-    isAdmin() {
-      return this.authStore.user?.role === 'admin'
-    },
-
     firstName() {
       return this.authStore.user?.first_name || ''
+    },
+
+    isAdmin() {
+      return Boolean(this.authStore.user && this.authStore.user.role === 'admin')
     },
 
     isPremium() {

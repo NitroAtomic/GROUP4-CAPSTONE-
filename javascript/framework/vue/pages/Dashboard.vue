@@ -50,11 +50,8 @@
           <div class="dashboard-section-heading dashboard-section-heading-row">
             <div>
               <h2>Recommended for you</h2>
-              <p>
-                {{ hasAssessment
-                  ? 'Based on your assessment results'
-                  : 'Complete the Awareness Assessment for personalized recommendations.' }}
-              </p>
+              <p v-if="hasAssessment">Based on your assessment results</p>
+              <p v-else>Modules you have not started yet. Take the assessment for a personalised list.</p>
             </div>
             <router-link
               to="/assessment/question"
@@ -107,7 +104,9 @@
             No weak areas recorded yet.
           </p>
           <p v-else class="dashboard-empty-copy">
-            You have not completed the Awareness Assessment yet. Your assessment-based weak areas will appear here afterward.
+            Weak areas come from the Awareness Assessment, not from module quizzes.
+            <router-link to="/assessment/question">Take the assessment</router-link>
+            to see which topics to focus on.
           </p>
         </section>
 

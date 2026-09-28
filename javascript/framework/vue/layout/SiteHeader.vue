@@ -6,6 +6,8 @@
         <router-link to="/" class="nav-link">Home</router-link>
         <router-link to="/about" class="nav-link">About</router-link>
         <router-link v-if="isAuthenticated && !isAdmin" to="/dashboard" class="nav-link">Dashboard</router-link>
+        <router-link v-if="isPremium && !isAdmin" to="/modules/premium" class="nav-link">Role-based</router-link>
+        <router-link v-if="isPremium && !isAdmin" to="/assessment/question" class="nav-link">Assessment</router-link>
         <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin Portal</router-link>
       </div>
 

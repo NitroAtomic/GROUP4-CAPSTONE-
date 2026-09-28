@@ -76,11 +76,7 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    // FR-12: Dashboard is Premium-only, not just "logged in" — requiresPremium
-    // catches a logged-in Free user the same way requiresAuth catches a
-    // logged-out visitor. The 4 upcoming /modules/premium/... routes (Phase B)
-    // will set the same two meta flags and reuse this same guard below.
-    meta: { requiresAuth: true, requiresPremium: true }
+    meta: { requiresAuth: true }
   },
   {
     path: '/admin',
@@ -121,6 +117,14 @@ const routes = [
   },
   // Premium module routes (FR-16 - Role-Based Modules)
   {
+    // Listahan ng apat na role-based courses. Dati walang ganito, kaya walang
+    // paraan para marating sila maliban sa pag-type ng URL.
+    path: '/modules/premium',
+    name: 'PremiumModules',
+    component: () => import('./pages/PremiumModules.vue'),
+    meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
     path: '/modules/premium/client-impersonation',
     name: 'ClientImpersonation',
     component: () => import('./modules/premium/ClientImpersonation.vue'),
@@ -160,13 +164,13 @@ const routes = [
     path: '/assessment/question',
     name: 'AwarenessAssessment',
     component: AwarenessAssessment,
-    meta: { requiresAuth: true, requiresPremium: true }
+    meta: { requiresAuth: true }
   },
   {
     path: '/assessment/results',
     name: 'AssessmentResults',
     component: AssessmentResults,
-    meta: { requiresAuth: true, requiresPremium: true }
+    meta: { requiresAuth: true }
   }
 ]
 

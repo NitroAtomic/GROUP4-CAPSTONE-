@@ -60,7 +60,7 @@ export default {
         this.firstName = authStore.user?.first_name || 'User'
         this.planLabel = authStore.user?.subscription_type || 'Free'
         this.accountStatusLabel = authStore.user?.subscription_status || 'inactive'
-        this.hasAssessment = Boolean(data.hasAssessment)
+        this.hasAssessment = Boolean(data.assessment)
 
         // Calculate completed modules
         this.completedModulesCount = data.progress?.filter(p => p.completion_status === 'completed').length || 0
