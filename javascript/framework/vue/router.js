@@ -11,6 +11,7 @@ import PremiumSubscription from './pages/PremiumSubscription.vue'
 import CreateAccount from './pages/CreateAccount.vue'
 import Payment from './pages/Payment.vue'
 import Dashboard from './pages/Dashboard.vue'
+import Admin from './pages/Admin.vue'
 
 // Import module components
 import Quishing from './modules/Quishing.vue'
@@ -80,6 +81,12 @@ const routes = [
     // logged-out visitor. The 4 upcoming /modules/premium/... routes (Phase B)
     // will set the same two meta flags and reuse this same guard below.
     meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+    meta: { requiresAuth: true, adminOnly: true }
   },
   // Module routes
   {
@@ -188,6 +195,10 @@ router.beforeEach((to) => {
 
   if (requiresAuth && !authStore.isAuthenticated) {
     return { name: 'Login', query: { redirect: to.fullPath } }
+  }
+
+  if (to.meta.adminOnly && authStore.user?.role !== 'admin') {
+    return { name: 'Home' }
   }
 
   // Logged in, but not Premium — send to the sign-up funnel, not Login,

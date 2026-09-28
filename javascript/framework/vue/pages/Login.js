@@ -80,15 +80,22 @@ export default {
     },
 
     async resendCode() {
+      if (this.isSubmitting) return
+
       this.errorMessage = ''
       this.resendMessage = ''
+      this.isSubmitting = true
       const authStore = useAuthStore()
 
       try {
-        await authStore.resendOtp({ pendingToken: this.pendingToken })
+        const result = await authStore.resendOtp({ pendingToken: this.pendingToken })
+        this.pendingToken = result.pendingToken
+        this.otpCode = ''
         this.resendMessage = 'A new code has been sent.'
       } catch (error) {
         this.errorMessage = error.message
+      } finally {
+        this.isSubmitting = false
       }
     }
   }

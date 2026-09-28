@@ -1,9 +1,10 @@
 {
   "moduleId": "module-2",
   "moduleName": "Spear Phishing",
-  "totalQuestions": 10,
-  "standardCount": 6,
-  "scenarioBasedCount": 4,
+  "totalQuestions": 20,
+  "questionsPerAttempt": 10,
+  "standardCount": 13,
+  "scenarioBasedCount": 7,
   "questions": [
     {
       "id": 1,
@@ -266,6 +267,279 @@
         }
       ],
       "explanation": "Public GitHub repositories display technical environments, active projects, and peer collaborators."
+    },
+    {
+      "id": 11,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What does the acronym \"OSINT\" stand for in cybersecurity reconnaissance?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Operational System Internal Network Tracking"
+        },
+        {
+          "value": "b",
+          "text": "Open Source Intelligence"
+        },
+        {
+          "value": "c",
+          "text": "Optical Security Inspection for Network Traffic"
+        },
+        {
+          "value": "d",
+          "text": "Offline Storage Integration and Networking Tool"
+        }
+      ],
+      "explanation": "OSINT stands for Open Source Intelligence, referring to publicly available data mined from social platforms, repositories, and directories."
+    },
+    {
+      "id": 12,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Enabling macros on an unverified Microsoft Word or Excel attachment is safe as long as the document has a .docm extension.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "False. The .docm extension explicitly denotes a macro-enabled document. Enabling macros runs underlying VBA code that can install malware."
+    },
+    {
+      "id": 13,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You are a remote graphic designer. You receive a direct message on Telegram from someone claiming to be a senior manager at your main client account, asking you to open Design_Brief.pdf.exe. How should you react?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Open the file immediately since it contains \"pdf\" in the filename"
+        },
+        {
+          "value": "b",
+          "text": "Do not open the file; the double extension (.pdf.exe) indicates an executable file"
+        },
+        {
+          "value": "c",
+          "text": "Rename the file to .doc and then double-click it"
+        },
+        {
+          "value": "d",
+          "text": "Forward the file to a friend on personal social media"
+        }
+      ],
+      "explanation": "Files ending in .exe are executable programs. The .pdf.exe naming convention tricks users into opening executable malware."
+    },
+    {
+      "id": 14,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Spear phishing attempts only target executive leadership (CEOs/CFOs), never entry-level remote contractors or virtual assistants.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "False. Attackers regularly target contractors, virtual assistants, and junior personnel as initial footholds to access corporate networks or facilitate payment fraud."
+    },
+    {
+      "id": 15,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": [
+        "a",
+        "b",
+        "d"
+      ],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What operating system settings and user habits help defend against weaponized spear phishing attachments? (Select ALL that apply)",
+      "options": [
+        {
+          "value": "a",
+          "text": "Disabling \"Hide extensions for known file types\" in OS file settings"
+        },
+        {
+          "value": "b",
+          "text": "Keeping Microsoft Office \"Block macros from running in Office files from the Internet\" enabled"
+        },
+        {
+          "value": "c",
+          "text": "Always opening untrusted email attachments using Administrator rights"
+        },
+        {
+          "value": "d",
+          "text": "Verifying unexpected file transfers with the sender via an independent communication channel"
+        }
+      ],
+      "explanation": "Revealing full file extensions, blocking Office macros, and out-of-band verification mitigate attachment risks. Running untrusted files as Administrator increases security risks."
+    },
+    {
+      "id": 16,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A spear phisher notices on Twitter that your company’s Lead Developer is on a 14-hour flight. The attacker emails you posing as the Lead Developer, requesting emergency production database credentials. Should you comply?",
+      "options": [
+        {
+          "value": "a",
+          "text": "True (Comply immediately)"
+        },
+        {
+          "value": "b",
+          "text": "False (Do not comply)"
+        }
+      ],
+      "explanation": "False. Attackers exploit travel schedules to create situations where the spoofed identity cannot be reached easily. Always follow established verification protocols."
+    },
+    {
+      "id": 17,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What technical feature makes MITRE ATT&CK Technique T1566.001 particularly dangerous to enterprise endpoint security?",
+      "options": [
+        {
+          "value": "a",
+          "text": "It uses physical USB drives dropped in parking lots"
+        },
+        {
+          "value": "b",
+          "text": "It relies on user execution of attached files to run malware inside the local user environment"
+        },
+        {
+          "value": "c",
+          "text": "It automatically changes home router DNS addresses without user interaction"
+        },
+        {
+          "value": "d",
+          "text": "It turns off laptop Wi-Fi adapters permanently"
+        }
+      ],
+      "explanation": "Technique T1566.001 relies on social engineering to trick the user into executing malicious attachments locally."
+    },
+    {
+      "id": 18,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": [
+        "b",
+        "c"
+      ],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following indicate that a project brief attachment might be a spear-phishing payload? *(Select TWO)*",
+      "options": [
+        {
+          "value": "a",
+          "text": "The attachment is a .pdf file under 500 KB."
+        },
+        {
+          "value": "b",
+          "text": "The attachment is an .xlsm file requiring macro activation to view text."
+        },
+        {
+          "value": "c",
+          "text": "The file name ends in .docx.iso."
+        },
+        {
+          "value": "d",
+          "text": "The file was downloaded directly from the company's official Google Drive."
+        }
+      ],
+      "explanation": "Macro-enabled files (.xlsm) and disk image archives (.iso) disguised as documents are common malicious delivery formats."
+    },
+    {
+      "id": 19,
+      "category": "hard",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A freelancer receives a high-paying offer on Upwork. The client insists on sending an .iso file containing \"project assets\" before contract signing. Why is this suspicious?",
+      "options": [
+        {
+          "value": "a",
+          "text": ".iso files are standard image files that cannot contain text."
+        },
+        {
+          "value": "b",
+          "text": "An .iso file is a disk image that can bypass basic scanner checks and mount an executable drive on Windows/Mac."
+        },
+        {
+          "value": "c",
+          "text": "Freelancers are legally prohibited from receiving .iso files."
+        },
+        {
+          "value": "d",
+          "text": ".iso files automatically delete the operating system upon opening."
+        }
+      ],
+      "explanation": "ISO files are container formats used by attackers to deliver malware while evading basic security filters."
+    },
+    {
+      "id": 20,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What term describes altering sender details so an email appears to come from a legitimate internal colleague?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Port forwarding"
+        },
+        {
+          "value": "b",
+          "text": "Email Header Spoofing"
+        },
+        {
+          "value": "c",
+          "text": "Hard drive partitioning"
+        },
+        {
+          "value": "d",
+          "text": "Disk defragmentation"
+        }
+      ],
+      "explanation": "Email spoofing manipulates header fields (From:) to impersonate legitimate contacts."
     }
   ]
 }

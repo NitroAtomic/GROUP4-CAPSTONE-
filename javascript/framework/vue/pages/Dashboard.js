@@ -33,6 +33,7 @@ export default {
       completedModulesCount: 0,
       totalModulesCount: 0,
       averageQuizScoreLabel: '0%',
+      hasAssessment: false,
       weakAreas: [],
       recommendations: [],
       quizHistoryRows: []
@@ -59,6 +60,7 @@ export default {
         this.firstName = authStore.user?.first_name || 'User'
         this.planLabel = authStore.user?.subscription_type || 'Free'
         this.accountStatusLabel = authStore.user?.subscription_status || 'inactive'
+        this.hasAssessment = Boolean(data.hasAssessment)
 
         // Calculate completed modules
         this.completedModulesCount = data.progress?.filter(p => p.completion_status === 'completed').length || 0
@@ -75,7 +77,7 @@ export default {
         // topic slugs (['spear-phishing', ...]); the matching module category
         // lives in the module table. Older stored results may be objects
         // ({topic, percentage}) — tolerate both, then title-case for display.
-        if (data.assessment?.weak_areas) {
+        if (this.hasAssessment && data.assessment?.weak_areas) {
           this.weakAreas = data.assessment.weak_areas.map(area => {
             const slug = typeof area === 'string' ? area : area && area.topic
             return {

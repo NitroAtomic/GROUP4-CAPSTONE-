@@ -1,9 +1,10 @@
 {
   "moduleId": "module-1",
   "moduleName": "Quishing",
-  "totalQuestions": 10,
-  "standardCount": 5,
-  "scenarioBasedCount": 5,
+  "totalQuestions": 20,
+  "questionsPerAttempt": 10,
+  "standardCount": 13,
+  "scenarioBasedCount": 7,
   "questions": [
     {
       "id": 1,
@@ -274,6 +275,276 @@
         }
       ],
       "explanation": "Resetting credentials, revoking active sessions, alerting IT, and auditing registered MFA devices stops ongoing unauthorized account access. Deleting local browser history does not stop the remote attacker."
+    },
+    {
+      "id": 11,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "c",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What does the term \"Quishing\" refer to in modern cybersecurity?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Sending phishing attempts via voice phone calls"
+        },
+        {
+          "value": "b",
+          "text": "Hacking smart television devices"
+        },
+        {
+          "value": "c",
+          "text": "Using malicious QR codes to conceal phishing URLs and bypass security filters"
+        },
+        {
+          "value": "d",
+          "text": "Encrypting databases using ransomware"
+        }
+      ],
+      "explanation": "Quishing stands for QR code phishing, where malicious links are embedded in image files to bypass textual email filters."
+    },
+    {
+      "id": 12,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Security Email Gateways (SEGs) detect embedded QR code links just as easily as standard plain-text web links.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "False. Traditional SEGs primarily scan textual and HTML links. Image-based QR codes often bypass standard filters because the URL is hidden inside the graphic payload."
+    },
+    {
+      "id": 13,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": [
+        "a",
+        "b",
+        "d"
+      ],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following indicators strongly suggest that an email may be a phishing attempt? (Select ALL that apply)",
+      "options": [
+        {
+          "value": "a",
+          "text": "Mismatch between the display sender name and the actual email domain address"
+        },
+        {
+          "value": "b",
+          "text": "Messages requesting urgent multi-factor authentication (MFA) re-verification"
+        },
+        {
+          "value": "c",
+          "text": "Digitally signed calendar invites sent from verified internal team accounts"
+        },
+        {
+          "value": "d",
+          "text": "Unsolicited attachments asking you to enable macros to view content"
+        }
+      ],
+      "explanation": "Mismatched headers, urgent MFA prompts, and macro-enabled attachments are classic phishing indicators. Digitally signed internal calendar invites are standard workflow items."
+    },
+    {
+      "id": 14,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "c",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You receive an email from IT-Support@company-desk.net stating: \"Your password expires in 10 minutes. Click here to retain your current password.\" What should you do first?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Click the link immediately to prevent losing account access"
+        },
+        {
+          "value": "b",
+          "text": "Forward the email to your personal account so you don't lose the link"
+        },
+        {
+          "value": "c",
+          "text": "Pause, do not click the link, and verify the sender address against official internal IT contacts"
+        },
+        {
+          "value": "d",
+          "text": "Reply to the email providing your current password so IT can fix it for you"
+        }
+      ],
+      "explanation": "You should pause and verify unrequested urgent security alerts independently through official internal channels."
+    },
+    {
+      "id": 15,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": [
+        "a",
+        "b",
+        "d"
+      ],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following file extensions attached to an unsolicited email should be treated as high-risk? (Select ALL that apply)",
+      "options": [
+        {
+          "value": "a",
+          "text": ".pdf.exe"
+        },
+        {
+          "value": "b",
+          "text": ".docm (Macro-enabled Word document)"
+        },
+        {
+          "value": "c",
+          "text": ".png"
+        },
+        {
+          "value": "d",
+          "text": ".vbs (Visual Basic Script)"
+        }
+      ],
+      "explanation": "Double extensions (.pdf.exe), macro-enabled documents (.docm), and script files (.vbs) can automatically execute malicious payloads on a host computer."
+    },
+    {
+      "id": 16,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A remote freelancer receives an email with an embedded QR code labeled \"Scan to View Signed Client NDA.\" Scans show the QR code opens http://192.168.1.1/login.html. Is this safe to open?",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "False. Legitimate signed contracts are not hosted on raw local IP addresses or delivered via unencrypted QR codes without prior client agreement."
+    },
+    {
+      "id": 17,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Combosquatting involves adding words like \"-security\" or \"-login\" to legitimate brand names within a domain registration.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "True. Combosquatting merges legitimate brand trademarks with keywords (e.g., paypal-update-center.com) to mislead recipients."
+    },
+    {
+      "id": 18,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": [
+        "a",
+        "b",
+        "c"
+      ],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What technical security mechanisms can organizations configure to help block spoofed email headers? (Select ALL that apply)",
+      "options": [
+        {
+          "value": "a",
+          "text": "SPF (Sender Policy Framework)"
+        },
+        {
+          "value": "b",
+          "text": "DKIM (DomainKeys Identified Mail)"
+        },
+        {
+          "value": "c",
+          "text": "DMARC (Domain-based Message Authentication, Reporting, and Conformance)"
+        },
+        {
+          "value": "d",
+          "text": "Upgrading physical monitor screen resolutions"
+        }
+      ],
+      "explanation": "SPF, DKIM, and DMARC are DNS-based email authentication protocols configured to verify sender domain legitimacy and stop header spoofing."
+    },
+    {
+      "id": 19,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is the primary reason threat actors exploit human curiosity or urgency during a phishing attempt?",
+      "options": [
+        {
+          "value": "a",
+          "text": "To test the bandwidth limitations of home routers"
+        },
+        {
+          "value": "b",
+          "text": "To trigger fast, emotional decision-making that bypasses logical identity verification"
+        },
+        {
+          "value": "c",
+          "text": "To force web browsers to automatically clear local cache files"
+        },
+        {
+          "value": "d",
+          "text": "To shorten the length of domain URLs"
+        }
+      ],
+      "explanation": "High-pressure emotional triggers (fear, urgency, curiosity) induce cognitive overload, causing targets to act before inspecting sender details or verifying requests."
+    },
+    {
+      "id": 20,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Phishing attacks targeting remote employees exclusively occur through traditional business email, never through personal email or instant messaging platforms.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "False. Attackers routinely target remote employees across personal email, LinkedIn DMs, WhatsApp, and Telegram to bypass enterprise email controls. MODULE 2: Spear Phishing"
     }
   ]
 }

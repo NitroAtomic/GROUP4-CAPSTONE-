@@ -26,6 +26,7 @@
 @import './pages/forgot-password.css';
 @import './pages/premium-subscription.css';
 @import './pages/payment.css';
+@import './pages/admin.css';
 @import './quiz/quiz-question.css';
 @import './quiz/quiz.css';
 @import './quiz/quiz-results.css';

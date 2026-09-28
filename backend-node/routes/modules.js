@@ -101,10 +101,11 @@ router.post('/', requireAdmin, async (req, res) => {
 // field update lang to sa parehong route)
 router.put('/:id', requireAdmin, async (req, res) => {
   const { module_title, description, module_type, category, slug, video_url } = req.body;
+  const hasVideoUrl = Object.prototype.hasOwnProperty.call(req.body, 'video_url');
   try {
     await pool.query(
-      'UPDATE module SET module_title = ?, description = ?, module_type = ?, category = ?, slug = ?, video_url = COALESCE(?, video_url) WHERE module_id = ?',
-      [module_title, description, module_type, category, slug, video_url, req.params.id]
+      'UPDATE module SET module_title = ?, description = ?, module_type = ?, category = ?, slug = ?, video_url = CASE WHEN ? THEN ? ELSE video_url END WHERE module_id = ?',
+      [module_title, description, module_type, category, slug, hasVideoUrl, video_url, req.params.id]
     );
     res.json({ message: 'Module updated.' });
   } catch (err) {
@@ -115,12 +116,56 @@ router.put('/:id', requireAdmin, async (req, res) => {
 
 // FR-17: Admin deletes ng module
 router.delete('/:id', requireAdmin, async (req, res) => {
+  const conn = await pool.getConnection();
   try {
-    await pool.query('DELETE FROM module WHERE module_id = ?', [req.params.id]);
+    await conn.beginTransaction();
+
+    const [modules] = await conn.query(
+      'SELECT module_id FROM module WHERE module_id = ? FOR UPDATE',
+      [req.params.id]
+    );
+    if (modules.length === 0) {
+      await conn.rollback();
+      return res.status(404).json({ error: 'Module not found.' });
+    }
+
+    const [progress] = await conn.query(
+      'SELECT progress_id FROM progress WHERE module_id = ? FOR UPDATE',
+      [req.params.id]
+    );
+    const [quizzes] = await conn.query(
+      'SELECT quiz_id FROM quiz WHERE module_id = ? FOR UPDATE',
+      [req.params.id]
+    );
+    const quizIds = quizzes.map((quiz) => quiz.quiz_id);
+    const quizResults = quizIds.length
+      ? (await conn.query(
+        'SELECT result_id FROM quizresult WHERE quiz_id IN (?) FOR UPDATE',
+        [quizIds]
+      ))[0]
+      : [];
+
+    if (progress.length || quizResults.length) {
+      await conn.rollback();
+      return res.status(409).json({
+        error: 'Cannot delete this module because learner progress or quiz history exists.'
+      });
+    }
+
+    if (quizIds.length) {
+      await conn.query('DELETE FROM quizquestion WHERE quiz_id IN (?)', [quizIds]);
+      await conn.query('DELETE FROM quiz WHERE module_id = ?', [req.params.id]);
+    }
+    await conn.query('DELETE FROM module WHERE module_id = ?', [req.params.id]);
+    await conn.commit();
+
     res.json({ message: 'Module deleted.' });
   } catch (err) {
+    await conn.rollback();
     console.error(err);
     res.status(500).json({ error: 'Failed to delete module.' });
+  } finally {
+    conn.release();
   }
 });
 

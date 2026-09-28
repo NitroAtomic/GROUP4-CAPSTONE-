@@ -1,9 +1,10 @@
 {
   "moduleId": "module-4",
   "moduleName": "Vishing",
-  "totalQuestions": 10,
-  "standardCount": 6,
-  "scenarioBasedCount": 4,
+  "totalQuestions": 20,
+  "questionsPerAttempt": 10,
+  "standardCount": 14,
+  "scenarioBasedCount": 6,
   "questions": [
     {
       "id": 1,
@@ -257,6 +258,291 @@
         }
       ],
       "explanation": "Passwords and OTPs must remain confidential and should never be disclosed over inbound calls."
+    },
+    {
+      "id": 11,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is \"Vishing\"?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Video Phishing via webcam feeds."
+        },
+        {
+          "value": "b",
+          "text": "Voice Phishing conducted via telephone calls or VoIP systems."
+        },
+        {
+          "value": "c",
+          "text": "Virtual Firewall scanning."
+        },
+        {
+          "value": "d",
+          "text": "Vector Analysis of server logs."
+        }
+      ],
+      "explanation": "Vishing is social engineering delivered via voice/phone communication."
+    },
+    {
+      "id": 12,
+      "category": "easy",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You receive a call from \"Corporate IT Support\" stating your laptop is infected. The caller instructs you to go to a website and install AnyDesk so they can clean the machine. What should you do?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Install AnyDesk immediately to fix the laptop."
+        },
+        {
+          "value": "b",
+          "text": "Decline the request, hang up, and verify the incident through official internal IT channels."
+        },
+        {
+          "value": "c",
+          "text": "Give the caller your banking credentials instead."
+        },
+        {
+          "value": "d",
+          "text": "Leave your laptop running and walk away."
+        }
+      ],
+      "explanation": "Installing remote desktop software on unsolicited calls gives attackers full control over your endpoint."
+    },
+    {
+      "id": 13,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Why is voice interaction (vishing) particularly effective at tricking targets compared to email?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Phone calls cannot be recorded."
+        },
+        {
+          "value": "b",
+          "text": "Real-time vocal conversations create high cognitive pressure and leave little time for independent verification."
+        },
+        {
+          "value": "c",
+          "text": "Emails are always blocked by antivirus software."
+        },
+        {
+          "value": "d",
+          "text": "Voice calls automatically bypass password controls."
+        }
+      ],
+      "explanation": "Live dialogue creates urgency and emotional pressure, making critical analysis difficult."
+    },
+    {
+      "id": 14,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What term describes repeated, automated MFA push prompts sent to a user’s phone to force them into tapping \"Approve\" out of frustration?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Denial of Service"
+        },
+        {
+          "value": "b",
+          "text": "MFA Fatigue / Push Bombing"
+        },
+        {
+          "value": "c",
+          "text": "Port Scanning"
+        },
+        {
+          "value": "d",
+          "text": "SQL Injection"
+        }
+      ],
+      "explanation": "Push bombing bombards targets with MFA prompts until they accidentally or reactively accept one."
+    },
+    {
+      "id": 15,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is the primary objective of a vishing attacker who convinces a remote employee to install Quick Assist or TeamViewer?",
+      "options": [
+        {
+          "value": "a",
+          "text": "To upgrade the computer's monitor resolution."
+        },
+        {
+          "value": "b",
+          "text": "To establish an active remote control session to exfiltrate files and pivot into corporate networks."
+        },
+        {
+          "value": "c",
+          "text": "To improve local Wi-Fi speeds."
+        },
+        {
+          "value": "d",
+          "text": "To automatically clear browser cache."
+        }
+      ],
+      "explanation": "Remote administration tools grant full desktop GUI control to the adversary."
+    },
+    {
+      "id": 16,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Vishing attacks only target personal landline phones and cannot be conducted over corporate VoIP applications like Microsoft Teams or Zoom.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "Attackers can initiate vishing via corporate VoIP, direct web calls, or messaging applications."
+    },
+    {
+      "id": 17,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which technique helps mitigate the risk of Caller ID spoofing when receiving unexpected internal calls?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Trusting the Caller ID name unconditionally."
+        },
+        {
+          "value": "b",
+          "text": "Independent Out-of-Band Callbacks using verified internal directory numbers."
+        },
+        {
+          "value": "c",
+          "text": "Turning off smartphone Bluetooth."
+        },
+        {
+          "value": "d",
+          "text": "Disabling mobile flight mode."
+        }
+      ],
+      "explanation": "Calling back via a independently verified number bypasses spoofed inbound routing."
+    },
+    {
+      "id": 18,
+      "category": "hard",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "You receive an unexpected call: *\"This is Executive Assistant Claire calling on behalf of CEO Mark. He needs you to purchase five digital gift cards right now for a client meeting.\"* What red flag is present?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Requests for digital gift cards combined with executive authority impersonation and urgency."
+        },
+        {
+          "value": "b",
+          "text": "The caller used proper grammar."
+        },
+        {
+          "value": "c",
+          "text": "The call occurred during business hours."
+        },
+        {
+          "value": "d",
+          "text": "The caller knew the CEO's name."
+        }
+      ],
+      "explanation": "Requesting gift cards under executive pressure is a classic social engineering financial scam."
+    },
+    {
+      "id": 19,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which department should a remote employee contact to report a suspicious vishing call impersonating internal staff?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Local Sanitation Department"
+        },
+        {
+          "value": "b",
+          "text": "Enterprise Security / IT Security Incident Response Team"
+        },
+        {
+          "value": "c",
+          "text": "Public Library"
+        },
+        {
+          "value": "d",
+          "text": "The caller's personal number"
+        }
+      ],
+      "explanation": "Security teams handle threat logging, account isolation, and incident analysis."
+    },
+    {
+      "id": 20,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": [
+        "a",
+        "b"
+      ],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following indicators suggest an incoming phone call is a vishing attempt? *(Select TWO)*",
+      "options": [
+        {
+          "value": "a",
+          "text": "The caller demands that you bypass standard verification procedures due to an \"emergency.\""
+        },
+        {
+          "value": "b",
+          "text": "The caller asks you to read back an incoming SMS passcode."
+        },
+        {
+          "value": "c",
+          "text": "The call was scheduled 3 days in advance via official calendar invite."
+        },
+        {
+          "value": "d",
+          "text": "The caller tells you to check official corporate documentation without asking for data."
+        }
+      ],
+      "explanation": "Emergency protocol bypasses and requests for passcodes are primary vishing tactics."
     }
   ]
 }

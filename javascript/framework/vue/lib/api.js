@@ -5,10 +5,17 @@
 // calling fetch() directly, so the base URL, JSON handling, and the
 // Authorization header only need to be right in one spot.
 
-// Vite exposes anything prefixed VITE_ on import.meta.env. Falls back to
-// the local backend's default port (see AUTHENTICATION.md "Running it")
-// so the app works out of the box in development with zero .env setup.
-export const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000'
+// VITE_API_BASE can point a separately hosted frontend at its API. In
+// production without an override, use same-origin /api routes; the backend
+// serves the built frontend in that deployment. Keep the local backend
+// fallback for development without requiring a .env file.
+export function resolveApiBase(configuredBase, isProduction) {
+  const base = typeof configuredBase === 'string' ? configuredBase.trim() : ''
+  if (base) return base
+  return isProduction ? '' : 'http://localhost:3000'
+}
+
+export const API_BASE = resolveApiBase(import.meta.env.VITE_API_BASE, import.meta.env.PROD)
 
 /**
  * @param {string} path       e.g. '/api/auth/login'

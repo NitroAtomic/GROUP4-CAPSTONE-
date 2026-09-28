@@ -7,7 +7,8 @@ export default {
 
   data() {
     return {
-      results: null
+      results: null,
+      isSubmitting: false
     }
   },
 
@@ -116,7 +117,8 @@ export default {
     },
 
     async submitToBackend() {
-      if (!this.results) return
+      if (!this.results || this.results.submitted || this.isSubmitting) return
+      this.isSubmitting = true
 
       try {
         const authStore = useAuthStore()
@@ -134,8 +136,12 @@ export default {
             weak_areas: this.results.weak_areas
           }
         })
+        this.results.submitted = true
+        sessionStorage.setItem('assessment-results', JSON.stringify(this.results))
       } catch (error) {
         console.error('Error submitting assessment:', error)
+      } finally {
+        this.isSubmitting = false
       }
     },
 

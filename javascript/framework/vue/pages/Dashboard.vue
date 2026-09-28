@@ -40,7 +40,7 @@
           <article class="dashboard-summary-card">
             <p class="dashboard-summary-label">Weak areas found</p>
             <p class="dashboard-summary-value" id="weak-areas-count">
-              {{ weakAreas.length }}
+              {{ hasAssessment ? weakAreas.length : 'Not assessed' }}
             </p>
           </article>
 
@@ -50,13 +50,17 @@
           <div class="dashboard-section-heading dashboard-section-heading-row">
             <div>
               <h2>Recommended for you</h2>
-              <p>Based on your assessment results</p>
+              <p>
+                {{ hasAssessment
+                  ? 'Based on your assessment results'
+                  : 'Complete the Awareness Assessment for personalized recommendations.' }}
+              </p>
             </div>
             <router-link
               to="/assessment/question"
               class="dashboard-assessment-link"
             >
-              Retake assessment
+              {{ hasAssessment ? 'Retake assessment' : 'Take assessment' }}
             </router-link>
           </div>
 
@@ -68,13 +72,18 @@
               class="dashboard-recommendation-card"
               v-bind="recommendationBind(module)"
             >
-              <span class="dashboard-recommended-label">Recommended</span>
+              <span class="dashboard-recommended-label">
+                {{ hasAssessment ? 'Recommended' : 'Suggested starting point' }}
+              </span>
               <h3>{{ module.module_title }}</h3>
               <p>{{ recommendationKind(module) }}</p>
             </component>
           </div>
+          <p v-else-if="hasAssessment" class="dashboard-empty-copy">
+            No recommended modules yet. Complete a quiz to get additional suggestions.
+          </p>
           <p v-else class="dashboard-empty-copy">
-            No recommended modules yet. Complete an assessment or a quiz to get personalized suggestions.
+            No starting modules are available right now. Complete the Awareness Assessment for personalized recommendations.
           </p>
         </section>
 
@@ -84,7 +93,7 @@
             <p>Topics to focus on next</p>
           </div>
 
-          <div v-if="weakAreas.length" class="dashboard-weak-areas-list">
+          <div v-if="hasAssessment && weakAreas.length" class="dashboard-weak-areas-list">
             <div
               v-for="area in weakAreas"
               :key="area.topic"
@@ -94,8 +103,11 @@
               <span class="dashboard-score-badge">{{ area.scoreLabel }}</span>
             </div>
           </div>
+          <p v-else-if="hasAssessment" class="dashboard-empty-copy">
+            No weak areas recorded yet.
+          </p>
           <p v-else class="dashboard-empty-copy">
-            No weak areas recorded yet. Take the Awareness Assessment once it is available.
+            You have not completed the Awareness Assessment yet. Your assessment-based weak areas will appear here afterward.
           </p>
         </section>
 
@@ -128,4 +140,4 @@
   </main>
 </template>
 
-<script src="./dashboard.js"></script>
+<script src="./Dashboard.js"></script>

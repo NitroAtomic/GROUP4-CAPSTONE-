@@ -5,7 +5,8 @@
       <div class="nav-left">
         <router-link to="/" class="nav-link">Home</router-link>
         <router-link to="/about" class="nav-link">About</router-link>
-        <router-link v-if="isAuthenticated" to="/dashboard" class="nav-link">Dashboard</router-link>
+        <router-link v-if="isAuthenticated && !isAdmin" to="/dashboard" class="nav-link">Dashboard</router-link>
+        <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin Portal</router-link>
       </div>
 
       <div class="nav-right">
@@ -38,11 +39,12 @@
             <span class="dashboard-user-icon" aria-hidden="true">●</span>
             <span class="dashboard-user-name">{{ firstName }}</span>
           </div>
-          <span v-if="isPremium" class="dashboard-premium-badge">
+          <span v-if="isAdmin" class="dashboard-premium-badge">Administrator</span>
+          <span v-else-if="isPremium" class="dashboard-premium-badge">
             <img class="inline-crown-icon" src="/images/icons/crown-badge.png" alt="" aria-hidden="true">
             Premium
           </span>
-          <router-link v-if="!isPremium && !isMinimalNav" to="/premium-subscription" class="btn btn-premium">Go Premium</router-link>
+          <router-link v-if="!isPremium && !isAdmin && !isMinimalNav" to="/premium-subscription" class="btn btn-premium">Go Premium</router-link>
           <button type="button" class="btn btn-logout" @click="logout">Log out</button>
         </template>
         <template v-else>

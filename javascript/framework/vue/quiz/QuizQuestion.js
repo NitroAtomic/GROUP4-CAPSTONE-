@@ -23,8 +23,6 @@ const MODULE_DATA = {
 }
 
 // Fisher-Yates shuffle — randomizes ORDER only.
-// We never drop or add questions here; all 10 always appear,
-// just in a different sequence each attempt (per Capstone paper requirement).
 function shuffleOrder(array) {
   const shuffled = [...array]
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -32,6 +30,13 @@ function shuffleOrder(array) {
     ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
   }
   return shuffled
+}
+
+// Randomly select N questions from the pool.
+// If pool size is <= count, shuffles and returns all questions.
+function selectRandomQuestions(array, count) {
+  const shuffled = shuffleOrder(array)
+  return shuffled.slice(0, count)
 }
 
 export default {
@@ -142,7 +147,8 @@ export default {
         return
       }
       this.moduleData = data
-      this.shuffledQuestions = shuffleOrder(data.questions)
+      const count = data.questionsPerAttempt || 10
+      this.shuffledQuestions = selectRandomQuestions(data.questions, count)
       this.currentIndex = 0
       this.answers = {}
       this.checkedIds = {}

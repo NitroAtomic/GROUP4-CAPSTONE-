@@ -1,9 +1,10 @@
 {
   "moduleId": "module-5",
   "moduleName": "Pretexting",
-  "totalQuestions": 10,
-  "standardCount": 6,
-  "scenarioBasedCount": 4,
+  "totalQuestions": 20,
+  "questionsPerAttempt": 10,
+  "standardCount": 14,
+  "scenarioBasedCount": 6,
   "questions": [
     {
       "id": 1,
@@ -270,6 +271,278 @@
         }
       ],
       "explanation": "Evaluating the logical plausibility of a request helps spot flawed pretexts."
+    },
+    {
+      "id": 11,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What is the primary characteristic of a pretexting attack?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Bombarding a website with fake internet traffic."
+        },
+        {
+          "value": "b",
+          "text": "Fabricating a scenario and identity to build trust and trick a victim into sharing data."
+        },
+        {
+          "value": "c",
+          "text": "Infecting USB drives left in public parking lots."
+        },
+        {
+          "value": "d",
+          "text": "Sending mass generic spam to millions of emails."
+        }
+      ],
+      "explanation": "Pretexting centers on creating a plausible false persona and narrative."
+    },
+    {
+      "id": 12,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Pretexting attacks always happen within a single 30-second interaction and never involve multi-day conversations.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "Pretexting often uses a \"slow-burn\" approach, building rapport across multiple days or weeks."
+    },
+    {
+      "id": 13,
+      "category": "easy",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Someone claiming to be an \"External ISO Auditor\" contacts a remote worker asking for a complete list of internal server IP addresses. The caller says opening an IT ticket will take too long. What should the worker do?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Email the server IP list immediately."
+        },
+        {
+          "value": "b",
+          "text": "Insist on routing the request through official internal ticketing and manager approval channels."
+        },
+        {
+          "value": "c",
+          "text": "Post the server IP addresses on social media."
+        },
+        {
+          "value": "d",
+          "text": "Give the auditor their home Wi-Fi password."
+        }
+      ],
+      "explanation": "Never bypass formal verification and ticketing procedures for external inquiries."
+    },
+    {
+      "id": 14,
+      "category": "easy",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": [
+        "a",
+        "b"
+      ],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which of the following personas are common disguises used in pretexting campaigns? *(Select TWO)*",
+      "options": [
+        {
+          "value": "a",
+          "text": "An external compliance auditor conducting an \"urgent audit.\""
+        },
+        {
+          "value": "b",
+          "text": "A distressed remote contractor needing file access due to an \"emergency.\""
+        },
+        {
+          "value": "c",
+          "text": "An automated operating system update wizard."
+        },
+        {
+          "value": "d",
+          "text": "A physical hardware firewall appliance."
+        }
+      ],
+      "explanation": "Pretexters assume roles that invoke authority (auditor) or empathy (distressed colleague)."
+    },
+    {
+      "id": 15,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A pretexter will never use public information from LinkedIn to build their fake story.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "Pretexters extensively use OSINT from LinkedIn and company sites to make their scenarios believable."
+    },
+    {
+      "id": 16,
+      "category": "medium",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What term describes an attacker engaging a victim in casual conversation over several days to establish a sense of normal friendship before executing a scam?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Buffer Overflow"
+        },
+        {
+          "value": "b",
+          "text": "Trust-Building / Slow-Burn Pretexting"
+        },
+        {
+          "value": "c",
+          "text": "Man-in-the-Middle"
+        },
+        {
+          "value": "d",
+          "text": "Zero-Day Exploit"
+        }
+      ],
+      "explanation": "Slow-burn pretexting grooms the victim over time to lower security vigilance."
+    },
+    {
+      "id": 17,
+      "category": "medium",
+      "questionType": "scenario-based",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "A remote contractor receives an email from someone claiming to be \"Head of Global Security\": *\"We are running a silent security exercise. Do not inform your supervisor. Send your current VPN credentials directly to this email.\"* What should the contractor do?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Follow instructions and keep quiet."
+        },
+        {
+          "value": "b",
+          "text": "Ignore the secrecy request and immediately report the message to their official supervisor and security team."
+        },
+        {
+          "value": "c",
+          "text": "Reply asking for a cash reward."
+        },
+        {
+          "value": "d",
+          "text": "Post the VPN credentials on an online forum."
+        }
+      ],
+      "explanation": "Demands for secrecy and credential submission are major red flags; legitimate security exercises do not collect user passwords via email."
+    },
+    {
+      "id": 18,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "multiple",
+      "correctAnswer": [
+        "a",
+        "b"
+      ],
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Which conversational signs suggest an interaction may be a pretexting attempt? *(Select TWO)*",
+      "options": [
+        {
+          "value": "a",
+          "text": "The contact asks for confidential data while insisting you skip standard manager approval."
+        },
+        {
+          "value": "b",
+          "text": "The contact uses an elaborate, emotional story to justify an unusual information request."
+        },
+        {
+          "value": "c",
+          "text": "The contact directs you to submit a ticket through the official company portal."
+        },
+        {
+          "value": "d",
+          "text": "The contact's identity is verified by your department manager in person."
+        }
+      ],
+      "explanation": "Bypassing procedures and using high-emotion stories are common pretexting tactics."
+    },
+    {
+      "id": 19,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "b",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "What should you do if an external party claiming to be an auditor asks for employee home addresses?",
+      "options": [
+        {
+          "value": "a",
+          "text": "Send the addresses in a plain text file."
+        },
+        {
+          "value": "b",
+          "text": "Refuse and escalate the inquiry to your company's official legal or HR department."
+        },
+        {
+          "value": "c",
+          "text": "Ask for $10 per address."
+        },
+        {
+          "value": "d",
+          "text": "Guess the addresses and send random data."
+        }
+      ],
+      "explanation": "Personally Identifiable Information (PII) disclosures must be handled exclusively by authorized departments."
+    },
+    {
+      "id": 20,
+      "category": "hard",
+      "questionType": "standard",
+      "answerType": "single",
+      "correctAnswer": "a",
+      "pointsCorrect": 1,
+      "pointsIncorrect": -1,
+      "questionText": "Pretexting can occur over email, phone calls, social media, or messaging apps.",
+      "options": [
+        {
+          "value": "a",
+          "text": "True"
+        },
+        {
+          "value": "b",
+          "text": "False"
+        }
+      ],
+      "explanation": "Pretexting is medium-agnostic and occurs across any communication channel."
     }
   ]
 }

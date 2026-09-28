@@ -82,6 +82,45 @@
     @apply ml-auto border-black bg-gray-100 text-black;
   }
 
+  .chatbot-message-paragraph {
+    @apply my-1 first:mt-0 last:mb-0;
+  }
+
+  .chatbot-message-heading {
+    @apply mt-1 mb-1 font-bold text-[13px] first:mt-0;
+  }
+
+  .chatbot-message-list {
+    @apply my-1 pl-5;
+  }
+
+  .chatbot-message-list li {
+    @apply mb-0.5;
+  }
+
+  .chatbot-message-code {
+    @apply my-1 p-2 overflow-x-auto rounded bg-gray-100 text-[11px] whitespace-pre-wrap;
+  }
+
+  .chatbot-message code {
+    @apply px-0.5 rounded bg-gray-100 font-mono text-[11px];
+  }
+
+  .chatbot-starter-prompts {
+    @apply flex flex-col items-start gap-1.5 pb-2;
+  }
+
+  .chatbot-starter-prompts p {
+    @apply mb-0.5 text-[11px] font-semibold text-gray-600;
+  }
+
+  .chatbot-starter-prompts button {
+    @apply py-1.5 px-2.5 border border-gray-300 rounded-full bg-white text-left text-[11px] leading-snug cursor-pointer hover:bg-gray-100;
+  }
+
+  .chatbot-retry-button {
+    @apply mt-1 underline text-[11px] font-semibold cursor-pointer disabled:cursor-not-allowed disabled:opacity-60;
+  }
 
   /* =========================
      Loading Message

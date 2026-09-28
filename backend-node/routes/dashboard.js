@@ -38,6 +38,7 @@ router.get('/', requireAuth, async (req, res) => {
       progress,
       quiz_history: quizHistory,
       assessment: assessmentRows[0] || null,
+      hasAssessment: assessmentRows.length > 0,
     });
   } catch (err) {
     console.error(err);
@@ -46,7 +47,7 @@ router.get('/', requireAuth, async (req, res) => {
 });
 
 // FR-15: Mga recommended modules. Base sa weak areas ng assessment kung meron,
-// kung wala, yung mga module pa na hindi pa nasimulan.
+// kung wala, yung mga module pa na hindi pa nasisimulan.
 router.get('/recommendations', requireAuth, async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -79,8 +80,15 @@ router.get('/recommendations', requireAuth, async (req, res) => {
       const [modules] = await pool.query(
         `SELECT module_id, module_title, slug, category, module_type
          FROM module
-         WHERE category IN (${placeholders}) OR slug IN (${placeholders})`,
-        [...ranked, ...ranked]
+         WHERE (category IN (${placeholders}) OR slug IN (${placeholders}))
+           AND NOT EXISTS (
+             SELECT 1
+             FROM progress p
+             WHERE p.user_id = ?
+               AND p.module_id = module.module_id
+               AND p.completion_status = 'completed'
+           )`,
+        [...ranked, ...ranked, req.user.user_id]
       );
 
       if (modules.length) {

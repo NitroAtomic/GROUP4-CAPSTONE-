@@ -2,6 +2,7 @@
 // IamAtomic — Group 4 Capstone 2, SE-AWARE backend
 const express = require('express');
 const bcrypt = require('bcrypt');
+const { randomInt } = require('crypto');
 const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
 const { requireAuth, JWT_SECRET } = require('../middleware/auth');
@@ -13,7 +14,7 @@ const OTP_TTL_MINUTES = 5;
 const OTP_MAX_ATTEMPTS = 5;
 
 function generateOtpCode() {
-  return String(Math.floor(100000 + Math.random() * 900000)); // 6 digits
+  return String(randomInt(0, 1000000)).padStart(6, '0');
 }
 
 async function issueOtp(user, purpose) {
@@ -21,20 +22,54 @@ async function issueOtp(user, purpose) {
   const code = generateOtpCode();
   const codeHash = await bcrypt.hash(code, SALT_ROUNDS);
   const expiresAt = new Date(Date.now() + OTP_TTL_MINUTES * 60 * 1000);
+  let otpId;
 
-  await pool.query(
-    'INSERT INTO otpcode (user_id, code_hash, purpose, expires_at) VALUES (?, ?, ?, ?)',
-    [user.user_id, codeHash, purpose, expiresAt]
-  );
+  if (purpose === 'login') {
+    const connection = await pool.getConnection();
+    try {
+      await connection.beginTransaction();
+      await connection.query('SELECT user_id FROM user WHERE user_id = ? FOR UPDATE', [user.user_id]);
+      await connection.query(
+        "UPDATE otpcode SET used = 1 WHERE user_id = ? AND purpose = 'login' AND used = 0",
+        [user.user_id]
+      );
+      const [result] = await connection.query(
+        'INSERT INTO otpcode (user_id, code_hash, purpose, expires_at) VALUES (?, ?, ?, ?)',
+        [user.user_id, codeHash, purpose, expiresAt]
+      );
+      otpId = result.insertId;
+      await connection.commit();
+    } catch (err) {
+      await connection.rollback();
+      throw err;
+    } finally {
+      connection.release();
+    }
+  } else {
+    const [result] = await pool.query(
+      'INSERT INTO otpcode (user_id, code_hash, purpose, expires_at) VALUES (?, ?, ?, ?)',
+      [user.user_id, codeHash, purpose, expiresAt]
+    );
+    otpId = result.insertId;
+  }
+
   // Naka-save na yung code bago pa subukang ipadala, kaya kung pumalya yung
   // email, hindi nasisira yung buong request. Sinasabi na lang kung naipadala
   // ba talaga, para masabi sa user imbis na generic na error.
   try {
-    return await sendOtpEmail(user.email, code, purpose);
+    return { ...(await sendOtpEmail(user.email, code, purpose)), otpId };
   } catch (err) {
     console.error('[auth] hindi naipadala yung code:', err.message);
-    return { delivered: false, mode: 'failed' };
+    return { delivered: false, mode: 'failed', otpId };
   }
+}
+
+function createPendingOtpToken(userId, otpId) {
+  return jwt.sign(
+    { user_id: userId, otp_pending: true, otp_id: otpId },
+    JWT_SECRET,
+    { expiresIn: `${OTP_TTL_MINUTES}m` }
+  );
 }
 
 // FR-09: Registration
@@ -105,11 +140,7 @@ router.post('/login', async (req, res) => {
         });
       }
 
-      const pendingToken = jwt.sign(
-        { user_id: user.user_id, otp_pending: true },
-        JWT_SECRET,
-        { expiresIn: `${OTP_TTL_MINUTES}m` }
-      );
+      const pendingToken = createPendingOtpToken(user.user_id, sent.otpId);
       return res.json({
         requiresOtp: true,
         pendingToken,
@@ -143,6 +174,9 @@ router.post('/verify-otp', async (req, res) => {
   if (!pendingToken || !code) {
     return res.status(400).json({ error: 'pendingToken and code are required.' });
   }
+  if (typeof code !== 'string' || !/^\d{6}$/.test(code)) {
+    return res.status(400).json({ error: 'The verification code must be exactly 6 digits.' });
+  }
 
   let payload;
   try {
@@ -150,14 +184,14 @@ router.post('/verify-otp', async (req, res) => {
   } catch (err) {
     return res.status(401).json({ error: 'This verification session expired. Please log in again.' });
   }
-  if (!payload.otp_pending) {
+  if (!payload.otp_pending || !payload.otp_id) {
     return res.status(400).json({ error: 'Invalid verification session.' });
   }
 
   try {
     const [otpRows] = await pool.query(
-      "SELECT * FROM otpcode WHERE user_id = ? AND purpose = 'login' AND used = 0 ORDER BY otp_id DESC LIMIT 1",
-      [payload.user_id]
+      "SELECT * FROM otpcode WHERE otp_id = ? AND user_id = ? AND purpose = 'login' AND used = 0",
+      [payload.otp_id, payload.user_id]
     );
     if (otpRows.length === 0) {
       return res.status(400).json({ error: 'No pending code found. Please log in again.' });
@@ -173,11 +207,23 @@ router.post('/verify-otp', async (req, res) => {
 
     const match = await bcrypt.compare(code, otp.code_hash);
     if (!match) {
-      await pool.query('UPDATE otpcode SET attempts = attempts + 1 WHERE otp_id = ?', [otp.otp_id]);
+      const [attemptResult] = await pool.query(
+        'UPDATE otpcode SET attempts = attempts + 1 WHERE otp_id = ? AND used = 0 AND attempts < ?',
+        [otp.otp_id, OTP_MAX_ATTEMPTS]
+      );
+      if (attemptResult.affectedRows === 0) {
+        return res.status(429).json({ error: 'Too many incorrect attempts. Please log in again to get a new code.' });
+      }
       return res.status(401).json({ error: 'Incorrect code. Please try again.' });
     }
 
-    await pool.query('UPDATE otpcode SET used = 1 WHERE otp_id = ?', [otp.otp_id]);
+    const [usedResult] = await pool.query(
+      'UPDATE otpcode SET used = 1 WHERE otp_id = ? AND used = 0 AND attempts < ?',
+      [otp.otp_id, OTP_MAX_ATTEMPTS]
+    );
+    if (usedResult.affectedRows === 0) {
+      return res.status(400).json({ error: 'This verification code is no longer active. Please request a new one.' });
+    }
 
     const [userRows] = await pool.query('SELECT * FROM user WHERE user_id = ?', [payload.user_id]);
     const user = userRows[0];
@@ -216,8 +262,16 @@ router.post('/resend-otp', async (req, res) => {
   try {
     const [userRows] = await pool.query('SELECT * FROM user WHERE user_id = ?', [payload.user_id]);
     if (userRows.length === 0) return res.status(404).json({ error: 'Account not found.' });
-    await issueOtp(userRows[0]);
-    res.json({ message: 'A new code has been sent.' });
+    const sent = await issueOtp(userRows[0]);
+    if (sent.mode === 'failed') {
+      return res.status(503).json({
+        error: 'We could not send your verification code right now. Please try again in a moment.',
+      });
+    }
+    res.json({
+      message: 'A new code has been sent.',
+      pendingToken: createPendingOtpToken(payload.user_id, sent.otpId),
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to resend code.' });

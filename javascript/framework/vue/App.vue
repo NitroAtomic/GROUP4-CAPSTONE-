@@ -1,7 +1,7 @@
 <template>
   <SiteHeader />
   <router-view />
-  <ChatbotWidget v-if="!isQuizOrAssessmentRoute" />
+  <ChatbotWidget />
   <BackToTop />
 </template>
 
@@ -15,12 +15,6 @@ export default {
     SiteHeader,
     ChatbotWidget,
     BackToTop
-  },
-  computed: {
-    isQuizOrAssessmentRoute() {
-      const path = this.$route.path
-      return path.startsWith('/assessment') || path.startsWith('/quiz')
-    }
   }
 }
 </script>
