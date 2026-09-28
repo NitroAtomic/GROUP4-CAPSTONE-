@@ -142,7 +142,14 @@ export const useAuthStore = defineStore('auth', {
         body: { subscription_type: 'Premium' }
       })
       if (this.user) {
-        this.user = { ...this.user, subscription_type: data.subscription_type }
+        // Kasama yung status, kasi yun din ang tinitingnan ng isPremium.
+        // Kung type lang ang na-update, mananatiling naka-lock yung nav at
+        // yung premium cards hangga't hindi nagre-login ulit.
+        this.user = {
+          ...this.user,
+          subscription_type: data.subscription_type,
+          subscription_status: data.subscription_status || 'active'
+        }
         sessionStorage.setItem(USER_KEY, JSON.stringify(this.user))
       }
       return data

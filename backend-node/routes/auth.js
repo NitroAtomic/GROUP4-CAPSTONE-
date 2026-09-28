@@ -252,9 +252,17 @@ router.patch('/me/subscription', requireAuth, async (req, res) => {
   if (!['Free', 'Premium'].includes(subscription_type)) {
     return res.status(400).json({ error: 'subscription_type must be Free or Premium.' });
   }
+  // Sabay binabago yung status, hindi lang yung type. Premium lang yung type
+  // pero hindi 'active' yung status, hindi kumpleto yung upgrade: pumapasa
+  // yung bayad pero hindi nabubuksan yung role-based modules at dashboard,
+  // kasi hinahanap ng frontend yung dalawa bago ka ituring na Premium.
+  const subscription_status = subscription_type === 'Premium' ? 'active' : 'inactive';
   try {
-    await pool.query('UPDATE user SET subscription_type = ? WHERE user_id = ?', [subscription_type, req.user.user_id]);
-    res.json({ message: 'Plan updated.', subscription_type });
+    await pool.query(
+      'UPDATE user SET subscription_type = ?, subscription_status = ? WHERE user_id = ?',
+      [subscription_type, subscription_status, req.user.user_id]
+    );
+    res.json({ message: 'Plan updated.', subscription_type, subscription_status });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to update plan.' });

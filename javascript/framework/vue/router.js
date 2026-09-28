@@ -114,6 +114,14 @@ const routes = [
   },
   // Premium module routes (FR-16 - Role-Based Modules)
   {
+    // Listahan ng apat na role-based courses. Dati walang ganito, kaya walang
+    // paraan para marating sila maliban sa pag-type ng URL.
+    path: '/modules/premium',
+    name: 'PremiumModules',
+    component: () => import('./pages/PremiumModules.vue'),
+    meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
     path: '/modules/premium/client-impersonation',
     name: 'ClientImpersonation',
     component: () => import('./modules/premium/ClientImpersonation.vue'),
