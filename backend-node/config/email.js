@@ -1,25 +1,31 @@
 // config/email.js
+// IamAtomic — Group 4 Capstone 2, SE-AWARE backend
 //
-// Sends the OTP by real email when SMTP credentials are set in .env.
-// Without them (e.g. right after cloning this repo, before anyone has set
-// up a mail account), it falls back to logging the code to the server
-// console instead -- so the OTP flow is fully testable with zero setup,
-// the same graceful-fallback pattern used elsewhere in this project
-// (js/backend-config.js on the frontend does the same thing for the API URL).
+// Nagpapadala ng totoong email kung naka-set up na yung SMTP sa .env. Kung
+// wala pa (bagong clone lang, walang mail account), console na lang lalabas
+// yung code — para testable pa rin agad kahit walang setup, parang yung
+// backend-config.js sa frontend na fallback din pag walang API URL na naka-set.
 
 const nodemailer = require('nodemailer');
+const config = require('./env');
 
 function smtpConfigured() {
-  return !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+  return !!(config.smtp.host && config.smtp.user && config.smtp.pass);
 }
 
 let transporter = null;
 if (smtpConfigured()) {
   transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT) || 587,
+    host: config.smtp.host,
+    port: config.smtp.port,
     secure: false,
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    auth: { user: config.smtp.user, pass: config.smtp.pass },
+    // Para hindi mag-hang yung login kapag ang bagal or hindi sumasagot yung
+    // mail server. Mas mabuting sabihin agad na hindi naipadala kaysa iwan
+    // na naghihintay yung user.
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
   });
 }
 
@@ -35,13 +41,13 @@ async function sendOtpEmail(toEmail, code, purpose) {
     : 'Your verification code is';
 
   if (!transporter) {
-    // Dev/demo fallback -- no real SMTP set up yet.
+    // Walang SMTP pa, kaya console na lang muna.
     console.log(`\n[email] SMTP not configured. ${isReset ? 'PASSWORD RESET' : 'OTP'} for ${toEmail}: ${code}\n`);
     return { delivered: false, mode: 'console' };
   }
 
   await transporter.sendMail({
-    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    from: config.smtp.from || config.smtp.user,
     to: toEmail,
     subject: subject,
     text: `${intro} ${code}. It expires in 5 minutes. If you didn't request this, you can ignore this email.`,

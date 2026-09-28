@@ -1,11 +1,13 @@
 // routes/dashboard.js
+// IamAtomic — Group 4 Capstone 2, SE-AWARE backend
 const express = require('express');
 const pool = require('../config/db');
 const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-// FR-12: Personalized Dashboard — everything the dashboard needs in one call
+// FR-12: Personalized Dashboard. Lahat ng kailangan ng dashboard, isang call
+// lang.
 router.get('/', requireAuth, async (req, res) => {
   try {
     const [progress] = await pool.query(
@@ -15,7 +17,7 @@ router.get('/', requireAuth, async (req, res) => {
       [req.user.user_id]
     );
 
-    // FR-14: Quiz history, most recent first
+    // FR-14: Quiz history, pinakabago muna
     const [quizHistory] = await pool.query(
       `SELECT qr.score, qr.total, qr.date_completed, m.module_title, m.slug
        FROM quizresult qr
@@ -26,7 +28,7 @@ router.get('/', requireAuth, async (req, res) => {
       [req.user.user_id]
     );
 
-    // FR-11: Most recent assessment
+    // FR-11: Pinakabagong assessment
     const [assessmentRows] = await pool.query(
       'SELECT awareness_score AS score, total, awareness_level, by_topic, weak_areas, assessment_date FROM awarenessassessment WHERE user_id = ? ORDER BY assessment_id DESC LIMIT 1',
       [req.user.user_id]
@@ -43,34 +45,68 @@ router.get('/', requireAuth, async (req, res) => {
   }
 });
 
-// FR-15: Recommended modules — based on assessment weak areas if one
-// exists, otherwise modules the user hasn't started yet.
+// FR-15: Mga recommended modules. Base sa weak areas ng assessment kung meron,
+// kung wala, yung mga module pa na hindi pa nasimulan.
 router.get('/recommendations', requireAuth, async (req, res) => {
   try {
-    const [assessmentRows] = await pool.query(
-      'SELECT weak_areas FROM awarenessassessment WHERE user_id = ? ORDER BY assessment_id DESC LIMIT 1',
+    const [rows] = await pool.query(
+      `SELECT weak_areas, by_topic FROM awarenessassessment
+       WHERE user_id = ? ORDER BY assessment_id DESC LIMIT 1`,
       [req.user.user_id]
     );
 
-    if (assessmentRows.length > 0) {
-      const weakAreas = assessmentRows[0].weak_areas; // JSON array, e.g. ["phishing","vishing"]
-      if (weakAreas && weakAreas.length > 0) {
-        const placeholders = weakAreas.map(() => '?').join(',');
-        const [modules] = await pool.query(
-          `SELECT module_id, module_title, slug, category FROM module WHERE category IN (${placeholders}) LIMIT 2`,
-          weakAreas
-        );
-        return res.json(modules);
+    const latest = rows[0];
+    const weakAreas = latest?.weak_areas || [];
+
+    if (weakAreas.length) {
+      // Pinakamahina muna, para yung talagang pinaghirapan nila una sa list,
+      // hindi basta kung ano lang naibalik ng database.
+      const byTopic = latest.by_topic || {};
+      const ranked = [...weakAreas].sort((a, b) => {
+        const ratio = (t) => {
+          const tally = byTopic[t];
+          return tally && tally.total ? tally.correct / tally.total : 0;
+        };
+        return ratio(a) - ratio(b);
+      });
+
+      // Tinugma sa slug pati category. Nagkalayo na to minsan: naka-record
+      // yung weakness sa "quishing" pero yung category ng module ay
+      // "phishing", kaya kahit gaano kababa yung score dun, hindi na-
+      // rerecommend. Kapag pareho tinigil, kahit ma-rename pa sa future,
+      // mababawasan lang, hindi bigla nawawala yung recommendation.
+      const placeholders = ranked.map(() => '?').join(',');
+      const [modules] = await pool.query(
+        `SELECT module_id, module_title, slug, category, module_type
+         FROM module
+         WHERE category IN (${placeholders}) OR slug IN (${placeholders})`,
+        [...ranked, ...ranked]
+      );
+
+      if (modules.length) {
+        const position = (m) => {
+          const bySlug = ranked.indexOf(m.slug);
+          const byCategory = ranked.indexOf(m.category);
+          const found = [bySlug, byCategory].filter((i) => i !== -1);
+          return found.length ? Math.min(...found) : ranked.length;
+        };
+
+        const ordered = modules
+          .sort((a, b) => position(a) - position(b))
+          .slice(0, 3);
+
+        return res.json(ordered);
       }
     }
 
-    // Fallback: modules with no progress row yet for this user
+    // Wala pang assessment, o walang tumugma. I-suggest yung Free modules na
+    // hindi pa nasisimulan, magandang pinagsisimulan naman.
     const [modules] = await pool.query(
-      `SELECT m.module_id, m.module_title, m.slug, m.category
+      `SELECT m.module_id, m.module_title, m.slug, m.category, m.module_type
        FROM module m
        WHERE m.module_type = 'Free'
-       AND m.module_id NOT IN (SELECT module_id FROM progress WHERE user_id = ?)
-       LIMIT 2`,
+         AND m.module_id NOT IN (SELECT module_id FROM progress WHERE user_id = ?)
+       LIMIT 3`,
       [req.user.user_id]
     );
     res.json(modules);

@@ -1,4 +1,5 @@
 -- ============================================================
+-- Backend and integration: IamAtomic
 -- 02 - Backend additions
 -- Web-Based Social Engineering Awareness Platform for Remote Workers
 -- Group 4 - Capstone 2

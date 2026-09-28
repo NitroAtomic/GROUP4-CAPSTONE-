@@ -1,10 +1,10 @@
 // routes/assessments.js
+// IamAtomic — Group 4 Capstone 2, SE-AWARE backend
 //
-// The real SE-AWARE frontend (assessment-data.js) has its own fixed
-// 15-question bank and already scores client-side, consistent with how
-// quiz.js also scores client-side in this codebase. This route persists
-// whatever the client computed rather than re-scoring against a different
-// question set server-side.
+// Yung totoong frontend (assessment-data.js) may sariling fixed na 15-question
+// bank at client-side na rin sina-score, kapareho ng ginagawa ng quiz.js sa
+// codebase na to. Yung route na to nag-sasave lang ng anumang na-compute ng
+// client, hindi na re-score ulit gamit ibang question set sa server.
 
 const express = require('express');
 const pool = require('../config/db');
@@ -12,7 +12,7 @@ const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-// FR-11: Save an assessment result (already scored client-side)
+// FR-11: I-save yung resulta ng assessment (na-score na sa client)
 router.post('/submit', requireAuth, async (req, res) => {
   const { score, total, level, level_key, by_topic, weak_areas } = req.body;
 
@@ -25,14 +25,14 @@ router.post('/submit', requireAuth, async (req, res) => {
       'INSERT INTO awarenessassessment (user_id, awareness_score, total, awareness_level, by_topic, weak_areas, assessment_date) VALUES (?, ?, ?, ?, ?, ?, CURDATE())',
       [req.user.user_id, score, total, level, JSON.stringify(by_topic), JSON.stringify(weak_areas)]
     );
-    res.json({ message: 'Assessment saved.' });
+    res.status(201).json({ message: 'Assessment saved.' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to save assessment.' });
   }
 });
 
-// Fetch the most recent assessment for the logged-in user
+// Kunin yung pinakabagong assessment ng naka-login na user
 router.get('/latest', requireAuth, async (req, res) => {
   try {
     const [rows] = await pool.query(
