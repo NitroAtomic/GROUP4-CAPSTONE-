@@ -112,6 +112,15 @@ const routes = [
     name: 'EssentialSafePracticesRemoteEnv',
     component: EssentialSafePracticesRemoteEnv
   },
+  // Admin panel (FR-17, FR-18, FR-19). May endpoints na sa backend para dito,
+  // pero wala pang screen, kaya sa terminal lang naaabot ang module at quiz
+  // management.
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('./pages/Admin.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true }
+  },
   // Premium module routes (FR-16 - Role-Based Modules)
   {
     // Listahan ng apat na role-based courses. Dati walang ganito, kaya walang
@@ -202,6 +211,13 @@ router.beforeEach((to) => {
   // since the person already has an account.
   if (requiresPremium && !authStore.isPremium) {
     return { name: 'PremiumSubscription' }
+  }
+
+  // Admin lang ang makakapasok sa admin panel. Naka-check din to sa server sa
+  // bawat tawag; pareho silang kailangan, kasi ang pagtatago ng link sa
+  // interface ay hindi proteksyon.
+  if (to.meta.requiresAdmin && (!authStore.user || authStore.user.role !== 'admin')) {
+    return { name: 'Dashboard' }
   }
 
   return true

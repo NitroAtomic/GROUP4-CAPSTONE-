@@ -9,6 +9,7 @@
         <!-- Kailangan ng premium user ng daan papunta sa binayaran nila. -->
         <router-link v-if="isPremium" to="/modules/premium" class="nav-link">Role-based</router-link>
         <router-link v-if="isPremium" to="/assessment/question" class="nav-link">Assessment</router-link>
+        <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin</router-link>
       </div>
 
       <div class="nav-right">

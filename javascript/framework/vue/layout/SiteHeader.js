@@ -45,6 +45,10 @@ export default {
       return this.authStore.user?.first_name || ''
     },
 
+    isAdmin() {
+      return Boolean(this.authStore.user && this.authStore.user.role === 'admin')
+    },
+
     isPremium() {
       return this.authStore.isPremium
     },
