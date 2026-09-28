@@ -1,4 +1,5 @@
 -- ============================================================
+-- Backend and integration: IamAtomic
 -- 03 - Seed data
 -- Run AFTER 01-jyan-base-schema.sql and 02-backend-additions.sql
 --
@@ -10,12 +11,16 @@
 USE `awareness_platform`;
 
 INSERT INTO `module` (module_title, slug, description, module_type, category) VALUES
-  ('Phishing', 'phishing', 'Email phishing, fake login pages, and QR code exploits.', 'Free', 'phishing'),
+  -- Category 'phishing', slug 'quishing': sakop ng module na to yung parehong
+  -- email phishing at QR code exploits, at slug o category ang tinutugma ng
+  -- recommendations. Kaya kahit alin sa dalawang topic ng assessment ang
+  -- kahinaan ng user ('phishing' o 'quishing'), tumatama pa rin dito.
+  ('Quishing', 'quishing', 'Email phishing, fake login pages, and QR code exploits.', 'Free', 'phishing'),
   ('Spear Phishing', 'spear-phishing', 'Targeted attacks using real details about you or your work.', 'Free', 'spear-phishing'),
   ('Smishing', 'smishing', 'Scam text messages and mobile messaging attacks.', 'Free', 'smishing'),
   ('Vishing', 'vishing', 'Voice phishing and social engineering phone calls.', 'Free', 'vishing'),
   ('Pretexting', 'pretexting', 'A fabricated scenario used to get access or information.', 'Free', 'pretexting'),
-  ('Safety Practices', 'safety-practices', 'Essential safe practices for remote work environments.', 'Free', 'safe-practices'),
+  ('Essential Safe Practices for Remote Environments', 'essential-safe-practices-remote-environments', 'Essential safe practices for remote work environments.', 'Free', 'safe-practices'),
   ('Client Impersonation', 'client-impersonation', 'Someone posing as your real client mid-project.', 'Premium', 'role-based'),
   ('Invoice and Payment Scams', 'invoice-scams', 'Spoofed payment confirmations and redirected invoices.', 'Premium', 'role-based'),
   ('Fake Job and Recruiter Offers', 'fake-recruiters', 'Recruitment scams targeting freelancers and VAs.', 'Premium', 'role-based'),

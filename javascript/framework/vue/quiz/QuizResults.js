@@ -5,6 +5,7 @@ import module2 from '../data/module-2.json'
 import module3 from '../data/module-3.json'
 import module4 from '../data/module-4.json'
 import module5 from '../data/module-5.json'
+import module6 from '../data/module-6.json'
 import course1 from '../data/course-1.json'
 import course2 from '../data/course-2.json'
 import course3 from '../data/course-3.json'
@@ -16,6 +17,7 @@ const MODULE_DATA = {
   'module-3': module3,
   'module-4': module4,
   'module-5': module5,
+  'module-6': module6,
   'client-impersonation': course1,
   'client-data': course2,
   'fake-recruiters': course3,
@@ -28,6 +30,7 @@ const MODULE_PATHS = {
   'module-3': '/modules/smishing',
   'module-4': '/modules/vishing',
   'module-5': '/modules/pretexting',
+  'module-6': '/modules/essential-safe-practices-remote-environments',
   'client-impersonation': '/modules/premium/client-impersonation',
   'client-data': '/modules/premium/client-data',
   'fake-recruiters': '/modules/premium/fake-recruiters',
@@ -42,7 +45,8 @@ const NEXT_MODULE = {
   'module-5': {
     path: '/modules/essential-safe-practices-remote-environments',
     label: 'Continue to Safe Practices'
-  }
+  },
+  'module-6': { path: '/dashboard', label: 'Back to your dashboard' }
 }
 
 // Frontend quiz ids → the module.slug values seeded in the database
@@ -50,11 +54,15 @@ const NEXT_MODULE = {
 // quiz by slug, so sending 'module-1' would 404. The Phishing module's
 // frontend page is Quishing.vue — the seed uses slug 'phishing'.
 const RECORD_ATTEMPT_SLUGS = {
-  'module-1': 'phishing',
+  // Yung module-1 ay Quishing, hindi 'phishing'. Dati magkaiba yung slug dito
+  // at yung nasa database, kaya hindi kailanman mairekomenda yung Quishing
+  // module kahit mahina dun yung user.
+  'module-1': 'quishing',
   'module-2': 'spear-phishing',
   'module-3': 'smishing',
   'module-4': 'vishing',
   'module-5': 'pretexting',
+  'module-6': 'essential-safe-practices-remote-environments',
   'client-impersonation': 'client-impersonation',
   'client-data': 'client-data',
   'fake-recruiters': 'fake-recruiters',

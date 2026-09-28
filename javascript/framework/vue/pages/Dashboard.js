@@ -34,6 +34,9 @@ export default {
       totalModulesCount: 0,
       averageQuizScoreLabel: '0%',
       weakAreas: [],
+      // Walang assessment pa: guhit muna imbis na "0", kasi ibang ibig sabihin
+      // ng zero weak areas kaysa sa hindi pa sumasagot ng assessment.
+      hasAssessment: false,
       recommendations: [],
       quizHistoryRows: []
     }
@@ -75,6 +78,7 @@ export default {
         // topic slugs (['spear-phishing', ...]); the matching module category
         // lives in the module table. Older stored results may be objects
         // ({topic, percentage}) — tolerate both, then title-case for display.
+        this.hasAssessment = Boolean(data.assessment)
         if (data.assessment?.weak_areas) {
           this.weakAreas = data.assessment.weak_areas.map(area => {
             const slug = typeof area === 'string' ? area : area && area.topic

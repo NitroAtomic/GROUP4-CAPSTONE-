@@ -8,7 +8,11 @@
 // Vite exposes anything prefixed VITE_ on import.meta.env. Falls back to
 // the local backend's default port (see AUTHENTICATION.md "Running it")
 // so the app works out of the box in development with zero .env setup.
-export const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000'
+// Sa production, yung backend mismo ang nagse-serve ng site, kaya pareho na
+// sila ng origin at dapat walang prefix. Kung naiwan yung localhost:3000,
+// sinusubukan ng browser ng bisita yung sarili niyang computer pag na-deploy.
+export const API_BASE = import.meta.env.VITE_API_BASE
+  || (import.meta.env.PROD ? '' : 'http://localhost:3000')
 
 /**
  * @param {string} path       e.g. '/api/auth/login'

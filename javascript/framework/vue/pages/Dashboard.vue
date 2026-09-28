@@ -40,7 +40,7 @@
           <article class="dashboard-summary-card">
             <p class="dashboard-summary-label">Weak areas found</p>
             <p class="dashboard-summary-value" id="weak-areas-count">
-              {{ weakAreas.length }}
+              {{ hasAssessment ? weakAreas.length : '—' }}
             </p>
           </article>
 
@@ -50,7 +50,12 @@
           <div class="dashboard-section-heading dashboard-section-heading-row">
             <div>
               <h2>Recommended for you</h2>
-              <p>Based on your assessment results</p>
+              <!-- Kapag walang assessment pa, hindi galing sa assessment yung
+                   listahan kundi sa mga module na hindi pa nasisimulan. Dati
+                   "Based on your assessment results" pa rin ang nakasulat,
+                   kaya mukhang sira yung "0 weak areas" sa tabi nito. -->
+              <p v-if="hasAssessment">Based on your assessment results</p>
+              <p v-else>Modules you have not started yet. Take the assessment for a personalised list.</p>
             </div>
             <router-link
               to="/assessment/question"
@@ -94,8 +99,13 @@
               <span class="dashboard-score-badge">{{ area.scoreLabel }}</span>
             </div>
           </div>
+          <!-- Galing sa Awareness Assessment ang weak areas, hindi sa quizzes.
+               Dati kasi "once it is available" ang nakasulat, kaya mukhang
+               sira kapag zero pa rin pagkatapos sumagot ng ilang quiz. -->
           <p v-else class="dashboard-empty-copy">
-            No weak areas recorded yet. Take the Awareness Assessment once it is available.
+            Weak areas come from the Awareness Assessment, not from module quizzes.
+            <router-link to="/assessment/question">Take the assessment</router-link>
+            to see which topics to focus on.
           </p>
         </section>
 
@@ -128,4 +138,4 @@
   </main>
 </template>
 
-<script src="./dashboard.js"></script>
+<script src="./Dashboard.js"></script>

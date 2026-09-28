@@ -5,6 +5,7 @@ import module2 from '../data/module-2.json'
 import module3 from '../data/module-3.json'
 import module4 from '../data/module-4.json'
 import module5 from '../data/module-5.json'
+import module6 from '../data/module-6.json'
 import course1 from '../data/course-1.json'
 import course2 from '../data/course-2.json'
 import course3 from '../data/course-3.json'
@@ -16,6 +17,7 @@ const MODULE_DATA = {
   'module-3': module3,
   'module-4': module4,
   'module-5': module5,
+  'module-6': module6,
   'client-impersonation': course1,
   'client-data': course2,
   'fake-recruiters': course3,
@@ -25,6 +27,31 @@ const MODULE_DATA = {
 // Fisher-Yates shuffle — randomizes ORDER only.
 // We never drop or add questions here; all 10 always appear,
 // just in a different sequence each attempt (per Capstone paper requirement).
+// Bawat pagsubok, sampung tanong lang ang lumalabas galing sa dalawampung
+// tanong ni Kim, kaya hindi pare-pareho ang lumalabas kapag inulit. Sinusunod
+// yung "category" ng bawat tanong (easy, medium, hard) para pantay ang hirap
+// sa bawat pagsubok: kung puro random, pwedeng puro madali ang makuha ng isa.
+const QUESTIONS_PER_ATTEMPT = 10
+const DIFFICULTY_MIX = { easy: 3, medium: 4, hard: 3 }
+
+function drawQuestions(pool) {
+  if (pool.length <= QUESTIONS_PER_ATTEMPT) return shuffleOrder(pool)
+
+  const picked = []
+  for (const [level, count] of Object.entries(DIFFICULTY_MIX)) {
+    picked.push(...shuffleOrder(pool.filter((q) => q.category === level)).slice(0, count))
+  }
+
+  // Kulang yung mix kung iba yung hanay ng tanong: punan na lang ng random.
+  if (picked.length < QUESTIONS_PER_ATTEMPT) {
+    const chosen = new Set(picked.map((q) => q.id))
+    picked.push(...shuffleOrder(pool.filter((q) => !chosen.has(q.id)))
+      .slice(0, QUESTIONS_PER_ATTEMPT - picked.length))
+  }
+
+  return shuffleOrder(picked)
+}
+
 function shuffleOrder(array) {
   const shuffled = [...array]
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -142,7 +169,7 @@ export default {
         return
       }
       this.moduleData = data
-      this.shuffledQuestions = shuffleOrder(data.questions)
+      this.shuffledQuestions = drawQuestions(data.questions)
       this.currentIndex = 0
       this.answers = {}
       this.checkedIds = {}

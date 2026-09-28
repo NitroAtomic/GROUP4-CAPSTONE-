@@ -125,6 +125,7 @@
       <h2>Course Assessment</h2>
       <p>Test your knowledge with the 10-question assessment for this course.</p>
       <button class="take-quiz-button" @click="startQuiz">Take Assessment</button>
+      <router-link to="/" class="module-home-button">Back to Homepage</router-link>
     </section>
   </div>
 </template>
