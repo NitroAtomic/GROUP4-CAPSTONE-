@@ -20,8 +20,6 @@
         id="vishing-awareness-guide"
         class="module-awareness-guide"
     >
-        <h2>Module Metadata</h2>
-
         <p class="module-key-details">
             <strong>Target Audience:</strong> Remote workers in client
             support, phone-based operations, sales, executive support, or
@@ -29,7 +27,7 @@
         </p>
 
         <article>
-            <h3>Explicit Learning Objectives:</h3>
+            <h3>Learning Objectives:</h3>
 
             <p>After completing this module, the learner should be able to:</p>
 

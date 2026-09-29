@@ -10,6 +10,8 @@
 -- because no module-6.json currently exists in the repository.
 -- ============================================================
 
+USE `awareness_platform`;
+
 START TRANSACTION;
 
 INSERT INTO `quizquestion` (`quiz_id`, `question_text`, `category`, `question_type`, `answer_type`, `options`, `correct_option_index`, `correct_answer`, `explanation`, `points_correct`, `points_incorrect`, `order_index`) SELECT 1, 'The presence of "HTTPS" and a padlock icon in the browser address bar guarantees that a login website is legitimate and safe.', 'easy', 'standard', 'single', '[{"value":"a","text":"True"},{"value":"b","text":"False"}]', 1, '"b"', 'False. Threat actors can easily acquire free SSL/TLS certificates for fraudulent domain names, displaying HTTPS padlock icons on malicious credential-harvesting websites.', 1, -1, 0 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `quizquestion` WHERE `quiz_id` = 1 AND `order_index` = 0);

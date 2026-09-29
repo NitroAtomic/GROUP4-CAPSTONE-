@@ -91,4 +91,62 @@
     @apply bg-gray-300;
   }
 
+  .assessment-results-content {
+    @apply flex flex-col gap-6;
+  }
+
+  .assessment-results-content > .quiz-score-summary {
+    @apply pb-6 border-b border-gray-200;
+  }
+
+  .assessment-results-content > .quiz-weak-areas,
+  .assessment-results-content > .quiz-topic-breakdown,
+  .assessment-results-content > .quiz-review-section {
+    @apply p-5 border border-gray-200 rounded-xl max-[620px]:p-4;
+  }
+
+  .assessment-results-content h3 {
+    @apply mb-4 text-lg font-semibold;
+  }
+
+  .assessment-results-content .quiz-weak-areas-list {
+    @apply flex flex-col gap-3;
+  }
+
+  .assessment-results-content .quiz-weak-area-item {
+    @apply flex items-center justify-between gap-4 py-2 border-b border-gray-100 last:border-b-0;
+  }
+
+  .assessment-results-content .quiz-topic-grid {
+    @apply grid grid-cols-2 gap-3 max-[620px]:grid-cols-1;
+  }
+
+  .assessment-results-content .quiz-topic-item {
+    @apply flex items-center justify-between gap-4 p-3 border border-gray-100 rounded-lg;
+  }
+
+  .assessment-results-content .quiz-review-item {
+    @apply py-5 border-t border-gray-200 first:border-t-0 first:pt-0 last:pb-0;
+  }
+
+  .assessment-results-content .quiz-review-type {
+    @apply inline-block mb-2 text-sm font-semibold text-gray-600;
+  }
+
+  .assessment-results-content .quiz-review-question {
+    @apply mb-3 text-base font-medium leading-relaxed;
+  }
+
+  .assessment-results-content .quiz-review-details {
+    @apply flex flex-col gap-2 text-sm leading-relaxed;
+  }
+
+  .assessment-results-content .quiz-review-details p {
+    @apply mb-0;
+  }
+
+  .assessment-results-content .quiz-results-actions {
+    @apply mt-0 pt-5 border-t border-gray-200;
+  }
+
 }

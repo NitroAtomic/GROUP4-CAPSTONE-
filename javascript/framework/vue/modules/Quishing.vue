@@ -26,7 +26,7 @@
         </p>
 
         <article>
-            <h2>Explicit Learning Objectives:</h2>
+            <h2>Learning Objectives:</h2>
 
             <p>After completing this module, the learner will be able to:</p>
 

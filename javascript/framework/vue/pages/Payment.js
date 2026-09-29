@@ -48,6 +48,27 @@ export default {
     }
   },
 
+  watch: {
+    cardNumber(value) {
+      const digits = String(value).replace(/\D/g, '').slice(0, 16)
+      const formatted = digits.replace(/(.{4})/g, '$1 ').trim()
+      if (formatted !== value) this.cardNumber = formatted
+    },
+
+    cardExpiry(value) {
+      const digits = String(value).replace(/\D/g, '').slice(0, 4)
+      const formatted = digits.length > 2
+        ? `${digits.slice(0, 2)}/${digits.slice(2)}`
+        : digits
+      if (formatted !== value) this.cardExpiry = formatted
+    },
+
+    cardSecurityCode(value) {
+      const digits = String(value).replace(/\D/g, '').slice(0, 3)
+      if (digits !== value) this.cardSecurityCode = digits
+    }
+  },
+
   methods: {
     // MM/YY (or MM / YY as typed) must be a real month and not already
     // in the past. "Any future date" per AUTHENTICATION.md's demo-card

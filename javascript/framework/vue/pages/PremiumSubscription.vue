@@ -48,7 +48,7 @@
           Yearly
 
           <span class="premium-save-label">
-            Save
+            Save 33%
           </span>
         </button>
 
@@ -75,7 +75,9 @@
               id="premium-yearly-savings"
               class="premium-yearly-savings"
             >
-              Save compared to paying monthly
+              <strong>Save 33% with the Annual Plan</strong>
+              <span>₱1,199/year instead of ₱1,788</span>
+              <span>Save ₱589/year</span>
             </p>
           </div>
 

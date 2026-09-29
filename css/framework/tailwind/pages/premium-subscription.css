@@ -100,6 +100,10 @@
     @apply mt-0.5 text-green-700 text-[14px];
   }
 
+  .premium-yearly-savings span {
+    @apply block mt-1;
+  }
+
 
   /* =========================
      Premium Features

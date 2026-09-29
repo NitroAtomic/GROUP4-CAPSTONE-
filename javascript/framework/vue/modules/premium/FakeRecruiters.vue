@@ -1,18 +1,10 @@
 <template>
-  <div class="module-page">
+  <div class="module-page premium-role-module">
     <!-- Premium Badge -->
     <div class="premium-badge">
       <span class="premium-badge-icon">👑</span>
       <span>Premium Course</span>
     </div>
-
-    <!-- Course Metadata -->
-    <dl class="course-metadata">
-      <dt>Target Stakeholders:</dt>
-      <dd>Remote Job Seekers, Freelancers in Transition, Contract Workers, Remote HR Coordinators.</dd>
-      <dt>Access Tier:</dt>
-      <dd>Premium (target_role = 'Job Seeker / Freelancer')</dd>
-    </dl>
 
     <!-- Module Header -->
     <header class="module-header">
@@ -26,6 +18,10 @@
       <h1>Remote Recruitment, HR Impersonation & Onboarding Scams (Job Offer & Identity Theft Lures)</h1>
       <p>Learn to analyze fake recruiter outreach, identify PII harvesting tactics, and execute verification workflows for recruiter identities and contract authenticity.</p>
     </header>
+
+    <p class="module-key-details">
+      <strong>Target Stakeholders:</strong> Remote Job Seekers, Freelancers in Transition, Contract Workers, Remote HR Coordinators.
+    </p>
 
     <!-- Learning Objectives -->
     <section class="learning-objectives">

@@ -1,18 +1,10 @@
 <template>
-  <div class="module-page">
+  <div class="module-page premium-role-module">
     <!-- Premium Badge -->
     <div class="premium-badge">
       <span class="premium-badge-icon">👑</span>
       <span>Premium Course</span>
     </div>
-
-    <!-- Course Metadata -->
-    <dl class="course-metadata">
-      <dt>Target Stakeholders:</dt>
-      <dd>Remote Bookkeepers, Finance Coordinators, Payroll Assistants, Account Managers, Small Business Operations Staff.</dd>
-      <dt>Access Tier:</dt>
-      <dd>Premium (target_role = 'Remote Finance / Bookkeeping')</dd>
-    </dl>
 
     <!-- Module Header -->
     <header class="module-header">
@@ -26,6 +18,10 @@
       <h1>Remote BEC, Invoice Manipulation & Payment Fraud (Vendor Account Updates & Direct Deposit Scams)</h1>
       <p>Learn to analyze Business Email Compromise attacks, identify vendor invoice manipulation tactics, and implement dual-custody approval controls for financial distributions.</p>
     </header>
+
+    <p class="module-key-details">
+      <strong>Target Stakeholders:</strong> Remote Bookkeepers, Finance Coordinators, Payroll Assistants, Account Managers, Small Business Operations Staff.
+    </p>
 
     <!-- Learning Objectives -->
     <section class="learning-objectives">

@@ -26,6 +26,8 @@
 -- The existing learner quiz is NOT changed by this migration.
 -- ============================================================
 
+USE `awareness_platform`;
+
 ALTER TABLE `quizquestion`
   ADD COLUMN `category` VARCHAR(100) NULL AFTER `question_text`,
   ADD COLUMN `question_type` VARCHAR(50) NULL AFTER `category`,

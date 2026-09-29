@@ -39,7 +39,7 @@
         <template v-if="isAuthenticated">
           <div class="dashboard-user-area">
             <span class="dashboard-user-icon" aria-hidden="true">●</span>
-            <span class="dashboard-user-name">{{ firstName }}</span>
+            <span class="dashboard-user-name">Hi, {{ firstName }}</span>
           </div>
           <span v-if="isAdmin" class="dashboard-premium-badge">Administrator</span>
           <span v-else-if="isPremium" class="dashboard-premium-badge">

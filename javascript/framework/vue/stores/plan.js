@@ -12,11 +12,13 @@
 import { defineStore } from 'pinia'
 
 const BILLING_KEY = 'se_selected_billing'
+const MONTHLY_PRICE = 149
+const YEARLY_PRICE = 1199
 
-// Actual prices are still "Price TBD" placeholders — Handoff Notes:
-// "The actual prices are currently Price TBD placeholders and should be
-// replaced once final pricing is decided." Only the /month vs /year
-// period label and the yearly-savings message are real behavior here.
+function formatPhp(amount) {
+  return `₱${amount.toLocaleString('en-PH')}`
+}
+
 function readStoredBilling() {
   const raw = sessionStorage.getItem(BILLING_KEY)
   return raw === 'yearly' ? 'yearly' : 'monthly'
@@ -35,7 +37,7 @@ export const usePlanStore = defineStore('plan', {
     // Payment) reads the same source instead of re-deriving it.
     billingLabel: (state) => (state.billing === 'yearly' ? 'Yearly' : 'Monthly'),
     pricePeriod: (state) => (state.billing === 'yearly' ? '/year' : '/month'),
-    price: () => 'Price TBD',
+    price: (state) => formatPhp(state.billing === 'yearly' ? YEARLY_PRICE : MONTHLY_PRICE),
     billingDescription: (state) =>
       state.billing === 'yearly'
         ? 'Billed yearly, cancel anytime'

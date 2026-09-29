@@ -1,18 +1,10 @@
 <template>
-  <div class="module-page">
+  <div class="module-page premium-role-module">
     <!-- Premium Badge -->
     <div class="premium-badge">
       <span class="premium-badge-icon">👑</span>
       <span>Premium Course</span>
     </div>
-
-    <!-- Course Metadata -->
-    <dl class="course-metadata">
-      <dt>Target Stakeholders:</dt>
-      <dd>Virtual Assistants (VAs), Executive Assistants, Remote Administrative Coordinators, Project Support Specialists.</dd>
-      <dt>Access Tier:</dt>
-      <dd>Premium (target_role = 'Virtual Assistant')</dd>
-    </dl>
 
     <!-- Module Header -->
     <header class="module-header">
@@ -26,6 +18,10 @@
       <h1>Executive Support & VA Impersonation Defense (Authority Scams & Delegation Exploits)</h1>
       <p>Learn to deconstruct executive authority exploitation, identify fake supervisor directives, and implement out-of-band authentication channels.</p>
     </header>
+
+    <p class="module-key-details">
+      <strong>Target Stakeholders:</strong> Virtual Assistants (VAs), Executive Assistants, Remote Administrative Coordinators, Project Support Specialists.
+    </p>
 
     <!-- Learning Objectives -->
     <section class="learning-objectives">

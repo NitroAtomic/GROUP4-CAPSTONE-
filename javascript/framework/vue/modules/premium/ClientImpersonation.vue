@@ -1,18 +1,10 @@
 <template>
-  <div class="module-page">
+  <div class="module-page premium-role-module">
     <!-- Premium Badge -->
     <div class="premium-badge">
       <span class="premium-badge-icon">👑</span>
       <span>Premium Course</span>
     </div>
-
-    <!-- Course Metadata -->
-    <dl class="course-metadata">
-      <dt>Target Stakeholders:</dt>
-      <dd>Independent Freelancers, Remote Designers, Software Engineers, Copywriters, Digital Marketing Contractors.</dd>
-      <dt>Access Tier:</dt>
-      <dd>Premium (target_role = 'Freelancer')</dd>
-    </dl>
 
     <!-- Module Header -->
     <header class="module-header">
@@ -26,6 +18,10 @@
       <h1>Freelancer Exploitation & Client Verification (Fake Clients, Portfolio Scams & Escrow Fraud)</h1>
       <p>Learn to identify fake client personas, detect portfolio credential harvesting, and implement secure verification procedures.</p>
     </header>
+
+    <p class="module-key-details">
+      <strong>Target Stakeholders:</strong> Independent Freelancers, Remote Designers, Software Engineers, Copywriters, Digital Marketing Contractors.
+    </p>
 
     <!-- Learning Objectives -->
     <section class="learning-objectives">

@@ -21,12 +21,13 @@
      premium-subscription.css and homepage .premium-card/.lock-icon)
      ========================= */
 
-  .premium-badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 border border-amber-300 rounded-full text-amber-700 text-[14px] font-semibold mb-4;
+  .premium-role-module > .premium-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 border border-gray-300 rounded-full text-gray-800 text-[14px] font-semibold mb-4;
   }
 
-  .premium-badge-icon {
-    @apply text-amber-600;
+  .premium-role-module .premium-badge-icon {
+    @apply text-gray-700;
+    filter: grayscale(1);
   }
 
 
@@ -52,28 +53,6 @@
 
   .module-header > p {
     @apply mt-1.5 text-gray-500 text-[16px];
-  }
-
-
-  /* =========================
-     Course Metadata Block
-     (target stakeholders, target_role tag, access tier)
-     ========================= */
-
-  .course-metadata {
-    @apply mt-4 mb-6 p-4 bg-gray-50 border border-gray-200 rounded-lg;
-  }
-
-  .course-metadata dt {
-    @apply text-[14px] font-semibold text-gray-700 mb-1;
-  }
-
-  .course-metadata dd {
-    @apply text-[15px] text-gray-600 mb-3;
-  }
-
-  .course-metadata dd:last-child {
-    @apply mb-0;
   }
 
 
@@ -198,19 +177,19 @@
      ========================= */
 
   .scenario-section {
-    @apply mt-9 mb-9 p-6 border-2 border-amber-200 bg-amber-50 rounded-[14px];
+    @apply mt-9 mb-9 p-6 border-2 border-gray-300 bg-gray-50 rounded-[14px];
   }
 
   .scenario-section h2 {
-    @apply mb-4 text-[26px] font-medium text-amber-900;
+    @apply mb-4 text-[26px] font-medium text-gray-900;
   }
 
   .scenario-stage {
-    @apply mb-6 p-5 bg-white border border-amber-300 rounded-lg;
+    @apply mb-6 p-5 bg-white border border-gray-300 rounded-lg;
   }
 
   .scenario-stage h3 {
-    @apply mb-3 text-[20px] font-semibold text-amber-800;
+    @apply mb-3 text-[20px] font-semibold text-gray-900;
   }
 
   .scenario-stage p {
@@ -218,11 +197,11 @@
   }
 
   .scenario-decision {
-    @apply mt-4 p-4 bg-amber-100 border border-amber-400 rounded-lg;
+    @apply mt-4 p-4 bg-gray-100 border border-gray-300 rounded-lg;
   }
 
   .scenario-decision h4 {
-    @apply mb-2 text-[17px] font-semibold text-amber-900;
+    @apply mb-2 text-[17px] font-semibold text-gray-900;
   }
 
   .scenario-decision ul {
@@ -230,7 +209,7 @@
   }
 
   .scenario-decision li {
-    @apply mb-1.5 text-[15px] text-amber-800;
+    @apply mb-1.5 text-[15px] text-gray-700;
   }
 
 
@@ -240,11 +219,11 @@
      ========================= */
 
   .red-flag-checklist {
-    @apply mt-6 mb-6 p-5 bg-red-50 border border-red-200 rounded-lg;
+    @apply mt-6 mb-6 p-5 bg-gray-50 border border-gray-200 rounded-lg;
   }
 
   .red-flag-checklist h3 {
-    @apply mb-4 text-[20px] font-medium text-red-900;
+    @apply mb-4 text-[20px] font-medium text-gray-900;
   }
 
   .red-flag-checklist ul {
@@ -252,11 +231,11 @@
   }
 
   .red-flag-checklist li {
-    @apply mb-3 pl-8 relative text-[16px] text-red-800 leading-relaxed;
+    @apply mb-3 pl-8 relative text-[16px] text-gray-800 leading-relaxed;
   }
 
   .red-flag-checklist li::before {
-    @apply absolute left-0 top-0.5 w-5 h-5 border-2 border-red-400 rounded bg-white content-[''];
+    @apply absolute left-0 top-0.5 w-5 h-5 border-2 border-gray-400 rounded bg-white content-[''];
   }
 
 
@@ -266,11 +245,11 @@
      ========================= */
 
   .mitigation-checklist {
-    @apply mt-6 mb-6 p-5 bg-green-50 border border-green-200 rounded-lg;
+    @apply mt-6 mb-6 p-5 bg-gray-50 border border-gray-200 rounded-lg;
   }
 
   .mitigation-checklist h3 {
-    @apply mb-4 text-[20px] font-medium text-green-900;
+    @apply mb-4 text-[20px] font-medium text-gray-900;
   }
 
   .mitigation-checklist ol {
@@ -278,7 +257,7 @@
   }
 
   .mitigation-checklist li {
-    @apply mb-2 text-[16px] text-green-800 leading-relaxed;
+    @apply mb-2 text-[16px] text-gray-800 leading-relaxed;
   }
 
   .mitigation-checklist li:last-child {
@@ -311,7 +290,7 @@
   }
 
   .curated-resources a {
-    @apply text-blue-600 underline hover:text-blue-800;
+    @apply text-gray-900 underline hover:text-gray-600;
   }
 
 
@@ -444,6 +423,80 @@
 
     .scenario-stage {
       @apply p-4;
+    }
+  }
+
+  /* Match the shared free-module layout while retaining Premium content. */
+  .premium-role-module {
+    @apply pt-6;
+  }
+
+  .premium-role-module > .premium-badge {
+    display: flex;
+    width: fit-content;
+    margin-left: max(20px, calc((100% - 1130px) / 2));
+  }
+
+  .premium-role-module > .module-key-details {
+    @apply w-[min(1130px,calc(100%-40px))] mx-auto mb-6;
+  }
+
+  .premium-role-module .learning-objectives,
+  .premium-role-module .scenario-section,
+  .premium-role-module .red-flag-checklist,
+  .premium-role-module .curated-resources {
+    @apply my-9 p-6 rounded-[14px];
+  }
+
+  .premium-role-module .scenario-stage {
+    @apply p-[18px] rounded-[14px];
+  }
+
+  .premium-role-module .learning-objectives h3,
+  .premium-role-module .learning-objectives li {
+    @apply text-gray-900;
+  }
+
+  .premium-role-module .learning-objectives h3,
+  .premium-role-module .scenario-section h2,
+  .premium-role-module .red-flag-checklist h3,
+  .premium-role-module .curated-resources h3,
+  .premium-role-module .scenario-stage h3 {
+    @apply text-[22px];
+  }
+
+  .premium-role-module .learning-objectives li,
+  .premium-role-module .scenario-stage p,
+  .premium-role-module .scenario-decision li,
+  .premium-role-module .red-flag-checklist li,
+  .premium-role-module .curated-resources li {
+    @apply text-[17px] leading-[1.6];
+  }
+
+  @media (max-width: 768px) {
+    .premium-role-module > .module-key-details {
+      @apply w-[calc(100%-32px)];
+    }
+
+    .premium-role-module .scenario-section h2 {
+      @apply text-[24px];
+    }
+
+    .premium-role-module .learning-objectives h3,
+    .premium-role-module .red-flag-checklist h3,
+    .premium-role-module .curated-resources h3,
+    .premium-role-module .scenario-stage h3 {
+      @apply text-[19px];
+    }
+  }
+
+  @media (max-width: 480px) {
+    .premium-role-module .learning-objectives li,
+    .premium-role-module .scenario-stage p,
+    .premium-role-module .scenario-decision li,
+    .premium-role-module .red-flag-checklist li,
+    .premium-role-module .curated-resources li {
+      @apply text-[15px];
     }
   }
 

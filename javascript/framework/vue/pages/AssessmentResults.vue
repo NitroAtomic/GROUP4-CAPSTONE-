@@ -7,7 +7,7 @@
         <h1>Assessment Results</h1>
       </div>
 
-      <div v-if="results" class="quiz-results-content">
+      <div v-if="results" class="quiz-results-content assessment-results-content">
 
         <!-- Score Summary -->
         <div class="quiz-score-summary">
