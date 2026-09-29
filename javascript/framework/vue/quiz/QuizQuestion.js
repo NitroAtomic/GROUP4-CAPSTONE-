@@ -1,4 +1,5 @@
 // Static import of all 5 built modules' question data.
+import examLock from '../lib/examLock.js'
 // Vite bundles .json imports automatically — no extra config needed.
 import module1 from '../data/module-1.json'
 import module2 from '../data/module-2.json'
@@ -136,7 +137,13 @@ export default {
   },
 
   created() {
+    examLock.start()
+
     this.loadModule()
+  },
+
+  beforeUnmount() {
+    examLock.stop()
   },
 
   methods: {

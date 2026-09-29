@@ -37,6 +37,18 @@
             </p>
           </article>
 
+          <!-- Resulta ng huling assessment. Wala nito dati, kaya pagkatapos
+               sumagot ay walang makitang bakas nito sa dashboard. -->
+          <article class="dashboard-summary-card">
+            <p class="dashboard-summary-label">Awareness level</p>
+            <p class="dashboard-summary-value" id="awareness-level">
+              {{ hasAssessment ? assessment.awareness_level : 'Not assessed' }}
+            </p>
+            <p v-if="hasAssessment" class="dashboard-summary-note">
+              Scored {{ assessmentScoreLabel }} on {{ assessmentDateLabel }}
+            </p>
+          </article>
+
           <article class="dashboard-summary-card">
             <p class="dashboard-summary-label">Weak areas found</p>
             <p class="dashboard-summary-value" id="weak-areas-count">

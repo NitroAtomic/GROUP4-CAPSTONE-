@@ -1,5 +1,5 @@
 <template>
-  <div class="chatbot-widget">
+  <div v-show="!hidden" class="chatbot-widget">
     <section
       class="chatbot-panel"
       :class="{ 'chatbot-panel-open': isOpen }"
@@ -7,7 +7,11 @@
     >
       <header class="chatbot-header">
         <div class="chatbot-assistant-information">
-          <div class="chatbot-assistant-icon" aria-hidden="true">CW</div>
+          <div class="chatbot-assistant-icon" aria-hidden="true">
+            <!-- Ang CyberWise badge mismo, hindi "CW" na titik lang. Nasa repo
+                 na ang logo, hindi lang nagagamit. -->
+            <img src="/images/icons/cyberwise-logo.png" alt="">
+          </div>
           <div class="chatbot-assistant-details">
             <h2>CyberWise</h2>
             <p class="chatbot-status">Learning assistant</p>
@@ -143,7 +147,7 @@
       @click="isOpen = !isOpen"
     >
       <span class="chatbot-floating-button-icon">
-        <img src="/images/icons/chatbot-icon.png" alt="">
+        <img src="/images/icons/cyberwise-logo.png" alt="">
       </span>
     </button>
   </div>

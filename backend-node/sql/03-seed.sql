@@ -28,9 +28,13 @@ INSERT INTO `module` (module_title, slug, description, module_type, category) VA
 
 -- One quiz per module. number_of_questions starts at 0 and is updated
 -- whenever questions are added through the admin panel.
+-- Lahat ng module ay binibigyan ng quiz row, kasama na ang Essential Safe
+-- Practices kahit wala pa itong tanong. Inaasahan kasi ng 05-import na nasa
+-- quiz_id 6 ang module na ito at 7 hanggang 10 ang mga premium course. Kapag
+-- nilaktawan ito, umuusod ang lahat ng numero, hindi makikita ang quiz_id 10,
+-- at walang naipapasok kahit isang tanong.
 INSERT INTO `quiz` (module_id, title, number_of_questions)
-SELECT module_id, CONCAT(module_title, ' Quiz'), 0 FROM `module`
-WHERE slug <> 'essential-safe-practices-remote-environments';
+SELECT module_id, CONCAT(module_title, ' Quiz'), 0 FROM `module`;
 
 -- ============================================================
 -- Creating the first admin account:

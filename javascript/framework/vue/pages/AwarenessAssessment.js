@@ -1,4 +1,5 @@
 import assessmentData from '../data/assessment-data.js'
+import examLock from '../lib/examLock.js'
 
 // Fisher-Yates shuffle — randomizes ORDER only.
 function shuffleOrder(array) {
@@ -93,7 +94,13 @@ export default {
   },
 
   created() {
+    examLock.start()
+
     this.loadAssessment()
+  },
+
+  beforeUnmount() {
+    examLock.stop()
   },
 
   methods: {
