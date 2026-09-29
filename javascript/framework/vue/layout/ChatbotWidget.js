@@ -1,7 +1,18 @@
 import { useAuthStore } from '../stores/auth.js'
+import examLock from '../lib/examLock.js'
 import { apiFetch } from '../lib/api.js'
 
 const HISTORY_STORAGE_KEY = 'chat-messages-v1'
+// Kanino ang nakaimbak na usapan. Iisa lang kasi ang susi ng history, kaya
+// kapag nag-log out ang isa at nag-log in ang iba sa parehong tab, nakikita
+// ng bagong user ang usapan ng nauna. Sariling usapan dapat ang makikita ng
+// bawat account.
+const HISTORY_OWNER_KEY = 'chat-owner-v1'
+
+function currentOwnerId() {
+  const user = useAuthStore().user
+  return user && user.user_id ? String(user.user_id) : 'guest'
+}
 const MAX_VISIBLE_MESSAGES = 24
 const API_HISTORY_LIMIT = 6
 const WELCOME_MESSAGE = {
@@ -28,6 +39,8 @@ export default {
 
   data() {
     return {
+      // Nakatago si CyberWise habang may quiz o assessment, kahit sa ibang tab.
+      examActive: examLock.isActive(),
       isOpen: false,
       isSending: false,
       draft: '',
@@ -38,17 +51,58 @@ export default {
   },
 
   computed: {
+    hidden() {
+      const path = this.$route ? this.$route.path : ''
+      return this.examActive
+        || /^\/quiz\/[^/]+\/question/.test(path)
+        || path.startsWith('/assessment/question')
+    },
+
     hasUserMessages() {
       return this.messages.some((message) => message.role === 'user')
     }
   },
 
+  mounted() {
+    this.unsubscribeExam = examLock.subscribe((active) => {
+      this.examActive = active
+      if (active) this.isOpen = false
+    })
+  },
+
+  beforeUnmount() {
+    if (this.unsubscribeExam) this.unsubscribeExam()
+  },
+
   created() {
+    this.resetIfDifferentUser()
     this.sessionId = sessionStorage.getItem('chat-session-id') || this.createSessionId()
     this.loadConversation()
   },
 
+  watch: {
+    // Nagpalit ng account sa parehong tab: bagong usapan, bagong session.
+    '$route'() {
+      if (sessionStorage.getItem(HISTORY_OWNER_KEY) !== currentOwnerId()) {
+        this.resetIfDifferentUser()
+        this.messages = [{ ...WELCOME_MESSAGE }]
+        this.sessionId = this.createSessionId()
+      }
+    }
+  },
+
   methods: {
+    // Binubura ang usapan kapag ibang account na ang naka-login, para hindi
+    // mabasa ng susunod na user ang tinanong ng nauna.
+    resetIfDifferentUser() {
+      const owner = currentOwnerId()
+      if (sessionStorage.getItem(HISTORY_OWNER_KEY) !== owner) {
+        sessionStorage.removeItem(HISTORY_STORAGE_KEY)
+        sessionStorage.removeItem('chat-session-id')
+        sessionStorage.setItem(HISTORY_OWNER_KEY, owner)
+      }
+    },
+
     createSessionId() {
       const id =
         typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'

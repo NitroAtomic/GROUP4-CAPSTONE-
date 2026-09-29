@@ -34,6 +34,10 @@ export default {
       totalModulesCount: 0,
       averageQuizScoreLabel: '0%',
       hasAssessment: false,
+      // Resulta ng assessment: iskor, antas, at petsa. Ipinapadala na ito ng
+      // backend, hindi lang naipapakita, kaya parang hindi nare-record ang
+      // ginawang exam.
+      assessment: null,
       weakAreas: [],
       recommendations: [],
       quizHistoryRows: []
@@ -42,6 +46,19 @@ export default {
 
   async mounted() {
     await this.loadDashboardData()
+  },
+
+  computed: {
+    assessmentScoreLabel() {
+      if (!this.assessment) return ''
+      const { score, total } = this.assessment
+      return `${score}/${total}`
+    },
+
+    assessmentDateLabel() {
+      if (!this.assessment || !this.assessment.assessment_date) return ''
+      return new Date(this.assessment.assessment_date).toLocaleDateString()
+    }
   },
 
   methods: {
@@ -61,6 +78,7 @@ export default {
         this.planLabel = authStore.user?.subscription_type || 'Free'
         this.accountStatusLabel = authStore.user?.subscription_status || 'inactive'
         this.hasAssessment = Boolean(data.assessment)
+        this.assessment = data.assessment || null
 
         // Calculate completed modules
         this.completedModulesCount = data.progress?.filter(p => p.completion_status === 'completed').length || 0

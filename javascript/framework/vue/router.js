@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import examLock from './lib/examLock.js'
 import { useAuthStore } from './stores/auth.js'
 
 // Import page components
@@ -189,7 +190,22 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to) => {
+// Babala bago umalis sa gitna ng quiz o assessment. Dati, sapat na ang
+// pag-click sa Dashboard o Home para mawala lahat ng nasagutan na.
+const isTestRoute = (path) =>
+  /^\/quiz\/[^/]+\/question/.test(path) || path.startsWith('/assessment/question')
+
+router.beforeEach((to, from) => {
+  if (isTestRoute(from.path) && !isTestRoute(to.path) && examLock.isActive()) {
+    if (!to.path.includes('/results')) {
+      const leave = window.confirm(
+        'Your progress will be lost. Do you want to continue exiting the test?'
+      )
+      if (!leave) return false
+      examLock.stop()
+    }
+  }
+
   const authStore = useAuthStore()
 
   const isPremiumQuizRoute =
