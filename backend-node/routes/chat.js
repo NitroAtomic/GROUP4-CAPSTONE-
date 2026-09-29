@@ -308,7 +308,26 @@ router.post('/', optionalAuth, async (req, res) => {
   // Premium yung pinakamalapit na sagot, at wala namang malakas na libreng
   // kapalit: sabihin na lang na nasa Premium yun, huwag sagutin.
   const MIN_DIRECT_SCORE = 5;
-  if (bestBlocked && mentionsPremiumTopic(message)
+
+  // Dalawang paraan para makilala ang tanong na Premium ang sagot:
+  //
+  //   1. May salitang Premium mismo sa tanong (kliyente, invoice, recruiter).
+  //   2. Malayong-malayo ang pinakamalapit na libreng passage sa Premium na
+  //      passage. Ito ang humuhuli sa mga tanong na walang ganoong salita,
+  //      gaya ng "what is the equipment check scam" — walang libreng materyal
+  //      na tumutugma doon, kaya Premium talaga ang sagot.
+  //
+  // Kailangan ng pangalawa kasi kung salita lang ang basehan, dumadaan sa AI
+  // ang mga tanong na hindi nabanggit sa listahan, at sinasagot naman ito ng
+  // n8n mula sa buong dokumento ni Kim — kasama ang bayad na bahagi.
+  const FREE_ALTERNATIVE_RATIO = 0.7;
+  const bestFree = passages[0] || null;
+  const noFreeMatch = !bestFree;
+  const freeIsFarBehind = bestBlocked && bestFree
+    && bestFree.score < bestBlocked.score * FREE_ALTERNATIVE_RATIO;
+
+  if (bestBlocked
+      && (mentionsPremiumTopic(message) || noFreeMatch || freeIsFarBehind)
       && (!passages.length || passages[0].score < bestBlocked.score)) {
     return send({
       reply: PREMIUM_ONLY_REPLY,
