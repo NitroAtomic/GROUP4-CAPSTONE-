@@ -84,6 +84,18 @@
             </ol>
             <pre v-else-if="block.type === 'code'" class="chatbot-message-code"><code>{{ block.text }}</code></pre>
           </template>
+
+          <!-- Link papunta sa module na pinagkunan ng sagot. Ipinapadala na
+               ito ng backend, hindi lang naipapakita. -->
+          <router-link
+            v-if="message.learnMore"
+            :to="message.learnMore.path"
+            class="chatbot-learn-more"
+            @click="isOpen = false"
+          >
+            Learn more: {{ message.learnMore.title }} →
+          </router-link>
+
           <button
             v-if="message.kind === 'error'"
             type="button"

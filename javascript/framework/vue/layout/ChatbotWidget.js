@@ -315,7 +315,10 @@ export default {
         }
         this.messages.push({
           role: 'assistant',
-          text: data.reply || 'I could not generate a response right now.'
+          text: data.reply || 'I could not generate a response right now.',
+          // Sinasabi ng backend kung saang module galing ang sagot. Kapag
+          // hindi ito itinabi dito, nawawala ang daan pabalik sa aral mismo.
+          learnMore: data.learnMore || null
         })
       } catch (error) {
         console.error('Chat request failed:', error)
@@ -353,7 +356,10 @@ export default {
         const data = await this.requestReply(errorMessage.retryText, history)
         this.messages.splice(errorIndex, 1, {
           role: 'assistant',
-          text: data.reply || 'I could not generate a response right now.'
+          text: data.reply || 'I could not generate a response right now.',
+          // Sinasabi ng backend kung saang module galing ang sagot. Kapag
+          // hindi ito itinabi dito, nawawala ang daan pabalik sa aral mismo.
+          learnMore: data.learnMore || null
         })
       } catch (error) {
         console.error('Chat retry failed:', error)
