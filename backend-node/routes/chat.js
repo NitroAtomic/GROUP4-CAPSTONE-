@@ -117,7 +117,7 @@ function findAnswer(message) {
 // na space yung value, binabalik lang yung punctuation sa dulo — kung hihinto
 // sa unang "!" o ".", lumalabas yung dulo ng password, "Qwerty!99" naging
 // "[REDACTED]!99".
-const PASSWORD_PATTERN = /\b(pass(?:word)?|pwd)\b(\s*[:=]|\s+is)\s*["']?(\S{3,}?)["']?(?=[.,!?]*(?:\s|$))/gi;
+const PASSWORD_PATTERN = /\b(pass(?:word)?s?|pwd)\b(\s*[:=]|\s+is)\s*["']?(\S{3,}?)["']?(?=[.,!?]*(?:\s|$))/gi;
 
 function redactSecrets(text) {
   return text.replace(PASSWORD_PATTERN, (match, label, connector) => `${label}${connector} [REDACTED]`);
@@ -256,8 +256,16 @@ router.post('/', optionalAuth, async (req, res) => {
   let plan = 'Free';
   if (req.user) {
     try {
-      const [rows] = await pool.query('SELECT subscription_type FROM user WHERE user_id = ?', [req.user.user_id]);
-      if (rows[0] && rows[0].subscription_type === 'Premium') plan = 'Premium';
+      // Kasama ang subscription_status, tulad ng modules.js, quizzes.js at
+      // assessments.js. Kung type lang ang titingnan, ang account na Premium
+      // pero cancelled/expired ay nakakakuha pa rin ng Premium na sagot dito
+      // samantalang tinatanggihan siya sa lahat ng iba.
+      const [rows] = await pool.query(
+        'SELECT subscription_type, subscription_status FROM user WHERE user_id = ?',
+        [req.user.user_id]
+      );
+      if (rows[0] && rows[0].subscription_type === 'Premium'
+          && rows[0].subscription_status === 'active') plan = 'Premium';
     } catch (err) {
       console.warn('[chat] hindi nakuha yung plan, Free muna:', err.message);
     }

@@ -51,11 +51,36 @@ router.post('/record-attempt', requireAuth, async (req, res) => {
   if (!slug || typeof score !== 'number' || typeof total !== 'number') {
     return res.status(400).json({ error: 'slug, score, and total are required.' });
   }
+
+  /* Dati typeof lang ang tsini-check, kaya dumadaan ang score na 1e9, negatibo,
+     may decimal, o mas mataas pa sa total — tapos ito na ang bubuhat sa
+     dashboard at sa /recommendations. */
+  if (!Number.isInteger(score) || !Number.isInteger(total)
+      || total < 1 || score < 0 || score > total) {
+    return res.status(400).json({ error: 'score and total must be whole numbers, with 0 <= score <= total.' });
+  }
+
   const conn = await pool.getConnection();
   try {
-    const [modRows] = await conn.query('SELECT module_id FROM module WHERE slug = ?', [slug]);
+    const [modRows] = await conn.query('SELECT module_id, module_type FROM module WHERE slug = ?', [slug]);
     if (modRows.length === 0) return res.status(404).json({ error: 'Module not found.' });
     const moduleId = modRows[0].module_id;
+
+    /* Parehong gate ng /by-module/:slug sa itaas. Kung wala ito, kayang
+       i-post ng Free account ang {"slug":"client-impersonation","score":10,
+       "total":10} at mamarkahang "completed" ang isang Premium module na
+       403 naman sa kanya kapag binuksan — may progreso siya sa module na
+       hindi niya mabubuksan. */
+    if (modRows[0].module_type === 'Premium' && req.user.role !== 'admin') {
+      const [u] = await conn.query(
+        'SELECT subscription_type, subscription_status FROM user WHERE user_id = ?',
+        [req.user.user_id]
+      );
+      const premium = u[0] && u[0].subscription_type === 'Premium' && u[0].subscription_status === 'active';
+      if (!premium) {
+        return res.status(403).json({ error: 'This quiz requires a Premium subscription.' });
+      }
+    }
 
     const [quizRows] = await conn.query('SELECT quiz_id FROM quiz WHERE module_id = ?', [moduleId]);
     if (quizRows.length === 0) return res.status(404).json({ error: 'No quiz found for this module.' });

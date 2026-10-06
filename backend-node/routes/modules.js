@@ -25,7 +25,11 @@ async function hasPremiumAccess(user) {
 router.get('/premium-list', async (req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT module_id, module_title, description, category, slug FROM module WHERE module_type = 'Premium' ORDER BY module_title"
+      // Walang description dito, gaya ng sinasabi ng komento sa itaas —
+      // nakalista siya dati sa SELECT. Bukas sa lahat ang route na ito, kaya
+      // kung may isusulat na totoong aralin ang admin sa description, mababasa
+      // yun ninuman. Nasa GET /:slug yun, kung saan may gate.
+      "SELECT module_id, module_title, category, slug FROM module WHERE module_type = 'Premium' ORDER BY module_title"
     );
     res.json(rows);
   } catch (err) {
@@ -100,13 +104,49 @@ router.post('/', requireAdmin, async (req, res) => {
 // FR-17: Admin edits ng module (FR-19 din — yung Free/Premium switch, normal
 // field update lang to sa parehong route)
 router.put('/:id', requireAdmin, async (req, res) => {
-  const { module_title, description, module_type, category, slug, video_url } = req.body;
-  const hasVideoUrl = Object.prototype.hasOwnProperty.call(req.body, 'video_url');
+  /* Yung mga field na ipinadala lang ang ina-update. Dati nakalista lahat sa
+     SET, at ang hindi ipinadala ay nagiging undefined — ginagawang NULL yun
+     ng mysql2. Kaya ang isang partial save mula sa admin panel, hal.
+     { module_title, slug } lang, ay nagni-NULL sa description, category at
+     module_type.
+
+     Doon nagiging delikado: kapag NULL ang module_type, hindi na Premium
+     ang module sa paningin ng GET /:slug (linya 59), kaya naibibigay na nito
+     ang buong laman sa kahit sinong hindi naka-login. Nawawala rin ang
+     module sa parehong listahan, dahil hindi na siya tumutugma sa 'Free' o
+     sa 'Premium'. Isang ordinaryong pag-edit, nagiging publiko ang bayad na
+     nilalaman. */
+  const COLUMNS = ['module_title', 'description', 'module_type', 'category', 'slug', 'video_url'];
+
+  const sets = [];
+  const values = [];
+  for (const column of COLUMNS) {
+    if (!Object.prototype.hasOwnProperty.call(req.body, column)) continue;
+    sets.push(`${column} = ?`);
+    values.push(req.body[column]);
+  }
+
+  if (sets.length === 0) {
+    return res.status(400).json({ error: 'No fields to update.' });
+  }
+
+  // Pareho ng validation sa POST. Kung tatanggapin ang kahit anong halaga
+  // dito, mababalewala ang Free/Premium na gate nang hindi sinasadya.
+  if (Object.prototype.hasOwnProperty.call(req.body, 'module_type')
+      && !['Free', 'Premium'].includes(req.body.module_type)) {
+    return res.status(400).json({ error: "module_type must be 'Free' or 'Premium'." });
+  }
+
+  values.push(req.params.id);
+
   try {
-    await pool.query(
-      'UPDATE module SET module_title = ?, description = ?, module_type = ?, category = ?, slug = ?, video_url = CASE WHEN ? THEN ? ELSE video_url END WHERE module_id = ?',
-      [module_title, description, module_type, category, slug, hasVideoUrl, video_url, req.params.id]
+    const [result] = await pool.query(
+      `UPDATE module SET ${sets.join(', ')} WHERE module_id = ?`,
+      values
     );
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Module not found.' });
+    }
     res.json({ message: 'Module updated.' });
   } catch (err) {
     console.error(err);

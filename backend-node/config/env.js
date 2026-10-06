@@ -11,6 +11,7 @@
 // kesa tumakbo gamit known secret.
 
 require('dotenv').config();
+const crypto = require('crypto');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -54,8 +55,20 @@ module.exports = {
 
   port: Number(process.env.PORT) || 3000,
 
-  // Gumagana pa rin sa local kahit walang .env; sa production hindi.
-  jwtSecret: jwtSecret || 'local-development-only-not-for-deployment',
+  /* Gumagana pa rin sa local kahit walang .env; sa production hindi.
+
+     Dati nakasulat dito mismo yung fallback na string. Public yung repo, kaya
+     nababasa yun ninuman — at ang required() ay sumasabog lang kapag
+     EKSAKTONG 'production' ang NODE_ENV. Kaya kung hindi naset, mali ang
+     baybay, o 'Production' lang, mag-bo-boot pa rin ito at pipirma ng token
+     gamit ang sikretong alam ng lahat. Isang jwt.sign({role:'admin'}, ...)
+     na lang, admin ka na.
+
+     Random na lang bawat boot kapag walang JWT_SECRET: hindi na pwedeng
+     i-forge, at hindi rin biglang titigil ang naka-deploy na kung sakaling
+     nakalimutan ang variable. Ang presyo: mawawalan ng bisa ang mga token
+     tuwing nagre-restart — tamang-tama bilang pahiwatig na hindi pa naset. */
+  jwtSecret: jwtSecret || crypto.randomBytes(32).toString('hex'),
 
   corsOrigins,
 

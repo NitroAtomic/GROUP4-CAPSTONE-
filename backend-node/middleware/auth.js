@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 // mahina yung JWT_SECRET. Kung nakuha to ng iba, pwede na sila mag-forge ng
 // token kahit anong account, pati admin.
 const JWT_SECRET = require('../config/env').jwtSecret;
+const pool = require('../config/db');
 
 // Tinitignan kung valid yung token, ilalagay sa req.user = { user_id, role }
 function requireAuth(req, res, next) {
@@ -33,13 +34,32 @@ function requireAuth(req, res, next) {
   }
 }
 
-// Pareho ng requireAuth, pero kailangan din role === 'admin' (FR-17/18/19)
+/* Pareho ng requireAuth, pero kailangan din role === 'admin' (FR-17/18/19)
+
+   Sa talaan tinitingnan ang role, hindi sa token. Nakasulat sa token yung
+   role noong nag-login, at pitong araw bago mag-expire — kaya ang
+   UPDATE user SET role='user' (yung dokumentadong pag-demote sa
+   sql/02-backend-additions.sql) ay walang bisa hangga't hindi naaabot yun.
+   Admin pa rin ang na-demote sa buong linggo na yun.
+
+   Ganito na rin ginagawa ng lahat ng Premium na check (modules.js,
+   quizzes.js, assessments.js): isang indexed lookup lang, at ang mga
+   admin route ay bihirang tawagin. */
 function requireAdmin(req, res, next) {
-  requireAuth(req, res, () => {
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Admin access required.' });
+  requireAuth(req, res, async () => {
+    try {
+      const [rows] = await pool.query('SELECT role FROM user WHERE user_id = ?', [req.user.user_id]);
+      if (!rows.length || rows[0].role !== 'admin') {
+        return res.status(403).json({ error: 'Admin access required.' });
+      }
+      req.user.role = rows[0].role;
+      next();
+    } catch (err) {
+      // Hindi na-verify, kaya hindi pinapayagan. Mas mabuti nang tumanggi
+      // kaysa magbigay ng admin access habang may problema ang database.
+      console.error('[auth] admin role lookup failed:', err.message);
+      return res.status(503).json({ error: 'Could not verify your access just now.' });
     }
-    next();
   });
 }
 

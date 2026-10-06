@@ -74,7 +74,7 @@ function createPendingOtpToken(userId, otpId) {
 
 // FR-09: Registration
 router.post('/register', async (req, res) => {
-  const { first_name, last_name, email, password, subscription_type } = req.body;
+  const { first_name, last_name, email, password } = req.body;
 
   if (!first_name || !email || !password) {
     return res.status(400).json({ error: 'first_name, email, and password are required.' });
@@ -82,7 +82,18 @@ router.post('/register', async (req, res) => {
   if (password.length < 8) {
     return res.status(400).json({ error: 'Password must be at least 8 characters.' });
   }
-  const plan = subscription_type === 'Premium' ? 'Premium' : 'Free';
+
+  /* Laging 'Free' ang bagong account, at hindi na binabasa ang
+     subscription_type sa body. Dati galing doon ito, kaya isang hindi
+     naka-login na POST /api/auth/register na may
+     "subscription_type":"Premium" ay gumagawa agad ng Premium/active na
+     account — libre pala ang buong bayad na tier, kasama ang apat na
+     role-based module, ang assessment at ang Premium na sagot ng chat.
+
+     Walang masisira: 'Free' na rin naman ang ipinapadala ng Vue app dito
+     (stores/auth.js). Ang pinagkaiba, hindi na ang kliyente ang
+     nagdedesisyon — sa /me/subscription dumadaan ang pag-upgrade. */
+  const plan = 'Free';
 
   try {
     const [existing] = await pool.query('SELECT user_id FROM user WHERE email = ?', [email]);
@@ -226,6 +237,13 @@ router.post('/verify-otp', async (req, res) => {
     }
 
     const [userRows] = await pool.query('SELECT * FROM user WHERE user_id = ?', [payload.user_id]);
+    // Tinitingnan na ito ng /resend-otp sa baba; dito hindi. Kung nabura ang
+    // account sa pagitan ng /login at nito, undefined ang user at sasabog
+    // ang susunod na linya — 500 "Verification failed." pagkatapos nang
+    // masunog na ang isahang gamit na code. 401 ang tamang sagot dito.
+    if (userRows.length === 0) {
+      return res.status(401).json({ error: 'Account not found. Please log in again.' });
+    }
     const user = userRows[0];
     const token = jwt.sign({ user_id: user.user_id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
 
@@ -380,13 +398,21 @@ router.post('/reset-password', async (req, res) => {
     if (new Date(otp.expires_at) < new Date()) {
       return res.status(400).json({ error: 'This reset code has expired. Please request a new one.' });
     }
-    if (otp.attempts >= OTP_MAX_ATTEMPTS) {
-      return res.status(429).json({ error: 'Too many incorrect attempts. Please request a new code.' });
-    }
-
     const match = await bcrypt.compare(code, otp.code_hash);
     if (!match) {
-      await pool.query('UPDATE otpcode SET attempts = attempts + 1 WHERE otp_id = ?', [otp.otp_id]);
+      /* Isang UPDATE na may kundisyon, hindi check-tapos-increment. Dati
+         binabasa muna ang otp.attempts tapos saka dinadagdagan, kaya ang
+         sabay-sabay na request ay pare-parehong nakakabasa ng attempts = 0
+         at pare-parehong nabibigyan ng tsansa — hindi talaga naipapatupad
+         ang limitasyong lima. Ganito na ang ginagawa ng verify-otp sa
+         itaas; pinapantayan lang ito. */
+      const [bump] = await pool.query(
+        'UPDATE otpcode SET attempts = attempts + 1 WHERE otp_id = ? AND used = 0 AND attempts < ?',
+        [otp.otp_id, OTP_MAX_ATTEMPTS]
+      );
+      if (bump.affectedRows === 0) {
+        return res.status(429).json({ error: 'Too many incorrect attempts. Please request a new code.' });
+      }
       return res.status(401).json({ error: 'Incorrect code. Please try again.' });
     }
 

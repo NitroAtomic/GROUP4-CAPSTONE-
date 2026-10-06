@@ -24,7 +24,7 @@ router.get('/', requireAuth, async (req, res) => {
        JOIN quiz q ON q.quiz_id = qr.quiz_id
        JOIN module m ON m.module_id = q.module_id
        WHERE qr.user_id = ?
-       ORDER BY qr.date_completed DESC`,
+       ORDER BY qr.date_completed DESC, qr.result_id DESC`,
       [req.user.user_id]
     );
 
