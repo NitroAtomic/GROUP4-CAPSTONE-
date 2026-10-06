@@ -224,7 +224,7 @@ export default {
     optionLabel(question, value) {
       const option = (question.options || []).find((item) => String(item.value) === String(value))
       if (!option) return String(value).toUpperCase()
-      return `${String(option.value).toUpperCase()}) ${option.text}`
+      return option.text
     },
 
     formatAnswer(question, answer) {

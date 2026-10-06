@@ -3,7 +3,7 @@
     <section class="quiz-container">
 
       <!-- Results Header -->
-      <div class="quiz-header">
+      <div class="quiz-header page-band">
         <h1>Assessment Results</h1>
       </div>
 

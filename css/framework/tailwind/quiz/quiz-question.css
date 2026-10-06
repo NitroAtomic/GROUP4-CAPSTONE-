@@ -22,10 +22,12 @@
 
   .quiz-header h1 {
     @apply text-xl font-medium;
+    color: var(--navy);
   }
 
   .quiz-question-counter {
-    @apply text-gray-500 text-lg;
+    @apply text-lg;
+    color: var(--muted);
   }
 
   /* =========================
@@ -33,11 +35,14 @@
      ========================= */
 
   .quiz-progress-container {
-    @apply w-full h-[14px] mb-[38px] border border-black rounded-full overflow-hidden;
+    @apply w-full h-[14px] mb-[38px] border rounded-full overflow-hidden;
+    border-color: var(--border);
+    background: var(--bg);
   }
 
   .quiz-progress-bar {
-    @apply h-full bg-black transition-[width] duration-300;
+    @apply h-full transition-[width] duration-300;
+    background: linear-gradient(90deg, var(--teal), var(--navy));
   }
 
   /* =========================
@@ -45,11 +50,15 @@
      ========================= */
 
   .quiz-question-type {
-    @apply inline-block mb-5 px-3 py-1 border border-black rounded-full bg-gray-300 text-xs font-semibold;
+    @apply inline-block mb-5 px-3 py-1 border rounded-full text-xs font-semibold;
+    background: rgba(245, 166, 35, 0.12);
+    border-color: rgba(245, 166, 35, 0.4);
+    color: var(--navy);
   }
 
   .quiz-question-text {
     @apply mb-[34px] text-[23px] leading-[1.25] font-normal;
+    color: var(--navy);
   }
 
   /* =========================
@@ -61,11 +70,13 @@
   }
 
   .quiz-answer-option {
-    @apply min-h-[52px] px-5 flex items-center gap-3.5 border-2 border-black rounded-[10px] cursor-pointer;
+    @apply min-h-[52px] px-5 flex items-center gap-3.5 border rounded-[10px] cursor-pointer;
+    border-color: var(--border);
+    background: rgba(255,255,255,0.95);
   }
 
   .quiz-answer-option:hover {
-    @apply bg-gray-100;
+    @apply bg-[var(--bg)];
   }
 
   .quiz-answer-option input[type="radio"],
@@ -75,6 +86,7 @@
 
   .quiz-answer-option span {
     @apply text-[17px];
+    color: var(--navy);
   }
 
   /* Highlight the correct option (and the user's wrong pick, if any) once
@@ -134,8 +146,9 @@
      not a conversion of an existing rule. */
   .quiz-navigation-button {
     @apply min-w-[98px] min-h-[42px] px-[18px] inline-flex items-center justify-center
-           border border-black rounded-lg bg-white text-black text-base
-           no-underline cursor-pointer;
+           border rounded-lg bg-white text-base no-underline cursor-pointer;
+    border-color: var(--border);
+    color: var(--navy);
   }
 
   .quiz-navigation-button:disabled {
@@ -143,7 +156,8 @@
   }
 
   .quiz-next-button {
-    @apply bg-gray-300;
+    @apply border-transparent text-white;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
   }
 
   /* =========================

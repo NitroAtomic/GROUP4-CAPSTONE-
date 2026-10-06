@@ -103,7 +103,7 @@
         <ul class="premium-features-list">
 
           <li>
-            <span class="premium-feature-check">✓</span>
+            <svg class="premium-feature-check ui-icon" aria-hidden="true"><use href="#ui-icon-check" /></svg>
 
             <span>
               Role-based social engineering modules
@@ -111,7 +111,7 @@
           </li>
 
           <li>
-            <span class="premium-feature-check">✓</span>
+            <svg class="premium-feature-check ui-icon" aria-hidden="true"><use href="#ui-icon-check" /></svg>
 
             <span>
               Personalized learning dashboard
@@ -119,7 +119,7 @@
           </li>
 
           <li>
-            <span class="premium-feature-check">✓</span>
+            <svg class="premium-feature-check ui-icon" aria-hidden="true"><use href="#ui-icon-check" /></svg>
 
             <span>
               Progress and quiz history tracking
@@ -127,7 +127,7 @@
           </li>
 
           <li>
-            <span class="premium-feature-check">✓</span>
+            <svg class="premium-feature-check ui-icon" aria-hidden="true"><use href="#ui-icon-check" /></svg>
 
             <span>
               Cybersecurity awareness assessment
@@ -135,7 +135,7 @@
           </li>
 
           <li>
-            <span class="premium-feature-check">✓</span>
+            <svg class="premium-feature-check ui-icon" aria-hidden="true"><use href="#ui-icon-check" /></svg>
 
             <span>
               AI-recommended modules and weak areas explained

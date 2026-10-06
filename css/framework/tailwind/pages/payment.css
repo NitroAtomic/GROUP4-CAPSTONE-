@@ -27,6 +27,7 @@
 
   .payment-heading h1 {
     @apply mt-1 text-[34px] leading-[1.1];
+    color: var(--navy);
   }
 
 
@@ -38,7 +39,10 @@
      ========================= */
 
   .payment-simulation-banner {
-    @apply mt-5 py-2.5 px-4 border border-black rounded-lg bg-gray-100 text-[13px] leading-snug text-center;
+    @apply mt-5 py-2.5 px-4 border rounded-lg text-[13px] leading-snug text-center;
+    background: rgba(245, 166, 35, 0.12);
+    border-color: rgba(245, 166, 35, 0.35);
+    color: var(--navy);
   }
 
 
@@ -47,7 +51,10 @@
      ========================= */
 
   .payment-card {
-    @apply mt-[30px] py-7 px-[58px] border-[2px] border-black rounded-3xl max-[620px]:py-6 max-[620px]:px-5;
+    @apply mt-[30px] py-7 px-[58px] border rounded-xl max-[620px]:py-6 max-[620px]:px-5;
+    background: rgba(255,255,255,0.96);
+    border-color: var(--border);
+    box-shadow: 0 2px 10px rgba(11, 37, 69, 0.07);
   }
 
   .payment-card-heading {
@@ -56,10 +63,12 @@
 
   .payment-card-heading h2 {
     @apply text-[29px] leading-[1.1];
+    color: var(--navy);
   }
 
   .payment-card-heading p {
-    @apply mt-[5px] text-gray-500 text-[14px];
+    @apply mt-[5px] text-[14px];
+    color: var(--muted);
   }
 
 
@@ -76,11 +85,14 @@
   }
 
   .payment-form-field label {
-    @apply block mb-1.5 text-gray-500 text-[16px];
+    @apply block mb-1.5 text-[16px];
+    color: var(--navy);
   }
 
   .payment-form-field input {
-    @apply w-full h-8 py-0 px-[9px] border border-black rounded-lg outline-none text-[14px] placeholder:text-gray-300 focus:border-2;
+    @apply w-full h-8 py-0 px-[9px] border rounded-lg outline-none text-[14px] placeholder:text-gray-300 focus:border-2;
+    border-color: var(--border);
+    background: #fff;
   }
 
 
@@ -98,6 +110,9 @@
      ========================= */
 
   .payment-subscribe-button {
-    @apply w-full min-h-[47px] mt-2 border border-black rounded-[11px] bg-gray-300 text-[19px] cursor-pointer transition-colors hover:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-gray-300;
+    @apply w-full min-h-[47px] mt-2 border rounded-[11px] text-[19px] cursor-pointer transition-colors disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-gray-300;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
+    border-color: transparent;
+    color: white;
   }
 }

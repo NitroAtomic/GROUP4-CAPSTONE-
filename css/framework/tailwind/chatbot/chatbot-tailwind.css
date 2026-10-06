@@ -14,8 +14,10 @@
      ========================= */
 
   .chatbot-panel {
-    @apply absolute right-0 bottom-[68px] w-[330px] h-[460px] overflow-hidden border-[2px] border-black rounded-[22px] bg-white hidden flex-col
+    @apply absolute right-0 bottom-[68px] w-[330px] h-[460px] overflow-hidden border rounded-[22px] bg-white hidden flex-col
       max-[480px]:w-[calc(100vw-28px)] max-[480px]:max-w-[330px] max-[480px]:h-[430px];
+    border-color: var(--border);
+    box-shadow: 0 18px 42px rgba(11, 37, 69, 0.12);
   }
 
   .chatbot-panel.chatbot-panel-open {
@@ -28,7 +30,10 @@
      ========================= */
 
   .chatbot-header {
-    @apply min-h-[60px] py-[9px] px-4 bg-white text-black border-b border-black flex items-center justify-between;
+    @apply min-h-[60px] py-[9px] px-4 border-b flex items-center justify-between;
+    background: linear-gradient(135deg, var(--navy), #12355d);
+    border-color: rgba(255,255,255,0.15);
+    color: white;
   }
 
   .chatbot-assistant-information {
@@ -48,7 +53,8 @@
   }
 
   .chatbot-status {
-    @apply mt-0.5 text-gray-500 text-[10px];
+    @apply mt-0.5 text-[10px];
+    color: rgba(255,255,255,0.75);
   }
 
 
@@ -57,7 +63,8 @@
      ========================= */
 
   .chatbot-close-button {
-    @apply w-8 h-8 p-0 border-none bg-transparent text-black flex items-center justify-center text-[20px] leading-none cursor-pointer;
+    @apply w-8 h-8 p-0 border-none bg-transparent flex items-center justify-center text-[20px] leading-none cursor-pointer;
+    color: white;
   }
 
 
@@ -75,15 +82,16 @@
      ========================= */
 
   .chatbot-message {
-    @apply max-w-[82%] mb-2.5 py-[9px] px-3 border border-black rounded-xl text-[13px] leading-snug break-words;
+    @apply max-w-[82%] mb-2.5 py-[9px] px-3 border rounded-xl text-[13px] leading-snug break-words;
+    border-color: var(--border);
   }
 
   .chatbot-assistant-message {
-    @apply mr-auto border-black bg-white text-black;
+    @apply mr-auto bg-white text-[var(--navy)];
   }
 
   .chatbot-user-message {
-    @apply ml-auto border-black bg-gray-100 text-black;
+    @apply ml-auto bg-[rgba(27,127,121,0.09)] text-[var(--navy)];
   }
 
   .chatbot-message-paragraph {
@@ -103,11 +111,15 @@
   }
 
   .chatbot-message-code {
-    @apply my-1 p-2 overflow-x-auto rounded bg-gray-100 text-[11px] whitespace-pre-wrap;
+    @apply my-1 p-2 overflow-x-auto rounded text-[11px] whitespace-pre-wrap;
+    background: rgba(11, 37, 69, 0.04);
+    color: var(--navy);
   }
 
   .chatbot-message code {
-    @apply px-0.5 rounded bg-gray-100 font-mono text-[11px];
+    @apply px-0.5 rounded font-mono text-[11px];
+    background: rgba(11, 37, 69, 0.05);
+    color: var(--navy);
   }
 
   .chatbot-starter-prompts {
@@ -119,7 +131,9 @@
   }
 
   .chatbot-starter-prompts button {
-    @apply py-1.5 px-2.5 border border-gray-300 rounded-full bg-white text-left text-[11px] leading-snug cursor-pointer hover:bg-gray-100;
+    @apply py-1.5 px-2.5 border rounded-full bg-white text-left text-[11px] leading-snug cursor-pointer hover:bg-[var(--bg)];
+    border-color: var(--border);
+    color: var(--navy);
   }
 
   .chatbot-retry-button {
@@ -131,7 +145,9 @@
      ========================= */
 
   .chatbot-loading-message {
-    @apply mr-auto border border-black bg-white text-gray-500 italic;
+    @apply mr-auto border bg-white italic;
+    border-color: var(--border);
+    color: var(--muted);
   }
 
 
@@ -140,7 +156,9 @@
      ========================= */
 
   .chatbot-error-message {
-    @apply mr-auto border border-red-700 bg-white text-red-700;
+    @apply mr-auto border bg-white;
+    border-color: rgba(220, 38, 38, 0.35);
+    color: #991b1b;
   }
 
 
@@ -149,7 +167,8 @@
      ========================= */
 
   .chatbot-message-form {
-    @apply p-2.5 border-t border-black bg-white;
+    @apply p-2.5 border-t bg-white;
+    border-color: var(--border);
   }
 
   .chatbot-input-container {
@@ -157,7 +176,9 @@
   }
 
   .chatbot-input-container input {
-    @apply flex-1 min-w-0 h-[38px] py-0 px-[13px] border border-black rounded-full bg-white outline-none text-[13px];
+    @apply flex-1 min-w-0 h-[38px] py-0 px-[13px] border rounded-full bg-white outline-none text-[13px];
+    border-color: var(--border);
+    color: var(--navy);
   }
 
   .chatbot-input-container input::placeholder {
@@ -165,7 +186,8 @@
   }
 
   .chatbot-input-container input:focus {
-    @apply border-2 border-black;
+    @apply border-2;
+    border-color: var(--teal);
   }
 
 
@@ -174,11 +196,14 @@
      ========================= */
 
   .chatbot-send-button {
-    @apply w-[38px] h-[38px] shrink-0 p-0 border border-black rounded-full bg-white text-black flex items-center justify-center text-[15px] leading-none cursor-pointer transition-all duration-150 ease-in-out;
+    @apply w-[38px] h-[38px] shrink-0 p-0 border rounded-full flex items-center justify-center text-[15px] leading-none cursor-pointer transition-all duration-150 ease-in-out;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
+    border-color: transparent;
+    color: white;
   }
 
   .chatbot-send-button:hover {
-    @apply bg-gray-100 -translate-y-[1px];
+    @apply -translate-y-[1px];
   }
 
 
@@ -187,11 +212,13 @@
      ========================= */
 
   .chatbot-floating-button {
-    @apply w-[54px] h-[54px] ml-auto p-0 border-0 rounded-full bg-transparent text-black flex items-center justify-center cursor-pointer transition-all duration-150 ease-in-out;
+    @apply w-[54px] h-[54px] ml-auto p-0 border-0 rounded-full bg-transparent flex items-center justify-center cursor-pointer transition-all duration-150 ease-in-out;
+    color: var(--navy);
   }
 
   .chatbot-floating-button:hover {
-    @apply bg-gray-100 -translate-y-[2px];
+    @apply -translate-y-[2px];
+    background: rgba(27, 127, 121, 0.08);
   }
 
 

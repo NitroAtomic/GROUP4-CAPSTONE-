@@ -3,7 +3,7 @@
     <section class="quiz-container">
 
       <!-- Quiz Header -->
-      <div class="quiz-header">
+      <div class="quiz-header page-band">
         <div>
           <h1>{{ moduleTitle }} Assessment</h1>
         </div>

@@ -3,7 +3,7 @@
     <section class="quiz-container">
 
       <!-- Assessment Header -->
-      <div class="quiz-header">
+      <div class="quiz-header page-band">
         <div>
           <h1>Cybersecurity Awareness Assessment</h1>
         </div>
@@ -78,13 +78,14 @@
           class="quiz-feedback-panel"
           :class="currentFeedback.isCorrect ? 'quiz-feedback-correct' : 'quiz-feedback-incorrect'"
         >
-          <p v-if="currentFeedback.isCorrect" class="quiz-feedback-title">Correct!</p>
-          <p v-else class="quiz-feedback-title">Incorrect</p>
-          <p class="quiz-feedback-text">
+          <p class="quiz-feedback-status">
+            {{ currentFeedback.isCorrect ? 'Correct!' : 'Incorrect' }}
+          </p>
+          <p v-if="!currentFeedback.isCorrect">
             <strong>Correct answer:</strong> {{ currentFeedback.correctAnswerText }}
           </p>
-          <p v-if="currentFeedback.explanation" class="quiz-feedback-explanation">
-            {{ currentFeedback.explanation }}
+          <p v-if="currentFeedback.explanation">
+            <strong>Explanation:</strong> {{ currentFeedback.explanation }}
           </p>
         </div>
 

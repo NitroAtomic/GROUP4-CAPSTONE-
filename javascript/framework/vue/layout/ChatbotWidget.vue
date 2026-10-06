@@ -146,7 +146,7 @@
             aria-label="Send message to CyberWise"
             :disabled="isSending || !draft.trim()"
           >
-            ➤
+            <svg class="ui-icon" aria-hidden="true"><use href="#ui-icon-arrow-right" /></svg>
           </button>
         </div>
       </form>

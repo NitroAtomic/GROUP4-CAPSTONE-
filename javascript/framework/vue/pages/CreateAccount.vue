@@ -22,7 +22,9 @@
       <nav class="subscription-progress" aria-label="Sign-up progress">
 
         <div class="subscription-progress-step subscription-progress-complete">
-          <span class="subscription-progress-number" aria-hidden="true">✓</span>
+          <span class="subscription-progress-number" aria-hidden="true">
+            <svg class="ui-icon" aria-hidden="true"><use href="#ui-icon-check" /></svg>
+          </span>
           <span>Choose plan</span>
         </div>
 
@@ -53,7 +55,7 @@
 
       <div class="selected-plan-summary">
         <span>
-          <img class="inline-crown-icon" src="/images/icons/crown-badge.png" alt="" aria-hidden="true">
+          <svg class="inline-crown-icon ui-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
           Premium plan • {{ planStore.billingLabel }}
         </span>
         <span>

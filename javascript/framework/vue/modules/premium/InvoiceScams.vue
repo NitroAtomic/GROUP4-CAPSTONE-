@@ -2,18 +2,21 @@
   <div class="module-page premium-role-module">
     <!-- Premium Badge -->
     <div class="premium-badge">
-      <span class="premium-badge-icon">👑</span>
+      <svg class="ui-icon premium-badge-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
       <span>Premium Course</span>
     </div>
 
     <!-- Module Header -->
-    <header class="module-header">
+    <header class="module-header page-band">
       <nav>
-        <router-link to="/">Home</router-link>
+        <router-link to="/" class="home-breadcrumb-link">
+          <svg class="ui-icon home-breadcrumb-icon" aria-hidden="true"><use href="#ui-icon-home" /></svg>
+          <span>Home</span>
+        </router-link>
         <span> / </span>
         <router-link to="/dashboard">Dashboard</router-link>
         <span> / </span>
-        <span class="text-gray-900">Remote BEC, Invoice Manipulation & Payment Fraud</span>
+        <span class="module-breadcrumb-current">Remote BEC, Invoice Manipulation & Payment Fraud</span>
       </nav>
       <h1>Remote BEC, Invoice Manipulation & Payment Fraud (Vendor Account Updates & Direct Deposit Scams)</h1>
       <p>Learn to analyze Business Email Compromise attacks, identify vendor invoice manipulation tactics, and implement dual-custody approval controls for financial distributions.</p>

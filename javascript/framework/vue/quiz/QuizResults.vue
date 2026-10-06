@@ -2,7 +2,8 @@
   <main class="quiz-results-page">
     <section v-if="results" class="quiz-results-container">
       <div class="quiz-results-icon">
-        {{ results.passed ? '✓' : '!' }}
+        <svg v-if="results.passed" class="ui-icon" aria-hidden="true"><use href="#ui-icon-check" /></svg>
+        <span v-else aria-hidden="true">!</span>
       </div>
 
       <h1>{{ results.moduleName }} Assessment Complete!</h1>

@@ -19,9 +19,17 @@
         :to="course.path"
         class="premium-list-card"
       >
-        <h2>{{ course.title }}</h2>
+        <span class="premium-list-card-heading">
+          <h2>{{ course.title }}</h2>
+          <span class="module-icon-chip" aria-hidden="true">
+            <svg class="ui-icon"><use :href="`#ui-icon-${courseIcon(course.path)}`" /></svg>
+          </span>
+        </span>
         <p>{{ course.summary }}</p>
-        <span class="premium-list-open">Open course →</span>
+        <span class="premium-list-open">
+          Open course
+          <svg class="ui-icon premium-list-arrow" aria-hidden="true"><use href="#ui-icon-arrow-right" /></svg>
+        </span>
       </router-link>
     </div>
 

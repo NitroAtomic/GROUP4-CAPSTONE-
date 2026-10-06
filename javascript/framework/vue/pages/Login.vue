@@ -58,7 +58,7 @@
         </div>
 
         <router-link to="/create-account" class="btn btn-login-create-account">
-          <img class="inline-crown-icon" src="/images/icons/crown-badge.png" alt="" aria-hidden="true">
+          <svg class="inline-crown-icon ui-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
           Go premium to create an account
         </router-link>
 

@@ -27,5 +27,16 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    courseIcon(path) {
+      const icons = {
+        '/modules/premium/client-impersonation': 'user-shield',
+        '/modules/premium/invoice-scams': 'invoice-warning',
+        '/modules/premium/fake-recruiters': 'recruiter',
+        '/modules/premium/client-data': 'client-data'
+      }
+      return icons[path]
+    }
   }
 }

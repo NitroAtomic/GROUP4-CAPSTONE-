@@ -165,13 +165,13 @@ const routes = [
     path: '/assessment/question',
     name: 'AwarenessAssessment',
     component: AwarenessAssessment,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresPremium: true }
   },
   {
     path: '/assessment/results',
     name: 'AssessmentResults',
     component: AssessmentResults,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresPremium: true }
   }
 ]
 

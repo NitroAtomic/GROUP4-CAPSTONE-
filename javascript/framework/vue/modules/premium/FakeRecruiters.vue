@@ -2,18 +2,21 @@
   <div class="module-page premium-role-module">
     <!-- Premium Badge -->
     <div class="premium-badge">
-      <span class="premium-badge-icon">👑</span>
+      <svg class="ui-icon premium-badge-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
       <span>Premium Course</span>
     </div>
 
     <!-- Module Header -->
-    <header class="module-header">
+    <header class="module-header page-band">
       <nav>
-        <router-link to="/">Home</router-link>
+        <router-link to="/" class="home-breadcrumb-link">
+          <svg class="ui-icon home-breadcrumb-icon" aria-hidden="true"><use href="#ui-icon-home" /></svg>
+          <span>Home</span>
+        </router-link>
         <span> / </span>
         <router-link to="/dashboard">Dashboard</router-link>
         <span> / </span>
-        <span class="text-gray-900">Remote Recruitment, HR Impersonation & Onboarding Scams</span>
+        <span class="module-breadcrumb-current">Remote Recruitment, HR Impersonation & Onboarding Scams</span>
       </nav>
       <h1>Remote Recruitment, HR Impersonation & Onboarding Scams (Job Offer & Identity Theft Lures)</h1>
       <p>Learn to analyze fake recruiter outreach, identify PII harvesting tactics, and execute verification workflows for recruiter identities and contract authenticity.</p>

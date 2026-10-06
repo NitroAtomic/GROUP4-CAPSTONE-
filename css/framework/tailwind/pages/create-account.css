@@ -38,7 +38,8 @@
   }
 
   .account-creation-heading h1 {
-    @apply mt-1 text-[34px] leading-[1.1];
+    @apply mt-1 text-[34px] leading-[1.1] font-bold;
+    color: var(--navy);
   }
 
 
@@ -51,28 +52,40 @@
   }
 
   .subscription-progress-step {
-    @apply flex items-center gap-[7px] text-gray-500 text-[14px] whitespace-nowrap max-[620px]:text-[11px];
+    @apply flex items-center gap-[7px] text-[14px] whitespace-nowrap max-[620px]:text-[11px];
+    color: var(--muted);
   }
 
   .subscription-progress-active {
-    @apply text-black font-bold;
+    @apply font-bold;
+    color: var(--navy);
   }
 
   .subscription-progress-complete {
-    @apply text-black;
+    color: var(--navy);
   }
 
   .subscription-progress-number {
-    @apply w-5 h-5 border border-gray-500 rounded-full inline-flex items-center justify-center text-[12px];
+    @apply w-5 h-5 border rounded-full inline-flex items-center justify-center text-[12px];
+    border-color: rgba(11, 37, 69, 0.35);
+    color: var(--navy);
+    background: rgba(255,255,255,0.8);
   }
 
   .subscription-progress-active .subscription-progress-number,
   .subscription-progress-complete .subscription-progress-number {
-    @apply bg-gray-300 border-black;
+    background: rgba(27, 127, 121, 0.12);
+    border-color: rgba(27, 127, 121, 0.45);
+    color: var(--navy);
+  }
+
+  .subscription-progress-number .ui-icon {
+    @apply w-3 h-3;
   }
 
   .subscription-progress-line {
-    @apply w-[100px] h-px my-0 mx-3 bg-gray-400 max-[620px]:w-[35px] max-[620px]:mx-1.5;
+    @apply w-[100px] h-px my-0 mx-3 max-[620px]:w-[35px] max-[620px]:mx-1.5;
+    background: rgba(11, 37, 69, 0.3);
   }
 
 
@@ -81,11 +94,15 @@
      ========================= */
 
   .selected-plan-summary {
-    @apply min-h-[34px] mt-[22px] py-0 px-2.5 border border-black rounded-[7px] flex items-center justify-between text-[14px];
+    @apply min-h-[34px] mt-[22px] py-0 px-2.5 border rounded-[7px] flex items-center justify-between text-[14px];
+    background: rgba(27, 127, 121, 0.05);
+    border-color: rgba(27, 127, 121, 0.34);
+    color: var(--navy);
   }
 
   .selected-plan-summary small {
-    @apply ml-[3px] text-gray-500;
+    @apply ml-[3px];
+    color: var(--muted);
   }
 
 
@@ -94,7 +111,10 @@
      ========================= */
 
   .account-creation-card {
-    @apply mt-[22px] pt-[30px] px-[58px] pb-[26px] border-[2px] border-black rounded-3xl max-[620px]:py-6 max-[620px]:px-5;
+    @apply mt-[22px] pt-[30px] px-[58px] pb-[26px] border rounded-xl max-[620px]:py-6 max-[620px]:px-5;
+    background: rgba(255, 255, 255, 0.96);
+    border-color: var(--border);
+    box-shadow: var(--shadow-soft);
   }
 
   .account-creation-card-heading {
@@ -102,11 +122,13 @@
   }
 
   .account-creation-card-heading h2 {
-    @apply text-[29px] leading-[1.1];
+    @apply text-[29px] leading-[1.1] font-bold;
+    color: var(--navy);
   }
 
   .account-creation-card-heading p {
-    @apply mt-1.5 text-gray-500 text-[14px];
+    @apply mt-1.5 text-[14px];
+    color: var(--muted);
   }
 
   .account-creation-form {
@@ -122,11 +144,14 @@
   }
 
   .account-form-field label {
-    @apply block mb-[5px] text-gray-500 text-[16px];
+    @apply block mb-[5px] text-[16px];
+    color: var(--navy);
   }
 
   .account-form-field input {
-    @apply w-full h-8 py-0 px-[9px] border border-black rounded-lg outline-none text-[14px] placeholder:text-gray-300 focus:border-2;
+    @apply w-full h-8 py-0 px-[9px] border rounded-lg outline-none text-[14px] placeholder:text-gray-300 focus:border-2;
+    border-color: var(--border);
+    background: #fff;
   }
 
 
@@ -184,15 +209,20 @@
      ========================= */
 
   .continue-to-payment-button {
-    @apply w-full min-h-[47px] mt-2.5 border border-black rounded-[11px] bg-white text-[19px] cursor-pointer hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white;
+    @apply w-full min-h-[47px] mt-2.5 border rounded-[11px] text-[19px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
+    border-color: transparent;
+    color: white;
   }
 
   .account-login-message {
     @apply mt-2 text-center text-[15px];
+    color: var(--muted);
   }
 
   .account-login-message a {
     @apply font-bold underline;
+    color: var(--navy);
   }
 
 
@@ -201,6 +231,9 @@
      ========================= */
 
   .form-error-message {
-    @apply mt-4 py-2 px-3 border border-black rounded-lg bg-gray-100 text-[14px] text-center;
+    @apply mt-4 py-2 px-3 border rounded-lg text-[14px] text-center;
+    background: rgba(220, 38, 38, 0.06);
+    border-color: rgba(220, 38, 38, 0.2);
+    color: #991b1b;
   }
 }

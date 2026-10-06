@@ -24,14 +24,17 @@
 
   .dashboard-heading h1 {
     @apply text-[40px] leading-[1.05] max-[700px]:text-[34px];
+    color: var(--navy);
   }
 
   .dashboard-heading p {
     @apply mt-0.5 text-[20px];
+    color: var(--muted);
   }
 
   .dashboard-account-status {
-    @apply mt-2 text-[16px] text-gray-500;
+    @apply mt-2 text-[16px];
+    color: var(--muted);
   }
 
 
@@ -44,15 +47,20 @@
   }
 
   .dashboard-summary-card {
-    @apply min-h-[104px] py-[18px] px-[30px] border-[2px] border-black rounded-[22px];
+    @apply min-h-[104px] py-[18px] px-[30px] border rounded-xl;
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--border);
+    box-shadow: 0 10px 20px rgba(11, 37, 69, 0.04);
   }
 
   .dashboard-summary-label {
-    @apply text-gray-500 text-[18px];
+    @apply text-[18px];
+    color: var(--muted);
   }
 
   .dashboard-summary-value {
     @apply mt-2 text-[30px] font-bold;
+    color: var(--navy);
   }
 
 
@@ -65,11 +73,13 @@
   }
 
   .dashboard-section-heading h2 {
-    @apply text-[29px] leading-[1.1];
+    @apply text-[29px] leading-[1.1] font-bold;
+    color: var(--navy);
   }
 
   .dashboard-section-heading p {
     @apply mt-px text-[19px];
+    color: var(--muted);
   }
 
   .dashboard-section-heading-row {
@@ -77,7 +87,7 @@
   }
 
   .dashboard-assessment-link {
-    @apply mt-[7px] text-black text-[17px] font-semibold underline bg-transparent border-0 cursor-default max-[700px]:mt-0;
+    @apply mt-[7px] text-[var(--navy)] text-[17px] font-semibold underline bg-transparent border-0 cursor-default max-[700px]:mt-0;
   }
 
 
@@ -90,19 +100,26 @@
   }
 
   .dashboard-recommendation-card {
-    @apply min-h-[104px] py-[18px] px-[26px] border-[2px] border-black rounded-[22px] flex flex-col justify-center text-inherit;
+    @apply min-h-[104px] py-[18px] px-[26px] border rounded-xl flex flex-col justify-center text-inherit;
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--border);
   }
 
   .dashboard-recommended-label {
-    @apply w-fit mb-1 py-0.5 px-1.5 border border-black rounded-full bg-gray-300 text-[9px];
+    @apply w-fit mb-1 py-0.5 px-1.5 border rounded-full text-[9px];
+    background: rgba(27, 127, 121, 0.12);
+    border-color: rgba(27, 127, 121, 0.2);
+    color: var(--navy);
   }
 
   .dashboard-recommendation-card h3 {
     @apply text-[19px] leading-[1.1];
+    color: var(--navy);
   }
 
   .dashboard-recommendation-card p {
-    @apply mt-px text-gray-500 text-[17px];
+    @apply mt-px text-[17px];
+    color: var(--muted);
   }
 
   .dashboard-empty-copy {
@@ -119,11 +136,17 @@
   }
 
   .dashboard-weak-area {
-    @apply min-h-[46px] py-0 px-[22px] border border-black rounded-[14px] flex items-center justify-between text-[18px] font-semibold max-[480px]:text-[15px];
+    @apply min-h-[46px] py-0 px-[22px] border rounded-[14px] flex items-center justify-between text-[18px] font-semibold max-[480px]:text-[15px];
+    border-color: var(--border);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--navy);
   }
 
   .dashboard-score-badge {
-    @apply min-w-[118px] py-1 px-3.5 border border-black rounded-full bg-gray-400 text-center text-gray-600 text-[12px] max-[480px]:min-w-[90px] max-[480px]:text-[11px];
+    @apply min-w-[118px] py-1 px-3.5 border rounded-full text-center text-[12px] max-[480px]:min-w-[90px] max-[480px]:text-[11px];
+    background: rgba(245, 166, 35, 0.14);
+    border-color: rgba(245, 166, 35, 0.5);
+    color: var(--navy);
   }
 
 
@@ -132,19 +155,23 @@
      ========================= */
 
   .dashboard-quiz-history {
-    @apply mt-2.5 border border-black rounded-[14px] overflow-hidden;
+    @apply mt-2.5 border rounded-[14px] overflow-hidden;
+    border-color: var(--border);
+    background: rgba(255,255,255,0.9);
   }
 
   .dashboard-quiz-history-row {
     @apply min-h-[42px] py-0 px-[22px] flex items-center justify-between text-[18px] max-[480px]:text-[15px];
+    color: var(--navy);
   }
 
   .dashboard-quiz-history-row:not(:last-child) {
-    @apply border-b border-gray-500;
+    @apply border-b;
+    border-color: var(--border);
   }
 
   .dashboard-low-score {
-    @apply text-gray-500;
+    @apply text-[var(--muted)];
   }
 
 
@@ -157,15 +184,22 @@
   }
 
   .dashboard-user-icon {
-    @apply w-7 h-7 border border-black rounded-full inline-flex items-center justify-center text-[19px];
+    @apply w-7 h-7 border rounded-full inline-flex items-center justify-center text-[19px];
+    border-color: var(--border);
+    background: rgba(255,255,255,0.12);
+    color: var(--orange);
   }
 
   .dashboard-user-name {
     @apply whitespace-nowrap;
+    color: var(--navy);
   }
 
   .dashboard-premium-badge {
-    @apply py-2 px-3.5 border border-black rounded-full bg-gray-300 text-gray-600 text-[13px] font-semibold;
+    @apply py-2 px-3.5 border rounded-full text-[13px] font-semibold;
+    border-color: rgba(245, 166, 35, 0.4);
+    background: rgba(245, 166, 35, 0.12);
+    color: var(--navy);
   }
 
   .form-error-message {

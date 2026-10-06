@@ -17,17 +17,20 @@
 
   /* =========================
      Premium Badge Treatment
-     (visually consistent with crown/lock iconography from
-     premium-subscription.css and homepage .premium-card/.lock-icon)
+     (     visually consistent with the shared inline SVG icon system
      ========================= */
 
   .premium-role-module > .premium-badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 border border-gray-300 rounded-full text-gray-800 text-[14px] font-semibold mb-4;
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[14px] font-semibold mb-4;
+    background: rgba(245, 166, 35, 0.12);
+    border: 1px solid rgba(245, 166, 35, 0.38);
+    color: var(--navy);
   }
 
   .premium-role-module .premium-badge-icon {
-    @apply text-gray-700;
-    filter: grayscale(1);
+    @apply text-[var(--navy)];
+    width: 17px;
+    height: 17px;
   }
 
 
@@ -44,15 +47,18 @@
   }
 
   .module-header nav a {
-    @apply text-[17px] text-gray-600;
+    @apply text-[17px];
+    color: var(--muted);
   }
 
   .module-header h1 {
     @apply text-[44px] leading-[1.1] font-medium;
+    color: var(--navy);
   }
 
   .module-header > p {
-    @apply mt-1.5 text-gray-500 text-[16px];
+    @apply mt-1.5 text-[16px];
+    color: var(--muted);
   }
 
 
@@ -61,11 +67,14 @@
      ========================= */
 
   .learning-objectives {
-    @apply mt-6 mb-6 p-5 bg-blue-50 border border-blue-200 rounded-lg;
+    @apply mt-6 mb-6 p-5 border rounded-lg;
+    background: rgba(27, 127, 121, 0.06);
+    border-color: rgba(27, 127, 121, 0.3);
   }
 
   .learning-objectives h3 {
-    @apply mb-3 text-[20px] font-medium text-blue-900;
+    @apply mb-3 text-[20px] font-medium;
+    color: var(--navy);
   }
 
   .learning-objectives ol {
@@ -73,7 +82,8 @@
   }
 
   .learning-objectives li {
-    @apply mb-2 text-[16px] text-blue-800 leading-relaxed;
+    @apply mb-2 text-[16px] leading-relaxed;
+    color: var(--navy);
   }
 
   .learning-objectives li:last-child {
@@ -138,11 +148,14 @@
   }
 
   .module-page figure img {
-    @apply mt-4 w-full max-w-full h-auto border-[2px] border-black;
+    @apply mt-4 w-full max-w-full h-auto border-[2px];
+    border-color: var(--border);
+    border-radius: 12px;
   }
 
   .module-page figcaption {
-    @apply mt-2 text-gray-500 text-[14px] leading-snug;
+    @apply mt-2 text-[14px] leading-snug;
+    color: var(--muted);
   }
 
   .module-concepts-list,
@@ -152,15 +165,19 @@
 
   .module-concept,
   .module-example {
-    @apply p-[18px] border border-black rounded-[14px];
+    @apply p-[18px] border rounded-xl;
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border);
+    box-shadow: var(--shadow-soft);
   }
 
   .module-concept h4 {
     @apply mb-2 text-[18px];
+    color: var(--navy);
   }
 
   .module-concept p {
-    @apply text-gray-600;
+    color: var(--muted);
   }
 
   .module-example h3 {
@@ -177,31 +194,41 @@
      ========================= */
 
   .scenario-section {
-    @apply mt-9 mb-9 p-6 border-2 border-gray-300 bg-gray-50 rounded-[14px];
+    @apply mt-9 mb-9 p-6 border rounded-xl;
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border);
+    box-shadow: var(--shadow-soft);
   }
 
   .scenario-section h2 {
-    @apply mb-4 text-[26px] font-medium text-gray-900;
+    @apply mb-4 text-[26px] font-medium;
+    color: var(--navy);
   }
 
   .scenario-stage {
-    @apply mb-6 p-5 bg-white border border-gray-300 rounded-lg;
+    @apply mb-6 p-5 bg-white border rounded-lg;
+    border-color: var(--border);
   }
 
   .scenario-stage h3 {
-    @apply mb-3 text-[20px] font-semibold text-gray-900;
+    @apply mb-3 text-[20px] font-semibold;
+    color: var(--navy);
   }
 
   .scenario-stage p {
-    @apply mb-3 text-[16px] text-gray-700 leading-relaxed;
+    @apply mb-3 text-[16px] leading-relaxed;
+    color: var(--muted);
   }
 
   .scenario-decision {
-    @apply mt-4 p-4 bg-gray-100 border border-gray-300 rounded-lg;
+    @apply mt-4 p-4 border rounded-lg;
+    background: rgba(27, 127, 121, 0.04);
+    border-color: rgba(27, 127, 121, 0.25);
   }
 
   .scenario-decision h4 {
-    @apply mb-2 text-[17px] font-semibold text-gray-900;
+    @apply mb-2 text-[17px] font-semibold;
+    color: var(--navy);
   }
 
   .scenario-decision ul {
@@ -209,7 +236,8 @@
   }
 
   .scenario-decision li {
-    @apply mb-1.5 text-[15px] text-gray-700;
+    @apply mb-1.5 text-[15px];
+    color: var(--navy);
   }
 
 
@@ -219,11 +247,14 @@
      ========================= */
 
   .red-flag-checklist {
-    @apply mt-6 mb-6 p-5 bg-gray-50 border border-gray-200 rounded-lg;
+    @apply mt-6 mb-6 p-5 border rounded-lg;
+    background: rgba(220, 38, 38, 0.03);
+    border-color: rgba(220, 38, 38, 0.2);
   }
 
   .red-flag-checklist h3 {
-    @apply mb-4 text-[20px] font-medium text-gray-900;
+    @apply mb-4 text-[20px] font-medium;
+    color: var(--navy);
   }
 
   .red-flag-checklist ul {
@@ -231,11 +262,13 @@
   }
 
   .red-flag-checklist li {
-    @apply mb-3 pl-8 relative text-[16px] text-gray-800 leading-relaxed;
+    @apply mb-3 pl-8 relative text-[16px] leading-relaxed;
+    color: var(--navy);
   }
 
   .red-flag-checklist li::before {
-    @apply absolute left-0 top-0.5 w-5 h-5 border-2 border-gray-400 rounded bg-white content-[''];
+    @apply absolute left-0 top-0.5 w-5 h-5 border-2 rounded bg-white content-[''];
+    border-color: rgba(220, 38, 38, 0.45);
   }
 
 
@@ -245,11 +278,14 @@
      ========================= */
 
   .mitigation-checklist {
-    @apply mt-6 mb-6 p-5 bg-gray-50 border border-gray-200 rounded-lg;
+    @apply mt-6 mb-6 p-5 border rounded-lg;
+    background: rgba(27, 127, 121, 0.04);
+    border-color: rgba(27, 127, 121, 0.2);
   }
 
   .mitigation-checklist h3 {
-    @apply mb-4 text-[20px] font-medium text-gray-900;
+    @apply mb-4 text-[20px] font-medium;
+    color: var(--navy);
   }
 
   .mitigation-checklist ol {
@@ -257,7 +293,8 @@
   }
 
   .mitigation-checklist li {
-    @apply mb-2 text-[16px] text-gray-800 leading-relaxed;
+    @apply mb-2 text-[16px] leading-relaxed;
+    color: var(--navy);
   }
 
   .mitigation-checklist li:last-child {
@@ -270,11 +307,14 @@
      ========================= */
 
   .curated-resources {
-    @apply mt-6 mb-6 p-5 bg-gray-50 border border-gray-200 rounded-lg;
+    @apply mt-6 mb-6 p-5 border rounded-lg;
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border);
   }
 
   .curated-resources h3 {
-    @apply mb-4 text-[20px] font-medium text-gray-900;
+    @apply mb-4 text-[20px] font-medium;
+    color: var(--navy);
   }
 
   .curated-resources ul {
@@ -282,7 +322,8 @@
   }
 
   .curated-resources li {
-    @apply mb-2 text-[16px] text-gray-700;
+    @apply mb-2 text-[16px];
+    color: var(--navy);
   }
 
   .curated-resources li:last-child {
@@ -290,7 +331,8 @@
   }
 
   .curated-resources a {
-    @apply text-gray-900 underline hover:text-gray-600;
+    @apply underline;
+    color: var(--navy);
   }
 
 
@@ -303,11 +345,13 @@
   }
 
   .video-player {
-    @apply min-h-[280px] mt-4 border-[2px] border-black flex items-center justify-center text-center;
+    @apply min-h-[280px] mt-4 border-[2px] flex items-center justify-center text-center;
+    border-color: var(--border);
+    background: rgba(255,255,255,0.8);
   }
 
   .video-player p {
-    @apply text-gray-500;
+    color: var(--muted);
   }
 
 
@@ -316,23 +360,32 @@
      ========================= */
 
   .module-quiz-section {
-    @apply w-[min(1130px,calc(100%-40px))] my-10 mx-auto p-7 border border-black rounded-2xl text-center;
+    @apply w-[min(1130px,calc(100%-40px))] my-10 mx-auto p-7 border rounded-xl text-center;
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border);
+    box-shadow: var(--shadow-soft);
   }
 
   .module-quiz-section h2 {
     @apply mb-2.5 text-[28px];
+    color: var(--navy);
   }
 
   .module-quiz-section p {
-    @apply max-w-[620px] mt-0 mx-auto mb-5 text-gray-600 text-[16px] leading-normal;
+    @apply max-w-[620px] mt-0 mx-auto mb-5 text-[16px] leading-normal;
+    color: var(--muted);
   }
 
   .take-quiz-button {
-    @apply inline-flex items-center justify-center min-w-40 min-h-11 py-0 px-6 border border-black rounded-lg bg-gray-300 font-semibold transition-all duration-150 ease-in-out;
+    @apply inline-flex items-center justify-center min-w-40 min-h-11 py-0 px-6 border rounded-lg font-semibold transition-all duration-150 ease-in-out;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
+    border-color: transparent;
+    color: white;
   }
 
   .take-quiz-button:hover {
-    @apply bg-gray-400 -translate-y-[1px];
+    @apply -translate-y-[1px];
+    filter: brightness(1.02);
   }
 
 
@@ -341,15 +394,20 @@
      ========================= */
 
   .module-exercise-section {
-    @apply mt-[30px] mb-10 p-6 border border-black rounded-[14px];
+    @apply mt-[30px] mb-10 p-6 border rounded-xl;
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border);
   }
 
   .module-exercise-button {
-    @apply inline-flex items-center justify-center mt-4 min-h-[42px] py-0 px-5 border border-black rounded-lg bg-gray-300 font-semibold;
+    @apply inline-flex items-center justify-center mt-4 min-h-[42px] py-0 px-5 border rounded-lg font-semibold;
+    background: rgba(245, 166, 35, 0.12);
+    border-color: rgba(245,166,35,0.5);
+    color: var(--navy);
   }
 
   .module-exercise-button:hover {
-    @apply bg-gray-400;
+    background: rgba(245, 166, 35, 0.2);
   }
 
 
@@ -358,11 +416,15 @@
      ========================= */
 
   .module-completion-section {
-    @apply mt-10 mb-10 p-7 border border-black rounded-2xl text-center;
+    @apply mt-10 mb-10 p-7 border rounded-xl text-center;
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border);
+    box-shadow: var(--shadow-soft);
   }
 
   .module-completion-section p {
     @apply max-w-[760px] mt-2.5 mx-auto mb-0;
+    color: var(--muted);
   }
 
 

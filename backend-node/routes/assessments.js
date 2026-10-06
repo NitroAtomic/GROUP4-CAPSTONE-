@@ -12,8 +12,28 @@ const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
+async function requirePremium(req, res, next) {
+  if (req.user.role === 'admin') return next();
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT subscription_type, subscription_status FROM user WHERE user_id = ?',
+      [req.user.user_id]
+    );
+    if (!rows.length || rows[0].subscription_type !== 'Premium' || rows[0].subscription_status !== 'active') {
+      return res.status(403).json({ error: 'This assessment requires a Premium subscription.' });
+    }
+    next();
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to verify Premium access.' });
+  }
+}
+
+router.use(requireAuth, requirePremium);
+
 // FR-11: I-save yung resulta ng assessment (na-score na sa client)
-router.post('/submit', requireAuth, async (req, res) => {
+router.post('/submit', async (req, res) => {
   const { score, total, level, level_key, by_topic, weak_areas } = req.body;
 
   if (typeof score !== 'number' || typeof total !== 'number' || !level || !by_topic || !weak_areas) {
@@ -33,7 +53,7 @@ router.post('/submit', requireAuth, async (req, res) => {
 });
 
 // Kunin yung pinakabagong assessment ng naka-login na user
-router.get('/latest', requireAuth, async (req, res) => {
+router.get('/latest', async (req, res) => {
   try {
     const [rows] = await pool.query(
       'SELECT awareness_score AS score, total, awareness_level, by_topic, weak_areas, assessment_date FROM awarenessassessment WHERE user_id = ? ORDER BY assessment_id DESC LIMIT 1',

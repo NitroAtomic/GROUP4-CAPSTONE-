@@ -2,18 +2,21 @@
   <div class="module-page premium-role-module">
     <!-- Premium Badge -->
     <div class="premium-badge">
-      <span class="premium-badge-icon">👑</span>
+      <svg class="ui-icon premium-badge-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
       <span>Premium Course</span>
     </div>
 
     <!-- Module Header -->
-    <header class="module-header">
+    <header class="module-header page-band">
       <nav>
-        <router-link to="/">Home</router-link>
+        <router-link to="/" class="home-breadcrumb-link">
+          <svg class="ui-icon home-breadcrumb-icon" aria-hidden="true"><use href="#ui-icon-home" /></svg>
+          <span>Home</span>
+        </router-link>
         <span> / </span>
         <router-link to="/dashboard">Dashboard</router-link>
         <span> / </span>
-        <span class="text-gray-900">Freelancer Exploitation & Client Verification</span>
+        <span class="module-breadcrumb-current">Freelancer Exploitation & Client Verification</span>
       </nav>
       <h1>Freelancer Exploitation & Client Verification (Fake Clients, Portfolio Scams & Escrow Fraud)</h1>
       <p>Learn to identify fake client personas, detect portfolio credential harvesting, and implement secure verification procedures.</p>

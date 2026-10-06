@@ -1,19 +1,28 @@
 @layer components {
 
   .quiz-results-page {
-    @apply w-[min(700px,calc(100%-40px))] my-[86px] mx-auto max-[620px]:mt-12;
+    @apply w-[min(760px,calc(100%-40px))] my-[86px] mx-auto max-[620px]:mt-12;
   }
 
   .quiz-results-container {
-    @apply text-center;
+    @apply text-center rounded-xl border bg-white p-6 shadow-[0_2px_10px_rgba(11,37,69,0.07)] max-[620px]:p-4;
+    border-color: var(--border);
   }
 
   .quiz-results-icon {
-    @apply w-[46px] h-[46px] mt-0 mx-auto mb-[18px] flex items-center justify-center border-[2px] border-black rounded-full text-[30px] font-bold;
+    @apply w-[46px] h-[46px] mt-0 mx-auto mb-[18px] flex items-center justify-center border rounded-full text-[30px] font-bold;
+    border-color: rgba(27, 127, 121, 0.45);
+    background: rgba(27, 127, 121, 0.08);
+    color: var(--navy);
+  }
+
+  .quiz-results-icon .ui-icon {
+    @apply w-6 h-6;
   }
 
   .quiz-results-container h1 {
     @apply text-[24px] font-medium;
+    color: var(--navy);
   }
 
   .quiz-score {
@@ -22,22 +31,28 @@
 
   .quiz-score-earned {
     @apply text-[64px] font-extrabold max-[620px]:text-[54px];
+    color: var(--navy);
   }
 
   .quiz-score-total {
-    @apply ml-1.5 text-gray-500 text-[34px] font-semibold max-[620px]:text-[28px];
+    @apply ml-1.5 text-[34px] font-semibold max-[620px]:text-[28px];
+    color: var(--muted);
   }
 
   .quiz-results-breakdown {
-    @apply mt-[62px] border border-black rounded-[14px] overflow-hidden text-left;
+    @apply mt-[62px] border rounded-xl overflow-hidden text-left;
+    border-color: var(--border);
+    background: rgba(247, 249, 252, 0.5);
   }
 
   .quiz-result-row {
     @apply min-h-[42px] py-0 px-3.5 flex items-center justify-between text-[17px];
+    color: var(--navy);
   }
 
   .quiz-result-row:not(:last-child) {
-    @apply border-b border-gray-500;
+    @apply border-b;
+    border-color: var(--border);
   }
 
   .quiz-answer-review {
@@ -46,10 +61,13 @@
 
   .quiz-answer-review h2 {
     @apply mb-4 text-[20px] font-medium;
+    color: var(--navy);
   }
 
   .quiz-review-card {
-    @apply mb-3.5 p-4 border border-black rounded-[14px];
+    @apply mb-3.5 p-4 border rounded-xl;
+    border-color: var(--border);
+    background: rgba(255,255,255,0.9);
   }
 
   /* These two classes were already in QuizResults.vue's :class binding but had
@@ -84,11 +102,15 @@
   }
 
   .quiz-results-button {
-    @apply min-w-[164px] min-h-[38px] inline-flex items-center justify-center py-0 px-4 border border-black rounded-lg bg-white text-[16px] max-[620px]:min-w-[0] max-[620px]:w-full;
+    @apply min-w-[164px] min-h-[38px] inline-flex items-center justify-center py-0 px-4 border rounded-lg text-[16px] max-[620px]:min-w-[0] max-[620px]:w-full;
+    border-color: var(--border);
+    background: #fff;
+    color: var(--navy);
   }
 
   .quiz-results-primary-button {
-    @apply bg-gray-300;
+    @apply border-transparent text-white;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
   }
 
   .assessment-results-content {

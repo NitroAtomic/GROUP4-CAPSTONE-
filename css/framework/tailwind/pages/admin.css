@@ -1,6 +1,7 @@
 @layer components {
   .admin-page {
-    @apply min-h-[calc(100vh-4rem)] bg-gray-50 py-8 px-4;
+    @apply min-h-[calc(100vh-4rem)] py-8 px-4;
+    background: linear-gradient(180deg, rgba(11, 37, 69, 0.04), rgba(247, 249, 252, 1));
   }
 
   .admin-container {
@@ -14,6 +15,7 @@
 
   .admin-heading h1 {
     @apply mb-2 text-3xl font-bold;
+    color: var(--navy);
   }
 
   .admin-heading p,
@@ -30,7 +32,9 @@
   }
 
   .admin-card {
-    @apply rounded-xl border border-gray-200 bg-white p-5 shadow-sm;
+    @apply rounded-xl border bg-white p-5 shadow-sm;
+    border-color: var(--border);
+    box-shadow: var(--shadow-soft);
   }
 
   .admin-card-heading {
@@ -70,15 +74,17 @@
   }
 
   .admin-primary-button {
-    @apply border-black bg-black text-white hover:bg-gray-800;
+    @apply border-transparent text-white hover:opacity-95;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
   }
 
   .admin-secondary-button {
-    @apply border-gray-300 bg-white hover:bg-gray-100;
+    @apply border-[var(--border)] bg-white hover:bg-[var(--bg)];
+    color: var(--navy);
   }
 
   .admin-delete-button {
-    @apply border-red-300 bg-white text-red-700 hover:bg-red-50;
+    @apply border-red-200 bg-white text-red-700 hover:bg-red-50;
   }
 
   .admin-message {
@@ -130,6 +136,7 @@
   }
 
   .admin-type-badge.is-premium {
-    @apply bg-amber-100 text-amber-900;
+    @apply bg-[rgba(245,166,35,0.14)] text-[var(--navy)];
+    border: 1px solid rgba(245,166,35,0.4);
   }
 }

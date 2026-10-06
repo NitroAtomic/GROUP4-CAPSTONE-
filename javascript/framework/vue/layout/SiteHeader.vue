@@ -38,12 +38,12 @@
 
         <template v-if="isAuthenticated">
           <div class="dashboard-user-area">
-            <span class="dashboard-user-icon" aria-hidden="true">●</span>
+            <svg class="dashboard-user-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
             <span class="dashboard-user-name">Hi, {{ firstName }}</span>
           </div>
           <span v-if="isAdmin" class="dashboard-premium-badge">Administrator</span>
           <span v-else-if="isPremium" class="dashboard-premium-badge">
-            <img class="inline-crown-icon" src="/images/icons/crown-badge.png" alt="" aria-hidden="true">
+            <svg class="inline-crown-icon ui-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
             Premium
           </span>
           <router-link v-if="!isPremium && !isAdmin && !isMinimalNav" to="/premium-subscription" class="btn btn-premium">Go Premium</router-link>

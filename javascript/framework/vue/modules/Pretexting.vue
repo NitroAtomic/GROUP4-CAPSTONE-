@@ -1,9 +1,10 @@
 <template>
   <main class="module-page">
-    <header class="module-header">
+    <header class="module-header page-band">
         <nav>
             <router-link to="/" class="home">
-                <span class="icon">🏠</span>Home
+                <svg class="ui-icon home-breadcrumb-icon" aria-hidden="true"><use href="#ui-icon-home" /></svg>
+                <span>Home</span>
             </router-link>
         </nav>
 

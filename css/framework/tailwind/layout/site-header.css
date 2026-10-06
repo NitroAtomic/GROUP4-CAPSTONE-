@@ -1,6 +1,8 @@
 @layer components {
   .site-header {
-    @apply w-full border-t border-b border-black;
+    @apply w-full border-b;
+    background: var(--navy);
+    border-color: rgba(255, 255, 255, 0.12);
   }
 
   .navbar {
@@ -12,14 +14,34 @@
     @apply flex items-center gap-[18px] max-[620px]:gap-2.5;
   }
 
+  .nav-left {
+    @apply min-w-0;
+  }
+
+  .nav-right {
+    @apply shrink-0;
+  }
+
   .nav-link {
-    @apply text-[18px] text-gray-500;
+    @apply text-[16px] font-medium text-white/80;
   }
 
   /* Vue Router auto-applies this class to the link matching the current
      route — replaces the old static .nav-link.active */
   .nav-link.router-link-exact-active {
-    @apply text-black font-bold;
+    @apply text-white font-bold;
+    position: relative;
+  }
+
+  .nav-link.router-link-exact-active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    height: 2px;
+    background: var(--orange);
+    border-radius: 999px;
   }
 
   .search-box {
@@ -27,38 +49,92 @@
   }
 
   .search-box input {
-    @apply w-[305px] h-10 py-0 px-[18px] border border-black rounded-lg text-[17px] outline-none;
+    @apply w-[305px] h-10 py-0 px-[18px] border rounded-lg text-[17px] outline-none bg-white/10 text-white placeholder:text-white/60;
+    border-color: rgba(255, 255, 255, 0.25);
   }
 
   .search-results {
-    @apply absolute top-full left-0 z-20 mt-1 w-full border border-black rounded-lg bg-white overflow-hidden;
+    @apply absolute top-full left-0 z-20 mt-1 w-full border rounded-lg bg-white overflow-hidden;
+    border-color: var(--border);
   }
 
   .search-result-item {
-    @apply block py-2 px-[18px] text-[15px] text-black;
+    @apply block py-2 px-[18px] text-[15px] text-[var(--text)];
   }
 
   .search-result-item:hover {
-    @apply bg-gray-100;
+    @apply bg-[var(--bg)];
   }
 
   .search-no-results {
-    @apply py-2 px-[18px] text-[15px] text-gray-500;
+    @apply py-2 px-[18px] text-[15px] text-[var(--muted)];
   }
 
   .btn-login {
-    @apply bg-white;
+    @apply bg-white text-[var(--navy)] font-semibold border-white;
   }
 
   .btn-premium {
-    @apply bg-gray-300 font-semibold;
+    @apply bg-[var(--orange)] text-[var(--navy)] font-semibold border-[var(--orange)];
   }
 
   .btn-logout {
-    @apply bg-white;
+    @apply bg-white text-[var(--navy)] font-semibold border-white;
+  }
+
+  .site-header .btn-login,
+  .site-header .btn-logout {
+    border-color: #fff;
+  }
+
+  .site-header .btn-premium {
+    border-color: var(--orange);
   }
 
   .inline-crown-icon {
     @apply inline-block w-4 h-4 align-[-2px] mr-1;
+  }
+
+  .dashboard-user-area {
+    @apply text-white;
+  }
+
+  .site-header .dashboard-user-icon.ui-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--orange);
+  }
+
+  .site-header .dashboard-user-name {
+    color: #fff;
+  }
+
+  .site-header .dashboard-premium-badge {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  @media (max-width: 620px) {
+    .navbar {
+      @apply h-auto min-h-16 flex-wrap gap-y-2 py-2;
+    }
+
+    .nav-left {
+      @apply order-1 w-full flex-wrap;
+    }
+
+    .nav-right {
+      @apply order-2 w-full flex-wrap justify-end;
+    }
+
+    .nav-link,
+    .nav-right .btn {
+      @apply whitespace-nowrap;
+    }
   }
 }

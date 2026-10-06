@@ -26,10 +26,12 @@
 
   .about-page-heading h1 {
     @apply text-[42px] leading-[1.1] font-extrabold max-[700px]:text-[34px];
+    color: var(--navy);
   }
 
   .about-page-heading p {
     @apply mt-3 text-[20px] leading-snug max-[700px]:text-[17px];
+    color: var(--muted);
   }
 
 
@@ -43,10 +45,12 @@
 
   .about-mission-section h2 {
     @apply text-[30px] leading-[1.1];
+    color: var(--navy);
   }
 
   .about-mission-section p {
     @apply mt-0.5 text-[20px] leading-tight max-[700px]:text-[17px];
+    color: var(--muted);
   }
 
 
@@ -60,6 +64,7 @@
 
   .about-audience-section h2 {
     @apply mb-2 text-[30px] leading-[1.1];
+    color: var(--navy);
   }
 
   .about-audience-grid {
@@ -67,7 +72,10 @@
   }
 
   .about-audience-card {
-    @apply min-h-[104px] p-[18px] border-[2px] border-black rounded-[22px] flex flex-col justify-between;
+    @apply min-h-[104px] p-[18px] border rounded-xl flex flex-col justify-between;
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border);
+    box-shadow: 0 10px 20px rgba(11, 37, 69, 0.04);
   }
 
   /* Wrapper is the JS/CSS hook — icon assets are temporary (Handoff Notes). */
@@ -94,6 +102,7 @@
 
   .about-team-section h2 {
     @apply text-[30px] leading-[1.1];
+    color: var(--navy);
   }
 
   .about-team-grid {
@@ -105,7 +114,8 @@
   }
 
   .about-team-member-image {
-    @apply w-[68px] h-[68px] mt-0 mx-auto mb-2.5 border-[2px] border-black rounded-full flex items-center justify-center overflow-hidden shrink-0;
+    @apply w-[68px] h-[68px] mt-0 mx-auto mb-2.5 border-[2px] rounded-full flex items-center justify-center overflow-hidden shrink-0;
+    border-color: var(--border);
   }
 
   .about-team-member-image img {
@@ -114,9 +124,11 @@
 
   .about-team-member h3 {
     @apply w-full min-h-[37px] flex items-center justify-center text-[16px] leading-[1.15];
+    color: var(--navy);
   }
 
   .about-team-member p {
-    @apply mt-0.5 text-gray-500 text-[14px] leading-[1.15];
+    @apply mt-0.5 text-[14px] leading-[1.15];
+    color: var(--muted);
   }
 }
