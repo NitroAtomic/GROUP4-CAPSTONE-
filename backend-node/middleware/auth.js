@@ -16,6 +16,16 @@ function requireAuth(req, res, next) {
   const token = header.slice(7);
   try {
     const payload = jwt.verify(token, JWT_SECRET);
+
+    /* Yung pendingToken ay HINDI login. Binibigay yan pagkatapos ng password
+       pero bago yung one-time code, at pareho lang ng secret ang pirma kaya
+       pasado siya dito. Kung tatanggapin natin, pwedeng basahin na lang yung
+       pendingToken sa sagot ng /login at ipadala bilang Bearer token —
+       malalampasan na yung code, at pampalamuti na lang yung buong OTP. */
+    if (payload.otp_pending) {
+      return res.status(401).json({ error: 'Finish verifying your login first.' });
+    }
+
     req.user = payload; // { user_id, role }
     next();
   } catch (err) {
@@ -40,7 +50,11 @@ function optionalAuth(req, res, next) {
   const header = req.headers.authorization;
   if (header && header.startsWith('Bearer ')) {
     try {
-      req.user = jwt.verify(header.slice(7), JWT_SECRET);
+      const payload = jwt.verify(header.slice(7), JWT_SECRET);
+      // Pareho ng patakaran sa requireAuth: hindi pa tapos ang login, hindi
+      // pa login. Dito ibig sabihin guest, hindi Premium — kundi mabubuksan
+      // ng pendingToken ang bayad na content nang walang code.
+      if (!payload.otp_pending) req.user = payload;
     } catch (err) {
       // invalid token pero optional lang naman, treat as guest na lang
     }
