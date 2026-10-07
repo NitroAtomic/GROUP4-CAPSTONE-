@@ -11,7 +11,7 @@
 
         <!-- Score Summary -->
         <div class="quiz-score-summary">
-          <div class="quiz-score-circle">
+          <div class="quiz-score-circle" :style="{ '--pct': percentageScore + '%' }">
             <span class="quiz-score-number">{{ percentageScore }}%</span>
           </div>
           <div class="quiz-score-details">

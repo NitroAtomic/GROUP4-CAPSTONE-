@@ -171,4 +171,107 @@
     @apply mt-0 pt-5 border-t border-gray-200;
   }
 
+  /* ----------------------------------------------------------------------
+     Assessment results: score, topics, review and actions
+
+     The template already had all of these class names; none of them had a
+     rule, so the page rendered as unstyled text - a bare "90%", topic rows
+     with no shape, and two buttons that looked like plain words. These use
+     the same tokens and radii as the quiz results above so the two pages
+     read as one design.
+     ---------------------------------------------------------------------- */
+
+  .assessment-results-content .quiz-score-summary {
+    @apply flex items-center gap-6 max-[620px]:flex-col max-[620px]:gap-4 max-[620px]:text-center;
+  }
+
+  /* The ring is drawn with a conic gradient driven by --pct, which the
+     template sets from the score. The inner disc is masked out with a
+     second radial layer so no extra markup is needed. */
+  .assessment-results-content .quiz-score-circle {
+    @apply relative shrink-0 w-[124px] h-[124px] rounded-full grid place-items-center max-[620px]:w-[104px] max-[620px]:h-[104px];
+    background:
+      radial-gradient(closest-side, #fff calc(100% - 12px), transparent calc(100% - 11px)),
+      conic-gradient(var(--teal) var(--pct, 0%), var(--border) 0);
+  }
+
+  .assessment-results-content .quiz-score-number {
+    @apply text-[30px] font-extrabold leading-none max-[620px]:text-[26px];
+    color: var(--navy);
+  }
+
+  .assessment-results-content .quiz-score-details {
+    @apply flex flex-col gap-1;
+  }
+
+  .assessment-results-content .quiz-score-level {
+    @apply text-[22px] font-semibold leading-tight;
+    color: var(--navy);
+  }
+
+  .assessment-results-content .quiz-score-text {
+    @apply mb-0 text-[15px];
+    color: var(--muted);
+  }
+
+  .assessment-results-content .quiz-weak-area-topic {
+    @apply text-[15px] font-medium;
+    color: var(--navy);
+  }
+
+  .assessment-results-content .quiz-weak-area-score {
+    @apply text-[15px] font-semibold tabular-nums text-amber-700;
+  }
+
+  .assessment-results-content .quiz-topic-name {
+    @apply text-[15px];
+    color: var(--navy);
+  }
+
+  .assessment-results-content .quiz-topic-score {
+    @apply text-[15px] font-semibold tabular-nums;
+    color: var(--teal);
+  }
+
+  /* A coloured edge rather than a filled card: the review list is long, and
+     eight tinted blocks in a row is harder to read than eight plain ones
+     with a marker. */
+  .assessment-results-content .quiz-review-item {
+    @apply pl-4 border-l-4 border-l-transparent;
+  }
+
+  .assessment-results-content .quiz-review-correct {
+    @apply border-l-green-600;
+  }
+
+  .assessment-results-content .quiz-review-incorrect {
+    @apply border-l-red-600;
+  }
+
+  .assessment-results-content .quiz-review-explanation {
+    @apply mt-1 text-[14px] leading-relaxed;
+    color: var(--muted);
+  }
+
+  .quiz-nav-button {
+    @apply min-w-[180px] min-h-[42px] inline-flex items-center justify-center py-0 px-5 border rounded-lg text-[15px] font-medium transition-colors max-[620px]:min-w-0 max-[620px]:w-full;
+    border-color: var(--border);
+    background: #fff;
+    color: var(--navy);
+  }
+
+  .quiz-nav-button:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+
+  .assessment-results-content .quiz-results-actions {
+    @apply flex items-center justify-between gap-4 max-[620px]:flex-col;
+  }
+
+  .quiz-no-results {
+    @apply flex flex-col items-center gap-4 py-10 text-center;
+    color: var(--muted);
+  }
+
 }
