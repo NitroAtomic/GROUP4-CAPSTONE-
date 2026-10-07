@@ -2,9 +2,13 @@
   <main class="home-page">
     <section id="home" class="home-hero page-band">
       <div class="home-hero-inner">
-        <p class="home-hero-eyebrow">Hello! Where do you need help in?</p>
+        <p class="home-hero-eyebrow">Security awareness for remote work</p>
         <h1>Social Engineering Awareness Platform</h1>
-        <p class="home-hero-copy">Foundations of social engineering for remote workers</p>
+        <p class="home-hero-copy">
+          Learn to recognise the phishing, smishing, vishing and pretexting aimed at
+          remote workers, freelancers and virtual assistants. Six modules, free,
+          no account needed.
+        </p>
         <div class="home-hero-actions">
           <a href="#modules" class="home-hero-primary">Browse free modules</a>
           <router-link to="/premium-subscription" class="home-hero-secondary">Explore premium</router-link>
@@ -16,7 +20,7 @@
       <div class="home-content">
         <div class="section-heading">
           <h2>Free modules</h2>
-          <p>Foundations of social engineering for remote workers</p>
+          <p>The six core attack types, each with a short quiz at the end.</p>
         </div>
 
         <div class="modules-grid">
