@@ -15,24 +15,24 @@
 
   .admin-heading h1 {
     @apply mb-2 text-3xl font-bold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .admin-heading p,
   .admin-card-heading p {
-    @apply text-sm text-gray-600;
+    @apply text-sm text-[var(--muted)];
   }
 
   .admin-eyebrow {
-    @apply mb-1 text-xs font-bold uppercase tracking-widest text-gray-500;
+    @apply mb-1 text-xs font-bold uppercase tracking-widest text-[var(--muted)];
   }
 
   .admin-back-link {
-    @apply shrink-0 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-semibold hover:bg-gray-100;
+    @apply shrink-0 rounded-md border border-[var(--border)] bg-[var(--card-bg)] py-2 px-3 text-sm font-semibold hover:bg-[var(--surface-2)];
   }
 
   .admin-card {
-    @apply rounded-xl border bg-white p-5 shadow-sm;
+    @apply rounded-xl border bg-[var(--card-bg)] p-5 shadow-sm;
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
@@ -56,7 +56,7 @@
   .admin-form input,
   .admin-form select,
   .admin-form textarea {
-    @apply w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-normal outline-none focus:border-black;
+    @apply w-full rounded-md border border-[var(--border)] bg-[var(--card-bg)] py-2 px-3 text-sm font-normal outline-none focus:border-black;
   }
 
   .admin-form-wide {
@@ -79,12 +79,12 @@
   }
 
   .admin-secondary-button {
-    @apply border-[var(--border)] bg-white hover:bg-[var(--bg)];
-    color: var(--navy);
+    @apply border-[var(--border)] bg-[var(--card-bg)] hover:bg-[var(--bg)];
+    color: var(--heading);
   }
 
   .admin-delete-button {
-    @apply border-red-200 bg-white text-red-700 hover:bg-red-50;
+    @apply border-[var(--bad-border)] bg-[var(--card-bg)] text-red-700 hover:bg-[var(--bad-bg)];
   }
 
   .admin-message {
@@ -92,15 +92,15 @@
   }
 
   .admin-error {
-    @apply border-red-300 bg-red-50 text-red-800;
+    @apply border-[var(--bad-border)] bg-[var(--bad-bg)] text-red-800;
   }
 
   .admin-success {
-    @apply border-green-300 bg-green-50 text-green-800;
+    @apply border-[var(--ok-border)] bg-[var(--ok-bg)] text-green-800;
   }
 
   .admin-empty-state {
-    @apply py-6 text-center text-sm text-gray-600;
+    @apply py-6 text-center text-sm text-[var(--muted)];
   }
 
   .admin-module-list {
@@ -116,7 +116,7 @@
   }
 
   .admin-module-details p {
-    @apply mb-1 text-sm text-gray-600;
+    @apply mb-1 text-sm text-[var(--muted)];
   }
 
   .admin-module-description {
@@ -132,11 +132,11 @@
   }
 
   .admin-type-badge.is-free {
-    @apply bg-gray-100 text-gray-700;
+    @apply bg-[var(--surface-2)] text-[var(--muted)];
   }
 
   .admin-type-badge.is-premium {
-    @apply bg-[rgba(245,166,35,0.14)] text-[var(--navy)];
+    @apply bg-[rgba(245,166,35,0.14)] text-[var(--heading)];
     border: 1px solid rgba(245,166,35,0.4);
   }
 }

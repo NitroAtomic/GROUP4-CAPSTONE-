@@ -24,11 +24,11 @@
     @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[14px] font-semibold mb-4;
     background: rgba(245, 166, 35, 0.12);
     border: 1px solid rgba(245, 166, 35, 0.38);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .premium-role-module .premium-badge-icon {
-    @apply text-[var(--navy)];
+    @apply text-[var(--heading)];
     width: 17px;
     height: 17px;
   }
@@ -53,7 +53,7 @@
 
   .module-header h1 {
     @apply text-[44px] leading-[1.1] font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-header > p {
@@ -74,7 +74,7 @@
 
   .learning-objectives h3 {
     @apply mb-3 text-[20px] font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .learning-objectives ol {
@@ -83,7 +83,7 @@
 
   .learning-objectives li {
     @apply mb-2 text-[16px] leading-relaxed;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .learning-objectives li:last-child {
@@ -166,14 +166,14 @@
   .module-concept,
   .module-example {
     @apply p-[18px] border rounded-xl;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
 
   .module-concept h4 {
     @apply mb-2 text-[18px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-concept p {
@@ -195,24 +195,24 @@
 
   .scenario-section {
     @apply mt-9 mb-9 p-6 border rounded-xl;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
 
   .scenario-section h2 {
     @apply mb-4 text-[26px] font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .scenario-stage {
-    @apply mb-6 p-5 bg-white border rounded-lg;
+    @apply mb-6 p-5 bg-[var(--card-bg)] border rounded-lg;
     border-color: var(--border);
   }
 
   .scenario-stage h3 {
     @apply mb-3 text-[20px] font-semibold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .scenario-stage p {
@@ -228,7 +228,7 @@
 
   .scenario-decision h4 {
     @apply mb-2 text-[17px] font-semibold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .scenario-decision ul {
@@ -237,7 +237,7 @@
 
   .scenario-decision li {
     @apply mb-1.5 text-[15px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
 
@@ -254,7 +254,7 @@
 
   .red-flag-checklist h3 {
     @apply mb-4 text-[20px] font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .red-flag-checklist ul {
@@ -263,11 +263,11 @@
 
   .red-flag-checklist li {
     @apply mb-3 pl-8 relative text-[16px] leading-relaxed;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .red-flag-checklist li::before {
-    @apply absolute left-0 top-0.5 w-5 h-5 border-2 rounded bg-white content-[''];
+    @apply absolute left-0 top-0.5 w-5 h-5 border-2 rounded bg-[var(--card-bg)] content-[''];
     border-color: rgba(220, 38, 38, 0.45);
   }
 
@@ -285,7 +285,7 @@
 
   .mitigation-checklist h3 {
     @apply mb-4 text-[20px] font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .mitigation-checklist ol {
@@ -294,7 +294,7 @@
 
   .mitigation-checklist li {
     @apply mb-2 text-[16px] leading-relaxed;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .mitigation-checklist li:last-child {
@@ -308,13 +308,13 @@
 
   .curated-resources {
     @apply mt-6 mb-6 p-5 border rounded-lg;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
   }
 
   .curated-resources h3 {
     @apply mb-4 text-[20px] font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .curated-resources ul {
@@ -323,7 +323,7 @@
 
   .curated-resources li {
     @apply mb-2 text-[16px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .curated-resources li:last-child {
@@ -332,7 +332,7 @@
 
   .curated-resources a {
     @apply underline;
-    color: var(--navy);
+    color: var(--heading);
   }
 
 
@@ -347,7 +347,7 @@
   .video-player {
     @apply min-h-[280px] mt-4 border-[2px] flex items-center justify-center text-center;
     border-color: var(--border);
-    background: rgba(255,255,255,0.8);
+    background: var(--card-bg);
   }
 
   .video-player p {
@@ -361,14 +361,14 @@
 
   .module-quiz-section {
     @apply w-[min(1130px,calc(100%-40px))] my-10 mx-auto p-7 border rounded-xl text-center;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
 
   .module-quiz-section h2 {
     @apply mb-2.5 text-[28px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-quiz-section p {
@@ -395,7 +395,7 @@
 
   .module-exercise-section {
     @apply mt-[30px] mb-10 p-6 border rounded-xl;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
   }
 
@@ -403,7 +403,7 @@
     @apply inline-flex items-center justify-center mt-4 min-h-[42px] py-0 px-5 border rounded-lg font-semibold;
     background: rgba(245, 166, 35, 0.12);
     border-color: rgba(245,166,35,0.5);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-exercise-button:hover {
@@ -417,7 +417,7 @@
 
   .module-completion-section {
     @apply mt-10 mb-10 p-7 border rounded-xl text-center;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
@@ -516,7 +516,7 @@
 
   .premium-role-module .learning-objectives h3,
   .premium-role-module .learning-objectives li {
-    @apply text-gray-900;
+    @apply text-[var(--text)];
   }
 
   .premium-role-module .learning-objectives h3,

@@ -57,13 +57,13 @@
 
   .premium-section {
     @apply py-9 max-[620px]:py-8;
-    background: #fff;
+    background: var(--card-bg);
     border-top: 1px solid var(--border);
   }
 
   .section-heading h2 {
     @apply text-[32px] leading-[1.1] font-bold tracking-[-0.02em] max-[620px]:text-[27px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .section-heading p {
@@ -82,7 +82,7 @@
 
   .module-card {
     @apply min-h-28 p-5 border flex items-center justify-between transition-all duration-150 ease-in-out;
-    background: #fff;
+    background: var(--card-bg);
     border-color: var(--border);
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(11, 37, 69, 0.06);
@@ -96,7 +96,7 @@
 
   .module-card h3 {
     @apply text-[24px] leading-[1.15] font-semibold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-card p {
@@ -123,7 +123,7 @@
     @apply w-7 h-7 shrink-0 rounded-full p-1.5;
     fill: none;
     background: rgba(245, 166, 35, 0.16);
-    color: var(--navy);
+    color: var(--heading);
     stroke: currentColor;
     stroke-width: 1.8;
     stroke-linecap: round;
@@ -143,7 +143,7 @@
     @apply py-[3px] px-[9px] border rounded-full text-[13px] font-semibold;
     background: rgba(245, 166, 35, 0.14);
     border-color: rgba(245, 166, 35, 0.44);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .premium-grid {
@@ -152,7 +152,7 @@
 
   .premium-card {
     @apply min-h-28 py-4 px-5 border flex items-center justify-between;
-    background: #fff;
+    background: var(--card-bg);
     border-color: var(--border);
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(11, 37, 69, 0.06);
@@ -160,7 +160,7 @@
 
   .premium-card h3 {
     @apply text-[23px] leading-tight font-semibold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .premium-card p {

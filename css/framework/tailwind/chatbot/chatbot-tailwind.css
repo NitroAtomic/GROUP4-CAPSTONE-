@@ -14,7 +14,7 @@
      ========================= */
 
   .chatbot-panel {
-    @apply absolute right-0 bottom-[68px] w-[330px] h-[460px] overflow-hidden border rounded-[22px] bg-white hidden flex-col
+    @apply absolute right-0 bottom-[68px] w-[330px] h-[460px] overflow-hidden border rounded-[22px] bg-[var(--card-bg)] hidden flex-col
       max-[480px]:w-[calc(100vw-28px)] max-[480px]:max-w-[330px] max-[480px]:h-[430px];
     border-color: var(--border);
     box-shadow: 0 18px 42px rgba(11, 37, 69, 0.12);
@@ -73,7 +73,7 @@
      ========================= */
 
   .chatbot-conversation {
-    @apply flex-1 p-3.5 overflow-y-auto bg-white;
+    @apply flex-1 p-3.5 overflow-y-auto bg-[var(--card-bg)];
   }
 
 
@@ -87,11 +87,11 @@
   }
 
   .chatbot-assistant-message {
-    @apply mr-auto bg-white text-[var(--navy)];
+    @apply mr-auto bg-[var(--card-bg)] text-[var(--heading)];
   }
 
   .chatbot-user-message {
-    @apply ml-auto bg-[rgba(27,127,121,0.09)] text-[var(--navy)];
+    @apply ml-auto bg-[rgba(27,127,121,0.09)] text-[var(--heading)];
   }
 
   .chatbot-message-paragraph {
@@ -113,13 +113,13 @@
   .chatbot-message-code {
     @apply my-1 p-2 overflow-x-auto rounded text-[11px] whitespace-pre-wrap;
     background: rgba(11, 37, 69, 0.04);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .chatbot-message code {
     @apply px-0.5 rounded font-mono text-[11px];
     background: rgba(11, 37, 69, 0.05);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .chatbot-starter-prompts {
@@ -127,13 +127,13 @@
   }
 
   .chatbot-starter-prompts p {
-    @apply mb-0.5 text-[11px] font-semibold text-gray-600;
+    @apply mb-0.5 text-[11px] font-semibold text-[var(--muted)];
   }
 
   .chatbot-starter-prompts button {
-    @apply py-1.5 px-2.5 border rounded-full bg-white text-left text-[11px] leading-snug cursor-pointer hover:bg-[var(--bg)];
+    @apply py-1.5 px-2.5 border rounded-full bg-[var(--card-bg)] text-left text-[11px] leading-snug cursor-pointer hover:bg-[var(--bg)];
     border-color: var(--border);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .chatbot-retry-button {
@@ -145,7 +145,7 @@
      ========================= */
 
   .chatbot-loading-message {
-    @apply mr-auto border bg-white italic;
+    @apply mr-auto border bg-[var(--card-bg)] italic;
     border-color: var(--border);
     color: var(--muted);
   }
@@ -156,7 +156,7 @@
      ========================= */
 
   .chatbot-error-message {
-    @apply mr-auto border bg-white;
+    @apply mr-auto border bg-[var(--card-bg)];
     border-color: rgba(220, 38, 38, 0.35);
     color: #991b1b;
   }
@@ -167,7 +167,7 @@
      ========================= */
 
   .chatbot-message-form {
-    @apply p-2.5 border-t bg-white;
+    @apply p-2.5 border-t bg-[var(--card-bg)];
     border-color: var(--border);
   }
 
@@ -176,13 +176,13 @@
   }
 
   .chatbot-input-container input {
-    @apply flex-1 min-w-0 h-[38px] py-0 px-[13px] border rounded-full bg-white outline-none text-[13px];
+    @apply flex-1 min-w-0 h-[38px] py-0 px-[13px] border rounded-full bg-[var(--card-bg)] outline-none text-[13px];
     border-color: var(--border);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .chatbot-input-container input::placeholder {
-    @apply text-gray-400;
+    @apply text-[var(--muted)];
   }
 
   .chatbot-input-container input:focus {
@@ -213,7 +213,7 @@
 
   .chatbot-floating-button {
     @apply w-[54px] h-[54px] ml-auto p-0 border-0 rounded-full bg-transparent flex items-center justify-center cursor-pointer transition-all duration-150 ease-in-out;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .chatbot-floating-button:hover {
@@ -320,7 +320,7 @@
 .chatbot-starter {
   border: 1px solid #111;
   border-radius: 9999px;
-  background: #fff;
+  background: var(--card-bg);
   padding: 5px 12px;
   font-size: 13px;
   text-align: left;

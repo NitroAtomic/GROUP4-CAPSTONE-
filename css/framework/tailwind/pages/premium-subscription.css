@@ -26,7 +26,7 @@
 
   .premium-page-heading h1 {
     @apply mt-1.5 text-[34px] leading-[1.1] font-bold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .premium-page-heading p {
@@ -46,8 +46,8 @@
   .premium-billing-button {
     @apply min-h-[34px] py-0 px-3.5 border rounded-lg text-[15px] cursor-pointer transition-colors;
     border-color: var(--border);
-    background: #fff;
-    color: var(--navy);
+    background: var(--card-bg);
+    color: var(--heading);
   }
 
   .premium-billing-button-active,
@@ -67,7 +67,7 @@
 
   .premium-plan-card {
     @apply mt-6 p-[38px] border rounded-xl max-[620px]:p-6;
-    background: rgba(255, 255, 255, 0.96);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
@@ -78,7 +78,7 @@
 
   .premium-plan-header h2 {
     @apply text-[28px] font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .premium-plan-header p {
@@ -92,7 +92,7 @@
 
   .premium-plan-price strong {
     @apply text-[29px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .premium-plan-price span {
@@ -163,11 +163,11 @@
   }
 
   .premium-account-information p:last-child {
-    @apply text-[var(--navy)];
+    @apply text-[var(--heading)];
   }
 
   .premium-account-information a {
     @apply font-semibold underline;
-    color: var(--navy);
+    color: var(--heading);
   }
 }

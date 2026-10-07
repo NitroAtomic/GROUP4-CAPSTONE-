@@ -17,14 +17,14 @@
 
   .login-container {
     @apply p-9 border rounded-xl max-[520px]:py-[26px] max-[520px]:px-5;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
 
   .login-container h1 {
     @apply text-center text-[32px] font-semibold max-[520px]:text-[28px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .login-description {
@@ -47,13 +47,13 @@
 
   .login-form-field label {
     @apply block mb-2 text-[16px] font-semibold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .login-form-field input {
     @apply w-full h-[46px] py-0 px-3.5 border rounded-lg outline-none text-[16px] focus:border-2;
     border-color: var(--border);
-    background: #fff;
+    background: var(--card-bg);
   }
 
 
@@ -89,7 +89,7 @@
 
   .create-account-text a {
     @apply font-semibold underline;
-    color: var(--navy);
+    color: var(--heading);
   }
 
 
@@ -117,7 +117,7 @@
     @apply w-full mt-4 font-semibold;
     background: rgba(245, 166, 35, 0.12);
     border-color: rgba(245, 166, 35, 0.5);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .btn-login-create-account .inline-crown-icon {

@@ -48,16 +48,83 @@
    ========================= */
 
 @layer base {
+  /* ----------------------------------------------------------------------
+     Theme tokens
+
+     --navy is the brand colour and stays navy in both themes: it is what the
+     header, the footer and the hero band are painted with, and those are dark
+     either way. Heading TEXT needed its own token, because in a dark theme it
+     has to go light while those bands stay dark. --navy was doing both jobs.
+
+     Anything that changes between themes is a token here. A colour written
+     directly into a rule cannot follow the theme, which is how a dark page
+     ends up with white cards sitting on it.
+     ---------------------------------------------------------------------- */
   :root {
-    --navy: #0B2545;
+    --navy: #0B2545;              /* brand; same in both themes */
     --teal: #1B7F79;
     --orange: #F5A623;
-    --bg: #F7F9FC;
-    --card-bg: #ffffff;
+
+    --bg: #F7F9FC;                /* page */
+    --card-bg: #ffffff;           /* cards and panels */
+    --surface-2: #F1F4F9;         /* sunken rows, table stripes */
     --border: #DFE5EE;
-    --text: #10233d;
-    --muted: #5e6a7a;
+    --heading: #0B2545;           /* heading text */
+    --text: #10233d;              /* body text */
+    --muted: #5e6a7a;             /* secondary text */
+    --field-bg: #ffffff;          /* inputs */
+    --accent-text: #1B7F79;       /* teal used as TEXT on a card */
+    --warn-text:   #B45309;       /* amber used as TEXT on a card */
     --shadow-soft: 0 2px 10px rgba(11, 37, 69, 0.07);
+
+    --ok-bg: #F0FDF4;             /* correct answers, success states */
+    --ok-border: #16A34A;
+    --bad-bg: #FEF2F2;            /* wrong answers, errors */
+    --bad-border: #DC2626;
+  }
+
+  /* Dark values live in one place. Applied when the person has chosen dark,
+     and when they have chosen nothing and their system asks for it. The
+     :not([data-theme]) guard matters - without it, the system preference
+     would override someone who explicitly picked light. */
+  :root[data-theme="dark"] {
+    --bg: #0A1220;
+    --card-bg: #121D2E;
+    --surface-2: #16233A;
+    --border: #28374F;
+    --heading: #E8EEF7;
+    --text: #DCE4F0;
+    --muted: #94A3B8;
+    --field-bg: #0F1A2B;
+    --accent-text: #5EEAD4;
+    --warn-text:   #FBBF24;
+    --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+    --ok-bg: #112A1C;
+    --ok-border: #2E9E5B;
+    --bad-bg: #2C1618;
+    --bad-border: #D4504F;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --bg: #0A1220;
+      --card-bg: #121D2E;
+      --surface-2: #16233A;
+      --border: #28374F;
+      --heading: #E8EEF7;
+      --text: #DCE4F0;
+      --muted: #94A3B8;
+      --field-bg: #0F1A2B;
+    --accent-text: #5EEAD4;
+    --warn-text:   #FBBF24;
+      --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+      --ok-bg: #112A1C;
+      --ok-border: #2E9E5B;
+      --bad-bg: #2C1618;
+      --bad-border: #D4504F;
+    }
   }
 
   * {
@@ -98,7 +165,7 @@
   }
 
   .se-card {
-    @apply rounded-[12px] border bg-white;
+    @apply rounded-[12px] border bg-[var(--card-bg)];
     border-color: var(--border);
     box-shadow: 0 2px 10px rgba(11, 37, 69, 0.07);
   }

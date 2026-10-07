@@ -5,7 +5,7 @@
   }
 
   .quiz-container {
-    @apply w-full rounded-xl border bg-white p-6 shadow-[0_2px_10px_rgba(11,37,69,0.07)] max-[620px]:p-4;
+    @apply w-full rounded-xl border bg-[var(--card-bg)] p-6 shadow-[0_2px_10px_rgba(11,37,69,0.07)] max-[620px]:p-4;
     border-color: var(--border);
   }
 
@@ -23,7 +23,7 @@
 
   .quiz-header h1 {
     @apply text-[20px] font-semibold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .quiz-header.page-band .quiz-question-counter {
@@ -50,12 +50,12 @@
     @apply inline-block mb-5 py-1 px-3 border rounded-full text-[12px] font-semibold;
     background: rgba(245, 166, 35, 0.12);
     border-color: rgba(245, 166, 35, 0.4);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .quiz-question-text {
     @apply mb-[34px] text-[23px] leading-tight font-normal max-[620px]:text-[20px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .quiz-answer-list {
@@ -65,7 +65,7 @@
   .quiz-answer-option {
     @apply min-h-[52px] py-0 px-5 flex items-center gap-3.5 border rounded-[10px] cursor-pointer;
     border-color: var(--border);
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
   }
 
   .quiz-answer-option:hover {
@@ -78,7 +78,7 @@
 
   .quiz-answer-option span {
     @apply text-[17px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .quiz-navigation {
@@ -88,8 +88,8 @@
   .quiz-navigation-button {
     @apply min-w-[98px] min-h-[42px] py-0 px-[18px] inline-flex items-center justify-center border rounded-lg text-[16px] no-underline cursor-pointer;
     border-color: var(--border);
-    background: #fff;
-    color: var(--navy);
+    background: var(--card-bg);
+    color: var(--heading);
   }
 
   .quiz-next-button {

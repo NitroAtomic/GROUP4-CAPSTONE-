@@ -24,7 +24,7 @@
 
   .dashboard-heading h1 {
     @apply text-[40px] leading-[1.05] max-[700px]:text-[34px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .dashboard-heading p {
@@ -52,7 +52,7 @@
 
   .dashboard-summary-card {
     @apply min-h-[104px] py-[18px] px-[30px] border rounded-xl;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: 0 10px 20px rgba(11, 37, 69, 0.04);
   }
@@ -64,7 +64,7 @@
 
   .dashboard-summary-value {
     @apply mt-2 text-[30px] font-bold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   /* Used under the awareness level; had no rule, so it rendered at body size
@@ -85,7 +85,7 @@
 
   .dashboard-section-heading h2 {
     @apply text-[29px] leading-[1.1] font-bold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .dashboard-section-heading p {
@@ -98,7 +98,7 @@
   }
 
   .dashboard-assessment-link {
-    @apply mt-[7px] text-[var(--navy)] text-[17px] font-semibold underline bg-transparent border-0 cursor-default max-[700px]:mt-0;
+    @apply mt-[7px] text-[var(--heading)] text-[17px] font-semibold underline bg-transparent border-0 cursor-default max-[700px]:mt-0;
   }
 
 
@@ -112,7 +112,7 @@
 
   .dashboard-recommendation-card {
     @apply min-h-[104px] py-[18px] px-[26px] border rounded-xl flex flex-col justify-center text-inherit;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--card-bg);
     border-color: var(--border);
   }
 
@@ -120,12 +120,12 @@
     @apply w-fit mb-1 py-0.5 px-1.5 border rounded-full text-[9px];
     background: rgba(27, 127, 121, 0.12);
     border-color: rgba(27, 127, 121, 0.2);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .dashboard-recommendation-card h3 {
     @apply text-[19px] leading-[1.1];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .dashboard-recommendation-card p {
@@ -134,7 +134,7 @@
   }
 
   .dashboard-empty-copy {
-    @apply mt-2 text-[17px] text-gray-500;
+    @apply mt-2 text-[17px] text-[var(--muted)];
   }
 
 
@@ -149,15 +149,15 @@
   .dashboard-weak-area {
     @apply min-h-[46px] py-0 px-[22px] border rounded-[14px] flex items-center justify-between text-[18px] font-semibold max-[480px]:text-[15px];
     border-color: var(--border);
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--navy);
+    background: var(--card-bg);
+    color: var(--heading);
   }
 
   .dashboard-score-badge {
     @apply min-w-[118px] py-1 px-3.5 border rounded-full text-center text-[12px] max-[480px]:min-w-[90px] max-[480px]:text-[11px];
     background: rgba(245, 166, 35, 0.14);
     border-color: rgba(245, 166, 35, 0.5);
-    color: var(--navy);
+    color: var(--heading);
   }
 
 
@@ -168,12 +168,12 @@
   .dashboard-quiz-history {
     @apply mt-2.5 border rounded-[14px] overflow-hidden;
     border-color: var(--border);
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
   }
 
   .dashboard-quiz-history-row {
     @apply min-h-[42px] py-0 px-[22px] flex items-center justify-between text-[18px] max-[480px]:text-[15px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .dashboard-quiz-history-row:not(:last-child) {
@@ -203,14 +203,14 @@
 
   .dashboard-user-name {
     @apply whitespace-nowrap;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .dashboard-premium-badge {
     @apply py-2 px-3.5 border rounded-full text-[13px] font-semibold;
     border-color: rgba(245, 166, 35, 0.4);
     background: rgba(245, 166, 35, 0.12);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .form-error-message {

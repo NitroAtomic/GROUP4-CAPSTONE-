@@ -36,6 +36,19 @@
           </div>
         </div>
 
+        <button
+          type="button"
+          class="btn btn-theme-toggle"
+          :aria-pressed="isDark() ? 'true' : 'false'"
+          :title="isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+          @click="toggleTheme"
+        >
+          <svg class="ui-icon" aria-hidden="true">
+            <use :href="isDark() ? '#ui-icon-sun' : '#ui-icon-moon'" />
+          </svg>
+          <span class="sr-only">{{ isDark() ? 'Switch to light mode' : 'Switch to dark mode' }}</span>
+        </button>
+
         <template v-if="isAuthenticated">
           <div class="dashboard-user-area">
             <svg class="dashboard-user-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>

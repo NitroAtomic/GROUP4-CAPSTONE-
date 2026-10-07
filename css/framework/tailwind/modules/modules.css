@@ -32,12 +32,12 @@
   }
 
   .module-header nav a {
-    @apply text-[17px] text-gray-600;
+    @apply text-[17px] text-[var(--muted)];
   }
 
   .module-header h1 {
     @apply text-[44px] leading-[1.1] font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-header > p {
@@ -81,6 +81,7 @@
   }
 
   .module-breadcrumb-current {
+    /* Sits inside the navy module header, so it is white in both themes. */
     color: rgba(255, 255, 255, 0.78);
   }
 
@@ -106,7 +107,7 @@
   .module-exercise-section h2,
   .module-completion-section h2 {
     @apply mb-2.5 text-[28px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-awareness-guide p,
@@ -153,7 +154,7 @@
   main.module-page > section:not(.module-quiz-section):not(.module-video-section):not(.module-exercise-section):not(.module-completion-section),
   main.module-page > article {
     @apply p-6 border rounded-xl;
-    background: #fff;
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
@@ -172,7 +173,7 @@
   }
 
   .module-page figcaption {
-    @apply mt-2 text-gray-500 text-[14px] leading-snug;
+    @apply mt-2 text-[var(--muted)] text-[14px] leading-snug;
   }
 
   .module-concepts-list,
@@ -183,7 +184,7 @@
   .module-concept,
   .module-example {
     @apply p-[18px] border rounded-xl;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
@@ -193,7 +194,7 @@
   }
 
   .module-concept p {
-    @apply text-gray-600;
+    @apply text-[var(--muted)];
   }
 
   .module-example h3 {
@@ -216,7 +217,7 @@
   .video-player {
     @apply min-h-[280px] mt-4 border-[2px] flex items-center justify-center text-center;
     border-color: var(--border);
-    background: rgba(255,255,255,0.8);
+    background: var(--card-bg);
   }
 
   .video-player p {
@@ -230,7 +231,7 @@
 
   .module-quiz-section {
     @apply w-[min(1130px,calc(100%-40px))] my-10 mx-auto p-7 border rounded-xl text-center;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
@@ -240,7 +241,7 @@
   }
 
   .module-quiz-section p {
-    @apply max-w-[620px] mt-0 mx-auto mb-5 text-gray-600 text-[16px] leading-normal;
+    @apply max-w-[620px] mt-0 mx-auto mb-5 text-[var(--muted)] text-[16px] leading-normal;
   }
 
   .take-quiz-button {
@@ -256,9 +257,9 @@
   }
 
   .module-home-button {
-    @apply inline-flex items-center justify-center min-w-40 min-h-11 py-0 px-6 ml-3.5 border rounded-lg bg-white font-semibold transition-all duration-150 ease-in-out max-[620px]:ml-0 max-[620px]:mt-3 max-[620px]:w-full;
+    @apply inline-flex items-center justify-center min-w-40 min-h-11 py-0 px-6 ml-3.5 border rounded-lg bg-[var(--card-bg)] font-semibold transition-all duration-150 ease-in-out max-[620px]:ml-0 max-[620px]:mt-3 max-[620px]:w-full;
     border-color: var(--border);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-home-button:hover {
@@ -273,7 +274,7 @@
 
   .module-exercise-section {
     @apply mt-[30px] mb-10 p-6 border rounded-xl;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
   }
 
@@ -281,7 +282,7 @@
     @apply inline-flex items-center justify-center mt-4 min-h-[42px] py-0 px-5 border rounded-lg font-semibold;
     background: rgba(245, 166, 35, 0.12);
     border-color: rgba(245,166,35,0.5);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .module-exercise-button:hover {
@@ -295,7 +296,7 @@
 
   .module-completion-section {
     @apply mt-10 mb-10 p-7 border rounded-xl text-center;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
@@ -311,7 +312,7 @@
    colour - so the page title rendered at body size and the page looked
    like it had no heading at all. Matched to the dashboard title scale. */
 .premium-list-header h1 {
-  margin-bottom: 6px; color: var(--navy);
+  margin-bottom: 6px; color: var(--heading);
   font-size: 34px; line-height: 1.1; font-weight: 700;
 }
 @media (max-width: 700px) { .premium-list-header h1 { font-size: 28px; } }
@@ -323,13 +324,13 @@
 @media (max-width: 700px) { .premium-list-grid { grid-template-columns: 1fr; } }
 .premium-list-card {
   display: block; padding: 18px 20px; border: 1px solid var(--border); border-radius: 12px;
-  color: inherit; text-decoration: none; background: rgba(255,255,255,0.96);
+  color: inherit; text-decoration: none; background: var(--card-bg);
   box-shadow: var(--shadow-soft);
 }
 .premium-list-card:hover { background: rgba(27,127,121,0.04); }
 .premium-list-card:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 .premium-list-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
-.premium-list-card h2 { min-width: 0; font-size: 18px; margin-bottom: 0; color: var(--navy); }
+.premium-list-card h2 { min-width: 0; font-size: 18px; margin-bottom: 0; color: var(--heading); }
 .premium-list-card p { color: var(--muted); font-size: 14px; margin-bottom: 10px; }
-.premium-list-open { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; color: var(--navy); }
+.premium-list-open { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; color: var(--heading); }
 .premium-list-arrow { width: 16px; height: 16px; }

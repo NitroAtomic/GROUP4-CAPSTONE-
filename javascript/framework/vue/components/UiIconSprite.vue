@@ -60,6 +60,13 @@
       <rect x="4" y="10" width="16" height="11" rx="2" />
       <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" />
     </symbol>
+    <symbol id="ui-icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+    </symbol>
+    <symbol id="ui-icon-moon" viewBox="0 0 24 24">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+    </symbol>
     <symbol id="ui-icon-crown" viewBox="0 0 24 24">
       <path d="m3 7 5 4 4-7 4 7 5-4-2 12H5L3 7Z" />
       <path d="M6 22h12M5 16h14" />

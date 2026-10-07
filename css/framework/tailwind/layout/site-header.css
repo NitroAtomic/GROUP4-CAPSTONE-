@@ -57,7 +57,7 @@
   }
 
   .search-results {
-    @apply absolute top-full left-0 z-20 mt-1 w-full border rounded-lg bg-white overflow-hidden;
+    @apply absolute top-full left-0 z-20 mt-1 w-full border rounded-lg bg-[var(--card-bg)] overflow-hidden;
     border-color: var(--border);
   }
 
@@ -73,7 +73,24 @@
     @apply py-2 px-[18px] text-[15px] text-[var(--muted)];
   }
 
+  /* Sits on the navy header like the other buttons, so it keeps the same
+     translucent-white treatment rather than following the theme tokens. */
+  .btn-theme-toggle {
+    @apply w-10 h-10 p-0 inline-flex items-center justify-center rounded-lg border text-white transition-colors;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  .btn-theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.20);
+  }
+
+  .btn-theme-toggle .ui-icon {
+    @apply w-5 h-5;
+  }
+
   .btn-login {
+    /* white button on the navy header: text stays navy in both themes */
     @apply bg-white text-[var(--navy)] font-semibold border-white;
   }
 

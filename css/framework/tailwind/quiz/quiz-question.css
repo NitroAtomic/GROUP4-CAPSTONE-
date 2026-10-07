@@ -22,7 +22,7 @@
 
   .quiz-header h1 {
     @apply text-xl font-medium;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .quiz-question-counter {
@@ -53,12 +53,12 @@
     @apply inline-block mb-5 px-3 py-1 border rounded-full text-xs font-semibold;
     background: rgba(245, 166, 35, 0.12);
     border-color: rgba(245, 166, 35, 0.4);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .quiz-question-text {
     @apply mb-[34px] text-[23px] leading-[1.25] font-normal;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   /* =========================
@@ -72,7 +72,7 @@
   .quiz-answer-option {
     @apply min-h-[52px] px-5 flex items-center gap-3.5 border rounded-[10px] cursor-pointer;
     border-color: var(--border);
-    background: rgba(255,255,255,0.95);
+    background: var(--card-bg);
   }
 
   .quiz-answer-option:hover {
@@ -86,17 +86,17 @@
 
   .quiz-answer-option span {
     @apply text-[17px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   /* Highlight the correct option (and the user's wrong pick, if any) once
      the current question has been checked. */
   .quiz-answer-option-correct {
-    @apply border-green-600 bg-green-50;
+    @apply border-[var(--ok-border)] bg-[var(--ok-bg)];
   }
 
   .quiz-answer-option-incorrect {
-    @apply border-red-600 bg-red-50;
+    @apply border-[var(--bad-border)] bg-[var(--bad-bg)];
   }
 
   .quiz-answer-option input:disabled {
@@ -112,11 +112,11 @@
   }
 
   .quiz-feedback-correct {
-    @apply border-green-600 bg-green-50 text-green-800;
+    @apply border-[var(--ok-border)] bg-[var(--ok-bg)] text-green-800;
   }
 
   .quiz-feedback-incorrect {
-    @apply border-red-600 bg-red-50 text-red-800;
+    @apply border-[var(--bad-border)] bg-[var(--bad-bg)] text-red-800;
   }
 
   .quiz-feedback-status {
@@ -146,9 +146,9 @@
      not a conversion of an existing rule. */
   .quiz-navigation-button {
     @apply min-w-[98px] min-h-[42px] px-[18px] inline-flex items-center justify-center
-           border rounded-lg bg-white text-base no-underline cursor-pointer;
+           border rounded-lg bg-[var(--card-bg)] text-base no-underline cursor-pointer;
     border-color: var(--border);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .quiz-navigation-button:disabled {

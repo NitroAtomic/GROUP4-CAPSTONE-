@@ -26,7 +26,7 @@
 
   .about-page-heading h1 {
     @apply text-[42px] leading-[1.1] font-extrabold max-[700px]:text-[34px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .about-page-heading p {
@@ -45,7 +45,7 @@
 
   .about-mission-section h2 {
     @apply text-[30px] leading-[1.1];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .about-mission-section p {
@@ -64,7 +64,7 @@
 
   .about-audience-section h2 {
     @apply mb-2 text-[30px] leading-[1.1];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .about-audience-grid {
@@ -73,7 +73,7 @@
 
   .about-audience-card {
     @apply min-h-[104px] p-[18px] border rounded-xl flex flex-col justify-between;
-    background: rgba(255,255,255,0.9);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: 0 10px 20px rgba(11, 37, 69, 0.04);
   }
@@ -102,7 +102,7 @@
 
   .about-team-section h2 {
     @apply text-[30px] leading-[1.1];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .about-team-grid {
@@ -124,7 +124,7 @@
 
   .about-team-member h3 {
     @apply w-full min-h-[37px] flex items-center justify-center text-[16px] leading-[1.15];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .about-team-member p {

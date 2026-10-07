@@ -39,7 +39,7 @@
 
   .account-creation-heading h1 {
     @apply mt-1 text-[34px] leading-[1.1] font-bold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
 
@@ -58,25 +58,27 @@
 
   .subscription-progress-active {
     @apply font-bold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .subscription-progress-complete {
-    color: var(--navy);
+    color: var(--heading);
   }
 
+  /* The step indicator sits on the page, not on a dark band, so it follows
+     the theme. Left white, the number went light-on-white in dark mode. */
   .subscription-progress-number {
     @apply w-5 h-5 border rounded-full inline-flex items-center justify-center text-[12px];
-    border-color: rgba(11, 37, 69, 0.35);
-    color: var(--navy);
-    background: rgba(255,255,255,0.8);
+    border-color: var(--border);
+    color: var(--heading);
+    background: var(--card-bg);
   }
 
   .subscription-progress-active .subscription-progress-number,
   .subscription-progress-complete .subscription-progress-number {
     background: rgba(27, 127, 121, 0.12);
     border-color: rgba(27, 127, 121, 0.45);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .subscription-progress-number .ui-icon {
@@ -85,7 +87,7 @@
 
   .subscription-progress-line {
     @apply w-[100px] h-px my-0 mx-3 max-[620px]:w-[35px] max-[620px]:mx-1.5;
-    background: rgba(11, 37, 69, 0.3);
+    background: var(--border);
   }
 
 
@@ -97,7 +99,7 @@
     @apply min-h-[34px] mt-[22px] py-0 px-2.5 border rounded-[7px] flex items-center justify-between text-[14px];
     background: rgba(27, 127, 121, 0.05);
     border-color: rgba(27, 127, 121, 0.34);
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .selected-plan-summary small {
@@ -112,7 +114,7 @@
 
   .account-creation-card {
     @apply mt-[22px] pt-[30px] px-[58px] pb-[26px] border rounded-xl max-[620px]:py-6 max-[620px]:px-5;
-    background: rgba(255, 255, 255, 0.96);
+    background: var(--card-bg);
     border-color: var(--border);
     box-shadow: var(--shadow-soft);
   }
@@ -123,7 +125,7 @@
 
   .account-creation-card-heading h2 {
     @apply text-[29px] leading-[1.1] font-bold;
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .account-creation-card-heading p {
@@ -145,13 +147,13 @@
 
   .account-form-field label {
     @apply block mb-[5px] text-[16px];
-    color: var(--navy);
+    color: var(--heading);
   }
 
   .account-form-field input {
-    @apply w-full h-8 py-0 px-[9px] border rounded-lg outline-none text-[14px] placeholder:text-gray-300 focus:border-2;
+    @apply w-full h-8 py-0 px-[9px] border rounded-lg outline-none text-[14px] placeholder:text-[var(--muted)] focus:border-2;
     border-color: var(--border);
-    background: #fff;
+    background: var(--card-bg);
   }
 
 
@@ -184,7 +186,7 @@
      ========================= */
 
   .password-requirements {
-    @apply mt-[9px] text-gray-500 text-[13px] leading-normal;
+    @apply mt-[9px] text-[var(--muted)] text-[13px] leading-normal;
   }
 
   .password-requirements p {
@@ -209,7 +211,7 @@
      ========================= */
 
   .continue-to-payment-button {
-    @apply w-full min-h-[47px] mt-2.5 border rounded-[11px] text-[19px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white;
+    @apply w-full min-h-[47px] mt-2.5 border rounded-[11px] text-[19px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[var(--card-bg)];
     background: linear-gradient(135deg, var(--teal), var(--navy));
     border-color: transparent;
     color: white;
@@ -222,7 +224,7 @@
 
   .account-login-message a {
     @apply font-bold underline;
-    color: var(--navy);
+    color: var(--heading);
   }
 
 
