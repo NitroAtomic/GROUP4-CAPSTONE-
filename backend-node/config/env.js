@@ -87,4 +87,14 @@ module.exports = {
     pass: process.env.SMTP_PASS || '',
     from: process.env.SMTP_FROM || '',
   },
+
+  /* Render's free plan blocks outbound SMTP (25, 465, 587), which is why a
+     Gmail account here only ever timed out. Port 443 is open, so mail goes
+     out over the provider's HTTPS API instead. MAIL_FROM has to be an
+     address verified with that provider, otherwise the send is rejected. */
+  mail: {
+    brevoKey: process.env.BREVO_API_KEY || '',
+    from: process.env.MAIL_FROM || process.env.SMTP_FROM || '',
+    fromName: process.env.MAIL_FROM_NAME || 'SE-AWARE',
+  },
 };
