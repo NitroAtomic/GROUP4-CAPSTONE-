@@ -45,7 +45,7 @@
               {{ hasAssessment ? assessment.awareness_level : 'Not assessed' }}
             </p>
             <p v-if="hasAssessment" class="dashboard-summary-note">
-              Scored {{ assessmentScoreLabel }} on {{ assessmentDateLabel }}
+              Scored {{ assessmentScoreLabel }}<span v-if="assessmentDateLabel"> on {{ assessmentDateLabel }}</span>
             </p>
           </article>
 

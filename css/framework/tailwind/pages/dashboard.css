@@ -42,8 +42,12 @@
      Dashboard Summary
      ========================= */
 
+  /* Four cards in a three-column grid left the fourth stranded on a row of
+     its own, which reads as an unfinished layout at every width. Four across
+     on a wide screen, two-by-two in the middle, stacked on a phone - never a
+     row with one card in it. */
   .dashboard-summary-grid {
-    @apply mt-2 grid grid-cols-3 gap-[30px] max-[850px]:gap-3.5 max-[700px]:grid-cols-1;
+    @apply mt-2 grid grid-cols-4 gap-5 max-[1200px]:grid-cols-2 max-[1200px]:gap-[22px] max-[850px]:gap-3.5 max-[700px]:grid-cols-1;
   }
 
   .dashboard-summary-card {
@@ -61,6 +65,13 @@
   .dashboard-summary-value {
     @apply mt-2 text-[30px] font-bold;
     color: var(--navy);
+  }
+
+  /* Used under the awareness level; had no rule, so it rendered at body size
+     and competed with the figure above it. */
+  .dashboard-summary-note {
+    @apply mt-1 text-[14px];
+    color: var(--muted);
   }
 
 

@@ -307,9 +307,20 @@
 }
 /* Listahan ng role-based (Premium) courses. */
 .premium-list-page { max-width: 960px; margin: 0 auto; padding: 32px 20px 64px; }
-.premium-list-header h1 { margin-bottom: 6px; color: var(--navy); }
+/* Tailwind preflight resets headings to inherit, and this rule only set a
+   colour - so the page title rendered at body size and the page looked
+   like it had no heading at all. Matched to the dashboard title scale. */
+.premium-list-header h1 {
+  margin-bottom: 6px; color: var(--navy);
+  font-size: 34px; line-height: 1.1; font-weight: 700;
+}
+@media (max-width: 700px) { .premium-list-header h1 { font-size: 28px; } }
 .premium-list-header p { color: var(--muted); margin-bottom: 24px; }
-.premium-list-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 28px; }
+/* auto-fit at 260px produced three across on a typical laptop and left the
+   fourth course alone on its own row. Two-by-two keeps the set balanced at
+   every width it is actually viewed at. */
+.premium-list-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 28px; }
+@media (max-width: 700px) { .premium-list-grid { grid-template-columns: 1fr; } }
 .premium-list-card {
   display: block; padding: 18px 20px; border: 1px solid var(--border); border-radius: 12px;
   color: inherit; text-decoration: none; background: rgba(255,255,255,0.96);

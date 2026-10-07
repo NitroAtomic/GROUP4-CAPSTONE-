@@ -22,7 +22,7 @@ export default {
         },
         {
           title: 'Secure Client Data Handling',
-          summary: 'Executive and virtual assistant impersonation, and authority scams.',
+          summary: 'Protecting client data, passwords and files from exposure.',
           path: '/modules/premium/client-data'
         }
       ]
