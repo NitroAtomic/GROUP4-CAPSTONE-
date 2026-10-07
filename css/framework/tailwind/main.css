@@ -65,10 +65,16 @@
     --teal: #1B7F79;
     --orange: #F5A623;
 
-    --bg: #F7F9FC;                /* page */
+    /* The page sits a clear step below the cards. It used to be #F7F9FC,
+       which is so close to white that a white card on it had no visible
+       edge - the cards looked like they were floating. The border was
+       #DFE5EE and too faint to rescue it. Cards stay white rather than
+       going grey themselves: the card is where the reading happens, so it
+       should be the cleanest surface on the page. */
+    --bg: #EAEFF6;                /* page */
     --card-bg: #ffffff;           /* cards and panels */
-    --surface-2: #F1F4F9;         /* sunken rows, table stripes */
-    --border: #DFE5EE;
+    --surface-2: #F2F5FA;         /* sunken rows, table stripes */
+    --border: #C8D3E3;
     --heading: #0B2545;           /* heading text */
     --text: #10233d;              /* body text */
     --muted: #5e6a7a;             /* secondary text */

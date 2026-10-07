@@ -55,9 +55,13 @@
     background: var(--bg);
   }
 
+  /* Alternating bands down the page. This used --card-bg, which is the same
+     white as the cards sitting on it, so the premium cards had no visible
+     edge at all. --surface-2 keeps the band distinct from the section above
+     while leaving the cards as the lightest thing on screen. */
   .premium-section {
     @apply py-9 max-[620px]:py-8;
-    background: var(--card-bg);
+    background: var(--surface-2);
     border-top: 1px solid var(--border);
   }
 
