@@ -96,5 +96,9 @@ module.exports = {
     brevoKey: process.env.BREVO_API_KEY || '',
     from: process.env.MAIL_FROM || process.env.SMTP_FROM || '',
     fromName: process.env.MAIL_FROM_NAME || 'SE-AWARE',
+    // Images in email need an absolute URL. Defaults to the first allowed
+    // origin so there is nothing extra to configure; set PUBLIC_URL if the
+    // site ever moves.
+    publicUrl: (process.env.PUBLIC_URL || corsOrigins[0] || '').replace(/\/$/, ''),
   },
 };

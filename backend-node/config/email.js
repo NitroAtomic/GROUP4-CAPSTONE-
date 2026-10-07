@@ -71,6 +71,10 @@ function buildMessage(code, purpose) {
     'Social Engineering Awareness Platform for Remote Workers',
   ].join('\n');
 
+  const logoUrl = config.mail.publicUrl
+    ? `${config.mail.publicUrl}/images/icons/se-aware-logo-email.png`
+    : '';
+
   const html = `<!DOCTYPE html>
 <html>
 <body style="margin:0;padding:0;background:#EAEFF6;">
@@ -78,9 +82,21 @@ function buildMessage(code, purpose) {
     <tr><td align="center">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;font-family:Arial,Helvetica,sans-serif;">
 
-        <tr><td style="background:#0B2545;padding:20px 28px;">
-          <span style="color:#ffffff;font-size:17px;font-weight:bold;letter-spacing:.4px;">SE-AWARE</span>
-          <span style="color:rgba(255,255,255,.72);font-size:13px;"> &nbsp;Security awareness for remote work</span>
+        <!-- The wordmark is TEXT beside the logo, not part of it. Most
+             clients block images until the reader allows them, so a header
+             that is only a picture arrives blank. This way the brand reads
+             either way and the logo is a bonus when it loads. -->
+        <tr><td style="background:#0B2545;padding:18px 28px;">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+            ${logoUrl ? `<td style="padding-right:12px;" valign="middle">
+              <img src="${logoUrl}" width="37" height="44" alt=""
+                   style="display:block;border:0;outline:none;text-decoration:none;">
+            </td>` : ''}
+            <td valign="middle">
+              <div style="color:#ffffff;font-size:17px;font-weight:bold;letter-spacing:.4px;">SE-AWARE</div>
+              <div style="color:rgba(255,255,255,.72);font-size:12px;margin-top:2px;">Security awareness for remote work</div>
+            </td>
+          </tr></table>
         </td></tr>
 
         <tr><td style="padding:32px 28px 8px;">
