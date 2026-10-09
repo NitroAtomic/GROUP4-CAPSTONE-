@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
 const { requireAuth, JWT_SECRET } = require('../middleware/auth');
 const { sendOtpEmail } = require('../config/email');
+// Pang-salo sa mga bayad na hindi nakabalik sa confirm page.
+const { reconcilePending } = require('../services/payments');
 
 const router = express.Router();
 const SALT_ROUNDS = 10;
@@ -303,15 +305,30 @@ router.post('/logout', requireAuth, (req, res) => {
   res.json({ message: 'Logged out.' });
 });
 
-// FR-10: Subscription/account management (plan state lang, walang pricing o
-// payment processing, ayon sa requirement).
+// FR-10: Subscription/account management.
 router.get('/me', requireAuth, async (req, res) => {
+  const SELECT_ME =
+    'SELECT user_id, first_name, last_name, email, subscription_type, subscription_status, subscription_expires_at, role, created_at FROM user WHERE user_id = ?';
+
   try {
-    const [rows] = await pool.query(
-      'SELECT user_id, first_name, last_name, email, subscription_type, subscription_status, subscription_expires_at, role, created_at FROM user WHERE user_id = ?',
-      [req.user.user_id]
-    );
+    let [rows] = await pool.query(SELECT_ME, [req.user.user_id]);
     if (rows.length === 0) return res.status(404).json({ error: 'User not found.' });
+
+    /* Yung sumasalo sa isinarang tab.
+
+       Kung may nagbayad tapos hindi na nakabalik sa confirm page, 'pending'
+       pa rin yung bayad niya at Free pa rin siya kahit tanggap na ng
+       PayMongo. Dito yun naaayos: paglo-load ng account niya, tinitingnan
+       kung may naiwan, at kung bayad nga, binibigay na.
+
+       Sa hindi pa Premium lang tumatakbo, kaya walang dagdag na trabaho
+       para sa mga bayad na. Hindi rin ito humahadlang: kung hindi maabot
+       ang PayMongo, naitatala sa log at tuloy pa rin ang pag-load. */
+    if (rows[0].subscription_type !== 'Premium') {
+      await reconcilePending(req.user.user_id);
+      [rows] = await pool.query(SELECT_ME, [req.user.user_id]);
+    }
+
     res.json(rows[0]);
   } catch (err) {
     console.error(err);
