@@ -112,11 +112,11 @@
   }
 
   .quiz-feedback-correct {
-    @apply border-[var(--ok-border)] bg-[var(--ok-bg)] text-green-800;
+    @apply border-[var(--ok-border)] bg-[var(--ok-bg)] text-[var(--ok-text)];
   }
 
   .quiz-feedback-incorrect {
-    @apply border-[var(--bad-border)] bg-[var(--bad-bg)] text-red-800;
+    @apply border-[var(--bad-border)] bg-[var(--bad-bg)] text-[var(--bad-text)];
   }
 
   .quiz-feedback-status {

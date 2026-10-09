@@ -85,8 +85,10 @@
 
     --ok-bg: #F0FDF4;             /* correct answers, success states */
     --ok-border: #16A34A;
+    --ok-text: #166534;           /* green used as TEXT */
     --bad-bg: #FEF2F2;            /* wrong answers, errors */
     --bad-border: #DC2626;
+    --bad-text: #991B1B;          /* red used as TEXT */
   }
 
   /* Dark values live in one place. Applied when the person has chosen dark,
@@ -108,8 +110,12 @@
 
     --ok-bg: #112A1C;
     --ok-border: #2E9E5B;
+    /* Hindi yung #166534 na ginagamit sa light. Sa ibabaw ng #112A1C,
+       2.15:1 lang yun -- halos hindi na mabasa. Ito ay 8.79:1. */
+    --ok-text: #4ADE80;
     --bad-bg: #2C1618;
     --bad-border: #D4504F;
+    --bad-text: #F87171;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -128,8 +134,10 @@
 
       --ok-bg: #112A1C;
       --ok-border: #2E9E5B;
+      --ok-text: #4ADE80;
       --bad-bg: #2C1618;
       --bad-border: #D4504F;
+      --bad-text: #F87171;
     }
   }
 

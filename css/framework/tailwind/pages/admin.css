@@ -84,7 +84,7 @@
   }
 
   .admin-delete-button {
-    @apply border-[var(--bad-border)] bg-[var(--card-bg)] text-red-700 hover:bg-[var(--bad-bg)];
+    @apply border-[var(--bad-border)] bg-[var(--card-bg)] text-[var(--bad-text)] hover:bg-[var(--bad-bg)];
   }
 
   .admin-message {
@@ -92,11 +92,11 @@
   }
 
   .admin-error {
-    @apply border-[var(--bad-border)] bg-[var(--bad-bg)] text-red-800;
+    @apply border-[var(--bad-border)] bg-[var(--bad-bg)] text-[var(--bad-text)];
   }
 
   .admin-success {
-    @apply border-[var(--ok-border)] bg-[var(--ok-bg)] text-green-800;
+    @apply border-[var(--ok-border)] bg-[var(--ok-bg)] text-[var(--ok-text)];
   }
 
   .admin-empty-state {

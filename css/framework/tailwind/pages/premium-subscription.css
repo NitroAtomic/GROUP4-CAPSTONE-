@@ -111,7 +111,7 @@
      ========================= */
 
   .premium-yearly-savings {
-    @apply mt-0.5 text-green-700 text-[14px];
+    @apply mt-0.5 text-[var(--ok-text)] text-[14px];
   }
 
   .premium-yearly-savings span {

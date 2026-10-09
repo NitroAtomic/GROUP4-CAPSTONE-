@@ -158,7 +158,7 @@
   .chatbot-error-message {
     @apply mr-auto border bg-[var(--card-bg)];
     border-color: rgba(220, 38, 38, 0.35);
-    color: #991b1b;
+    color: var(--bad-text);
   }
 
 

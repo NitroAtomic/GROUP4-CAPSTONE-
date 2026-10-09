@@ -214,6 +214,6 @@
   }
 
   .form-error-message {
-    @apply mt-4 text-red-700 text-[16px];
+    @apply mt-4 text-[var(--bad-text)] text-[16px];
   }
 }
