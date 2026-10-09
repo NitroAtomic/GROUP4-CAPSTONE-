@@ -20,17 +20,18 @@
           <strong>Social Engineering Awareness Platform</strong>
         </div>
       </div>
+      <!-- Walang nav links dito. Pareho lang sila ng nasa header, at
+           dalawang nakatayong link sa gilid ng talata ang mukhang
+           naligaw na teksto sa halip na footer menu. Isang lugar lang
+           ang navigation: yung header. -->
       <div class="site-footer-content">
-        <nav class="site-footer-nav" aria-label="Footer navigation">
-          <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/about">About</router-link></li>
-          </ul>
-        </nav>
         <p class="site-footer-note">
           Educational guidance to support awareness and learning. This resource does not replace formal organizational training.
         </p>
       </div>
+      <p class="site-footer-legal">
+        &copy; 2026 SE-AWARE &middot; Group 4, S3102 &middot; Capstone project, for academic use.
+      </p>
     </div>
   </footer>
   <ChatbotWidget />
