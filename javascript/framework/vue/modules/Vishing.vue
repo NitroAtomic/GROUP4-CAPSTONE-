@@ -8,7 +8,7 @@
             </router-link>
         </nav>
 
-        <h1>Vishing (Voice Phishing & Social Engineering Calls)</h1>
+        <h1>Vishing: Phishing by Phone</h1>
         <p>Module 4 of 6</p>
     </header>
 
@@ -22,37 +22,33 @@
         class="module-awareness-guide"
     >
         <p class="module-key-details">
-            <strong>Target Audience:</strong> Remote workers in client
+            <strong>Who this is for:</strong> remote workers in client
             support, phone-based operations, sales, executive support, or
             administrative roles.
         </p>
 
         <article>
-            <h3>Learning Objectives:</h3>
-
-            <p>After completing this module, the learner should be able to:</p>
+            <h3>By the end of this module you can</h3>
 
             <ul>
                 <li>
-                    Analyze the technical mechanics of Caller ID spoofing
-                    and VoIP-based voice manipulation.
+                    Explain how caller ID spoofing and VoIP let a stranger
+                    look internal.
                 </li>
 
                 <li>
-                    Deconstruct how real-time vocal interactions induce
-                    cognitive overload and compliance pressure.
+                    Describe how a live call overloads you into complying.
                 </li>
 
                 <li>
-                    Recognize common vishing pretexts, such as imposter IT
-                    support desks, emergency financial holds, and
-                    remote-management software installations.
+                    Recognise the usual stories: a fake IT helpdesk, an
+                    emergency hold on your money, an urgent
+                    remote-management install.
                 </li>
 
                 <li>
-                    Apply systematic identity verification protocols and
-                    out-of-band phone confirmation workflows before sharing
-                    credentials or approving access.
+                    Call back on a number you looked up yourself, before
+                    sharing credentials or approving access.
                 </li>
             </ul>
         </article>
@@ -61,152 +57,139 @@
 
 
     <section id="vishing-reading-material">
-        <h2>Website Reading Material</h2>
+        <h2>What to know</h2>
 
         <article>
-            <h3>1. The Threat of Voice Phishing (Vishing)</h3>
+            <h3>What vishing is</h3>
 
             <p>
-                Vishing (Voice Phishing) uses phone calls or Voice over IP
-                (VoIP) channels to trick targets into disclosing sensitive
-                data, financial details, or granting system access. Unlike
-                email or text-based attacks where a victim has time to
-                review messaging syntax, real-time voice communications
-                create intense conversational pressure.
+                Vishing is phishing over a phone call or a Voice over IP
+                (VoIP) line. The caller wants sensitive data, financial
+                details, or access to a system. An email you can reread; a
+                live call you answer in real time. That pressure is the
+                point.
             </p>
         </article>
 
         <article>
-            <h3>2. Technical Tactics: Caller ID Spoofing & VoIP Platforms</h3>
+            <h3>Faking the number</h3>
 
             <p>
-                Vishers exploit phone system protocols to alter the
-                information displayed on a victim's incoming call screen:
+                Phone protocols let a caller choose what your screen shows.
             </p>
 
             <ul>
                 <li>
-                    <strong>Caller ID Spoofing:</strong> Attackers use
-                    web-based VoIP services to manipulate the outbound
-                    Caller ID metadata, making the call appear as if it
-                    originates from an internal extension (e.g., "Corporate
-                    IT Helpdesk" or "HQ Executive Office") or an official
-                    bank customer service line.
+                    <strong>Caller ID spoofing.</strong> Web-based VoIP
+                    services let an attacker set the outbound caller ID to
+                    anything: an internal extension like &ldquo;Corporate IT
+                    Helpdesk&rdquo; or &ldquo;HQ Executive Office&rdquo;, or
+                    your bank&rsquo;s customer service line.
                 </li>
 
                 <li>
-                    <strong>Interactive Voice Response (IVR) Robocalls:</strong>
-                    Attackers deploy automated phone menus ("Press 1 to
-                    speak to our fraud department") to simulate legitimate
-                    banking call centers before routing the victim to a
-                    live scammer.
+                    <strong>Interactive Voice Response (IVR)
+                    robocalls.</strong> An automated menu (&ldquo;Press 1 to
+                    speak to our fraud department&rdquo;) imitates a real
+                    bank call centre, then routes you to a live scammer.
                 </li>
             </ul>
         </article>
 
         <article>
-            <h3>3. Psychological Manipulation & Cognitive Load</h3>
+            <h3>Why a live call works</h3>
 
             <p>
-                Voice communication allows threat actors to dynamically
-                adapt their tactics based on a victim's tone and hesitation:
+                The caller hears your tone and your hesitation, and adapts.
             </p>
 
             <ul>
                 <li>
-                    <strong>Artificial Urgency & Panic:</strong> Scammers
-                    claim an active cyberattack or fraudulent transaction is
-                    occurring right now, demanding immediate action.
+                    <strong>Manufactured urgency.</strong> A cyberattack or
+                    a fraudulent transaction is happening right now, so you
+                    must act now.
                 </li>
 
                 <li>
-                    <strong>Impersonation of Authority:</strong> The caller
-                    assumes an authoritative persona (e.g., Senior Systems
-                    Administrator, Financial Auditor, Executive Assistant)
-                    to compel compliance.
+                    <strong>Borrowed authority.</strong> The caller plays a
+                    senior systems administrator, a financial auditor, an
+                    executive assistant &mdash; someone you do not argue
+                    with.
                 </li>
 
                 <li>
-                    <strong>High Cognitive Pressure:</strong> By creating a
-                    fast-paced environment, the caller prevents the target
-                    from stepping back to critically evaluate the
-                    situation.
+                    <strong>No thinking room.</strong> A fast pace stops you
+                    stepping back to judge whether any of this is true.
                 </li>
             </ul>
         </article>
 
         <article>
-            <h3>4. Common Vishing Pretexts targeting Remote Workers</h3>
+            <h3>The calls remote workers actually get</h3>
 
             <ul>
                 <li>
-                    <strong>The IT Helpdesk "Password Reset" Call:</strong>
-                    The caller claims your remote access account has
-                    suspicious logins and asks you to read aloud an
-                    incoming SMS OTP or approve a push notification.
+                    <strong>The password reset.</strong> Your remote access
+                    account has suspicious logins, says the caller. Read out
+                    the code in your SMS, or approve the push notification.
                 </li>
 
                 <li>
-                    <strong>Remote Management Tool Deployment:</strong> The
-                    caller claims your laptop requires an urgent patch and
-                    instructs you to download and execute remote
-                    administration software (e.g., AnyDesk, TeamViewer,
-                    Quick Assist). Once installed, the attacker gains full
-                    remote control over your workstation.
+                    <strong>The urgent patch.</strong> Your laptop needs a
+                    fix now: download and run remote administration software
+                    &mdash; AnyDesk, TeamViewer, Quick Assist. Once
+                    installed, the caller controls your workstation.
                 </li>
             </ul>
         </article>
 
         <article>
-            <h3>5. Real-World Remote Work Scenario</h3>
+            <h3>Scenario: the fake IT helpdesk</h3>
 
-            <p><strong>Scenario: The Fake IT Helpdesk Push Bombing Attack</strong></p>
+            <p><strong>Push bombing a tired engineer.</strong></p>
 
             <p>
-                Mark, a remote systems engineer, receives 15 consecutive
-                MFA push notifications on his mobile phone at 10 PM.
-                Seconds later, his phone rings. The Caller ID displays
-                "Internal IT Operations."
+                Mark, a remote systems engineer, gets 15 MFA push
+                notifications at 10 PM. His phone rings. The caller ID says
+                &ldquo;Internal IT Operations.&rdquo;
             </p>
 
             <p>
-                The voice on the line states: <em>"Hi Mark, this is Dave
-                from IT SecOps. We see automated push alerts flooding your
-                phone due to a gateway glitch. I am pushing one final
-                prompt now—please tap 'Approve' to clear the queue so your
-                account isn't locked overnight."</em>
+                <em>&ldquo;Hi Mark, Dave from IT SecOps. Those push alerts
+                are a gateway glitch. I am pushing one final prompt &mdash;
+                tap Approve to clear the queue so your account isn&rsquo;t
+                locked overnight.&rdquo;</em>
             </p>
 
             <p>
-                Stressed and tired, Mark taps "Approve." The caller was an
-                attacker who possessed Mark's password and used vishing
-                combined with push fatigue to bypass MFA.
+                Tired, Mark taps Approve. Dave was an attacker who already
+                had his password; the call plus push fatigue got him past
+                MFA.
             </p>
         </article>
 
         <article>
-            <h3>6. Verification Protocols & Live Incident Safeguards</h3>
+            <h3>What to do instead</h3>
 
             <ol>
                 <li>
-                    <strong>Never Disclose Credentials or OTPs over the
-                    Phone:</strong> Legitimate IT staff will never ask for
-                    your password, PIN, or MFA codes over an incoming phone
-                    call.
+                    <strong>Never read out a credential or a code.</strong>
+                    Real IT will not ring and ask for your password, PIN, or
+                    MFA code.
                 </li>
 
                 <li>
-                    <strong>Hang Up and Call Back (Out-of-Band):</strong> If
-                    a caller claims to represent an internal department or
-                    bank, end the call immediately. Find the official phone
-                    number from the internal company directory or card back
-                    and call back independently.
+                    <strong>Hang up and call back.</strong> If the caller
+                    claims to be an internal department or your bank, end
+                    the call. Look up the official number in the company
+                    directory or on the back of your card, and dial it
+                    yourself.
                 </li>
 
                 <li>
-                    <strong>Refuse Unsolicited Remote Software
-                    Installs:</strong> Never install remote access software
-                    (AnyDesk, TeamViewer) based on an inbound phone call.
+                    <strong>Refuse remote-access installs.</strong> Never
+                    install AnyDesk or TeamViewer because an inbound call
+                    told you to.
                 </li>
             </ol>
         </article>
@@ -214,37 +197,35 @@
     </section>
 
     <section id="vishing-red-flags">
-        <h2>Red Flag Indicators & Defensive Checklist</h2>
+        <h2>Red flags</h2>
 
         <ul>
             <li>
-                <strong>Unsolicited Technical Support Calls:</strong>
-                Incoming calls claiming to be "Internal IT" asking for
-                system access or password disclosures.
+                <strong>An unsolicited technical support call.</strong>
+                Someone claiming to be internal IT, wanting system access or
+                your password.
             </li>
 
             <li>
-                <strong>Demands for Remote Access Tools:</strong> Requests
-                to download AnyDesk, TeamViewer, or LogMeIn during an
-                unexpected phone call.
+                <strong>A push to install remote access tools.</strong>
+                AnyDesk, TeamViewer or LogMeIn, during an unexpected call.
             </li>
 
             <li>
-                <strong>Demands for MFA Verification:</strong> Callers
-                asking you to approve a push notification or read aloud a
-                One-Time Password.
+                <strong>A request to confirm MFA.</strong> Approve this push
+                notification, or read me your one-time password.
             </li>
 
             <li>
-                <strong>High-Pressure Intimidation:</strong> Aggressive
-                language or threats of immediate employment termination or
-                legal action if you do not comply.
+                <strong>Pressure and intimidation.</strong> Aggressive
+                language, or threats of dismissal or legal action if you
+                refuse.
             </li>
         </ul>
     </section>
 
     <section id="vishing-curated-resources">
-        <h2>Curated Resources & References</h2>
+        <h2>References</h2>
 
         <ul>
             <li>

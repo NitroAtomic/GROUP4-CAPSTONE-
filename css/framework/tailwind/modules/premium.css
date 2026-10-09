@@ -562,4 +562,17 @@
     }
   }
 
+
+  /* Mga pangalan ng domain at email address sa loob ng aralin.
+     Ang buong punto ng ilan sa mga halimbawa ay ang isang letrang
+     pagkakaiba (vendor.co laban sa vendor.com), kaya hindi dapat
+     halo-halo sa karaniwang teksto -- doon mismo nawawala yung aral. */
+  .premium-role-module code,
+  .module-page code {
+    @apply rounded px-1.5 py-0.5 text-[0.92em];
+    font-family: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--heading);
+  }
 }

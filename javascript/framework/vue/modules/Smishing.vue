@@ -8,7 +8,7 @@
             </router-link>
         </nav>
 
-        <h1>Smishing (SMS & Mobile Messaging Attacks)</h1>
+        <h1>Smishing: Scam Texts and Messages</h1>
         <p>Module 3 of 6</p>
     </header>
 
@@ -22,37 +22,33 @@
         class="module-awareness-guide"
     >
         <p class="module-key-details">
-            <strong>Target Audience:</strong> Remote employees and
-            freelancers using personal or mobile endpoints (BYOD) for
-            multi-factor authentication (MFA), client messaging, and team
-            communication.
+            <strong>Who this is for:</strong> remote employees and freelancers
+            using a personal phone (BYOD) for multi-factor authentication
+            (MFA), client messaging, and team communication.
         </p>
 
         <article>
-            <h3>Learning Objectives:</h3>
-
-            <p>After completing this module, the learner should be able to:</p>
+            <h3>By the end of this module you can</h3>
 
             <ul>
                 <li>
-                    Explain the psychological drivers that make mobile text
-                    messaging a high-trust, high-vulnerability attack vector.
+                    Explain why a text feels more trustworthy than an email,
+                    and why that is a problem.
                 </li>
 
                 <li>
-                    Identify technical smishing techniques including URL
-                    shortener obfuscation, sender ID spoofing, and fake
-                    portal redirects.
+                    Recognise the technical tricks: shortened URLs, a spoofed
+                    sender ID, a fake portal.
                 </li>
 
                 <li>
-                    Differentiate between legitimate institutional/logistics
-                    SMS alerts and malicious smishing lures.
+                    Tell a real bank or courier alert apart from a smishing
+                    lure.
                 </li>
 
                 <li>
-                    Implement mobile device hardening, OTP/MFA protection
-                    habits, and secure reporting procedures.
+                    Harden your phone, protect your OTP and MFA codes, and
+                    report what arrives.
                 </li>
             </ul>
         </article>
@@ -61,146 +57,130 @@
 
 
     <section id="smishing-reading-material">
-        <h2>Website Reading Material</h2>
+        <h2>What to know</h2>
 
         <article>
-            <h3>1. The Mobile Vulnerability Landscape</h3>
+            <h3>Why the phone is the soft spot</h3>
 
             <p>
-                Smishing (SMS Phishing) delivers malicious links or
-                deceptive calls via Short Message Service (SMS) or instant
-                messaging platforms (WhatsApp, Signal, Telegram). As
-                organizations adopt mobile Multi-Factor Authentication (MFA)
-                and mobile collaboration tools, threat actors increasingly
-                target personal smartphones.
+                Smishing is phishing by text &mdash; a malicious link or a
+                prompt to call, sent over Short Message Service (SMS) or an app
+                like WhatsApp, Signal or Telegram. As Multi-Factor
+                Authentication (MFA) and team collaboration move onto phones,
+                so do the attackers.
             </p>
 
-            <p>Mobile endpoints present specific security challenges:</p>
+            <p>A phone has three specific weaknesses:</p>
 
             <ul>
                 <li>
-                    <strong>High User Trust:</strong> Users traditionally
-                    view SMS as a direct, personal communication channel,
-                    leading to higher open and click-through rates compared
-                    to email.
+                    <strong>You trust it more.</strong> Text feels personal, so
+                    texts get opened and tapped far more than email.
                 </li>
 
                 <li>
-                    <strong>Mobile Interface Constraints:</strong> Mobile
-                    browsers hide full URL structures due to limited screen
-                    real estate, making it difficult to inspect destination
-                    domains.
+                    <strong>You cannot see the link.</strong> A mobile browser
+                    has no room for the full URL, hiding the real destination
+                    domain.
                 </li>
 
                 <li>
-                    <strong>BYOD Exposure:</strong> Personal mobile devices
-                    often lack enterprise-grade endpoint detection and
-                    response (EDR) agents or web filtering controls.
+                    <strong>Nothing is watching.</strong> A personal phone
+                    usually lacks the company&rsquo;s endpoint detection and
+                    response (EDR) agent or web filtering.
                 </li>
             </ul>
         </article>
 
         <article>
-            <h3>2. Common Smishing Attack Patterns</h3>
+            <h3>The lures that work</h3>
 
-            <p>
-                Threat actors design smishing lures around high-probability
-                daily scenarios:
-            </p>
+            <p>Each lure is built on an ordinary, everyday event:</p>
 
             <ul>
                 <li>
-                    <strong>Logistics & Delivery Scams:</strong> Messages
-                    claiming a parcel (e.g., FedEx, DHL, postal services)
-                    cannot be delivered without address confirmation or a
-                    small fee. The included link redirects to a credential
-                    or credit card harvesting page.
+                    <strong>The parcel.</strong> A FedEx, DHL or postal
+                    delivery stuck until you confirm an address or pay a small
+                    fee. The link harvests your card or password.
                 </li>
 
                 <li>
-                    <strong>Financial Fraud Alerts:</strong> Text alerts
-                    claiming an urgent security hold or unauthorized
-                    transaction has occurred on a bank account. The victim
-                    is urged to "click here immediately to verify identity".
+                    <strong>The bank alert.</strong> An urgent security hold or
+                    unauthorised transaction on your account, and a link to
+                    &ldquo;click here immediately to verify identity&rdquo;.
                 </li>
 
                 <li>
-                    <strong>MFA Interception & OTP Harvesting:</strong> The
-                    attacker attempts to log in to a victim's corporate
-                    account, triggering a real One-Time Password (OTP) text
-                    to the victim's phone. Simultaneously, the attacker
-                    sends a smishing text: "IT Desk: We detected suspicious
-                    activity. Reply with the 6-digit code sent to your
-                    device to secure your account."
+                    <strong>The OTP grab.</strong> The attacker logs into your
+                    corporate account, which sends a real One-Time Password
+                    (OTP) to your phone. Then a text arrives: &ldquo;IT Desk:
+                    We detected suspicious activity. Reply with the 6-digit
+                    code sent to your device to secure your account.&rdquo;
+                    The code is real; the sender is not.
                 </li>
             </ul>
         </article>
 
         <article>
-            <h3>3. Technical Obfuscation: URL Shorteners & Sender ID Spoofing</h3>
+            <h3>Hidden links, faked senders</h3>
 
             <p>
-                Smishers rely on URL shorteners (bit.ly, tinyurl.com, t.co)
-                or lookalike domains (bank-secure-login.site) to hide the
-                true destination of their links. Additionally, attackers
-                utilize SMS gateway tools to perform Alpha-Numeric Sender ID
-                Spoofing, causing the fake text message to appear in the
-                exact same SMS conversation thread as legitimate messages
-                from banks or service providers.
+                The true destination hides behind a URL shortener &mdash;
+                <code>bit.ly</code>, <code>tinyurl.com</code>,
+                <code>t.co</code> &mdash; or a lookalike domain like
+                <code>bank-secure-login.site</code>. Sender ID spoofing goes
+                further: an SMS gateway tool sets the alpha-numeric sender name
+                to your bank&rsquo;s, so the fake text drops into the exact
+                same conversation thread as the real ones.
             </p>
         </article>
 
         <article>
-            <h3>4. Real-World Remote Work Scenario</h3>
-
-            <p><strong>Scenario: The IT System Unlocking Text</strong></p>
+            <h3>Scenario: the IT unlocking text</h3>
 
             <p>
-                Sarah, a remote customer support agent, receives an SMS at
-                8:00 AM: <em>"OKTA ALERT: Your remote access account has
-                been flagged for compliance review. Resolve within 30
-                minutes to maintain shift access:
-                https://okta-sso-verify.link/login"</em>
+                Sarah is a remote customer support agent. At 8:00 AM a text
+                arrives: <em>&ldquo;OKTA ALERT: Your remote access account has
+                been flagged for compliance review. Resolve within 30 minutes
+                to maintain shift access:
+                <code>https://okta-sso-verify.link/login</code>&rdquo;</em>
             </p>
 
             <p>
-                Fearing she will miss her shift and face disciplinary
-                action, Sarah taps the link on her phone. The page renders
-                an exact copy of her company's SSO login portal. She enters
-                her username, password, and the push MFA token, unknowingly
-                handing her enterprise credentials directly to an attacker.
+                Afraid of missing her shift and being disciplined, she taps the
+                link. The page is an exact copy of her company&rsquo;s SSO
+                login portal. She enters her username, password and push MFA
+                token, handing her enterprise credentials to an attacker.
             </p>
         </article>
 
         <article>
-            <h3>5. Defense & Remediation Protocols</h3>
+            <h3>What to do</h3>
 
             <ol>
                 <li>
-                    <strong>Never Click Links in Unsolicited SMS:</strong>
-                    Treat all text messages containing clickable links as
-                    untrusted. If an alert claims to be from your bank or
-                    employer, navigate to the official app or website
-                    independently.
+                    <strong>Do not tap links in unsolicited texts.</strong>
+                    Treat every clickable link as untrusted. If the alert
+                    claims to be your bank or employer, open their official app
+                    or site yourself.
                 </li>
 
                 <li>
-                    <strong>Protect OTPs and MFA Codes:</strong> Never share
-                    One-Time Passwords or MFA tokens with anyone over text
-                    or phone. Legitimate IT departments will never ask you
-                    to text back an OTP.
+                    <strong>Guard your OTPs and MFA codes.</strong> Never share
+                    a One-Time Password or MFA token with anyone, by text or by
+                    phone. Real IT never asks for one back.
                 </li>
 
                 <li>
-                    <strong>Use Short-Link Unshorteners:</strong> Use URL
-                    expansion tools or expansion preview settings before
-                    tapping shortened links on mobile devices.
+                    <strong>Expand short links first.</strong> Use a URL
+                    expansion tool, or your phone&rsquo;s link preview, before
+                    tapping a shortened link.
                 </li>
 
                 <li>
-                    <strong>Report Smishing:</strong> Forward scam texts to
-                    SPAM (7726) on supported mobile networks or report them
-                    to your security team.
+                    <strong>Report it.</strong> Forward scam texts to SPAM
+                    (<code>7726</code>) on networks that support it, or tell
+                    your security team.
                 </li>
             </ol>
         </article>
@@ -208,38 +188,35 @@
     </section>
 
     <section id="smishing-red-flags">
-        <h2>Red Flag Indicators & Defensive Checklist</h2>
+        <h2>Red flags</h2>
 
         <ul>
             <li>
-                <strong>Urgent Demands via Text:</strong> Messages
-                threatening account suspension, missed deliveries, or
-                legal action requiring immediate link clicks.
+                A text threatening account suspension, a missed delivery or
+                legal action unless you tap now.
             </li>
 
             <li>
-                <strong>Shortened / Obscured Links:</strong> URLs using
-                services like bit.ly, tiny.cc, or unusual top-level
-                domains (.xyz, .site, .info).
+                A shortened or obscured link &mdash; <code>bit.ly</code>,
+                <code>tiny.cc</code> &mdash; or an unusual top-level domain
+                like <code>.xyz</code>, <code>.site</code>,
+                <code>.info</code>.
             </li>
 
             <li>
-                <strong>Requests for OTPs:</strong> Texts or callers
-                asking you to text back or read aloud a multi-factor
+                Anyone asking you to text back or read aloud a multi-factor
                 authentication code.
             </li>
 
             <li>
-                <strong>Generic 10-Digit Sender Numbers:</strong>
-                Official bank or corporate alerts arriving from standard
-                individual mobile phone numbers rather than registered
-                shortcodes.
+                A bank or corporate alert from a standard 10-digit mobile
+                number instead of a registered shortcode.
             </li>
         </ul>
     </section>
 
     <section id="smishing-curated-resources">
-        <h2>Curated Resources & References</h2>
+        <h2>References</h2>
 
         <ul>
             <li>

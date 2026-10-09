@@ -8,7 +8,7 @@
             </router-link>
         </nav>
 
-        <h1>Essential Safe Practices for Remote Environments</h1>
+        <h1>Safe Practices for Remote Work</h1>
         <p>Module 6 of 6</p>
     </header>
 
@@ -22,39 +22,33 @@
         class="module-awareness-guide"
     >
         <p class="module-key-details">
-            <strong>Target Audience:</strong> Universal application across
-            all remote workers, distributed employees, freelancers, and
-            hybrid personnel.
+            <strong>Who this is for:</strong> everyone working remotely
+            &mdash; distributed employees, freelancers, and hybrid staff.
         </p>
 
         <article>
-            <h3>Learning Objectives:</h3>
-
-            <p>After completing this module, the learner should be able to:</p>
+            <h3>By the end of this module you can</h3>
 
             <ul>
                 <li>
-                    Evaluate multi-factor authentication (MFA)
-                    architectures and transition from vulnerable SMS-MFA to
-                    app-based (TOTP) or hardware key authenticators.
+                    Tell strong multi-factor authentication (MFA) from weak,
+                    and move off SMS to an authenticator app (TOTP) or a
+                    hardware key.
                 </li>
 
                 <li>
-                    Configure and harden home network environments,
-                    including router administrative controls, WPA3
-                    encryption, and guest network isolation.
+                    Harden your home network: the router admin login, WPA3
+                    encryption, and an isolated guest network.
                 </li>
 
                 <li>
-                    Formulate and enforce Out-of-Band (OOB) verification
-                    workflows for high-risk administrative or financial
-                    communications.
+                    Verify out of band before acting on anything about
+                    money, passwords or access.
                 </li>
 
                 <li>
-                    Develop daily cyber hygiene protocols covering BYOD
-                    patching, password management, and swift incident
-                    reporting.
+                    Keep up the daily habits &mdash; BYOD patching, password
+                    management, and reporting an incident fast.
                 </li>
             </ul>
         </article>
@@ -63,143 +57,128 @@
 
 
     <section id="essential-safe-practices-reading-material">
-        <h2>Website Reading Material</h2>
+        <h2>What to know</h2>
 
         <article>
-            <h3>1. Security in Perimeterless Workspaces</h3>
+            <h3>There is no perimeter now</h3>
 
             <p>
-                In a traditional office, security relies on centralized
-                perimeter defenses: corporate firewalls, intrusion
-                detection systems, and physical access controls. Remote
-                work eliminates this traditional perimeter. Data moves
-                across home Wi-Fi networks, personal routers, and
+                An office has a wall around it: corporate firewalls,
+                intrusion detection, locked doors. Remote work removes it.
+                Work travels over home Wi-Fi, personal routers and
                 commercial mobile networks.
             </p>
 
             <p>
-                In this environment, every remote endpoint is its own
-                perimeter. Maintaining security requires proactive
-                technical hardening and disciplined personal operational
-                habits.
+                So every device is its own perimeter, which takes technical
+                hardening and steady personal habits.
             </p>
         </article>
 
         <article>
-            <h3>2. Multi-Factor Authentication (MFA) Hardening</h3>
+            <h3>MFA, weakest to strongest</h3>
 
             <p>
-                Multi-Factor Authentication adds a critical layer of
-                defense beyond passwords. However, not all MFA methods
-                offer equal protection:
+                MFA helps beyond a password, but the methods are not equal.
             </p>
 
             <ul>
                 <li>
-                    <strong>SMS-Based MFA (Vulnerable):</strong> SMS
-                    authentication codes can be intercepted via
-                    SIM-swapping attacks, mobile malware, or smishing
-                    lures.
+                    <strong>SMS codes &mdash; vulnerable.</strong> A texted
+                    code can be intercepted by SIM-swapping, mobile malware,
+                    or a smishing lure.
                 </li>
 
                 <li>
-                    <strong>Authenticator Apps (TOTP - Recommended):</strong>
-                    Time-based One-Time Password apps (e.g., Google
-                    Authenticator, Microsoft Authenticator, 1Password)
-                    generate codes locally on your device without relying
-                    on cellular SMS networks.
+                    <strong>Authenticator apps (TOTP) &mdash;
+                    recommended.</strong> Time-based One-Time Password apps
+                    &mdash; Google Authenticator, Microsoft Authenticator,
+                    1Password &mdash; generate the code on your device, with
+                    no cellular SMS involved.
                 </li>
 
                 <li>
-                    <strong>FIDO2 Hardware Keys (Gold Standard):</strong>
-                    Physical USB/NFC security keys (e.g., YubiKey) provide
-                    phishing-resistant authentication by cryptographically
-                    binding the login assertion to the verified site
-                    domain.
+                    <strong>FIDO2 hardware keys &mdash; the gold
+                    standard.</strong> A physical USB or NFC key such as a
+                    YubiKey is phishing-resistant: it binds the login
+                    cryptographically to the verified site domain.
                 </li>
             </ul>
         </article>
 
         <article>
-            <h3>3. Securing Home Networks & BYOD Endpoints</h3>
+            <h3>Home network and your own devices (BYOD)</h3>
 
             <p>
-                Home Wi-Fi networks are prime targets for threat actors
-                seeking lateral entry into remote work systems:
+                Home Wi-Fi is an easy side door into work systems.
             </p>
 
             <ul>
                 <li>
-                    <strong>Change Router Default Credentials:</strong>
-                    Default administrative passwords (admin/admin) on
-                    home routers are publicly known and routinely scanned
-                    by automated botnets.
+                    <strong>Change the router&rsquo;s default
+                    login.</strong> Factory passwords like
+                    <code>admin/admin</code> are public knowledge, and
+                    botnets scan for them constantly.
                 </li>
 
                 <li>
-                    <strong>Enable WPA3/WPA2 Enterprise Encryption:</strong>
-                    Ensure home wireless networks use strong encryption
-                    standards. Disable outdated WEP or plain WPA
-                    protocols.
+                    <strong>Use WPA3, or WPA2 Enterprise.</strong> Strong
+                    encryption only &mdash; turn off outdated WEP and plain
+                    WPA.
                 </li>
 
                 <li>
-                    <strong>Isolate IoT Devices on a Guest Network:</strong>
-                    Smart TVs, connected appliances, and security cameras
-                    often have unpatched vulnerabilities. Connect work
-                    laptops to an isolated Guest Wi-Fi Network so
-                    compromised IoT devices cannot intercept work traffic.
+                    <strong>Put IoT devices on the guest network.</strong>
+                    Smart TVs, appliances and cameras often go unpatched.
+                    Keep the work laptop on an isolated guest network so a
+                    compromised gadget cannot intercept work traffic.
                 </li>
 
                 <li>
-                    <strong>Automated OS Patching:</strong> Keep operating
-                    systems, browsers, and security software updated.
-                    Unpatched software vulnerabilities allow drive-by
-                    downloads when browsing.
+                    <strong>Let updates install themselves.</strong>
+                    Operating system, browser, security software. Unpatched
+                    software is how a drive-by download reaches you from a
+                    page you only visited.
                 </li>
             </ul>
         </article>
 
         <article>
-            <h3>4. Out-of-Band (OOB) Verification Protocols</h3>
+            <h3>Verify out of band</h3>
 
             <p>
-                Establish a personal operational rule: Any unexpected
-                request involving money, password resets, access grants,
-                or sensitive data transfers requires Out-of-Band
-                verification.
+                Make it a personal rule: anything unexpected about money, a
+                password reset, an access grant, or a transfer of sensitive
+                data gets confirmed on a second channel.
             </p>
 
             <p>
-                <strong>Example:</strong> If a client emails asking you to
-                send invoice payments to a new bank account, call them
-                using a phone number verified from a previous paper
-                contract—never use the phone number printed on the new
-                invoice.
+                <strong>Example:</strong> a client emails new bank details
+                for your invoices. Call them &mdash; on the number from the
+                earlier paper contract, never the one on the new invoice.
             </p>
         </article>
 
         <article>
-            <h3>5. Incident Reporting: The Speed Advantage</h3>
+            <h3>If it already happened, speed wins</h3>
 
             <p>
-                If you accidentally click a suspicious link, enter
-                credentials on a questionable site, or download an
-                untrusted file, time is critical.
+                Clicked a suspicious link, typed credentials into a
+                questionable site, downloaded an untrusted file? Time is
+                critical.
             </p>
 
             <ol>
                 <li>
-                    Immediately disconnect the affected device from
-                    Wi-Fi/Ethernet to halt potential lateral malware
-                    movement or remote command execution.
+                    Disconnect the device from Wi-Fi or Ethernet at once, to
+                    stop malware moving sideways or commands running
+                    remotely.
                 </li>
 
                 <li>
-                    Report the incident to your company's IT security
-                    team or client contact. Early reporting allows
-                    security teams to revoke compromised tokens before
-                    adversaries pivot deeper into internal systems.
+                    Report it to your IT security team or client contact.
+                    Early reporting lets them revoke compromised tokens
+                    before the attacker pivots deeper in.
                 </li>
             </ol>
         </article>
@@ -207,35 +186,34 @@
     </section>
 
     <section id="essential-safe-practices-red-flags">
-        <h2>Red Flag Indicators & Defensive Checklist</h2>
+        <h2>Red flags</h2>
 
         <ul>
             <li>
-                <strong>SMS-Only MFA Reliance:</strong> Relying on SMS
-                text passcodes instead of authenticator apps or hardware
-                keys.
+                <strong>SMS-only MFA.</strong> Text passcodes instead of an
+                authenticator app or a hardware key.
             </li>
 
             <li>
-                <strong>Default Router Passwords:</strong> Running home
-                Wi-Fi networks using factory default admin passwords.
+                <strong>A default router password.</strong> Home Wi-Fi still
+                on the factory admin login.
             </li>
 
             <li>
-                <strong>Single Network for Work & Smart Home:</strong>
-                Keeping work laptops on the same Wi-Fi subnet as unpatched
-                smart home IoT devices.
+                <strong>One network for work and the smart home.</strong>
+                The work laptop on the same Wi-Fi subnet as unpatched IoT
+                devices.
             </li>
 
             <li>
-                <strong>Delayed Software Patching:</strong> Postponing
-                operating system and browser security updates for weeks.
+                <strong>Updates put off for weeks.</strong> Pending
+                operating system and browser security patches.
             </li>
         </ul>
     </section>
 
     <section id="essential-safe-practices-curated-resources">
-        <h2>Curated Resources & References</h2>
+        <h2>References</h2>
 
         <ul>
             <li>
@@ -258,7 +236,7 @@
          AI Chatbot
          ========================= -->
 
-    
+
 
 
   </main>

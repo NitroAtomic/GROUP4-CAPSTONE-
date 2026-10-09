@@ -16,82 +16,80 @@
         <span> / </span>
         <router-link to="/dashboard">Dashboard</router-link>
         <span> / </span>
-        <span class="module-breadcrumb-current">Executive Support & VA Impersonation Defense</span>
+        <span class="module-breadcrumb-current">Executive Impersonation</span>
       </nav>
-      <h1>Executive Support & VA Impersonation Defense (Authority Scams & Delegation Exploits)</h1>
-      <p>Learn to deconstruct executive authority exploitation, identify fake supervisor directives, and implement out-of-band authentication channels.</p>
+      <h1>Executive Impersonation</h1>
+      <p>How someone posing as your boss gets gift cards bought and passwords reset &mdash; and the one check that stops it, whatever rank is on the message.</p>
     </header>
 
     <p class="module-key-details">
-      <strong>Target Stakeholders:</strong> Virtual Assistants (VAs), Executive Assistants, Remote Administrative Coordinators, Project Support Specialists.
+      <strong>Who this is for:</strong> virtual assistants, executive assistants, remote administrative coordinators, and project support specialists.
     </p>
 
     <!-- Learning Objectives -->
     <section class="learning-objectives">
-      <h3>Learning Objectives</h3>
-      <p>After completing this module, the learner should be able to:</p>
+      <h3>By the end of this module you can</h3>
       <ol>
-        <li>Deconstruct the psychological mechanics of Executive Authority Exploitation targeting Virtual Assistants.</li>
-        <li>Identify fake supervisor directives and emergency gift card/wire transfer purchase requests.</li>
-        <li>Detect password reset traps and Single Sign-On (SSO) credential requests originating from impersonated executive profiles.</li>
-        <li>Implement mandatory Out-of-Band (OOB) authentication channels to verify high-stakes administrative requests regardless of perceived executive rank.</li>
+        <li>Explain why an instruction that appears to come from an executive is hard to question.</li>
+        <li>Recognise a fake supervisor directive, including the urgent gift card or wire request.</li>
+        <li>Spot password reset traps and single sign-on credential requests from an impersonated executive.</li>
+        <li>Apply out-of-band (OOB) verification &mdash; confirming on a separate, already-trusted channel &mdash; to any high-stakes request, whatever rank it seems to come from.</li>
       </ol>
     </section>
 
     <!-- Reading Material -->
     <section class="module-awareness-guide">
-      <h2>Website Reading Material</h2>
-      
+      <h2>What to know</h2>
+
       <article>
-        <h3>1. The Virtual Assistant as an Attack Surface</h3>
-        <p>Virtual Assistants (VAs) hold significant operational access within distributed companies. VAs routinely manage executive calendars, process travel arrangements, handle sensitive corporate communications, and possess elevated access to cloud management portals. Threat actors recognize that VAs are built-in administrative hubs—gaining control of a VA's credentials or manipulating their trust gives the attacker indirect administrative access to the entire company (Lazarus, 2024).</p>
+        <h3>Why the assistant is the target</h3>
+        <p>A virtual assistant runs the executive calendar, books the travel, handles sensitive corporate mail, and often holds elevated access to cloud management portals. That makes the VA an administrative hub. Take their credentials, or just their trust, and you have indirect administrative access to the whole company (Lazarus, 2024).</p>
       </article>
 
       <article>
-        <h3>2. Executive Authority Exploitation & Fear Tactics</h3>
-        <p>VAs are socialized to respond quickly to executive requests. Threat actors exploit this professional responsiveness through <strong>Authority Manipulation</strong>:</p>
+        <h3>Authority and urgency</h3>
+        <p>A VA is expected to act on an executive request quickly. That responsiveness is the thing being exploited.</p>
         <ul>
-          <li><strong>The "In-a-Meeting" Communication Barrier:</strong> The attacker impersonates a C-suite executive (CEO, CFO) using a lookalike email address or messaging profile (WhatsApp/Telegram). The attacker establishes a narrative: "I am currently locked in an all-day executive board meeting and cannot take calls. I need you to handle an urgent task immediately."</li>
-          <li><strong>Emergency Gift Card / Wire Purchase Directives:</strong> The fake executive instructs the VA to purchase digital gift cards (Apple, Google Play, Amazon) or execute an urgent wire transfer for a "client appreciation gift" or "emergency vendor deposit." The attacker stresses that failing to do so immediately will jeopardize a multi-million dollar business deal.</li>
+          <li><strong>The meeting excuse.</strong> A lookalike email address, or a WhatsApp or Telegram profile, carries the name of your CEO or CFO. They are locked in an all-day board meeting and cannot take calls, but they need an urgent task handled now. The story is built so you cannot phone to check.</li>
+          <li><strong>The purchase.</strong> Buy digital gift cards &mdash; Apple, Google Play, Amazon &mdash; or send an urgent wire, for a &ldquo;client appreciation gift&rdquo; or an &ldquo;emergency vendor deposit.&rdquo; Any delay, you are told, costs a multi-million dollar deal.</li>
         </ul>
       </article>
 
       <article>
-        <h3>3. Single Sign-On (SSO) & Password Reset Traps</h3>
-        <p>Because VAs often assist with technical setup, attackers impersonate executive management to bypass authentication controls:</p>
+        <h3>Single sign-on and password reset traps</h3>
+        <p>VAs often help with technical setup, so the same fake executive is used to get round the login controls.</p>
         <ul>
-          <li><strong>The Emergency Access Request:</strong> The fake executive messages the VA: "I lost my phone and cannot receive my Multi-Factor Authentication (MFA) push code. Please contact IT or use your admin access to reset my password to TempPassword2026! immediately."</li>
-          <li><strong>The MFA Approval Trick:</strong> The attacker attempts to log into the executive's actual account, triggering repeated push notifications to the VA's device. The fake executive then calls or texts the VA: "Accept that push notification on your screen right now—it's me trying to log in from the airport."</li>
+          <li><strong>The reset.</strong> &ldquo;I lost my phone and cannot receive my multi-factor push code. Contact IT, or use your admin access, and reset my password to <code>TempPassword2026!</code> immediately.&rdquo;</li>
+          <li><strong>The push.</strong> The attacker logs into the executive&rsquo;s real account, which sends repeated push notifications to your device. Then the call or text arrives: &ldquo;Accept that notification on your screen right now &mdash; it&rsquo;s me, logging in from the airport.&rdquo;</li>
         </ul>
       </article>
     </section>
 
     <!-- Scenario Simulation -->
     <section class="scenario-section">
-      <h2>Interactive Scenario Simulation Game</h2>
-      <p><strong>Scenario Name:</strong> The CEO Boardroom Wire Emergency</p>
-      <p><strong>Context:</strong> You are a remote Virtual Assistant for a tech startup. It is 4:30 PM on a Friday. You receive a direct message on WhatsApp from a number displaying the photo and name of your CEO, Sarah Jenkins.</p>
+      <h2>Scenario: the Friday afternoon emergency</h2>
+      <p>You are a remote virtual assistant at a tech startup. It is 4:30 PM on a Friday. A WhatsApp message arrives from a number showing the photo and name of your CEO, Sarah Jenkins.</p>
 
       <div class="scenario-stage">
-        <h3>Stage 1 (Initial Hook)</h3>
-        <p>The message reads: "Hi! I'm in a closed-door meeting with investors. My laptop died and I can't access Slack. I need you to purchase 5 x $200 digital Apple gift cards right now for the investor team. Use the corporate card. Send the codes here ASAP. Do not call me, I'm presenting."</p>
+        <h3>Stage 1 &mdash; the hook</h3>
+        <p>&ldquo;Hi! I&rsquo;m in a closed-door meeting with investors. My laptop died and I can&rsquo;t access Slack. Purchase 5 x $200 digital Apple gift cards right now for the investor team. Use the corporate card. Send the codes here ASAP. Do not call me, I&rsquo;m presenting.&rdquo;</p>
         <div class="scenario-decision">
-          <h4>Decision Point:</h4>
+          <h4>What do you do?</h4>
           <ul>
-            <li><strong>Option A:</strong> Purchase the gift cards immediately using the corporate card to impress the CEO and avoid ruining the investor meeting.</li>
-            <li><strong>Option B:</strong> Recognize the classic indicators of executive impersonation (gift cards, urgency, prohibition of phone calls) and pause. <em>(Correct Path)</em></li>
+            <li><strong>A:</strong> Buy the gift cards on the corporate card, to impress the CEO and avoid ruining the investor meeting.</li>
+            <li><strong>B:</strong> Notice the familiar pattern &mdash; gift cards, urgency, no phone calls allowed &mdash; and pause. <em>(Correct)</em></li>
           </ul>
         </div>
       </div>
 
       <div class="scenario-stage">
-        <h3>Stage 2 (Verification Action)</h3>
+        <h3>Stage 2 &mdash; verifying</h3>
         <p>What is your next step?</p>
         <div class="scenario-decision">
-          <h4>Decision Point:</h4>
+          <h4>What do you do?</h4>
           <ul>
-            <li><strong>Option A:</strong> Reply on WhatsApp asking: "Are you sure it's you, Sarah?"</li>
-            <li><strong>Option B:</strong> Contact the CEO or Executive Operations team through an established internal channel (e.g., calling the CEO's verified phone number or checking with the Chief of Staff). <em>(Correct Path)</em></li>
+            <li><strong>A:</strong> Reply on WhatsApp: &ldquo;Are you sure it&rsquo;s you, Sarah?&rdquo;</li>
+            <li><strong>B:</strong> Use an established internal channel &mdash; the CEO&rsquo;s verified phone number, or a check with the Chief of Staff. <em>(Correct)</em></li>
           </ul>
         </div>
       </div>
@@ -99,18 +97,18 @@
 
     <!-- Red Flag Checklist -->
     <section class="red-flag-checklist">
-      <h3>Red Flag Indicators & Actionable Checklist</h3>
+      <h3>Red flags</h3>
       <ul>
-        <li>Demands for Gift Cards / Instant Wires: Any request from an executive to purchase digital gift cards, cryptocurrency, or execute unverified wire transfers.</li>
-        <li>Prohibition of Phone Verification: Messages explicitly instructing you NOT to call the executive because they are "in a meeting" or "on a flight."</li>
-        <li>Communication Channel Shifts: Executives reaching out via personal WhatsApp, Telegram, or non-corporate webmail accounts (ceo.company@gmail.com).</li>
-        <li>Requests to Bypass Security Controls: Instructions to disable MFA, reset passwords to weak defaults, or share login tokens over chat.</li>
+        <li>An executive asking you to buy digital gift cards or cryptocurrency, or to send an unverified wire.</li>
+        <li>A message that tells you not to call, because they are in a meeting or on a flight.</li>
+        <li>An executive turning up on personal WhatsApp or Telegram, or a non-corporate webmail address like <code>ceo.company@gmail.com</code>.</li>
+        <li>Instructions to disable MFA, reset a password to a weak default, or share a login token over chat.</li>
       </ul>
     </section>
 
     <!-- Curated Resources -->
     <section class="curated-resources">
-      <h3>Curated Resources & References</h3>
+      <h3>References</h3>
       <ul>
         <li>Lazarus, S. (2024). Cybercriminal Networks and Operational Dynamics of Business Email Compromise (BEC) Scammers. <em>Deviant Behavior</em>, 46, 456–480.</li>
         <li>Papathanasiou, A., et al. (2023). Business Email Compromise (BEC) Attacks: Threats, Vulnerabilities and Countermeasures. <em>Journal of Cybersecurity and Privacy</em>, 3(3), 610–637.</li>

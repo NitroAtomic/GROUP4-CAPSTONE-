@@ -16,82 +16,80 @@
         <span> / </span>
         <router-link to="/dashboard">Dashboard</router-link>
         <span> / </span>
-        <span class="module-breadcrumb-current">Freelancer Exploitation & Client Verification</span>
+        <span class="module-breadcrumb-current">Fake Clients and Escrow Fraud</span>
       </nav>
-      <h1>Freelancer Exploitation & Client Verification (Fake Clients, Portfolio Scams & Escrow Fraud)</h1>
-      <p>Learn to identify fake client personas, detect portfolio credential harvesting, and implement secure verification procedures.</p>
+      <h1>Fake Clients and Escrow Fraud</h1>
+      <p>How a fake client takes your login, your work or your money &mdash; and how to check who you are dealing with before you hand anything over.</p>
     </header>
 
     <p class="module-key-details">
-      <strong>Target Stakeholders:</strong> Independent Freelancers, Remote Designers, Software Engineers, Copywriters, Digital Marketing Contractors.
+      <strong>Who this is for:</strong> independent freelancers, remote designers, software engineers, copywriters, and digital marketing contractors.
     </p>
 
     <!-- Learning Objectives -->
     <section class="learning-objectives">
-      <h3>Learning Objectives</h3>
-      <p>After completing this module, the learner should be able to:</p>
+      <h3>By the end of this module you can</h3>
       <ol>
-        <li>Identify fake client personas and fraudulent job inquiries designed to harvest credentials or extract unpaid labor.</li>
-        <li>Detect portfolio credential harvesting tricks where attackers demand login credentials to view sample work or project environments.</li>
-        <li>Analyze the social engineering tactics used to trick freelancers into moving off-platform, bypassing secure escrow and contract protections.</li>
-        <li>Implement rigorous out-of-band client verification procedures and secure asset delivery protocols before granting access to work.</li>
+        <li>Recognise a fake client or job inquiry built to harvest credentials or get free work.</li>
+        <li>Spot the portfolio trick, where a login is demanded before you can see the brief.</li>
+        <li>Explain what you lose when a client moves you off-platform, away from escrow and contract cover.</li>
+        <li>Verify a client out of band before you grant access or deliver work.</li>
       </ol>
     </section>
 
     <!-- Reading Material -->
     <section class="module-awareness-guide">
-      <h2>Website Reading Material</h2>
-      
+      <h2>What to know</h2>
+
       <article>
-        <h3>1. The Vulnerability of Independent Contractors</h3>
-        <p>Freelancers operate without corporate IT perimeters, internal legal teams, or dedicated security support. Their financial stability depends directly on securing client projects, creating an inherent psychological vulnerability: the fear of losing lucrative opportunities. Threat actors actively exploit this income pressure by constructing convincing "high-budget client" personas that manipulate freelancers into lowering their standard verification vigilance (Ticona, 2022).</p>
+        <h3>Why freelancers get targeted</h3>
+        <p>A freelancer has no corporate IT perimeter, no in-house legal team and nobody doing security for them. Income depends on landing the next project, so the fear of losing a good one is always there. Attackers build a convincing &ldquo;high-budget client&rdquo; persona for exactly that reason: to make you drop your usual checks (Ticona, 2022).</p>
       </article>
 
       <article>
-        <h3>2. Portfolio Credential Harvesting & Fake Client Briefs</h3>
-        <p>A prevalent tactic targeting freelancers is <strong>Portfolio Credential Harvesting</strong>. Unlike mass phishing, this attack uses a tailored commercial pretext:</p>
+        <h3>Portfolio credential harvesting</h3>
+        <p>Not mass phishing. The pretext is a commercial brief written for you.</p>
         <ul>
-          <li><strong>The Fake Review Portal Trap:</strong> An attacker impersonating a client contacts a designer or developer, expressing interest in a high-value contract. The attacker sends a link to an alleged "prototype review portal" or "shared client workspace" (e.g., figma-client-verify.com or adobe-portfolio-review.site) and claims the freelancer must sign in using their professional credentials to view the project brief.</li>
-          <li><strong>Asset Access Exploitation:</strong> The attacker asks the freelancer to log into a client's staging server, CMS, or cloud repository using credentials supplied by the client. The login page is a credential harvester designed to capture the freelancer's primary password and multi-factor authentication tokens.</li>
+          <li><strong>The review portal.</strong> A client interested in a high-value contract sends a link to a &ldquo;prototype review portal&rdquo; or &ldquo;shared client workspace&rdquo; &mdash; <code>figma-client-verify.com</code>, <code>adobe-portfolio-review.site</code>. Sign in with your professional account to see the brief, they say.</li>
+          <li><strong>The client&rsquo;s own system.</strong> You are asked to log into their staging server, CMS or cloud repository using credentials they supply. The login page is a harvester, built to capture your main password and your multi-factor code.</li>
         </ul>
       </article>
 
       <article>
-        <h3>3. Off-Platform Manipulation & Escrow Bypasses</h3>
-        <p>Secure freelancing platforms (e.g., Upwork, Fiverr, Toptal) enforce built-in contract logging, identity verification, and escrow payment holds. Scammers systematically attempt to lure freelancers off these platforms during initial communications:</p>
+        <h3>Getting you off the platform</h3>
+        <p>Upwork, Fiverr and Toptal log the contract, verify identities and hold payment in escrow. So the first move is to get you talking somewhere else.</p>
         <ul>
-          <li><strong>The Convenience Pretext:</strong> The "client" claims their corporate accounting department cannot process payments through the platform and offers a 30% bonus if the freelancer agrees to direct wire transfers, PayPal Friends & Family, or cryptocurrency.</li>
-          <li><strong>The Overpayment Scam:</strong> The client sends an advance check or wire transfer exceeding the agreed project fee, claims an administrative accounting error, and asks the freelancer to immediately refund the difference via an irreversible payment method. The initial check is later flagged as fraudulent, leaving the freelancer responsible for the refunded balance.</li>
+          <li><strong>The convenience story.</strong> Their accounting department cannot pay through the platform, and there is a 30% bonus if you accept a direct wire, PayPal Friends &amp; Family, or cryptocurrency.</li>
+          <li><strong>The overpayment.</strong> An advance check or wire arrives for more than the agreed fee. An accounting error, they say &mdash; please return the difference now, by a method that cannot be reversed. The original payment is later flagged as fraudulent, leaving you owing what you refunded.</li>
         </ul>
       </article>
     </section>
 
     <!-- Scenario Simulation -->
     <section class="scenario-section">
-      <h2>Interactive Scenario Simulation Game</h2>
-      <p><strong>Scenario Name:</strong> The High-Retainer Global Brand Opportunity</p>
-      <p><strong>Context:</strong> You are an independent remote web developer. An individual named "Marcus Vance" contacts you via email, claiming to be the Marketing Director for an international agency. He offers a $12,000 retainer to redesign their core web platform.</p>
+      <h2>Scenario: the high-retainer brand</h2>
+      <p>You are a freelance web developer. &ldquo;Marcus Vance&rdquo; emails you, says he is Marketing Director at an international agency, and offers a $12,000 retainer to redesign their core web platform.</p>
 
       <div class="scenario-stage">
-        <h3>Stage 1 (Initial Contact)</h3>
-        <p>Marcus sends a link: "Review our current environment and sitemap here: <a href="https://nexus-agency-auth.net/sitemap" target="_blank">https://nexus-agency-auth.net/sitemap</a>". Clicking the link opens a page that looks identical to Google Workspace, prompting you to "Log in with Google to view protected brand assets."</p>
+        <h3>Stage 1 &mdash; first contact</h3>
+        <p>He sends a link to review the current environment and sitemap: <code>nexus-agency-auth.net/sitemap</code>. It opens a page identical to Google Workspace, asking you to log in with Google to view the protected brand assets.</p>
         <div class="scenario-decision">
-          <h4>Decision Point:</h4>
+          <h4>What do you do?</h4>
           <ul>
-            <li><strong>Option A:</strong> Enter your Google credentials to view the sitemap and secure the $12,000 project.</li>
-            <li><strong>Option B:</strong> Refuse to enter credentials, inspect the domain (nexus-agency-auth.net), and request the brief via email or a standard PDF. <em>(Correct Path)</em></li>
+            <li><strong>A:</strong> Enter your Google credentials to see the sitemap and secure the $12,000 project.</li>
+            <li><strong>B:</strong> Enter nothing, look at the domain &mdash; <code>nexus-agency-auth.net</code> &mdash; and ask for the brief by email or as a PDF. <em>(Correct)</em></li>
           </ul>
         </div>
       </div>
 
       <div class="scenario-stage">
-        <h3>Stage 2 (Escrow Bypass)</h3>
-        <p>Marcus sends a PDF brief and says: "Our legal team requires us to start immediately. To avoid freelancing platform fees, we will transfer $4,000 directly to your bank account today if you send us full administrative access to your development server now."</p>
+        <h3>Stage 2 &mdash; the escrow bypass</h3>
+        <p>A PDF brief arrives. &ldquo;Our legal team needs us to start immediately. To avoid platform fees we will transfer $4,000 straight to your bank today &mdash; just send us full administrative access to your development server now.&rdquo;</p>
         <div class="scenario-decision">
-          <h4>Decision Point:</h4>
+          <h4>What do you do?</h4>
           <ul>
-            <li><strong>Option A:</strong> Grant server access immediately since Marcus seems legitimate and is offering direct payment.</li>
-            <li><strong>Option B:</strong> Insist on executing a verified contract with escrow protection through a recognized platform before sharing administrative server access. <em>(Correct Path)</em></li>
+            <li><strong>A:</strong> Grant the server access. He seems legitimate and the payment is coming direct.</li>
+            <li><strong>B:</strong> No administrative access until there is a signed contract with escrow on a recognised platform. <em>(Correct)</em></li>
           </ul>
         </div>
       </div>
@@ -99,18 +97,18 @@
 
     <!-- Red Flag Checklist -->
     <section class="red-flag-checklist">
-      <h3>Red Flag Indicators & Actionable Checklist</h3>
+      <h3>Red flags</h3>
       <ul>
-        <li>Demands for External Login: Clients requiring you to log into unknown third-party portals to view project specifications or submit work.</li>
-        <li>Push to Move Off-Platform: Immediate requests to move communications or payments away from escrow-protected freelancing platforms.</li>
-        <li>Unrealistic Advances / Overpayments: Clients sending advance payments exceeding agreed amounts and demanding immediate partial refunds.</li>
-        <li>Unverified Business Domains: Emails originating from lookalike domains or generic free webmail accounts claiming to represent major agencies.</li>
+        <li>A client who needs you to log into an unfamiliar third-party portal to read the spec or submit work.</li>
+        <li>An early push to move the conversation, or the payment, off an escrow-protected platform.</li>
+        <li>An advance for more than the agreed amount, with a request to refund the difference.</li>
+        <li>A major agency writing from a lookalike domain or a free webmail account.</li>
       </ul>
     </section>
 
     <!-- Curated Resources -->
     <section class="curated-resources">
-      <h3>Curated Resources & References</h3>
+      <h3>References</h3>
       <ul>
         <li>Ravenelle, A. J., Janko, E., & Kowalski, K. C. (2022). Good jobs, scam jobs: Detecting, normalizing, and internalizing online job scams during the COVID-19 pandemic. <em>New Media & Society</em>, 24(7), 1591–1610.</li>
         <li>Ticona, J. (2022). Red flags, sob stories, and scams: The contested meaning of governance on carework labor platforms. <em>New Media & Society</em>, 24(7), 1548–1566.</li>

@@ -16,83 +16,81 @@
         <span> / </span>
         <router-link to="/dashboard">Dashboard</router-link>
         <span> / </span>
-        <span class="module-breadcrumb-current">Remote Recruitment, HR Impersonation & Onboarding Scams</span>
+        <span class="module-breadcrumb-current">Fake Job Offers</span>
       </nav>
-      <h1>Remote Recruitment, HR Impersonation & Onboarding Scams (Job Offer & Identity Theft Lures)</h1>
-      <p>Learn to analyze fake recruiter outreach, identify PII harvesting tactics, and execute verification workflows for recruiter identities and contract authenticity.</p>
+      <h1>Fake Job Offers</h1>
+      <p>How a fake recruiter collects your passport scan, your bank details and your money &mdash; and what to check before you send any of it.</p>
     </header>
 
     <p class="module-key-details">
-      <strong>Target Stakeholders:</strong> Remote Job Seekers, Freelancers in Transition, Contract Workers, Remote HR Coordinators.
+      <strong>Who this is for:</strong> remote job seekers, freelancers between contracts, contract workers, and remote HR coordinators.
     </p>
 
     <!-- Learning Objectives -->
     <section class="learning-objectives">
-      <h3>Learning Objectives</h3>
-      <p>After completing this module, the learner should be able to:</p>
+      <h3>By the end of this module you can</h3>
       <ol>
-        <li>Analyze the structural mechanics of fake recruiter outreach, fraudulent job postings, and counterfeit employment contracts.</li>
-        <li>Identify Personally Identifiable Information (PII) harvesting tactics executed under the guise of pre-employment background checks or onboarding.</li>
-        <li>Deconstruct fake equipment check/check-clearing scams targeting newly hired remote workers.</li>
-        <li>Execute verification workflows to validate recruiter identities, corporate domains, and contract authenticity before sharing sensitive personal records.</li>
+        <li>Explain how fake outreach, fake postings and counterfeit contracts fit together.</li>
+        <li>Recognise PII harvesting dressed up as a background check or onboarding.</li>
+        <li>Explain the fake equipment check scam aimed at new remote hires.</li>
+        <li>Verify a recruiter&rsquo;s identity, their corporate domain and the contract before sharing personal records.</li>
       </ol>
     </section>
 
     <!-- Reading Material -->
     <section class="module-awareness-guide">
-      <h2>Website Reading Material</h2>
-      
+      <h2>What to know</h2>
+
       <article>
-        <h3>1. The Threat Architecture of Remote Recruitment Fraud</h3>
-        <p>The transition to remote hiring has enabled global talent acquisition, but it has also created opportunities for recruitment fraud. Job seekers and remote contractors frequently share resumes, contact details, and career histories on public job boards (LinkedIn, Indeed, Upwork). Threat actors harvest this data to craft targeted fake job offers that exploit job seekers' financial expectations (Ravenelle et al., 2022).</p>
+        <h3>Why remote hiring is easy to fake</h3>
+        <p>Remote hiring opened up global recruiting, and recruitment fraud with it. Resumes, contact details and career histories sit in public on LinkedIn, Indeed and Upwork. Attackers harvest that and build an offer shaped around what you are hoping to earn (Ravenelle et al., 2022).</p>
       </article>
 
       <article>
-        <h3>2. Fake Recruiter Outreach & PII Harvesting</h3>
-        <p>Scammers create fake recruiter profiles or impersonate actual talent acquisition specialists from well-known corporations:</p>
+        <h3>Fake recruiters and PII harvesting</h3>
+        <p>The profile is either invented or copied from a real talent acquisition specialist at a company you have heard of.</p>
         <ul>
-          <li><strong>The Fake Interview Lure:</strong> The "recruiter" reaches out via email or direct message, offering an interview for a lucrative, fully remote position. The interview is conducted entirely over text-based messaging apps (Telegram, Signal, Google Chat) or through automated questionnaires, skipping voice or video calls.</li>
-          <li><strong>Pre-Employment PII Harvesting:</strong> Upon extending a fake "job offer," the scammer demands sensitive Personally Identifiable Information (PII)—including passport scans, government ID numbers, bank account details for direct deposit, and social security numbers—under the pretext of "pre-employment background checks" or "tax form processing." The harvested data is used for identity theft and financial fraud (Anbarasu et al., 2024).</li>
+          <li><strong>The text-only interview.</strong> An email or message offers an interview for a well-paid, fully remote role. It runs entirely in Telegram, Signal or Google Chat, or an automated questionnaire. No voice, no video.</li>
+          <li><strong>The onboarding forms.</strong> With the &ldquo;job offer&rdquo; comes a demand for personally identifiable information (PII): passport scans, government ID numbers, bank account details for direct deposit, your social security number &mdash; all for the &ldquo;pre-employment background check&rdquo; or &ldquo;tax form processing.&rdquo; The data goes straight to identity theft and financial fraud (Anbarasu et al., 2024).</li>
         </ul>
       </article>
 
       <article>
-        <h3>3. The Fake Equipment Check Scam</h3>
-        <p>A widespread financial scam targeting newly hired remote employees is the <strong>Check-Clearing Equipment Trap</strong>:</p>
+        <h3>The fake equipment check</h3>
+        <p>A widespread scam aimed at new remote hires. It turns on how long a bank takes to clear a check.</p>
         <ul>
-          <li>The scammer sends the newly hired remote worker a counterfeit check (e.g., $3,500) to purchase home office equipment (laptops, monitors, ergonomic desks).</li>
-          <li>The worker is instructed to deposit the check into their personal bank account and wire the funds immediately to a "certified vendor" controlled by the scammer.</li>
-          <li>Days later, the bank discovers the check is fraudulent and reverses the $3,500 credit. The worker loses the transferred money and faces potential account closure for depositing fake checks.</li>
+          <li>A counterfeit check arrives &mdash; say $3,500 &mdash; to buy home office equipment: laptop, monitors, an ergonomic desk.</li>
+          <li>You are told to deposit it in your personal account and wire the money straight on to a &ldquo;certified vendor,&rdquo; which is them.</li>
+          <li>Days later the bank finds the check is fraudulent and reverses the $3,500. You are out the money you wired, and your account may be closed for depositing a fake check.</li>
         </ul>
       </article>
     </section>
 
     <!-- Scenario Simulation -->
     <section class="scenario-section">
-      <h2>Interactive Scenario Simulation Game</h2>
-      <p><strong>Scenario Name:</strong> The Exclusive Remote Regional Coordinator Offer</p>
-      <p><strong>Context:</strong> You applied for remote positions online. You receive an email from careers@tech-global-corp.net extending a job offer as a "Remote Operations Coordinator" with a starting salary of $95,000/year.</p>
+      <h2>Scenario: the exclusive coordinator offer</h2>
+      <p>You have been applying for remote roles online. An email from <code>careers@tech-global-corp.net</code> offers you a &ldquo;Remote Operations Coordinator&rdquo; post at $95,000 a year.</p>
 
       <div class="scenario-stage">
-        <h3>Stage 1 (The Interview Process)</h3>
-        <p>The recruiter, "David Miller," says: "Congratulations! Based on your resume, our board has selected you. We do not require a video interview. Please fill out the attached employment contract and background form (Onboarding_Form.pdf)." The form asks for your full government ID number, passport scan, and bank account credentials.</p>
+        <h3>Stage 1 &mdash; the interview</h3>
+        <p>The recruiter, &ldquo;David Miller,&rdquo; writes: &ldquo;Congratulations! Our board selected you from your resume. No video interview required &mdash; just complete the attached employment contract and background form.&rdquo; <code>Onboarding_Form.pdf</code> asks for your full government ID number, a passport scan, and your bank account credentials.</p>
         <div class="scenario-decision">
-          <h4>Decision Point:</h4>
+          <h4>What do you do?</h4>
           <ul>
-            <li><strong>Option A:</strong> Fill out the form and attach your passport scan immediately to secure the $95,000 job offer.</li>
-            <li><strong>Option B:</strong> Pause and investigate. A job offer without a video or voice interview that demands bank login credentials is a major fraud indicator. <em>(Correct Path)</em></li>
+            <li><strong>A:</strong> Complete the form and attach the passport scan to secure the $95,000 offer.</li>
+            <li><strong>B:</strong> Pause and investigate. An offer with no video or voice interview that demands your bank login is a major fraud indicator. <em>(Correct)</em></li>
           </ul>
         </div>
       </div>
 
       <div class="scenario-stage">
-        <h3>Stage 2 (Equipment Check Directive)</h3>
-        <p>David Miller messages: "We are mailing you a check for $4,000. Deposit it and wire $3,200 to our approved hardware supplier via Zelle today."</p>
+        <h3>Stage 2 &mdash; the equipment check</h3>
+        <p>David Miller messages: &ldquo;We are mailing you a check for $4,000. Deposit it and wire $3,200 to our approved hardware supplier via Zelle today.&rdquo;</p>
         <div class="scenario-decision">
-          <h4>Decision Point:</h4>
+          <h4>What do you do?</h4>
           <ul>
-            <li><strong>Option A:</strong> Deposit the check and wire the $3,200 immediately to get your work laptop.</li>
-            <li><strong>Option B:</strong> Refuse the check, report the job posting as fraudulent, and do not wire personal funds. <em>(Correct Path)</em></li>
+            <li><strong>A:</strong> Deposit the check and wire the $3,200 now, so your work laptop arrives.</li>
+            <li><strong>B:</strong> Refuse the check, report the posting as fraudulent, and wire none of your own money. <em>(Correct)</em></li>
           </ul>
         </div>
       </div>
@@ -100,18 +98,18 @@
 
     <!-- Red Flag Checklist -->
     <section class="red-flag-checklist">
-      <h3>Red Flag Indicators & Actionable Checklist</h3>
+      <h3>Red flags</h3>
       <ul>
-        <li>Text-Only Interviews: Job offers extended without any live video or voice interviews.</li>
-        <li>Advance Equipment Checks: Employers sending checks to purchase equipment from specific "approved vendors" via irreversible wire transfers.</li>
-        <li>Demands for Bank Login Credentials: Requests for bank account passwords or full tax IDs before official contract signing.</li>
-        <li>Lookalike Hiring Domains: Communications originating from domains differing from the company's official website (e.g., @company-careers-jobs.com vs. @company.com).</li>
+        <li>An offer made without a single live video or voice interview.</li>
+        <li>A check sent in advance to buy equipment from a named &ldquo;approved vendor&rdquo; by irreversible wire.</li>
+        <li>A request for your bank account password or full tax ID before any contract is signed.</li>
+        <li>A hiring address on a domain that is not the company&rsquo;s own &mdash; <code>@company-careers-jobs.com</code> instead of <code>@company.com</code>.</li>
       </ul>
     </section>
 
     <!-- Curated Resources -->
     <section class="curated-resources">
-      <h3>Curated Resources & References</h3>
+      <h3>References</h3>
       <ul>
         <li>Anbarasu, V., Selvakani, S., & Vasumathi, K. (2024). Fake job prediction using machine learning. <em>International Journal of Darshan Institute</em>, 13(1), 12–20.</li>
         <li>Ravenelle, A. J., Janko, E., & Kowalski, K. C. (2022). Good jobs, scam jobs: Detecting, normalizing, and internalizing online job scams. <em>New Media & Society</em>, 24(7), 1591–1610.</li>

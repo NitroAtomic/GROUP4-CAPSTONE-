@@ -8,7 +8,7 @@
             </router-link>
         </nav>
 
-        <h1>Spear Phishing & Targeted Digital Surveillance</h1>
+        <h1>Spear Phishing and Target Research</h1>
         <p>Module 2 of 6</p>
     </header>
 
@@ -22,32 +22,28 @@
         class="module-awareness-guide"
     >
         <p class="module-key-details">
-            <strong>Target Audience:</strong> Remote personnel with system
-            access, administrative privileges, financial responsibilities,
-            or public social media profiles.
+            <strong>Who this is for:</strong> remote staff with system access,
+            administrative privileges, financial responsibilities, or a public
+            social media profile.
         </p>
 
         <article>
-            <h2>Learning Objectives:</h2>
-
-            <p>After completing this module, the learner will be able to:</p>
+            <h2>By the end of this module you can</h2>
 
             <ul>
                 <li>
-                    Differentiate between broad mass phishing and targeted,
-                    reconnaissance-driven spear phishing.
+                    Tell broad mass phishing apart from a message written for
+                    you alone.
                 </li>
 
                 <li>
-                    Identify how threat actors use Open Source Intelligence
-                    (OSINT) gathered from public platforms (LinkedIn, GitHub,
-                    X) to craft personalized lures.
+                    Recognise how Open Source Intelligence (OSINT) from
+                    LinkedIn, GitHub and X becomes a personal lure.
                 </li>
 
                 <li>
-                    Recognize execution risks associated with macro-enabled
-                    attachments, double file extensions, and out-of-band
-                    messaging channels.
+                    Spot the risk in a macro-enabled attachment, a double file
+                    extension, and a move to an out-of-band messaging channel.
                 </li>
             </ul>
         </article>
@@ -56,104 +52,98 @@
 
 
     <section>
-        <h2>Core Reading Material & Article Content</h2>
+        <h2>What to know</h2>
 
         <article>
-            <h3>The Mechanics of Spear Phishing</h3>
+            <h3>How it differs from mass phishing</h3>
 
             <p>
-                Mass phishing relies on broad distribution, sending
-                thousands of identical, generic messages hoping a small
-                percentage of recipients click. In contrast, spear phishing
-                is a targeted, asymmetric attack focused on a specific
-                individual, team, or organization.
+                Mass phishing sends thousands of identical, generic messages
+                broadly, hoping a small percentage click. Spear phishing is the
+                opposite: one message, aimed at one person, team or
+                organisation.
             </p>
 
             <p>
-                Because spear phishing messages reference real names,
-                current client engagements, internal software platforms, or
-                recent company events, the victim's psychological threshold
-                to suspect deception is significantly lower.
+                It names real people, your current client engagement, the
+                internal platforms you use, a recent company event. That
+                familiarity drops your guard.
             </p>
         </article>
 
         <figure>
             <img src="/images/OSINT-for-Targeted-Spear-Phishing-Process-Flow.png" alt="Diagram showing three Open Source Intelligence sources feeding into a customized spear phishing message: a LinkedIn profile revealing job role, work experience, and connections; a GitHub repository revealing projects, code and technologies, and commit history; and Social Media/X revealing posts, activity patterns, and tools or technologies mentioned. All three funnel into a single result labeled Customized Spear Phishing Targeted Communication.">
-            <figcaption>Attackers combine details pulled from LinkedIn, GitHub, and social media/X profiles to assemble a single, highly convincing spear phishing message aimed at one specific target.</figcaption>
+            <figcaption>Details from LinkedIn, GitHub and social media/X combine into one message aimed at a single target.</figcaption>
         </figure>
 
         <article>
-            <h3>Open Source Intelligence (OSINT) Reconnaissance</h3>
+            <h3>Open source intelligence (OSINT)</h3>
 
             <p>
-                Before sending a single email, a spear phisher conducts
-                detailed reconnaissance using publicly accessible data:
+                Before sending anything, the attacker researches you, using
+                only public pages:
             </p>
 
             <ul>
                 <li>
-                    <strong>LinkedIn:</strong> Maps corporate reporting
-                    hierarchies, job titles, active projects, and vendor
-                    relationships.
+                    <strong>LinkedIn.</strong> Reporting lines, job titles,
+                    active projects, vendor relationships.
                 </li>
 
                 <li>
-                    <strong>GitHub / Technical Blogs:</strong> Identifies
-                    specific programming frameworks, internal repository
-                    names, and outdated software dependencies used by a
-                    company's engineering team.
+                    <strong>GitHub and technical blogs.</strong> Programming
+                    frameworks, internal repository names, outdated
+                    dependencies your engineering team uses.
                 </li>
 
                 <li>
-                    <strong>Social Media / X:</strong> Tracks employee
-                    vacation schedules, conference attendance, or remote
-                    work locations.
+                    <strong>Social media and X.</strong> Holiday schedules,
+                    conference attendance, where people work from.
                 </li>
             </ul>
 
             <p>
-                Using this OSINT, an attacker might draft an email appearing
-                to come from a real co-worker currently attending a
-                conference, referencing a real client project:
+                That is enough for an email from a co-worker who really is at a
+                conference, about a real client project:
             </p>
 
             <p>
-                <em>"Hi Alex, I'm at the TechSummit conference right now.
-                Could you check the attached update for the Acme Corp
-                project proposal? Password to unzip is 1234."</em>
+                <em>&ldquo;Hi Alex, I&rsquo;m at the TechSummit conference
+                right now. Could you check the attached update for the Acme
+                Corp project proposal? Password to unzip is 1234.&rdquo;</em>
             </p>
         </article>
 
         <article>
-            <h3>Weaponized Attachments & Evasion</h3>
+            <h3>The attachment</h3>
 
             <p>
-                Spear phishing campaigns frequently deliver malicious
-                payloads hidden inside weaponized files:
+                The payload arrives as a file, weaponised in one of three ways:
             </p>
 
             <ul>
                 <li>
-                    <strong>Macro-Enabled Office Documents (.docm, .xlsm):</strong>
-                    Contain embedded Visual Basic for Applications (VBA)
-                    scripts that download secondary malware
-                    (trojans/infostealers) when macros are enabled.
+                    <strong>Macro-enabled Office documents</strong>
+                    (<code>.docm</code>, <code>.xlsm</code>). Enable macros and
+                    an embedded Visual Basic for Applications (VBA) script
+                    downloads secondary malware &mdash; a trojan or
+                    infostealer.
                 </li>
 
                 <li>
-                    <strong>Double Extensions (.pdf.exe, .docx.iso):</strong>
-                    Operating systems often hide known extensions by
-                    default. A file named Quarterly_Report.pdf.exe appears
-                    to the user as Quarterly_Report.pdf.
+                    <strong>Double extensions</strong> (<code>.pdf.exe</code>,
+                    <code>.docx.iso</code>). Operating systems hide known
+                    extensions by default, so
+                    <code>Quarterly_Report.pdf.exe</code> shows on screen as
+                    <code>Quarterly_Report.pdf</code>.
                 </li>
 
                 <li>
-                    <strong>Encrypted Archives (.zip, .rar, .7z):</strong>
-                    Attackers encrypt the attached archive file and provide
-                    the password in the email body. Because the gateway
-                    cannot inspect the encrypted contents without the
-                    password, the malicious attachment bypasses automated
-                    perimeter scanners.
+                    <strong>Encrypted archives</strong> (<code>.zip</code>,
+                    <code>.rar</code>, <code>.7z</code>). The archive is
+                    locked, the password is in the email body, and the gateway
+                    cannot look inside &mdash; so the attachment walks past the
+                    automated perimeter scanners.
                 </li>
             </ul>
         </article>
@@ -161,7 +151,7 @@
     </section>
 
     <article>
-        <h2>Curated External Resources & References</h2>
+        <h2>References</h2>
 
         <ul>
             <li>
