@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "kb:build": "node scripts/build-knowledge-base.js"
+    "kb:build": "node scripts/build-knowledge-base.js",
+    "db:migrate": "node scripts/run-sql.js"
   },
   "keywords": [],
   "author": "Juan Paolo Dente",
