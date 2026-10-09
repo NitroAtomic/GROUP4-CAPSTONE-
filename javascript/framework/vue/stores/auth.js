@@ -33,12 +33,24 @@ export const useAuthStore = defineStore('auth', {
 
   getters: {
     isAuthenticated: (state) => Boolean(state.token && state.user),
-    isPremium: (state) =>
-      Boolean(
-        state.user &&
-        state.user.subscription_type === 'Premium' &&
-        state.user.subscription_status === 'active'
-      )
+    /* Pang-nav lang ito — kung aling link ang naka-lock at aling card ang
+       may padlock. Ang server pa rin ang totoong tagapagpasya; kahit
+       lokohin ng isang tao yung sessionStorage niya para maging
+       "Premium", 403 pa rin ang sagot ng backend sa mismong nilalaman.
+
+       Kasama na yung petsa ng pagtatapos para tumugma sa
+       middleware/premium.js. Kung dito lang ito nakalimutan, makikita ng
+       taong expired na yung mga naka-unlock na link, tapos mabibigo siya
+       pagpindot — mas malala pa yun kaysa sa padlock. */
+    isPremium: (state) => {
+      const user = state.user
+      if (!user) return false
+      if (user.subscription_type !== 'Premium') return false
+      if (user.subscription_status !== 'active') return false
+      if (user.subscription_expires_at &&
+          new Date(user.subscription_expires_at) <= new Date()) return false
+      return true
+    }
   },
 
   actions: {
@@ -135,20 +147,37 @@ export const useAuthStore = defineStore('auth', {
     // without processing any payment." No card data is sent here; Payment.js
     // validates the card client-side first and only calls this once that
     // (simulated) check passes.
-    async upgradeToPremium() {
+    /* Dating may upgradeToPremium() dito na tumatawag ng
+       PATCH /api/auth/me/subscription na may {subscription_type:'Premium'}.
+       Tinanggal na: tumatanggi na ngayon ang server doon, dahil yun mismo
+       ang paraan para makakuha ng Premium nang walang bayad.
+
+       Ang kapalit ay refreshUser(): hindi tayo nagsasabi sa server kung
+       anong plano natin -- tinatanong natin siya. */
+    async refreshUser() {
+      const me = await apiFetch('/api/auth/me', { token: this.token })
+      this.user = {
+        ...this.user,
+        ...me
+      }
+      sessionStorage.setItem(USER_KEY, JSON.stringify(this.user))
+      return this.user
+    },
+
+    // Pag-cancel. Pababa lang ang dinadaanan nito; ang pagtaas ay dumadaan
+    // sa bayad.
+    async cancelSubscription() {
       const data = await apiFetch('/api/auth/me/subscription', {
         method: 'PATCH',
         token: this.token,
-        body: { subscription_type: 'Premium' }
+        body: { subscription_type: 'Free' }
       })
       if (this.user) {
-        // Kasama yung status, kasi yun din ang tinitingnan ng isPremium.
-        // Kung type lang ang na-update, mananatiling naka-lock yung nav at
-        // yung premium cards hangga't hindi nagre-login ulit.
         this.user = {
           ...this.user,
-          subscription_type: data.subscription_type,
-          subscription_status: data.subscription_status || 'active'
+          subscription_type: 'Free',
+          subscription_status: 'inactive',
+          subscription_expires_at: null
         }
         sessionStorage.setItem(USER_KEY, JSON.stringify(this.user))
       }

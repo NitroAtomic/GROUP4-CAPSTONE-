@@ -11,6 +11,7 @@ import ForgotPasswordConfirmation from './pages/ForgotPasswordConfirmation.vue'
 import PremiumSubscription from './pages/PremiumSubscription.vue'
 import CreateAccount from './pages/CreateAccount.vue'
 import Payment from './pages/Payment.vue'
+import PaymentConfirm from './pages/PaymentConfirm.vue'
 import Dashboard from './pages/Dashboard.vue'
 import Admin from './pages/Admin.vue'
 
@@ -71,7 +72,16 @@ const routes = [
     path: '/payment',
     name: 'Payment',
     component: Payment,
-    meta: { minimalNav: true }
+    meta: { minimalNav: true, requiresAuth: true }
+  },
+  {
+    // Dito ibinabalik ng PayMongo yung user. requiresAuth ito kasi ang
+    // pagkumpirma ay nakatali sa account — hindi pwedeng i-confirm ng
+    // isang tao yung bayad ng iba kahit alam pa niya yung reference.
+    path: '/payment/confirm',
+    name: 'PaymentConfirm',
+    component: PaymentConfirm,
+    meta: { minimalNav: true, requiresAuth: true }
   },
   {
     path: '/dashboard',

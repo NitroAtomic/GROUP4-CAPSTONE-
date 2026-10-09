@@ -76,32 +76,38 @@
      Payment Form
      ========================= */
 
-  .payment-form {
-    @apply mt-6;
-  }
-
-  .payment-form-field {
-    @apply mb-3;
-  }
-
-  .payment-form-field label {
-    @apply block mb-1.5 text-[16px];
-    color: var(--heading);
-  }
-
-  .payment-form-field input {
-    @apply w-full h-8 py-0 px-[9px] border rounded-lg outline-none text-[14px] placeholder:text-[var(--muted)] focus:border-2;
-    border-color: var(--border);
-    background: var(--card-bg);
-  }
-
-
   /* =========================
-     Card Details
+     Handoff to PayMongo
+
+     Wala nang .payment-form, .payment-form-field at .payment-card-details
+     dito: nasa hosted checkout page na ng PayMongo yung mga card field,
+     kaya wala nang form na ipipinta sa page na ito.
      ========================= */
 
-  .payment-card-details {
-    @apply grid grid-cols-2 gap-3.5 max-[620px]:grid-cols-1 max-[620px]:gap-0;
+  .payment-assurance-list {
+    @apply mt-5 flex list-none flex-col gap-2.5 p-0 text-[14px] leading-snug;
+    color: var(--text);
+  }
+
+  .payment-assurance-list li {
+    @apply flex items-start gap-2.5;
+  }
+
+  .payment-assurance-list .ui-icon {
+    @apply mt-0.5 h-4 w-4 shrink-0;
+    color: var(--accent-text);
+  }
+
+  .payment-cancelled-note {
+    @apply mt-5 rounded-lg border py-2.5 px-4 text-[13px] leading-snug;
+    background: rgba(245, 166, 35, 0.1);
+    border-color: rgba(245, 166, 35, 0.3);
+    color: var(--text);
+  }
+
+  .payment-assurance-list + .payment-subscribe-button,
+  .payment-cancelled-note + .payment-subscribe-button {
+    @apply mt-6;
   }
 
 
@@ -114,5 +120,108 @@
     background: linear-gradient(135deg, var(--teal), var(--navy));
     border-color: transparent;
     color: white;
+  }
+
+
+  /* =========================
+     Payment confirmation
+
+     Ito yung page na binabalikan galing PayMongo. Apat na estado:
+     checking, paid, unpaid, error.
+     ========================= */
+
+  .payment-confirm {
+    @apply pt-6;
+  }
+
+  .payment-confirm-panel {
+    @apply rounded-xl border py-9 px-7 text-center max-[620px]:py-7 max-[620px]:px-5;
+    background: var(--card-bg);
+    border-color: var(--border);
+  }
+
+  .payment-confirm-panel h1 {
+    @apply text-[27px] leading-[1.15];
+    color: var(--heading);
+  }
+
+  .payment-confirm-panel p {
+    @apply mx-auto mt-2.5 max-w-[34rem] text-[15px] leading-relaxed;
+    color: var(--text);
+  }
+
+  .payment-confirm-badge {
+    @apply mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full;
+    background: rgba(27, 127, 121, 0.14);
+    color: var(--accent-text);
+  }
+
+  .payment-confirm-badge .ui-icon {
+    @apply h-7 w-7;
+  }
+
+  .payment-confirm-spinner {
+    @apply mx-auto mb-4 h-10 w-10 rounded-full border-4;
+    border-color: var(--border);
+    border-top-color: var(--teal);
+    animation: payment-confirm-spin 850ms linear infinite;
+  }
+
+  @keyframes payment-confirm-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Ang gumagalaw na bilog ay hindi dapat kailangan para maintindihan
+     kung ano ang nangyayari, at may mga taong nasasakit ang ulo dito. */
+  @media (prefers-reduced-motion: reduce) {
+    .payment-confirm-spinner {
+      animation: none;
+    }
+  }
+
+  .payment-confirm-reference {
+    @apply mt-3 text-[13px];
+    color: var(--muted);
+  }
+
+  .payment-confirm-actions {
+    @apply mt-6 flex flex-col items-center gap-3;
+  }
+
+  .payment-confirm-actions .payment-subscribe-button {
+    @apply mt-0;
+  }
+
+  .payment-confirm-secondary {
+    @apply text-[14px] underline underline-offset-4;
+    color: var(--muted);
+  }
+
+  .payment-confirm-secondary:hover {
+    color: var(--heading);
+  }
+
+  .payment-confirm-ok .payment-subscribe-button {
+    @apply mt-6;
+  }
+
+  /* Yung dalawang estado na hindi tagumpay. Kulay lang ang ipinagkaiba
+     nila sa karaniwang panel, pero kailangan nilang magkaroon ng sariling
+     tuntunin — kung wala, mukhang wala lang nangyari sa taong nabigo
+     ang bayad. */
+  .payment-confirm-pending {
+    border-color: rgba(245, 166, 35, 0.4);
+  }
+
+  .payment-confirm-pending h1 {
+    color: var(--warn-text);
+  }
+
+  .payment-confirm-error {
+    border-color: var(--bad-border);
+  }
+
+  .payment-confirm-error h1 {
+    color: var(--bad-border);
   }
 }
