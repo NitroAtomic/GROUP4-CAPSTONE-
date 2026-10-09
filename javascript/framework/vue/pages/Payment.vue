@@ -37,7 +37,10 @@
           <span class="subscription-progress-number" aria-hidden="true">
             <svg class="ui-icon" aria-hidden="true"><use href="#ui-icon-check" /></svg>
           </span>
-          <span>Create account</span>
+          <!-- "Account", hindi "Create account": pwedeng dumaan dito ang
+               taong matagal nang may account at nag-upgrade lang. Hindi
+               siya gumawa ng bago. -->
+          <span>Account</span>
         </div>
 
         <div class="subscription-progress-line" aria-hidden="true"></div>

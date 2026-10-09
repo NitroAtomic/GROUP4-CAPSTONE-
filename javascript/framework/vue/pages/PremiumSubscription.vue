@@ -151,10 +151,10 @@
              ========================= -->
 
         <router-link
-          to="/create-account"
+          :to="continueTo"
           class="premium-continue-button"
         >
-          Continue
+          {{ continueLabel }}
         </router-link>
 
       </section>
@@ -164,16 +164,35 @@
            Account Information
            ========================= -->
 
+      <!-- Iba yung sinasabi depende kung may account ka na. Dati, "you
+           will create your account in the next step" ang nakasulat kahit
+           naka-login ka na — at doon mismo nabubunggo yung may Free
+           account na: dinadala siya sa paggawa ng account gamit yung
+           email na mayroon na siya. -->
       <div class="premium-account-information">
 
-        <p>
-          You will create your account in the next step
-        </p>
+        <template v-if="alreadyPremium">
+          <p>You are already on Premium.</p>
+        </template>
 
-        <p>
-          Already have an account?
-          <router-link to="/login">Log in</router-link>
-        </p>
+        <template v-else-if="isSignedIn">
+          <p>
+            Signed in as <strong>{{ authStore.user.email }}</strong>
+          </p>
+          <p>
+            Your plan is upgraded on this account &mdash; no new account needed.
+          </p>
+        </template>
+
+        <template v-else>
+          <p>
+            You will create your account in the next step
+          </p>
+          <p>
+            Already have an account?
+            <router-link to="/login">Log in</router-link>
+          </p>
+        </template>
 
       </div>
 
