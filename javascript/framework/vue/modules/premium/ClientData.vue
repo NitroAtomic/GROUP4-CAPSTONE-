@@ -16,10 +16,15 @@
         <span> / </span>
         <router-link to="/dashboard">Dashboard</router-link>
         <span> / </span>
-        <span class="module-breadcrumb-current">Executive Impersonation</span>
+        <!-- Yung pamagat ay yung LAYUNIN, yung laman ay yung PARAAN. Hindi
+             sila magkasalungat: yung pangunahing dahilan kung bakit
+             nalalantad ang client data ng isang VA ay may nagpanggap na
+             amo. Dati, "Executive Impersonation" lang ang nakalagay dito,
+             kaya iba ang pangalan sa dashboard at iba ang nasa pahina. -->
+        <span class="module-breadcrumb-current">Secure Client Data Handling</span>
       </nav>
-      <h1>Executive Impersonation</h1>
-      <p>How someone posing as your boss gets gift cards bought and passwords reset &mdash; and the one check that stops it, whatever rank is on the message.</p>
+      <h1>Secure Client Data Handling</h1>
+      <p>You hold the client files, the passwords and the access. The usual way all three get exposed is someone posing as your boss &mdash; here is how that works, and the one check that stops it whatever rank is on the message.</p>
     </header>
 
     <p class="module-key-details">
