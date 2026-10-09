@@ -8,6 +8,31 @@ const router = express.Router();
 
 // FR-12: Personalized Dashboard. Lahat ng kailangan ng dashboard, isang call
 // lang.
+/* Yung maikling paglalarawan na ipinapakita sa card.
+
+   Pinuputol sa 160 na titik. Yung mga nasa seed ay maikli naman, pero
+   kayang baguhin ng admin yung description -- at kung may magdikit doon
+   ng buong aralin ng isang bayad na module, mababasa yun ng Free na user
+   dito sa dashboard. Yung teaser lang ang kailangan, kaya yun lang ang
+   pinapadala.
+
+   Kapag walang laman, wala talagang ipinapakita. Dati kasi, pag walang
+   description, yung category na lang yung lumalabas -- kaya may
+   "spear-phishing" sa ilalim ng "Spear Phishing". Panloob na susi yun,
+   hindi pang-basa ng tao. */
+const TEASER_LIMIT = 160;
+
+function teaser(description) {
+  if (!description) return null;
+  const text = String(description).trim().replace(/\s+/g, ' ');
+  if (text.length <= TEASER_LIMIT) return text;
+  return text.slice(0, TEASER_LIMIT - 1).trimEnd() + '\u2026';
+}
+
+function forCard(row) {
+  return { ...row, description: teaser(row.description) };
+}
+
 router.get('/', requireAuth, async (req, res) => {
   try {
     const [progress] = await pool.query(
@@ -78,7 +103,7 @@ router.get('/recommendations', requireAuth, async (req, res) => {
       // mababawasan lang, hindi bigla nawawala yung recommendation.
       const placeholders = ranked.map(() => '?').join(',');
       const [modules] = await pool.query(
-        `SELECT module_id, module_title, slug, category, module_type
+        `SELECT module_id, module_title, description, slug, category, module_type
          FROM module
          WHERE (category IN (${placeholders}) OR slug IN (${placeholders}))
            AND NOT EXISTS (
@@ -103,21 +128,21 @@ router.get('/recommendations', requireAuth, async (req, res) => {
           .sort((a, b) => position(a) - position(b))
           .slice(0, 3);
 
-        return res.json(ordered);
+        return res.json(ordered.map(forCard));
       }
     }
 
     // Wala pang assessment, o walang tumugma. I-suggest yung Free modules na
     // hindi pa nasisimulan, magandang pinagsisimulan naman.
     const [modules] = await pool.query(
-      `SELECT m.module_id, m.module_title, m.slug, m.category, m.module_type
+      `SELECT m.module_id, m.module_title, m.description, m.slug, m.category, m.module_type
        FROM module m
        WHERE m.module_type = 'Free'
          AND m.module_id NOT IN (SELECT module_id FROM progress WHERE user_id = ?)
        LIMIT 3`,
       [req.user.user_id]
     );
-    res.json(modules);
+    res.json(modules.map(forCard));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to load recommendations.' });

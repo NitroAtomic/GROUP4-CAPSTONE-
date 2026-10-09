@@ -85,7 +85,9 @@
                 {{ hasAssessment ? 'Recommended' : 'Suggested starting point' }}
               </span>
               <h3>{{ module.module_title }}</h3>
-              <p>{{ recommendationKind(module) }}</p>
+              <!-- Walang <p> kung walang laman, para hindi maiwan yung
+                   patlang sa ilalim ng pamagat. -->
+              <p v-if="recommendationKind(module)">{{ recommendationKind(module) }}</p>
             </component>
           </div>
           <p v-else-if="hasAssessment" class="dashboard-empty-copy">

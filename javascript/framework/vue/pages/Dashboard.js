@@ -147,8 +147,17 @@ export default {
       }
     },
 
+    /* Yung paglalarawan, hindi yung category.
+
+       Dati `module.category || 'Free module'` ito, kaya panloob na susi
+       yung lumalabas sa ilalim ng pamagat: "spear-phishing" sa ilalim ng
+       "Spear Phishing", "quishing" sa ilalim ng "Quishing". Inuulit lang
+       nito yung pamagat sa anyong pang-database, at mukhang hindi tapos.
+
+       Kapag walang paglalarawan, mas mabuting wala kaysa may susing
+       lumalabas. */
     recommendationKind(module) {
-      return module.category || 'Free module'
+      return module.description || ''
     }
   }
 }
