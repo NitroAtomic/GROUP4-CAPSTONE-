@@ -308,7 +308,7 @@ router.post('/logout', requireAuth, (req, res) => {
 router.get('/me', requireAuth, async (req, res) => {
   try {
     const [rows] = await pool.query(
-      'SELECT user_id, first_name, last_name, email, subscription_type, subscription_status, role, created_at FROM user WHERE user_id = ?',
+      'SELECT user_id, first_name, last_name, email, subscription_type, subscription_status, subscription_expires_at, role, created_at FROM user WHERE user_id = ?',
       [req.user.user_id]
     );
     if (rows.length === 0) return res.status(404).json({ error: 'User not found.' });
@@ -319,22 +319,52 @@ router.get('/me', requireAuth, async (req, res) => {
   }
 });
 
+/* Dati, dito nakukuha ang Premium nang libre.
+
+   Tinatanggap nito yung subscription_type mula mismo sa request body, kaya
+   isang linya lang sa devtools ng kahit sinong naka-login:
+
+       fetch('/api/auth/me/subscription', {
+         method: 'PATCH',
+         headers: { 'content-type': 'application/json', ... },
+         body: JSON.stringify({ subscription_type: 'Premium' })
+       })
+
+   at bukas na lahat ng bayad na module. Nasa browser lang kasi yung card
+   form, kaya yung buong "bayad" ay pang-palamuti lang pala.
+
+   Ngayon, pababa lang ang dinadaanan nito. Ang pagtaas ay sa
+   routes/billing.js lang, at doon lang pagkatapos kumpirmahin ng PayMongo
+   na may aktwal na bayad. Hindi ito maaaring pagdaanan. */
 router.patch('/me/subscription', requireAuth, async (req, res) => {
   const { subscription_type } = req.body;
+
   if (!['Free', 'Premium'].includes(subscription_type)) {
     return res.status(400).json({ error: 'subscription_type must be Free or Premium.' });
   }
-  // Sabay binabago yung status, hindi lang yung type. Premium lang yung type
-  // pero hindi 'active' yung status, hindi kumpleto yung upgrade: pumapasa
-  // yung bayad pero hindi nabubuksan yung role-based modules at dashboard,
-  // kasi hinahanap ng frontend yung dalawa bago ka ituring na Premium.
-  const subscription_status = subscription_type === 'Premium' ? 'active' : 'inactive';
+
+  if (subscription_type === 'Premium') {
+    return res.status(403).json({
+      error: 'Premium is granted only after a confirmed payment. Start one at /api/billing/checkout.',
+    });
+  }
+
+  // Natitira: pag-cancel. Walang kailangang bayad para bumaba, at
+  // sinasara rin nito yung expiry para hindi na siya ituring na Premium.
   try {
     await pool.query(
-      'UPDATE user SET subscription_type = ?, subscription_status = ? WHERE user_id = ?',
-      [subscription_type, subscription_status, req.user.user_id]
+      `UPDATE user
+          SET subscription_type = 'Free',
+              subscription_status = 'inactive',
+              subscription_expires_at = NULL
+        WHERE user_id = ?`,
+      [req.user.user_id]
     );
-    res.json({ message: 'Plan updated.', subscription_type, subscription_status });
+    res.json({
+      message: 'Subscription cancelled.',
+      subscription_type: 'Free',
+      subscription_status: 'inactive',
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to update plan.' });

@@ -3,20 +3,11 @@
 const express = require('express');
 const pool = require('../config/db');
 const { optionalAuth, requireAdmin } = require('../middleware/auth');
+// Isang pinagmumulan ng panuntunan, nasa middleware/premium.js — kasama na
+// doon yung petsa ng pagtatapos ng subscription.
+const { hasPremiumAccess } = require('../middleware/premium');
 
 const router = express.Router();
-
-// Helper: may access ba to sa Premium content?
-async function hasPremiumAccess(user) {
-  if (!user) return false;
-  if (user.role === 'admin') return true;
-  const [rows] = await pool.query(
-    "SELECT subscription_type, subscription_status FROM user WHERE user_id = ?",
-    [user.user_id]
-  );
-  if (rows.length === 0) return false;
-  return rows[0].subscription_type === 'Premium' && rows[0].subscription_status === 'active';
-}
 
 // Public teaser list ng Premium catalog: title/summary/category lang, para sa
 // lahat ng module_type = 'Premium' (kasama admin-created), kahit hindi

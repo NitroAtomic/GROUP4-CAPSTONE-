@@ -3,6 +3,8 @@
 const express = require('express');
 const pool = require('../config/db');
 const { requireAuth, requireAdmin, optionalAuth } = require('../middleware/auth');
+// Iisa lang ang panuntunan sa Premium, nasa middleware/premium.js.
+const { hasPremiumAccess } = require('../middleware/premium');
 
 const router = express.Router();
 
@@ -18,14 +20,8 @@ router.get('/by-module/:slug', optionalAuth, async (req, res) => {
     const [modRows] = await pool.query('SELECT module_id, module_type FROM module WHERE slug = ?', [req.params.slug]);
     if (modRows.length === 0) return res.status(404).json({ error: 'Module not found.' });
 
-    if (modRows[0].module_type === 'Premium') {
-      const isAdmin = req.user && req.user.role === 'admin';
-      let premium = isAdmin;
-      if (!premium && req.user) {
-        const [u] = await pool.query('SELECT subscription_type, subscription_status FROM user WHERE user_id = ?', [req.user.user_id]);
-        premium = u[0] && u[0].subscription_type === 'Premium' && u[0].subscription_status === 'active';
-      }
-      if (!premium) return res.status(403).json({ error: 'This quiz requires a Premium subscription.' });
+    if (modRows[0].module_type === 'Premium' && !(await hasPremiumAccess(req.user))) {
+      return res.status(403).json({ error: 'This quiz requires a Premium subscription.' });
     }
 
     const [quizRows] = await pool.query('SELECT quiz_id, title FROM quiz WHERE module_id = ?', [modRows[0].module_id]);
@@ -71,15 +67,8 @@ router.post('/record-attempt', requireAuth, async (req, res) => {
        "total":10} at mamarkahang "completed" ang isang Premium module na
        403 naman sa kanya kapag binuksan — may progreso siya sa module na
        hindi niya mabubuksan. */
-    if (modRows[0].module_type === 'Premium' && req.user.role !== 'admin') {
-      const [u] = await conn.query(
-        'SELECT subscription_type, subscription_status FROM user WHERE user_id = ?',
-        [req.user.user_id]
-      );
-      const premium = u[0] && u[0].subscription_type === 'Premium' && u[0].subscription_status === 'active';
-      if (!premium) {
-        return res.status(403).json({ error: 'This quiz requires a Premium subscription.' });
-      }
+    if (modRows[0].module_type === 'Premium' && !(await hasPremiumAccess(req.user))) {
+      return res.status(403).json({ error: 'This quiz requires a Premium subscription.' });
     }
 
     const [quizRows] = await conn.query('SELECT quiz_id FROM quiz WHERE module_id = ?', [moduleId]);

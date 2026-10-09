@@ -17,6 +17,7 @@ const config = require('./../config/env');
 const retrieval = require('./../config/retrieval');
 const pool = require('../config/db');
 const { optionalAuth } = require('../middleware/auth');
+const { hasPremiumAccess } = require('../middleware/premium');
 
 const router = express.Router();
 
@@ -256,16 +257,12 @@ router.post('/', optionalAuth, async (req, res) => {
   let plan = 'Free';
   if (req.user) {
     try {
-      // Kasama ang subscription_status, tulad ng modules.js, quizzes.js at
-      // assessments.js. Kung type lang ang titingnan, ang account na Premium
-      // pero cancelled/expired ay nakakakuha pa rin ng Premium na sagot dito
-      // samantalang tinatanggihan siya sa lahat ng iba.
-      const [rows] = await pool.query(
-        'SELECT subscription_type, subscription_status FROM user WHERE user_id = ?',
-        [req.user.user_id]
-      );
-      if (rows[0] && rows[0].subscription_type === 'Premium'
-          && rows[0].subscription_status === 'active') plan = 'Premium';
+      // Parehong tseke ng modules.js, quizzes.js at assessments.js — iisa na
+      // silang pinagmumulan sa middleware/premium.js. Kung dito lang
+      // maiiwan ang lumang bersyon, ang account na expired na ay
+      // makakakuha pa rin ng bayad na sagot dito samantalang tinatanggihan
+      // siya sa lahat ng iba.
+      if (await hasPremiumAccess(req.user)) plan = 'Premium';
     } catch (err) {
       console.warn('[chat] hindi nakuha yung plan, Free muna:', err.message);
     }
