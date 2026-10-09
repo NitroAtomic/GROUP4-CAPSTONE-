@@ -22,7 +22,23 @@
 
 const config = require('./env');
 
-const API_BASE = 'https://api.paymongo.com/v2';
+/* Hindi pareho ng bersyon yung paggawa at yung pagkuha, at hindi ito
+   pagkakamali sa pagbasa:
+
+     gumawa  ->  POST  /v2/checkout_sessions
+     kunin   ->  GET   /v1/checkout_sessions/{id}
+
+   Sa dokumentasyon mismo ng PayMongo, v2 yung inirerekomenda para sa
+   bagong integration, pero v1 pa rin yung nakatala para sa pagkuha. Dati
+   v2 din yung ginagamit dito sa pagkuha -- at dahil walang ganoong
+   daan, bumabagsak yung confirm at hindi nabibigay yung Premium kahit
+   bayad na talaga.
+
+   Sinusubukan muna yung v1 na nakadokumento. Kung 404 yun, sinusubukan
+   yung v2, para hindi tayo masabit kung saan man nila ilagay ito. */
+const API_HOST = 'https://api.paymongo.com';
+const CREATE_PATH = '/v2/checkout_sessions';
+const RETRIEVE_VERSIONS = ['/v1', '/v2'];
 const REQUEST_TIMEOUT_MS = 20000;
 
 function isConfigured() {
@@ -40,7 +56,7 @@ async function request(method, path, body) {
     throw new Error('PAYMONGO_SECRET_KEY is not set.');
   }
 
-  const response = await fetch(`${API_BASE}${path}`, {
+  const response = await fetch(`${API_HOST}${path}`, {
     method,
     headers: {
       authorization: authHeader(),
@@ -85,7 +101,7 @@ async function createCheckoutSession({
   email,
   metadata,
 }) {
-  const payload = await request('POST', '/checkout_sessions', {
+  const payload = await request('POST', CREATE_PATH, {
     data: {
       attributes: {
         line_items: [{
@@ -119,7 +135,29 @@ async function createCheckoutSession({
    o payment_intent.status === 'succeeded'. Dalawa ang tinitingnan natin
    para hindi tayo nakasabit sa isang field lang. */
 async function retrieveCheckoutSession(sessionId) {
-  const payload = await request('GET', `/checkout_sessions/${encodeURIComponent(sessionId)}`);
+  const id = encodeURIComponent(sessionId);
+
+  let payload = null;
+  let lastError = null;
+
+  for (const version of RETRIEVE_VERSIONS) {
+    try {
+      payload = await request('GET', `${version}/checkout_sessions/${id}`);
+      break;
+    } catch (err) {
+      // 404 lang ang sinusundan ng susunod na subok -- ibig sabihin
+      // nun, mali yung daan. Yung 401 (maling key) o 500 ay totoong
+      // problema, kaya hindi na natin tinatago sa likod ng retry.
+      if (err.status === 404) {
+        lastError = err;
+        continue;
+      }
+      throw err;
+    }
+  }
+
+  if (!payload) throw lastError || new Error('Checkout session not found.');
+
   const attributes = payload?.data?.attributes || {};
 
   const payments = Array.isArray(attributes.payments) ? attributes.payments : [];
