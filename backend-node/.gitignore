@@ -14,3 +14,9 @@ npm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Yung CA certificate ng database provider. Hindi ito sikreto -- publiko
+# yung certificate ng isang CA -- pero iba ito kada provider at kada
+# environment, kaya mas mabuting kunin ng bawat isa yung sarili niya kaysa
+# may isang kopyang nauuna nang maluma dito sa repo.
+certs/
