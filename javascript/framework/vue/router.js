@@ -12,6 +12,7 @@ import PremiumSubscription from './pages/PremiumSubscription.vue'
 import CreateAccount from './pages/CreateAccount.vue'
 import Payment from './pages/Payment.vue'
 import PaymentConfirm from './pages/PaymentConfirm.vue'
+import NotFound from './pages/NotFound.vue'
 import Dashboard from './pages/Dashboard.vue'
 import Admin from './pages/Admin.vue'
 
@@ -182,6 +183,16 @@ const routes = [
     name: 'AssessmentResults',
     component: AssessmentResults,
     meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
+    /* Dapat ito ang HULI. Kung walang catch-all, yung maling address ay
+       walang tumutugmang route, kaya blangko lang ang <router-view /> --
+       header at footer na walang laman sa gitna, at walang paraan pabalik.
+       Hindi rin ito nahuhuli ng server: lahat ng hindi /api ay binibigyan
+       ng index.html, kaya walang 404 kahit kailan. */
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound
   }
 ]
 

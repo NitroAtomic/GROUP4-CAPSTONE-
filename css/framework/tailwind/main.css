@@ -369,4 +369,59 @@
       transform: none !important;
     }
   }
+
+  /* =========================
+     404
+
+     Walang catch-all dati, kaya yung maling address ay blangkong pahina
+     na walang paraan pabalik. Ito yung nakikita ngayon.
+     ========================= */
+
+  .notfound-page {
+    @apply flex items-center justify-center px-5 py-16;
+    min-height: 60vh;
+  }
+
+  .notfound-panel {
+    @apply w-full max-w-[34rem] rounded-xl border px-8 py-10 text-center max-[620px]:px-5;
+    background: var(--card-bg);
+    border-color: var(--border);
+  }
+
+  .notfound-code {
+    @apply text-[2.75rem] font-bold leading-none tracking-tight;
+    color: var(--accent-text);
+  }
+
+  .notfound-panel h1 {
+    @apply mt-3 text-[1.6rem] leading-tight;
+    color: var(--heading);
+  }
+
+  .notfound-panel p:not(.notfound-code) {
+    @apply mx-auto mt-3 max-w-[28rem] text-[15px] leading-relaxed;
+    color: var(--text);
+  }
+
+  .notfound-actions {
+    @apply mt-7 flex flex-wrap items-center justify-center gap-3;
+  }
+
+  .notfound-primary {
+    @apply inline-flex min-h-[44px] items-center rounded-[11px] border px-5 text-[15px];
+    background: linear-gradient(135deg, var(--teal), var(--navy));
+    border-color: transparent;
+    color: #fff;
+  }
+
+  .notfound-secondary {
+    @apply inline-flex min-h-[44px] items-center rounded-[11px] border px-5 text-[15px];
+    background: var(--card-bg);
+    border-color: var(--border);
+    color: var(--heading);
+  }
+
+  .notfound-secondary:hover {
+    background: var(--bg);
+  }
 }

@@ -45,6 +45,12 @@ export const useAuthStore = defineStore('auth', {
     isPremium: (state) => {
       const user = state.user
       if (!user) return false
+      /* Dumadaan yung admin, kapareho ng middleware/premium.js sa backend.
+         Kung dito lang mawawala yung tuntuning yun, hindi magkasundo yung
+         dalawa: papayagan ng server yung admin sa bayad na nilalaman, pero
+         ipapadala siya ng nav sa pricing page — aanyayahan yung sariling
+         administrator ng site na bumili ng subscription. */
+      if (user.role === 'admin') return true
       if (user.subscription_type !== 'Premium') return false
       if (user.subscription_status !== 'active') return false
       if (user.subscription_expires_at &&

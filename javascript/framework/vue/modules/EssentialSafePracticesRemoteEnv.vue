@@ -232,12 +232,35 @@
         </ul>
     </section>
 
-        <!-- =========================
-         AI Chatbot
+    <!-- =========================
+         End of the module
+
+         Walang pagsusulit ang module na ito -- wala talagang module-6
+         na tanungan, at sinadya yun. Pero wala ring pabalik na button
+         dito samantalang meron yung lima pang iba, kaya dito natatapos
+         yung daan: pinadadala ka ng Module 5 results papunta rito,
+         binabasa mo, tapos wala nang susunod.
          ========================= -->
 
+    <section class="module-quiz-section">
 
+        <h2>You&rsquo;ve finished the modules</h2>
 
+        <p>
+            This is the last of the six. There&rsquo;s no quiz for this one
+            &mdash; it&rsquo;s a reference you can come back to rather than
+            a test.
+        </p>
+
+        <router-link to="/dashboard" class="take-quiz-button">
+            See your progress
+        </router-link>
+
+        <router-link to="/" class="module-home-button">
+            Back to Homepage
+        </router-link>
+
+    </section>
 
   </main>
 </template>

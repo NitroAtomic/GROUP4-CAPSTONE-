@@ -1,7 +1,11 @@
 @layer components {
   .admin-page {
     @apply min-h-[calc(100vh-4rem)] py-8 px-4;
-    background: linear-gradient(180deg, rgba(11, 37, 69, 0.04), rgba(247, 249, 252, 1));
+    /* Naka-hardcode dati sa maputla: rgba(247, 249, 252, 1) sa ibaba.
+       Hindi ito nagpapalit sa dark mode, kaya naiiwang halos puti ang
+       pahina habang yung teksto ay pumuputi rin -- 1.11:1 yung "Admin
+       Portal". Token na ngayon, kaya sumusunod sa tema. */
+    background: linear-gradient(180deg, var(--bg), var(--card-bg));
   }
 
   .admin-container {

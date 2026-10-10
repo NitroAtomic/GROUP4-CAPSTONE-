@@ -66,10 +66,10 @@
               <p v-else>Modules you have not started yet. Take the assessment for a personalised list.</p>
             </div>
             <router-link
-              to="/assessment/question"
+              :to="assessmentPath"
               class="dashboard-assessment-link"
             >
-              {{ hasAssessment ? 'Retake assessment' : 'Take assessment' }}
+              {{ assessmentLinkLabel }}
             </router-link>
           </div>
 
@@ -117,10 +117,17 @@
           <p v-else-if="hasAssessment" class="dashboard-empty-copy">
             No weak areas recorded yet.
           </p>
-          <p v-else class="dashboard-empty-copy">
+          <p v-else-if="canTakeAssessment" class="dashboard-empty-copy">
             Weak areas come from the Awareness Assessment, not from module quizzes.
             <router-link to="/assessment/question">Take the assessment</router-link>
             to see which topics to focus on.
+          </p>
+          <!-- Sinasabi nang diretso na bayad ito, sa halip na ipadala siya
+               sa pricing page nang walang paliwanag. -->
+          <p v-else class="dashboard-empty-copy">
+            Weak areas come from the Awareness Assessment, which is part of
+            <router-link to="/premium-subscription">Premium</router-link>.
+            Your module quizzes are still scored and tracked above.
           </p>
         </section>
 

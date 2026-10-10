@@ -8,12 +8,15 @@ import { apiFetch } from '../lib/api.js'
 // Premium modules live under /modules/premium/, so a bare /modules/:slug
 // cannot be assumed to exist.
 const MODULE_ROUTE_BY_SLUG = {
-  'phishing': '/modules/quishing',
+  // Slug ang ipinapadala ng API, hindi category. Dati 'phishing' at
+  // 'safety-practices' ang nakasulat dito -- category at maling baybay --
+  // kaya hindi sila tumatama kahit kailan.
+  'quishing': '/modules/quishing',
   'spear-phishing': '/modules/spear-phishing',
   'smishing': '/modules/smishing',
   'vishing': '/modules/vishing',
   'pretexting': '/modules/pretexting',
-  'safety-practices': '/modules/essential-safe-practices-remote-environments',
+  'essential-safe-practices-remote-environments': '/modules/essential-safe-practices-remote-environments',
   'client-impersonation': '/modules/premium/client-impersonation',
   'client-data': '/modules/premium/client-data',
   'fake-recruiters': '/modules/premium/fake-recruiters',
@@ -49,6 +52,28 @@ export default {
   },
 
   computed: {
+    /* Yung assessment ay Premium. Dati, laging nakaturo sa
+       /assessment/question yung button dito kahit sino yung nakatingin --
+       at tahimik lang na ibinabalik ng guard sa pricing page yung Free
+       user. Pinindot niya ang "Take assessment", presyo ang nakita niya,
+       walang paliwanag.
+
+       Ganito na rin yung ginagawa sa Home.vue: naka-lock yung card kapag
+       hindi pa Premium. Dito, imbes na patay na padlock, sinasabi na lang
+       kung saan papunta. */
+    canTakeAssessment() {
+      return useAuthStore().isPremium
+    },
+
+    assessmentPath() {
+      return this.canTakeAssessment ? '/assessment/question' : '/premium-subscription'
+    },
+
+    assessmentLinkLabel() {
+      if (!this.canTakeAssessment) return 'Unlock with Premium'
+      return this.hasAssessment ? 'Retake assessment' : 'Take assessment'
+    },
+
     assessmentScoreLabel() {
       if (!this.assessment) return ''
       const { score, total } = this.assessment

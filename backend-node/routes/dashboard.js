@@ -3,6 +3,7 @@
 const express = require('express');
 const pool = require('../config/db');
 const { requireAuth } = require('../middleware/auth');
+const { hasPremiumAccess } = require('../middleware/premium');
 
 const router = express.Router();
 
@@ -75,6 +76,10 @@ router.get('/', requireAuth, async (req, res) => {
 // kung wala, yung mga module pa na hindi pa nasisimulan.
 router.get('/recommendations', requireAuth, async (req, res) => {
   try {
+    // Admin at Premium lang ang pwedeng makakita ng bayad na module dito.
+    // Nasa loob ng try: isang tawag ito sa database, at kung sasablay yun
+    // sa labas, bumabagsak ang buong route nang walang sumasalo.
+    const canSeePremium = await hasPremiumAccess(req.user);
     const [rows] = await pool.query(
       `SELECT weak_areas, by_topic FROM awarenessassessment
        WHERE user_id = ? ORDER BY assessment_id DESC LIMIT 1`,
@@ -106,6 +111,11 @@ router.get('/recommendations', requireAuth, async (req, res) => {
         `SELECT module_id, module_title, description, slug, category, module_type
          FROM module
          WHERE (category IN (${placeholders}) OR slug IN (${placeholders}))
+           /* Libre lang ang irerekomenda sa hindi Premium. Kung wala
+              ito, pwedeng lumabas ang bayad na module sa dashboard ng
+              Free user -- at ang card ay magdadala sa kanya sa pahinang
+              itataboy siya pabalik, yung dating butas. */
+           AND (? = 1 OR module_type = 'Free')
            AND NOT EXISTS (
              SELECT 1
              FROM progress p
@@ -113,7 +123,7 @@ router.get('/recommendations', requireAuth, async (req, res) => {
                AND p.module_id = module.module_id
                AND p.completion_status = 'completed'
            )`,
-        [...ranked, ...ranked, req.user.user_id]
+        [...ranked, ...ranked, canSeePremium ? 1 : 0, req.user.user_id]
       );
 
       if (modules.length) {

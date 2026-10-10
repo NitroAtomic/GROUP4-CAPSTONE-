@@ -42,7 +42,9 @@
   .quiz-results-breakdown {
     @apply mt-[62px] border rounded-xl overflow-hidden text-left;
     border-color: var(--border);
-    background: rgba(247, 249, 252, 0.5);
+    /* Dating naka-hardcode na halos puti, kaya lumiliwanag ang panel sa
+       dark mode habang pumuputi rin ang teksto: 2.94:1 ang "Standard". */
+    background: var(--bg);
   }
 
   .quiz-result-row {

@@ -47,8 +47,12 @@ const NEXT_MODULE = {
 
 // Frontend quiz ids → the module.slug values seeded in the database
 // (backend-node/sql/03-seed.sql). /api/quizzes/record-attempt resolves the
-// quiz by slug, so sending 'module-1' would 404. The Phishing module's
-// frontend page is Quishing.vue — the seed uses slug 'phishing'.
+// quiz by slug, so sending 'module-1' would 404.
+//
+// Yung seed ay slug 'quishing' na ang category ay 'phishing' — hindi
+// 'phishing' ang slug, gaya ng mali kong nasulat dito dati. Tama yung
+// mapa sa ibaba; yung komento ang mali, at paanyaya yun para may
+// "magtama" ng linyang tama naman.
 const RECORD_ATTEMPT_SLUGS = {
   // Yung module-1 ay Quishing, hindi 'phishing'. Dati magkaiba yung slug dito
   // at yung nasa database, kaya hindi kailanman mairekomenda yung Quishing
