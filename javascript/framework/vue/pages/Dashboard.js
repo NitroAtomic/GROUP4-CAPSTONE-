@@ -122,8 +122,13 @@ export default {
 
         // Load dashboard data from backend (apiFetch already throws on
         // non-2xx with the backend's own error message)
+        /* Dalawa ang kinukuha: yung progreso, at yung listahan ng module na
+           talagang nakikita ng taong ito. Ang server na ang humahati niyan --
+           anim kung Free, lahat kung Premium -- kaya hindi na kailangang
+           hulaan dito. */
         const data = await apiFetch('/api/dashboard', { token: authStore.token })
-        
+        const visibleModules = await this.loadVisibleModules()
+
         // Set user data
         this.firstName = authStore.user?.first_name || 'User'
         this.planLabel = authStore.user?.subscription_type || 'Free'
@@ -131,9 +136,24 @@ export default {
         this.hasAssessment = Boolean(data.assessment)
         this.assessment = data.assessment || null
 
-        // Calculate completed modules
-        this.completedModulesCount = data.progress?.filter(p => p.completion_status === 'completed').length || 0
-        this.totalModulesCount = 6 // Total free modules
+        /* Bilang ng natapos, laban sa bilang ng makikita.
+
+           Dati anim ang laging nasa ibaba ng bahagdan -- yung bilang ng
+           libreng module -- pero kasama sa itaas ang natapos na bayad na
+           module. Kaya ang isang Premium na tumapos ng lahat ay makakakita
+           ng "10/6". Hindi pa ito nahalata dahil iisa pa lang ang tapos.
+
+           Ngayon, pareho nang galing sa iisang listahan: yung mga module na
+           pinapayagan ng server para sa kaniya. */
+        const visibleSlugs = new Set(visibleModules.map(m => m.slug))
+        const completed = (data.progress || []).filter(
+          p => p.completion_status === 'completed' && visibleSlugs.has(p.slug)
+        )
+
+        this.completedModulesCount = visibleSlugs.size
+          ? completed.length
+          : (data.progress || []).filter(p => p.completion_status === 'completed').length
+        this.totalModulesCount = visibleSlugs.size || 6
 
         // Calculate average quiz score
         const quizHistory = data.quiz_history || []
@@ -193,6 +213,18 @@ export default {
         this.errorMessage = error.message
       } finally {
         this.isLoading = false
+      }
+    },
+
+    /* Kung pumalya ito, hindi dapat mawala ang buong dashboard: babalik
+       lang siya ng walang laman, at bumabalik ang dating anim sa ibaba. */
+    async loadVisibleModules() {
+      try {
+        const modules = await apiFetch('/api/modules', { token: useAuthStore().token })
+        return Array.isArray(modules) ? modules : []
+      } catch (error) {
+        console.error('Failed to load module list:', error)
+        return []
       }
     },
 
