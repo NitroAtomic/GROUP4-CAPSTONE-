@@ -9,7 +9,12 @@
   .module-video-section,
   .module-exercise-section,
   .module-completion-section,
-  .module-page > section:not(.module-quiz-section),
+/* '>' dati ito. Nakabalot na ngayon sa .premium-module-body yung aral na
+     galing sa server, kaya apo na ang mga section at tumitigil doon ang
+     direktang anak. Walang naka-nest na section kahit saan sa mga module,
+     kaya pareho ang ibig sabihin ng descendant dito -- bukod sa gumagana
+     na rin ito sa loob ng balot. */
+    .module-page section:not(.module-quiz-section),
   .module-page > article {
     @apply w-[min(1130px,calc(100%-40px))] ml-auto mr-auto;
   }
@@ -142,7 +147,7 @@
     @apply text-[17px] leading-[1.6];
   }
 
-  .module-page > section,
+  .module-page section,
   .module-page > article {
     @apply mt-9 mb-9;
   }
@@ -454,7 +459,7 @@
     .module-video-section,
     .module-exercise-section,
     .module-completion-section,
-    .module-page > section:not(.module-quiz-section),
+    .module-page section:not(.module-quiz-section),
     .module-page > article {
       @apply w-[calc(100%-32px)];
     }
@@ -493,13 +498,24 @@
     @apply pt-6;
   }
 
+  /* Balot lang para sa aral na galing sa server. Walang sariling anyo --
+     dapat katulad pa rin ng dati ang hitsura ng pahina. */
+  .premium-module-body {
+    display: contents;
+  }
+
   .premium-role-module > .premium-badge {
     display: flex;
     width: fit-content;
     margin-left: max(20px, calc((100% - 1130px) / 2));
   }
 
-  .premium-role-module > .module-key-details {
+  /* Dati '>' lang ito. Nakabalot na ngayon sa .premium-module-body yung
+     aral na galing sa server, kaya apo na ang .module-key-details at
+     hindi na tumatama ang direktang anak. Dalawa na ang saklaw para
+     gumana sa luma at bagong hugis. */
+  .premium-role-module > .module-key-details,
+  .premium-role-module > .premium-module-body > .module-key-details {
     @apply w-[min(1130px,calc(100%-40px))] mx-auto mb-6;
   }
 
@@ -536,7 +552,8 @@
   }
 
   @media (max-width: 768px) {
-    .premium-role-module > .module-key-details {
+    .premium-role-module > .module-key-details,
+    .premium-role-module > .premium-module-body > .module-key-details {
       @apply w-[calc(100%-32px)];
     }
 

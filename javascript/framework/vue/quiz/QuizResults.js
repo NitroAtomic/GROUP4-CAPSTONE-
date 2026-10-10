@@ -1,26 +1,13 @@
 import { useAuthStore } from '../stores/auth.js'
 import { apiFetch } from '../lib/api.js'
-import module1 from '../data/module-1.json'
-import module2 from '../data/module-2.json'
-import module3 from '../data/module-3.json'
-import module4 from '../data/module-4.json'
-import module5 from '../data/module-5.json'
-import course1 from '../data/course-1.json'
-import course2 from '../data/course-2.json'
-import course3 from '../data/course-3.json'
-import course4 from '../data/course-4.json'
 
-const MODULE_DATA = {
-  'module-1': module1,
-  'module-2': module2,
-  'module-3': module3,
-  'module-4': module4,
-  'module-5': module5,
-  'client-impersonation': course1,
-  'client-data': course2,
-  'fake-recruiters': course3,
-  'invoice-scams': course4
-}
+/* Wala nang tanungan na iniimport dito.
+
+   Dati naka-import lahat ng siyam para mabuo ang review -- kasama ang
+   apat na bayad, kaya napupunta sila sa pampublikong bundle na may mga
+   sagot. Hindi naman pala kailangan: lahat ng kailangan ng review
+   (tanong, piniling sagot, tamang sagot, paliwanag) ay nakatago na ng
+   QuizQuestion sa resulta bago pa dumating dito. */
 
 const MODULE_PATHS = {
   'module-1': '/modules/quishing',
@@ -102,25 +89,16 @@ export default {
 
     reviewItems() {
       if (!this.results) return []
-      const data = MODULE_DATA[this.moduleId]
-      const questions = (data && data.questions) || []
       const storedReview = Array.isArray(this.results.review) ? this.results.review : []
-      const storedById = Object.fromEntries(storedReview.map((item) => [String(item.id), item]))
-      const sourceQuestions = storedReview.length
-        ? storedReview
-            .map((item) => questions.find((question) => String(question.id) === String(item.id)))
-            .filter(Boolean)
-        : questions
 
-      return sourceQuestions.map((question) => {
-        const stored = storedById[String(question.id)] || {}
+      return storedReview.map((stored) => {
         return {
-          id: question.id,
-          questionText: question.questionText,
-          questionType: question.questionType,
+          id: stored.id,
+          questionText: stored.questionText || '',
+          questionType: stored.questionType || 'standard',
           selectedAnswerText: stored.selectedAnswerText || '',
-          correctAnswerText: this.formatAnswer(question, question.correctAnswer),
-          explanation: question.explanation || stored.explanation || '',
+          correctAnswerText: stored.correctAnswerText || '',
+          explanation: stored.explanation || '',
           isCorrect: Boolean(stored.isCorrect),
           attemptRecorded: stored.attemptRecorded !== false && Boolean(stored.selectedAnswerText)
         }

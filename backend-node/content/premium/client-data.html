@@ -1,33 +1,4 @@
-<template>
-  <div class="module-page premium-role-module">
-    <!-- Premium Badge -->
-    <div class="premium-badge">
-      <svg class="ui-icon premium-badge-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
-      <span>Premium Course</span>
-    </div>
-
-    <!-- Module Header -->
-    <header class="module-header page-band">
-      <nav>
-        <router-link to="/" class="home-breadcrumb-link">
-          <svg class="ui-icon home-breadcrumb-icon" aria-hidden="true"><use href="#ui-icon-home" /></svg>
-          <span>Home</span>
-        </router-link>
-        <span> / </span>
-        <router-link to="/dashboard">Dashboard</router-link>
-        <span> / </span>
-        <!-- Yung pamagat ay yung LAYUNIN, yung laman ay yung PARAAN. Hindi
-             sila magkasalungat: yung pangunahing dahilan kung bakit
-             nalalantad ang client data ng isang VA ay may nagpanggap na
-             amo. Dati, "Executive Impersonation" lang ang nakalagay dito,
-             kaya iba ang pangalan sa dashboard at iba ang nasa pahina. -->
-        <span class="module-breadcrumb-current">Secure Client Data Handling</span>
-      </nav>
-      <h1>Secure Client Data Handling</h1>
-      <p>You hold the client files, the passwords and the access. The usual way all three get exposed is someone posing as your boss &mdash; here is how that works, and the one check that stops it whatever rank is on the message.</p>
-    </header>
-
-    <p class="module-key-details">
+<p class="module-key-details">
       <strong>Who this is for:</strong> virtual assistants, executive assistants, remote administrative coordinators, and project support specialists.
     </p>
 
@@ -122,13 +93,3 @@
     </section>
 
     <!-- Quiz Section -->
-    <section class="module-quiz-section">
-      <h2>Course Assessment</h2>
-      <p>Test your knowledge with the 10-question assessment for this course.</p>
-      <button class="take-quiz-button" @click="startQuiz">Take Assessment</button>
-      <router-link to="/" class="module-home-button">Back to Homepage</router-link>
-    </section>
-  </div>
-</template>
-
-<script src="./ClientData.js"></script>

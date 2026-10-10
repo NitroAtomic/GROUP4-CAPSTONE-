@@ -9,7 +9,12 @@
   .module-video-section,
   .module-exercise-section,
   .module-completion-section,
-  .module-page > section:not(.module-quiz-section),
+/* '>' dati ito. Nakabalot na ngayon sa .premium-module-body yung aral na
+     galing sa server, kaya apo na ang mga section at tumitigil doon ang
+     direktang anak. Walang naka-nest na section kahit saan sa mga module,
+     kaya pareho ang ibig sabihin ng descendant dito -- bukod sa gumagana
+     na rin ito sa loob ng balot. */
+    .module-page section:not(.module-quiz-section),
   .module-page > article {
     @apply w-[min(1130px,calc(100%-40px))] ml-auto mr-auto;
   }
@@ -146,12 +151,12 @@
     @apply text-[17px] leading-[1.6];
   }
 
-  .module-page > section,
+  .module-page section,
   .module-page > article {
     @apply mt-9 mb-9;
   }
 
-  main.module-page > section:not(.module-quiz-section):not(.module-video-section):not(.module-exercise-section):not(.module-completion-section),
+  main.module-page section:not(.module-quiz-section):not(.module-video-section):not(.module-exercise-section):not(.module-completion-section),
   main.module-page > article {
     @apply p-6 border rounded-xl;
     background: var(--card-bg);
@@ -160,7 +165,7 @@
   }
 
   @media (max-width: 480px) {
-    main.module-page > section:not(.module-quiz-section):not(.module-video-section):not(.module-exercise-section):not(.module-completion-section),
+    main.module-page section:not(.module-quiz-section):not(.module-video-section):not(.module-exercise-section):not(.module-completion-section),
     main.module-page > article {
       @apply p-[18px];
     }

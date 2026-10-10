@@ -1,27 +1,32 @@
 // Static import of all 5 built modules' question data.
 import examLock from '../lib/examLock.js'
+import { useAuthStore } from '../stores/auth.js'
+import { apiFetch } from '../lib/api.js'
 // Vite bundles .json imports automatically — no extra config needed.
 import module1 from '../data/module-1.json'
 import module2 from '../data/module-2.json'
 import module3 from '../data/module-3.json'
 import module4 from '../data/module-4.json'
 import module5 from '../data/module-5.json'
-import course1 from '../data/course-1.json'
-import course2 from '../data/course-2.json'
-import course3 from '../data/course-3.json'
-import course4 from '../data/course-4.json'
 
+/* Yung libreng tanungan lang ang nakasama sa bundle.
+
+   Yung apat na bayad (dating course-1.json … course-4.json) ay nasa
+   server na at hinihingi sa GET /api/modules/:slug/quiz, na may
+   kaparehong tseke ng bayad. Dati silang naka-import dito nang diretso,
+   kaya napupunta sila sa pangunahing bundle kasama ang mga tamang sagot
+   -- mababasa ng kahit sino, bayad man o hindi. */
 const MODULE_DATA = {
   'module-1': module1,
   'module-2': module2,
   'module-3': module3,
   'module-4': module4,
-  'module-5': module5,
-  'client-impersonation': course1,
-  'client-data': course2,
-  'fake-recruiters': course3,
-  'invoice-scams': course4
+  'module-5': module5
 }
+
+const PREMIUM_QUIZ_SLUGS = new Set([
+  'client-impersonation', 'client-data', 'fake-recruiters', 'invoice-scams'
+])
 
 // Fisher-Yates shuffle — randomizes ORDER only.
 function shuffleOrder(array) {
@@ -45,7 +50,8 @@ export default {
 
   data() {
     return {
-      moduleData: null,        // the loaded module-N.json (name, totals, etc.)
+      moduleData: null,        // the loaded question bank (name, totals, etc.)
+      loadError: '',           // kung bakit walang tanong na lumabas
       shuffledQuestions: [],   // the 10 questions, order randomized for this attempt
       currentIndex: 0,         // which question (0-9) is currently shown
       answers: {},             // { [questionId]: 'b' }  or  { [questionId]: ['a','b'] }
@@ -147,12 +153,28 @@ export default {
   },
 
   methods: {
-    loadModule() {
-      const data = MODULE_DATA[this.moduleId]
+    async loadModule() {
+      this.loadError = ''
+      let data = MODULE_DATA[this.moduleId]
+
+      if (!data && PREMIUM_QUIZ_SLUGS.has(this.moduleId)) {
+        try {
+          data = await apiFetch(`/api/modules/${this.moduleId}/quiz`, {
+            token: useAuthStore().token,
+          })
+        } catch (error) {
+          this.loadError = error.message
+          return
+        }
+      }
+
       if (!data) {
-        console.error(`No question data found for "${this.moduleId}"`)
+        // Dati, console.error lang ito at blangkong pahina ang nakikita
+        // ng tao. Ngayon may sinasabi na.
+        this.loadError = 'This quiz could not be found.'
         return
       }
+
       this.moduleData = data
       const count = data.questionsPerAttempt || 10
       this.shuffledQuestions = selectRandomQuestions(data.questions, count)

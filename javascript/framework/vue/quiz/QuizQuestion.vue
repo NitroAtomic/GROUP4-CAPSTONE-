@@ -18,7 +18,16 @@
       </div>
 
       <!-- Current Question -->
-      <div v-if="currentQuestion" class="quiz-question-content">
+      <!-- Kapag hindi nakuha ang tanungan: may sinasabi, hindi
+           blangkong pahina. -->
+      <div v-if="loadError" class="quiz-question-content">
+        <p class="form-error-message">{{ loadError }}</p>
+        <div class="quiz-navigation">
+          <router-link to="/dashboard" class="quiz-navigation-button">Back to dashboard</router-link>
+        </div>
+      </div>
+
+      <div v-else-if="currentQuestion" class="quiz-question-content">
 
         <span class="quiz-question-type">
           {{ currentQuestion.questionType === 'scenario-based' ? 'Scenario-Based' : 'Standard' }}

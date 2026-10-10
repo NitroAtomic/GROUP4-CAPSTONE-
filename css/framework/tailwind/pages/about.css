@@ -78,13 +78,10 @@
     box-shadow: 0 10px 20px rgba(11, 37, 69, 0.04);
   }
 
-  /* Wrapper is the JS/CSS hook — icon assets are temporary (Handoff Notes). */
+  /* Sprite na ang laman, hindi na PNG, kaya hindi na kailangang
+     pilitin ang sukat dito -- ang chip na ang may hawak noon. */
   .about-audience-icon {
-    @apply w-10 h-10;
-  }
-
-  .about-audience-icon img {
-    @apply w-full h-full object-contain block;
+    @apply flex;
   }
 
   .about-audience-card h3 {

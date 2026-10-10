@@ -136,30 +136,23 @@ const routes = [
     component: () => import('./pages/PremiumModules.vue'),
     meta: { requiresAuth: true, requiresPremium: true }
   },
-  {
-    path: '/modules/premium/client-impersonation',
-    name: 'ClientImpersonation',
-    component: () => import('./modules/premium/ClientImpersonation.vue'),
-    meta: { requiresAuth: true, requiresPremium: true }
-  },
-  {
-    path: '/modules/premium/client-data',
-    name: 'ClientData',
-    component: () => import('./modules/premium/ClientData.vue'),
-    meta: { requiresAuth: true, requiresPremium: true }
-  },
-  {
-    path: '/modules/premium/fake-recruiters',
-    name: 'FakeRecruiters',
-    component: () => import('./modules/premium/FakeRecruiters.vue'),
-    meta: { requiresAuth: true, requiresPremium: true }
-  },
-  {
-    path: '/modules/premium/invoice-scams',
-    name: 'InvoiceScams',
-    component: () => import('./modules/premium/InvoiceScams.vue'),
-    meta: { requiresAuth: true, requiresPremium: true }
-  },
+  /* Isang component na lang ang apat na role-based module.
+
+     Dati tig-isa sila ng .vue na may buong aral sa loob — at yun ay
+     naipapadala bilang pampublikong JavaScript, kaya mababasa nang
+     walang bayad. Ang moduleSlug na nasa meta ang nagsasabi sa shell
+     kung aling aral ang hihingin sa server. */
+  ...[
+    ['client-impersonation', 'ClientImpersonation'],
+    ['client-data',          'ClientData'],
+    ['fake-recruiters',      'FakeRecruiters'],
+    ['invoice-scams',        'InvoiceScams'],
+  ].map(([slug, name]) => ({
+    path: `/modules/premium/${slug}`,
+    name,
+    component: () => import('./modules/premium/PremiumModule.vue'),
+    meta: { requiresAuth: true, requiresPremium: true, moduleSlug: slug }
+  })),
   // Quiz routes
   {
     path: '/quiz/:moduleId/question',

@@ -27,25 +27,36 @@
       <section class="about-audience-section">
         <h2>Who it's for</h2>
 
+        <!-- Sprite icons, hindi PNG. Yung dating larawan ng Freelancers
+             ay itim na guhit sa malinaw na background: nawawala siya sa
+             dark mode, at ibang-iba rin ang estilo niya sa dalawa pang
+             may kulay. Yung sprite ay sumusunod sa kulay ng teksto, kaya
+             kita sa dalawang tema at pareho ng anyo ng buong site. -->
         <div class="about-audience-grid">
 
           <article class="about-audience-card">
             <div class="about-audience-icon" aria-hidden="true">
-              <img src="/images/icons/audience-remote-workers.png" alt="">
+              <span class="module-icon-chip">
+                <svg class="ui-icon"><use href="#ui-icon-user" /></svg>
+              </span>
             </div>
             <h3>Remote workers</h3>
           </article>
 
           <article class="about-audience-card">
             <div class="about-audience-icon" aria-hidden="true">
-              <img src="/images/icons/audience-freelancers.png" alt="">
+              <span class="module-icon-chip">
+                <svg class="ui-icon"><use href="#ui-icon-identity" /></svg>
+              </span>
             </div>
             <h3>Freelancers</h3>
           </article>
 
           <article class="about-audience-card">
             <div class="about-audience-icon" aria-hidden="true">
-              <img src="/images/icons/audience-virtual-assistants.png" alt="">
+              <span class="module-icon-chip">
+                <svg class="ui-icon"><use href="#ui-icon-user-shield" /></svg>
+              </span>
             </div>
             <h3>Virtual assistants</h3>
           </article>

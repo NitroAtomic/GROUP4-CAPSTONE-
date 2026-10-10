@@ -1,6 +1,8 @@
 // routes/modules.js
 // IamAtomic — Group 4 Capstone 2, SE-AWARE backend
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const pool = require('../config/db');
 const { optionalAuth, requireAdmin } = require('../middleware/auth');
 // Isang pinagmumulan ng panuntunan, nasa middleware/premium.js — kasama na
@@ -45,6 +47,107 @@ router.get('/', optionalAuth, async (req, res) => {
 });
 
 // Kunin yung isang module by slug. 403 kung Premium tapos hindi entitled.
+// ------------------------------------------------------------
+// GET /api/modules/:slug/content
+//
+// Yung mismong aral ng bayad na module.
+//
+// BAKIT HINDI NA LANG ITO NASA VUE COMPONENT, GAYA NG DATI
+//
+// Yung apat na role-based module ay nakasulat dati sa loob mismo ng
+// kanilang .vue file. Yun ay naipapadala palabas bilang ordinaryong
+// JavaScript -- dist/assets/InvoiceScams-*.js -- at yung pangalan ng
+// file ay nakalista sa pangunahing bundle na dina-download ng bawat
+// bisita. Ibig sabihin: mababasa ng kahit sino ang buong bayad na aral
+// nang walang account, walang bayad.
+//
+// Kaya tama yung 403 ng API noon, pero wala ring saysay: nakalimbag na
+// pala sa labas yung mismong laman na binabantayan nito.
+//
+// Ngayon, nasa server ang aral at dito lang dumadaan. Ang natitira sa
+// browser ay yung balangkas lang: pamagat, breadcrumb, button papuntang
+// pagsusulit. Walang aral doon.
+// ------------------------------------------------------------
+const PREMIUM_CONTENT_DIR = path.join(__dirname, '..', 'content', 'premium');
+const PREMIUM_QUIZ_DIR = path.join(PREMIUM_CONTENT_DIR, 'quiz');
+
+router.get('/:slug/content', optionalAuth, async (req, res) => {
+  const slug = String(req.params.slug);
+
+  // Pangalan ng file mula sa URL: kailangang mahigpit, kundi pwedeng
+  // humingi ng "../../config/env" at makakuha ng ibang file.
+  if (!/^[a-z0-9-]{1,64}$/.test(slug)) {
+    return res.status(404).json({ error: 'Module not found.' });
+  }
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT module_type FROM module WHERE slug = ?', [slug]
+    );
+    if (rows.length === 0) return res.status(404).json({ error: 'Module not found.' });
+
+    if (rows[0].module_type === 'Premium' && !(await hasPremiumAccess(req.user))) {
+      return res.status(403).json({ error: 'This module requires a Premium subscription.' });
+    }
+
+    const file = path.join(PREMIUM_CONTENT_DIR, `${slug}.html`);
+    // Pangalawang hadlang, kung sakaling may nakalusot sa itaas.
+    if (!file.startsWith(PREMIUM_CONTENT_DIR + path.sep)) {
+      return res.status(404).json({ error: 'Module not found.' });
+    }
+    if (!fs.existsSync(file)) {
+      return res.status(404).json({ error: 'No content for this module yet.' });
+    }
+
+    res.json({ slug, html: fs.readFileSync(file, 'utf8') });
+  } catch (err) {
+    console.error('[modules] content failed:', err.message);
+    res.status(500).json({ error: 'Failed to load this module.' });
+  }
+});
+
+// ------------------------------------------------------------
+// GET /api/modules/:slug/quiz
+//
+// Yung tanungan ng bayad na module. Dating naka-import nang diretso sa
+// frontend (course-1.json … course-4.json), kaya naipapadala sa
+// pangunahing bundle — kasama ang mga tamang sagot at paliwanag,
+// mababasa ng kahit sino.
+//
+// Dito na lang dumadaan ngayon, sa likod ng parehong tseke ng bayad.
+//
+// Tandaan: dumarating pa rin ang sagot sa browser ng Premium user, kasi
+// doon mismo iskinocore ang pagsusulit. Ang natapos dito ay yung
+// pagkakalantad sa HINDI nagbabayad.
+// ------------------------------------------------------------
+router.get('/:slug/quiz', optionalAuth, async (req, res) => {
+  const slug = String(req.params.slug);
+  if (!/^[a-z0-9-]{1,64}$/.test(slug)) {
+    return res.status(404).json({ error: 'Quiz not found.' });
+  }
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT module_type FROM module WHERE slug = ?', [slug]
+    );
+    if (rows.length === 0) return res.status(404).json({ error: 'Quiz not found.' });
+
+    if (rows[0].module_type === 'Premium' && !(await hasPremiumAccess(req.user))) {
+      return res.status(403).json({ error: 'This quiz requires a Premium subscription.' });
+    }
+
+    const file = path.join(PREMIUM_QUIZ_DIR, `${slug}.json`);
+    if (!file.startsWith(PREMIUM_QUIZ_DIR + path.sep) || !fs.existsSync(file)) {
+      return res.status(404).json({ error: 'Quiz not found.' });
+    }
+
+    res.json(JSON.parse(fs.readFileSync(file, 'utf8')));
+  } catch (err) {
+    console.error('[modules] quiz failed:', err.message);
+    res.status(500).json({ error: 'Failed to load this quiz.' });
+  }
+});
+
 router.get('/:slug', optionalAuth, async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM module WHERE slug = ?', [req.params.slug]);
