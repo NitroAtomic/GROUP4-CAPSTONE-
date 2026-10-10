@@ -105,13 +105,26 @@
           </div>
 
           <div v-if="hasAssessment && weakAreas.length" class="dashboard-weak-areas-list">
+            <!-- Hindi na "Needs improvement" lang. Bawat isa ay may
+                 aktwal na iskor at tuwirang daan papunta sa module na
+                 tungkol doon, para may masusunod agad. -->
             <div
               v-for="area in weakAreas"
-              :key="area.topic"
+              :key="area.slug || area.topic"
               class="dashboard-weak-area"
             >
-              <span>{{ area.topic }}</span>
-              <span class="dashboard-score-badge">{{ area.scoreLabel }}</span>
+              <div class="dashboard-weak-area-main">
+                <span class="dashboard-weak-area-topic">{{ area.topic }}</span>
+                <span class="dashboard-weak-area-score">{{ area.scoreLabel }}</span>
+              </div>
+              <router-link
+                v-if="area.modulePath"
+                :to="area.modulePath"
+                class="dashboard-weak-area-action"
+              >
+                Review {{ area.moduleTitle }}
+              </router-link>
+              <span v-else class="dashboard-score-badge">Needs improvement</span>
             </div>
           </div>
           <p v-else-if="hasAssessment" class="dashboard-empty-copy">

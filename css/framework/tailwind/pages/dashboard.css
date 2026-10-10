@@ -216,4 +216,42 @@
   .form-error-message {
     @apply mt-4 text-[var(--bad-text)] text-[16px];
   }
+
+  /* =========================
+     Weak areas
+
+     Dati isang linya lang: pangalan ng paksa at "Needs improvement".
+     Ngayon may iskor at may pindutan papunta sa kaukulang module.
+     ========================= */
+
+  .dashboard-weak-area-main {
+    @apply flex min-w-0 flex-col gap-0.5;
+  }
+
+  .dashboard-weak-area-topic {
+    @apply font-semibold;
+    color: var(--heading);
+  }
+
+  .dashboard-weak-area-score {
+    @apply text-[13px];
+    color: var(--muted);
+  }
+
+  .dashboard-weak-area-action {
+    @apply inline-flex shrink-0 items-center rounded-lg border px-3 py-1.5 text-[13px] font-semibold;
+    background: var(--card-bg);
+    border-color: var(--border);
+    color: var(--accent-text);
+  }
+
+  .dashboard-weak-area-action:hover {
+    background: var(--bg);
+  }
+
+  @media (max-width: 560px) {
+    .dashboard-weak-area {
+      @apply flex-col items-start gap-2.5;
+    }
+  }
 }

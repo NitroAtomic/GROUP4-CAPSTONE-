@@ -7,6 +7,32 @@ import { apiFetch } from '../lib/api.js'
 // is the Quishing component; Safety Practices uses a longer route name), and
 // Premium modules live under /modules/premium/, so a bare /modules/:slug
 // cannot be assumed to exist.
+/* Saan papunta ang taong mahina sa isang paksa.
+
+   Kapareho ng mga katumbas na nasa backend (routes/dashboard.js):
+   "phishing" ang itinatala ng assessment, pero "quishing" ang module. */
+const TOPIC_MODULE_PATH = {
+  'phishing': '/modules/quishing',
+  'quishing': '/modules/quishing',
+  'spear-phishing': '/modules/spear-phishing',
+  'smishing': '/modules/smishing',
+  'vishing': '/modules/vishing',
+  'pretexting': '/modules/pretexting',
+  'safe-practices': '/modules/essential-safe-practices-remote-environments',
+  'safety-practices': '/modules/essential-safe-practices-remote-environments'
+}
+
+const TOPIC_MODULE_TITLE = {
+  'phishing': 'Quishing',
+  'quishing': 'Quishing',
+  'spear-phishing': 'Spear Phishing',
+  'smishing': 'Smishing',
+  'vishing': 'Vishing',
+  'pretexting': 'Pretexting',
+  'safe-practices': 'Essential Safe Practices',
+  'safety-practices': 'Essential Safe Practices'
+}
+
 const MODULE_ROUTE_BY_SLUG = {
   // Slug ang ipinapadala ng API, hindi category. Dati 'phishing' at
   // 'safety-practices' ang nakasulat dito -- category at maling baybay --
@@ -121,14 +147,33 @@ export default {
         // lives in the module table. Older stored results may be objects
         // ({topic, percentage}) — tolerate both, then title-case for display.
         if (this.hasAssessment && data.assessment?.weak_areas) {
+          /* Dati "Needs improvement" lang ang nakasulat sa bawat isa --
+             alam mo na mahina ka, pero hindi kung gaano, at hindi kung
+             ano ang gagawin. Nandiyan naman na ang bilang (by_topic) at
+             may module para sa bawat paksa; hindi lang ginagamit. */
+          const byTopic = data.assessment.by_topic || {}
+
           this.weakAreas = data.assessment.weak_areas.map(area => {
-            const slug = typeof area === 'string' ? area : area && area.topic
+            const slug = String((typeof area === 'string' ? area : area && area.topic) || '')
+            const tally = byTopic[slug]
+            const hasTally = tally && Number(tally.total) > 0
+            const percent = hasTally
+              ? Math.round((Number(tally.correct) / Number(tally.total)) * 100)
+              : null
+
             return {
-              topic: String(slug || '')
+              slug,
+              topic: slug
                 .split('-')
                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' '),
-              scoreLabel: 'Needs improvement'
+              // Yung aktwal na nangyari, hindi yung panlahatang label.
+              scoreLabel: hasTally
+                ? `${tally.correct} of ${tally.total} correct`
+                : 'Needs improvement',
+              percent,
+              modulePath: TOPIC_MODULE_PATH[slug] || null,
+              moduleTitle: TOPIC_MODULE_TITLE[slug] || null
             }
           })
         }
