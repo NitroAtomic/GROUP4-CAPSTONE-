@@ -10,7 +10,7 @@
      ========================= */
 
   .dashboard-page {
-    @apply pt-[18px] px-5 pb-10;
+    @apply pt-10 px-5 pb-14 max-[700px]:pt-7;
   }
 
   .dashboard-container {
@@ -22,19 +22,40 @@
      Dashboard Heading
      ========================= */
 
+  /* Nasa gitna ang pambungad. Dati nakatapat sa kaliwa habang ang mga
+     card sa ibaba ay pantay-pantay ang pagkakahati sa buong lapad, kaya
+     parang hindi magkasama ang dalawa. */
+  .dashboard-heading {
+    @apply text-center;
+  }
+
   .dashboard-heading h1 {
-    @apply text-[40px] leading-[1.05] max-[700px]:text-[34px];
+    @apply text-[40px] leading-[1.05] font-bold max-[700px]:text-[32px];
     color: var(--heading);
   }
 
   .dashboard-heading p {
-    @apply mt-0.5 text-[20px];
+    @apply mt-1.5 text-[18px];
     color: var(--muted);
   }
 
+  /* Dalawang tatak sa halip na isang mahabang linyang may tuldok sa gitna. */
   .dashboard-account-status {
-    @apply mt-2 text-[16px];
+    @apply mt-3.5 flex flex-wrap items-center justify-center gap-2;
+  }
+
+  .dashboard-status-pill {
+    @apply inline-flex items-center py-1 px-3.5 border rounded-full text-[13px] font-semibold;
+    background: var(--card-bg);
+    border-color: var(--border);
     color: var(--muted);
+  }
+
+  /* Ang plano lang ang may kulay. Dalawang may kulay, wala nang nangunguna. */
+  .dashboard-status-pill-plan {
+    background: rgba(245, 166, 35, 0.12);
+    border-color: rgba(245, 166, 35, 0.45);
+    color: var(--warn-text);
   }
 
 
@@ -47,30 +68,54 @@
      on a wide screen, two-by-two in the middle, stacked on a phone - never a
      row with one card in it. */
   .dashboard-summary-grid {
-    @apply mt-2 grid grid-cols-4 gap-5 max-[1200px]:grid-cols-2 max-[1200px]:gap-[22px] max-[850px]:gap-3.5 max-[700px]:grid-cols-1;
+    @apply mt-6 grid grid-cols-4 gap-4 max-[1200px]:grid-cols-2 max-[1200px]:gap-[18px] max-[850px]:gap-3.5 max-[700px]:grid-cols-1;
   }
 
+  /* Nasa gitna ang laman ng bawat card, at pantay ang taas ng apat kahit
+     may paliwanag sa ilalim ang iba. */
   .dashboard-summary-card {
-    @apply min-h-[104px] py-[18px] px-[30px] border rounded-xl;
+    @apply min-h-[120px] h-full py-5 px-4 border rounded-2xl flex flex-col items-center justify-start text-center;
     background: var(--card-bg);
     border-color: var(--border);
     box-shadow: 0 10px 20px rgba(11, 37, 69, 0.04);
   }
 
+  /* Isa-isa na lang ang card sa telepono, kaya wala nang pinapantayan:
+     nasa gitna na ulit ang laman sa halip na may puwang sa ilalim. */
+  @media (max-width: 700px) {
+    .dashboard-summary-card {
+      @apply min-h-[96px] justify-center;
+    }
+  }
+
+  /* Maliit at nakaangat: ang numero ang dapat unang makita, hindi ang
+     pangalan nito. Sa 18px dati, dalawang linya ang "Modules completed"
+     kaya mas mababa ang 1/6 kaysa sa katabing numero. */
   .dashboard-summary-label {
-    @apply text-[18px];
+    @apply text-[11px] font-semibold uppercase tracking-[0.09em];
     color: var(--muted);
   }
 
   .dashboard-summary-value {
-    @apply mt-2 text-[30px] font-bold;
+    @apply mt-2.5 text-[34px] font-bold leading-none;
     color: var(--heading);
+  }
+
+  /* Hindi kasingtingkad ng mga numero ang pamatlang. */
+  .dashboard-summary-of {
+    @apply font-normal;
+    color: var(--muted);
+  }
+
+  /* Para sa salita, hindi numero: kasya ang "Intermediate" sa card. */
+  .dashboard-summary-value-word {
+    @apply text-[22px] leading-tight;
   }
 
   /* Used under the awareness level; had no rule, so it rendered at body size
      and competed with the figure above it. */
   .dashboard-summary-note {
-    @apply mt-1 text-[14px];
+    @apply mt-2 text-[12px] leading-snug;
     color: var(--muted);
   }
 
@@ -79,17 +124,19 @@
      Shared Dashboard Section
      ========================= */
 
+  /* Magkadikit dati ang mga bahagi (16px), kaya parang isang mahabang
+     listahan ang buong pahina. */
   .dashboard-section {
-    @apply mt-4;
+    @apply mt-10;
   }
 
   .dashboard-section-heading h2 {
-    @apply text-[29px] leading-[1.1] font-bold;
+    @apply text-[26px] leading-[1.1] font-bold;
     color: var(--heading);
   }
 
   .dashboard-section-heading p {
-    @apply mt-px text-[19px];
+    @apply mt-1 text-[16px];
     color: var(--muted);
   }
 
@@ -107,34 +154,38 @@
      ========================= */
 
   .dashboard-recommendations-grid {
-    @apply mt-2.5 grid grid-cols-3 gap-[30px] max-[850px]:gap-3.5 max-[700px]:grid-cols-1;
+    @apply mt-4 grid grid-cols-3 gap-4 max-[850px]:gap-3.5 max-[700px]:grid-cols-1;
   }
 
+  /* justify-center ang dati, kaya iba-iba ang taas ng tatak na
+     "Recommended" sa tatlong card -- nakasunod sa haba ng teksto sa ilalim
+     nito. Mula sa itaas na ngayon, kaya magkapantay sila. */
   .dashboard-recommendation-card {
-    @apply min-h-[104px] py-[18px] px-[26px] border rounded-xl flex flex-col justify-center text-inherit;
+    @apply min-h-[104px] h-full py-[18px] px-[22px] border rounded-2xl flex flex-col items-start justify-start text-inherit;
     background: var(--card-bg);
     border-color: var(--border);
+    box-shadow: 0 10px 20px rgba(11, 37, 69, 0.04);
   }
 
   .dashboard-recommended-label {
-    @apply w-fit mb-1 py-0.5 px-1.5 border rounded-full text-[9px];
+    @apply w-fit mb-2.5 py-0.5 px-2 border rounded-full text-[10px] font-semibold uppercase tracking-[0.07em];
     background: rgba(27, 127, 121, 0.12);
-    border-color: rgba(27, 127, 121, 0.2);
-    color: var(--heading);
+    border-color: rgba(27, 127, 121, 0.3);
+    color: var(--accent-text);
   }
 
   .dashboard-recommendation-card h3 {
-    @apply text-[19px] leading-[1.1];
+    @apply text-[18px] font-bold leading-snug;
     color: var(--heading);
   }
 
   .dashboard-recommendation-card p {
-    @apply mt-px text-[17px];
+    @apply mt-1.5 text-[15px] leading-snug;
     color: var(--muted);
   }
 
   .dashboard-empty-copy {
-    @apply mt-2 text-[17px] text-[var(--muted)];
+    @apply mt-4 text-[16px] text-[var(--muted)];
   }
 
 
@@ -143,11 +194,11 @@
      ========================= */
 
   .dashboard-weak-areas-list {
-    @apply mt-2 flex flex-col gap-2;
+    @apply mt-4 flex flex-col gap-2.5;
   }
 
   .dashboard-weak-area {
-    @apply min-h-[46px] py-0 px-[22px] border rounded-[14px] flex items-center justify-between text-[18px] font-semibold max-[480px]:text-[15px];
+    @apply min-h-[56px] py-2.5 px-[22px] border rounded-[14px] flex items-center justify-between text-[18px] font-semibold max-[480px]:text-[15px];
     border-color: var(--border);
     background: var(--card-bg);
     color: var(--heading);
@@ -166,13 +217,13 @@
      ========================= */
 
   .dashboard-quiz-history {
-    @apply mt-2.5 border rounded-[14px] overflow-hidden;
+    @apply mt-4 border rounded-[14px] overflow-hidden;
     border-color: var(--border);
     background: var(--card-bg);
   }
 
   .dashboard-quiz-history-row {
-    @apply min-h-[42px] py-0 px-[22px] flex items-center justify-between text-[18px] max-[480px]:text-[15px];
+    @apply min-h-[48px] py-0 px-[22px] flex items-center justify-between text-[18px] max-[480px]:text-[15px];
     color: var(--heading);
   }
 

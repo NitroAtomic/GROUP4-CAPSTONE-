@@ -11,14 +11,27 @@
 
       <template v-else>
 
+        <!-- Nasa gitna na ang pambungad, at hindi na isang mahabang linya
+             ang plano at kalagayan ng account: dalawang maliit na tatak na
+             mabilis basahin. -->
         <section class="dashboard-heading">
           <h1>
             Welcome back, <span id="dashboard-user-first-name">{{ firstName }}</span>
           </h1>
           <p>Here's your progress so far</p>
-          <p class="dashboard-account-status">
-            Current plan: {{ planLabel }} · Account status: {{ accountStatusLabel }}
-          </p>
+          <div class="dashboard-account-status">
+            <!-- Ang gintong tatak ay para sa Premium lang. Sa Free, ang
+                 parehong kulay ay parang may binili siyang wala naman. -->
+            <span
+              class="dashboard-status-pill"
+              :class="{ 'dashboard-status-pill-plan': planLabel === 'Premium' }"
+            >
+              {{ planLabel }} plan
+            </span>
+            <span class="dashboard-status-pill">
+              Account {{ accountStatusLabel }}
+            </span>
+          </div>
         </section>
 
         <section class="dashboard-summary-grid">
@@ -26,7 +39,7 @@
           <article class="dashboard-summary-card">
             <p class="dashboard-summary-label">Modules completed</p>
             <p class="dashboard-summary-value">
-              <span id="completed-modules-count">{{ completedModulesCount }}</span>/<span id="total-modules-count">{{ totalModulesCount }}</span>
+              <span id="completed-modules-count">{{ completedModulesCount }}</span><span class="dashboard-summary-of">/</span><span id="total-modules-count">{{ totalModulesCount }}</span>
             </p>
           </article>
 
@@ -41,7 +54,12 @@
                sumagot ay walang makitang bakas nito sa dashboard. -->
           <article class="dashboard-summary-card">
             <p class="dashboard-summary-label">Awareness level</p>
-            <p class="dashboard-summary-value" id="awareness-level">
+            <!-- Salita ito, hindi bilang. Sa laki ng ibang numero, hindi
+                 kasya ang "Intermediate" sa loob ng card. -->
+            <p
+              class="dashboard-summary-value dashboard-summary-value-word"
+              id="awareness-level"
+            >
               {{ hasAssessment ? assessment.awareness_level : 'Not assessed' }}
             </p>
             <p v-if="hasAssessment" class="dashboard-summary-note">
@@ -51,8 +69,15 @@
 
           <article class="dashboard-summary-card">
             <p class="dashboard-summary-label">Weak areas found</p>
-            <p class="dashboard-summary-value" id="weak-areas-count">
+            <p
+              class="dashboard-summary-value"
+              :class="{ 'dashboard-summary-value-word': !hasAssessment }"
+              id="weak-areas-count"
+            >
               {{ hasAssessment ? weakAreas.length : 'Not assessed' }}
+            </p>
+            <p v-if="hasAssessment" class="dashboard-summary-note">
+              {{ weakAreas.length === 1 ? 'topic to review' : 'topics to review' }}
             </p>
           </article>
 
