@@ -21,6 +21,34 @@ const router = express.Router();
    description, yung category na lang yung lumalabas -- kaya may
    "spear-phishing" sa ilalim ng "Spear Phishing". Panloob na susi yun,
    hindi pang-basa ng tao. */
+/* Magkaibang pangalan para sa iisang paksa.
+
+   Yung assessment ay nagtatala ng "phishing"; yung Quishing module ay
+   sumasaklaw ng email phishing AT QR codes, at sa seed ay category
+   'phishing' ang nakalagay pero sa live na database ay naging 'quishing'.
+   Kapag hindi tugma, yung taong mahina sa phishing ay hindi kailanman
+   nirerekomendahan ng module na eksaktong tungkol doon -- tahimik, at
+   mukhang gumagana naman.
+
+   Pinapalawak dito ang hinahanap para hindi na ito masira sa susunod na
+   pagkakaiba ng pangalan. Mas mabuting dagdagan ang hanapan kaysa
+   umasang pareho ang baybay sa dalawang lugar. */
+const TOPIC_ALIASES = {
+  'phishing': ['phishing', 'quishing'],
+  'quishing': ['quishing', 'phishing'],
+  'safe-practices': ['safe-practices', 'safety-practices'],
+};
+
+function expandTopics(topics) {
+  const out = [];
+  for (const t of topics) {
+    for (const alias of (TOPIC_ALIASES[t] || [t])) {
+      if (!out.includes(alias)) out.push(alias);
+    }
+  }
+  return out;
+}
+
 const TEASER_LIMIT = 160;
 
 function teaser(description) {
@@ -106,7 +134,10 @@ router.get('/recommendations', requireAuth, async (req, res) => {
       // "phishing", kaya kahit gaano kababa yung score dun, hindi na-
       // rerecommend. Kapag pareho tinigil, kahit ma-rename pa sa future,
       // mababawasan lang, hindi bigla nawawala yung recommendation.
-      const placeholders = ranked.map(() => '?').join(',');
+      // Kasama na ang mga katumbas na pangalan sa hinahanap, pero yung
+      // orihinal na pagkakasunod pa rin ang gamit sa pag-aayos sa ibaba.
+      const lookup = expandTopics(ranked);
+      const placeholders = lookup.map(() => '?').join(',');
       const [modules] = await pool.query(
         `SELECT module_id, module_title, description, slug, category, module_type
          FROM module
@@ -123,14 +154,21 @@ router.get('/recommendations', requireAuth, async (req, res) => {
                AND p.module_id = module.module_id
                AND p.completion_status = 'completed'
            )`,
-        [...ranked, ...ranked, canSeePremium ? 1 : 0, req.user.user_id]
+        [...lookup, ...lookup, canSeePremium ? 1 : 0, req.user.user_id]
       );
 
       if (modules.length) {
+        /* Nananatiling nakabatay sa ORIHINAL na pagkakasunod ng kahinaan
+           ang pag-aayos -- yung pinakamahina muna -- kahit pinalawak ang
+           hinanap. Kung katumbas lang ang tumama, sa posisyon pa rin ng
+           pinagmulang paksa ito nakaupo. */
         const position = (m) => {
-          const bySlug = ranked.indexOf(m.slug);
-          const byCategory = ranked.indexOf(m.category);
-          const found = [bySlug, byCategory].filter((i) => i !== -1);
+          const rank = (value) => {
+            const direct = ranked.indexOf(value);
+            if (direct !== -1) return direct;
+            return ranked.findIndex((t) => (TOPIC_ALIASES[t] || []).includes(value));
+          };
+          const found = [rank(m.slug), rank(m.category)].filter((i) => i !== -1);
           return found.length ? Math.min(...found) : ranked.length;
         };
 

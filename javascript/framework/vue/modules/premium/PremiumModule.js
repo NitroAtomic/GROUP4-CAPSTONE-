@@ -18,9 +18,12 @@ import { apiFetch } from '../../lib/api.js'
 /* Pamagat at panimula lang -- hindi ito lihim. Nasa /premium-list na ang
    mga pamagat para sa lahat, kaya nandito sila para may makita agad
    habang hinihintay ang aral, sa halip na blangkong pahina. */
+/* Yung pangalan sa database ang sinusunod, kapareho ng nasa katalogo ng
+   role-based modules. Dati tatlo ang pangalan ng iisang module: isa sa
+   card, iba sa pahina, iba pa sa resulta ng pagsusulit. */
 const MODULES = {
   'invoice-scams': {
-    title: 'Invoice and Payment Fraud',
+    title: 'Invoice and Payment Scams',
     intro: 'How attackers redirect a real payment to their own account — by changing bank details on an invoice, or a payroll record — and the two checks that stop it.',
   },
   'client-data': {
@@ -28,11 +31,11 @@ const MODULES = {
     intro: 'You hold the client files, the passwords and the access. The usual way all three get exposed is someone posing as your boss — here is how that works, and the one check that stops it whatever rank is on the message.',
   },
   'client-impersonation': {
-    title: 'Fake Clients and Escrow Fraud',
+    title: 'Client Impersonation',
     intro: 'How a fake client takes your login, your work, or your money — and the checks that keep a new project from costing you.',
   },
   'fake-recruiters': {
-    title: 'Fake Job Offers',
+    title: 'Fake Job and Recruiter Offers',
     intro: 'How a fake recruiter collects your passport scan, your bank details and an upfront payment — and what a real employer never asks for.',
   },
 }

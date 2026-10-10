@@ -40,13 +40,18 @@ export default {
       questionText: 'Which of these is a common sign of a phishing email?',
       questionType: 'standard',
       answerType: 'multiple',
+      /* Dating kasama ang "All of the above" sa mga opsyon AT sa tamang
+         sagot, kasama yung tatlong tinutukoy nito. Para maging tama,
+         kailangang i-tik mo lahat ng apat -- walang gagawa noon, kaya
+         halos lahat ay namamali sa tanong na ito. Tinanggal na yung
+         catch-all; tatlo nang totoong palatandaan ang pagpipilian. */
       options: [
         { value: 'a', text: 'Urgent language threatening consequences' },
         { value: 'b', text: 'Generic greetings like "Dear Customer"' },
         { value: 'c', text: 'Mismatched sender domain' },
-        { value: 'd', text: 'All of the above' }
+        { value: 'd', text: 'A digitally signed invite from a colleague' }
       ],
-      correctAnswer: ['a', 'b', 'c', 'd'],
+      correctAnswer: ['a', 'b', 'c'],
       explanation: 'Phishing emails often use urgency, generic greetings, and suspicious sender addresses.'
     },
     {

@@ -15,16 +15,20 @@
         <span class="quiz-score-total">/{{ results.totalPoints }}</span>
       </div>
 
+      <!-- Yung uri na walang kahit isang tanong ay hindi na ipinapakita.
+           Dati laging nandiyan ang "Simulation 0/0 correct" kahit walang
+           ganoong tanong sa pagsusulit -- mukhang may nawawala, samantalang
+           wala naman talagang ganoon. -->
       <div class="quiz-results-breakdown">
-        <div class="quiz-result-row">
+        <div v-if="breakdown.standard.total" class="quiz-result-row">
           <span>Standard</span>
           <span><strong>{{ breakdown.standard.correct }}/{{ breakdown.standard.total }}</strong> correct</span>
         </div>
-        <div class="quiz-result-row">
+        <div v-if="breakdown['scenario-based'].total" class="quiz-result-row">
           <span>Scenario-based</span>
           <span><strong>{{ breakdown['scenario-based'].correct }}/{{ breakdown['scenario-based'].total }}</strong> correct</span>
         </div>
-        <div class="quiz-result-row">
+        <div v-if="breakdown.simulation.total" class="quiz-result-row">
           <span>Simulation</span>
           <span><strong>{{ breakdown.simulation.correct }}/{{ breakdown.simulation.total }}</strong> correct</span>
         </div>
