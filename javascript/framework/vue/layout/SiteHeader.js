@@ -62,6 +62,12 @@ export default {
     // be re-prompted to go Premium or get pulled away by search.
     isMinimalNav() {
       return Boolean(this.$route.meta && this.$route.meta.minimalNav)
+    },
+
+    /* Yung route mismo ang nagsasabi, hindi yung tao: naka-adminOnly na
+       ang /admin sa router, kaya wala nang bagong watawat na aalagaan. */
+    isAdminPage() {
+      return Boolean(this.$route.meta && this.$route.meta.adminOnly)
     }
   },
 

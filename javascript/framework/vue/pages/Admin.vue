@@ -3,7 +3,6 @@
     <section class="admin-container">
       <header class="admin-heading">
         <div>
-          <p class="admin-eyebrow">Administration</p>
           <h1>Admin Portal</h1>
           <p>Manage learning modules, quiz questions, and Free or Premium availability.</p>
         </div>
@@ -13,7 +12,31 @@
       <p v-if="errorMessage" class="admin-message admin-error" role="alert">{{ errorMessage }}</p>
       <p v-if="successMessage" class="admin-message admin-success" role="status">{{ successMessage }}</p>
 
-      <section class="admin-card">
+      <!-- Dalawang gawain, dalawang tab. Dati magkakasunod lahat sa isang
+           mahabang pahina, kaya kailangan pang mag-scroll nang malayo bago
+           makita ang talaan ng bayad. -->
+      <nav class="admin-tabs" aria-label="Admin sections">
+        <button
+          type="button"
+          class="admin-tab"
+          :aria-selected="activeTab === 'modules'"
+          @click="activeTab = 'modules'"
+        >
+          Modules
+          <span class="admin-tab-count">{{ modules.length }}</span>
+        </button>
+        <button
+          type="button"
+          class="admin-tab"
+          :aria-selected="activeTab === 'payments'"
+          @click="activeTab = 'payments'"
+        >
+          Payments
+          <span class="admin-tab-count">{{ payments.length }}</span>
+        </button>
+      </nav>
+
+      <section v-if="activeTab === 'modules'" class="admin-card">
         <div class="admin-card-heading">
           <div>
             <h2>{{ formTitle }}</h2>
@@ -65,7 +88,7 @@
         </form>
       </section>
 
-      <section class="admin-card">
+      <section v-if="activeTab === 'modules'" class="admin-card">
         <div class="admin-card-heading">
           <div>
             <h2>Modules</h2>
@@ -121,7 +144,7 @@
            nakakakuha ng Premium nang libre". Hindi yung mga bayad na
            linya ang nagpapatunay niyan -- yung mga naiwang 'pending':
            umalis papuntang PayMongo, hindi bumalik, at Free pa rin. -->
-      <section class="admin-card">
+      <section v-if="activeTab === 'payments'" class="admin-card">
         <div class="admin-card-heading">
           <div>
             <h2>Payments</h2>
@@ -229,7 +252,7 @@
         </template>
       </section>
 
-      <section v-if="quizModuleId !== null" class="admin-card">
+      <section v-if="activeTab === 'modules' && quizModuleId !== null" class="admin-card">
         <div class="admin-card-heading">
           <div>
             <h2>Quiz questions</h2>

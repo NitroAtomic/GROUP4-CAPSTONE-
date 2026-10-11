@@ -3,16 +3,27 @@
     <nav class="navbar">
 
       <div class="nav-left">
-        <router-link to="/" class="nav-link">Home</router-link>
-        <router-link to="/about" class="nav-link">About</router-link>
-        <router-link v-if="isAuthenticated && !isAdmin" to="/dashboard" class="nav-link">Dashboard</router-link>
-        <router-link v-if="isPremium && !isAdmin" to="/modules/premium" class="nav-link">Role-based</router-link>
-        <router-link v-if="isPremium && !isAdmin" to="/assessment/question" class="nav-link">Assessment</router-link>
-        <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin Portal</router-link>
+        <!-- Sa loob ng admin, wala nang Home at About.
+
+             Hindi ito para sa bumibisita: ito yung likod ng bahay. Yung
+             "Back to site" na nasa pahina mismo ang labasan, kaya yung
+             Home sa itaas ay pangalawang pinto papunta sa iisang lugar,
+             at yung About ay walang kinalaman sa trabaho rito.
+
+             Pangalan na lang ang naiiwan, para malinaw kung nasaan ka. -->
+        <span v-if="isAdminPage" class="nav-admin-brand">SE-AWARE Admin</span>
+        <template v-else>
+          <router-link to="/" class="nav-link">Home</router-link>
+          <router-link to="/about" class="nav-link">About</router-link>
+          <router-link v-if="isAuthenticated && !isAdmin" to="/dashboard" class="nav-link">Dashboard</router-link>
+          <router-link v-if="isPremium && !isAdmin" to="/modules/premium" class="nav-link">Role-based</router-link>
+          <router-link v-if="isPremium && !isAdmin" to="/assessment/question" class="nav-link">Assessment</router-link>
+          <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin Portal</router-link>
+        </template>
       </div>
 
       <div class="nav-right">
-        <div v-if="!isMinimalNav" class="search-box">
+        <div v-if="!isMinimalNav && !isAdminPage" class="search-box">
           <input
             v-model="searchQuery"
             type="text"

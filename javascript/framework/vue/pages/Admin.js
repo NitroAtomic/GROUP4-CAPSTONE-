@@ -60,6 +60,7 @@ export default {
       questionError: '',
       // Talaan ng bayad. Nandito yung patunay na walang Premium na
       // naibigay nang walang bayad.
+      activeTab: 'modules',
       payments: [],
       paymentSummary: null,
       isLoadingPayments: false,

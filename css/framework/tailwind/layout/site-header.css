@@ -157,4 +157,10 @@
       @apply whitespace-nowrap;
     }
   }
+
+  /* Pangalan lang, hindi link: nandito ka na. */
+  .nav-admin-brand {
+    @apply text-[17px] font-bold tracking-[0.02em];
+    color: var(--heading);
+  }
 }
