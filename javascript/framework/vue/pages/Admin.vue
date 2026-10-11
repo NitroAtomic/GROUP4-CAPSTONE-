@@ -148,7 +148,14 @@
         <div class="admin-card-heading">
           <div>
             <h2>Payments</h2>
-            <p>Every checkout that was started, and what the account is now.</p>
+            <!-- Dati "what the account is now" lang. Sa isang linyang may
+                 "not paid" sa tabi ng "Premium", pinagdudugtong ito ng
+                 mata: parang nakakuha siya ng Premium nang walang bayad.
+                 Hiwalay ang dalawa, at kailangang sabihin. -->
+            <p>
+              Every checkout that was started. The last column is the account's
+              status today, not the result of that one checkout.
+            </p>
           </div>
           <button
             type="button"
