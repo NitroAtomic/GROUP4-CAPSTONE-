@@ -209,15 +209,18 @@
           <div v-else class="admin-table-scroll">
             <table class="admin-table">
               <thead>
+                <!-- Walo ang hanay dati, kaya hindi kasya sa isang tanawin
+                     at kailangan pang i-scroll pakanan. Pinagsama ang
+                     magkakamag-anak: ang paraan ng bayad ay kasama na ng
+                     halaga, at ang kalagayan ng account ay kasama na ng
+                     katayuan ng bayad. Ang "test" ay hindi na hanay --
+                     lumalabas lang kapag LIVE, na siyang dapat mapansin. -->
                 <tr>
                   <th>Reference</th>
                   <th>Account</th>
                   <th>Amount</th>
                   <th>Status</th>
-                  <th>Method</th>
-                  <th>Mode</th>
                   <th>Started</th>
-                  <th>Account is now</th>
                   <th></th>
                 </tr>
               </thead>
@@ -230,17 +233,17 @@
                   </td>
                   <td>
                     {{ payment.amount_display }}
-                    <span class="admin-table-sub">{{ payment.billing_period }}</span>
+                    <span class="admin-table-sub">
+                      {{ payment.billing_period }}<template v-if="payment.payment_method"> · {{ payment.payment_method }}</template>
+                    </span>
                   </td>
                   <td>
                     <span class="admin-status" :class="statusClass(payment.status)">
                       {{ payment.status }}
                     </span>
-                  </td>
-                  <td>{{ payment.payment_method || '—' }}</td>
-                  <td>
-                    <span :class="payment.livemode ? 'admin-status admin-status-failed' : ''">
-                      {{ payment.livemode ? 'LIVE' : 'test' }}
+                    <span v-if="payment.livemode" class="admin-status admin-status-failed">LIVE</span>
+                    <span class="admin-table-sub">
+                      now {{ payment.subscription_type }}, {{ payment.subscription_status }}
                     </span>
                   </td>
                   <td class="admin-table-when">
@@ -248,10 +251,6 @@
                     <span class="admin-table-sub">
                       {{ payment.paid_at ? 'paid ' + paymentWhen(payment.paid_at) : 'not paid' }}
                     </span>
-                  </td>
-                  <td>
-                    {{ payment.subscription_type }}
-                    <span class="admin-table-sub">{{ payment.subscription_status }}</span>
                   </td>
                   <td class="admin-table-actions">
                     <button
