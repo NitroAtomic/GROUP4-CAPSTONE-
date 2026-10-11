@@ -8,7 +8,12 @@
             </router-link>
         </nav>
 
-        <h1>Phishing and QR Code Scams</h1>
+        <!-- Hindi lumalabas dati ang salitang "Quishing" sa pamagat ng
+             sariling pahina nito. Pinindot mo ang card na "Quishing" at
+             ibang pangalan ang sumasalubong sa iyo. Sinusunod na nito
+             ang anyo ng Smishing at Vishing: pangalan muna, saka
+             paliwanag. -->
+        <h1>Quishing: Phishing and QR Code Scams</h1>
         <p>Module 1 of 6</p>
     </header>
 
