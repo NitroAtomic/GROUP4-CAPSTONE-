@@ -34,7 +34,11 @@
       </p>
     </div>
   </footer>
-  <ChatbotWidget />
+  <!-- Walang chatbot sa loob ng admin. Para sa natututo ito -- "paano
+       malalaman kung peke ang QR code" -- at walang kinalaman sa
+       pamamahala ng module o sa talaan ng bayad. Lumulutang lang ito sa
+       ibabaw ng trabaho. -->
+  <ChatbotWidget v-if="!isAdminRoute" />
   <BackToTop />
 </template>
 
@@ -51,6 +55,13 @@ export default {
     BackToTop,
     UiIconSprite
   },
+  computed: {
+    /* Yung route na mismo ang nagsasabi: naka-adminOnly na ang /admin. */
+    isAdminRoute() {
+      return Boolean(this.$route.meta && this.$route.meta.adminOnly)
+    }
+  },
+
   methods: {
     setFooterMarkDirection(event) {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
