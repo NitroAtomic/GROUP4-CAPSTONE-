@@ -64,6 +64,7 @@ export default {
       payments: [],
       paymentSummary: null,
       isLoadingPayments: false,
+      busyReference: null,
       paymentError: ''
     }
   },
@@ -104,6 +105,52 @@ export default {
         this.paymentSummary = null
       } finally {
         this.isLoadingPayments = false
+      }
+    },
+
+    /* Puwedeng isara ang hindi natapos; hindi ang bayad na. */
+    canCancel(payment) {
+      return payment.status === 'pending'
+    },
+
+    /* Basura ng pagsubok lang ang puwedeng burahin. Pareho itong
+       nakasulat sa SQL -- ito ay para itago ang pindutan, hindi ito
+       ang nagbabantay. */
+    canDelete(payment) {
+      return !payment.livemode && payment.status !== 'paid'
+    },
+
+    async cancelPayment(payment) {
+      if (this.busyReference) return
+      if (!window.confirm(`Close checkout ${payment.reference_number} as cancelled? The record stays.`)) return
+      this.busyReference = payment.reference_number
+      this.paymentError = ''
+      try {
+        await authRequest(`/api/billing/transactions/${encodeURIComponent(payment.reference_number)}/cancel`, {
+          method: 'PATCH'
+        })
+        await this.loadPayments()
+      } catch (error) {
+        this.paymentError = error.message
+      } finally {
+        this.busyReference = null
+      }
+    },
+
+    async deletePayment(payment) {
+      if (this.busyReference) return
+      if (!window.confirm(`Remove ${payment.reference_number} from the records? This cannot be undone.`)) return
+      this.busyReference = payment.reference_number
+      this.paymentError = ''
+      try {
+        await authRequest(`/api/billing/transactions/${encodeURIComponent(payment.reference_number)}`, {
+          method: 'DELETE'
+        })
+        await this.loadPayments()
+      } catch (error) {
+        this.paymentError = error.message
+      } finally {
+        this.busyReference = null
       }
     },
 

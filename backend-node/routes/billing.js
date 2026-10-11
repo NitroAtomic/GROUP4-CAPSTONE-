@@ -342,4 +342,98 @@ router.get('/transactions/all', requireAdmin, async (req, res) => {
   }
 });
 
+// ------------------------------------------------------------
+// PATCH /api/billing/transactions/:reference/cancel   (admin lang)
+//
+// Isinasara ang checkout na hindi natapos: 'pending' -> 'cancelled'.
+//
+// Ito ang tamang paraan ng paglilinis, hindi ang pagbura. Nananatili
+// ang linya, nakatala pa rin na may sumubok at hindi natuloy, at
+// tumitigil na itong magmukhang naghihintay pa. Yung WHERE status =
+// 'pending' ang nagbabantay: hindi puwedeng isara ang bayad na.
+// ------------------------------------------------------------
+const REFERENCE = /^[A-Za-z0-9-]{1,64}$/;
+
+router.patch('/transactions/:reference/cancel', requireAdmin, async (req, res) => {
+  const reference = String(req.params.reference || '');
+  if (!REFERENCE.test(reference)) {
+    return res.status(400).json({ error: 'That is not a reference number.' });
+  }
+
+  try {
+    const [result] = await pool.query(
+      "UPDATE payment_transaction SET status = 'cancelled' WHERE reference_number = ? AND status = 'pending'",
+      [reference]
+    );
+
+    if (result.affectedRows !== 1) {
+      /* Alinman sa wala ito, o hindi na ito 'pending'. Sinasabi kung
+         alin, para hindi mukhang sira ang pindutan. */
+      const [rows] = await pool.query(
+        'SELECT status FROM payment_transaction WHERE reference_number = ?',
+        [reference]
+      );
+      if (!rows.length) return res.status(404).json({ error: 'No payment with that reference.' });
+      return res.status(409).json({
+        error: `That payment is already ${rows[0].status}. Only a pending checkout can be cancelled.`,
+      });
+    }
+
+    res.json({ reference_number: reference, status: 'cancelled' });
+  } catch (err) {
+    console.error('[billing] cancel failed:', err.message);
+    res.status(500).json({ error: 'Could not cancel that payment.' });
+  }
+});
+
+// ------------------------------------------------------------
+// DELETE /api/billing/transactions/:reference   (admin lang)
+//
+// Para sa basurang naiwan ng pagsubok, hindi para sa pagbura ng bakas.
+//
+// Dalawa ang hindi puwedeng burahin, at nasa SQL mismo ang bantay:
+//
+//   livemode = 1   totoong pera ang dumaan dito
+//   status = 'paid'  may nagbayad, kahit test
+//
+// Yung talaan ng bayad ang siyang patunay na walang nakakakuha ng
+// Premium nang libre. Kung kayang burahin ng admin ang kahit ano
+// rito, wala nang silbi ang patunay -- kaya hindi sa pag-click ito
+// nakadepende kundi sa WHERE.
+// ------------------------------------------------------------
+router.delete('/transactions/:reference', requireAdmin, async (req, res) => {
+  const reference = String(req.params.reference || '');
+  if (!REFERENCE.test(reference)) {
+    return res.status(400).json({ error: 'That is not a reference number.' });
+  }
+
+  try {
+    const [result] = await pool.query(
+      "DELETE FROM payment_transaction WHERE reference_number = ? AND livemode = 0 AND status <> 'paid'",
+      [reference]
+    );
+
+    if (result.affectedRows !== 1) {
+      const [rows] = await pool.query(
+        'SELECT status, livemode FROM payment_transaction WHERE reference_number = ?',
+        [reference]
+      );
+      if (!rows.length) return res.status(404).json({ error: 'No payment with that reference.' });
+      if (rows[0].livemode) {
+        return res.status(409).json({
+          error: 'That is a live payment. Live records are kept, whatever their status.',
+        });
+      }
+      return res.status(409).json({
+        error: 'That payment was paid. A paid record is the evidence it was paid, so it stays.',
+      });
+    }
+
+    res.json({ reference_number: reference, deleted: true });
+  } catch (err) {
+    console.error('[billing] delete failed:', err.message);
+    res.status(500).json({ error: 'Could not remove that payment.' });
+  }
+});
+
 module.exports = router;

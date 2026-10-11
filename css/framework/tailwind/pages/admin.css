@@ -352,6 +352,14 @@
     color: var(--muted);
   }
 
+  .admin-table-actions {
+    @apply whitespace-nowrap text-right;
+  }
+
+  .admin-table-actions button {
+    @apply ml-2 py-1 px-2.5 text-[12.5px];
+  }
+
   .admin-status {
     @apply inline-block rounded-md border px-2 py-0.5 text-[11.5px] font-bold capitalize;
     border-color: var(--border);

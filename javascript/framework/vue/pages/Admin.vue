@@ -218,6 +218,7 @@
                   <th>Mode</th>
                   <th>Started</th>
                   <th>Account is now</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -251,6 +252,27 @@
                   <td>
                     {{ payment.subscription_type }}
                     <span class="admin-table-sub">{{ payment.subscription_status }}</span>
+                  </td>
+                  <td class="admin-table-actions">
+                    <button
+                      v-if="canCancel(payment)"
+                      type="button"
+                      class="admin-secondary-button"
+                      :disabled="busyReference !== null"
+                      @click="cancelPayment(payment)"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      v-if="canDelete(payment)"
+                      type="button"
+                      class="admin-delete-button"
+                      :disabled="busyReference !== null"
+                      @click="deletePayment(payment)"
+                    >
+                      Delete
+                    </button>
+                    <span v-if="!canCancel(payment) && !canDelete(payment)" class="admin-table-sub">kept</span>
                   </td>
                 </tr>
               </tbody>
