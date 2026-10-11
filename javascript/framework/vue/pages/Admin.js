@@ -17,6 +17,21 @@ const EMPTY_QUESTION = () => ({
   order_index: 0
 })
 
+/* Buong pangalan ng klase, nakasulat nang buo.
+
+   Hindi puwedeng `'admin-status-' + status` sa template: tinatanggal ng
+   Tailwind ang mga tuntunin sa @layer components kung hindi lumilitaw
+   ang pangalan ng klase sa mga file na sinusuri niya. Pinagdikit lang
+   ang pangalan, kaya hindi niya nakikita -- at tahimik na nawawala ang
+   kulay. Ganito rin ang nangyari sa aral ng bayad noong inilipat sila
+   sa labas ng frontend. */
+const STATUS_CLASS = {
+  paid: 'admin-status-paid',
+  pending: 'admin-status-pending',
+  failed: 'admin-status-failed',
+  cancelled: 'admin-status-cancelled'
+}
+
 const authRequest = (path, options = {}) => {
   const { token } = useAuthStore()
   return apiFetch(path, { ...options, token })
@@ -42,7 +57,13 @@ export default {
       isSavingQuestion: false,
       editingQuestionId: null,
       questionForm: EMPTY_QUESTION(),
-      questionError: ''
+      questionError: '',
+      // Talaan ng bayad. Nandito yung patunay na walang Premium na
+      // naibigay nang walang bayad.
+      payments: [],
+      paymentSummary: null,
+      isLoadingPayments: false,
+      paymentError: ''
     }
   },
 
@@ -63,9 +84,40 @@ export default {
       return
     }
     await this.loadModules()
+    await this.loadPayments()
   },
 
   methods: {
+    /* Hindi pinapatay ang buong pahina kapag pumalya ito -- yung mga
+       module ang pangunahing trabaho dito, hiwalay ang talaan ng bayad. */
+    async loadPayments() {
+      this.isLoadingPayments = true
+      this.paymentError = ''
+      try {
+        const data = await authRequest('/api/billing/transactions/all')
+        this.payments = data.transactions || []
+        this.paymentSummary = data.summary || null
+      } catch (error) {
+        this.paymentError = error.message
+        this.payments = []
+        this.paymentSummary = null
+      } finally {
+        this.isLoadingPayments = false
+      }
+    },
+
+    statusClass(status) {
+      return STATUS_CLASS[status] || ''
+    },
+
+    paymentWhen(value) {
+      if (!value) return '—'
+      return new Date(value).toLocaleString([], {
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      })
+    },
+
     async loadModules() {
       this.isLoading = true
       this.errorMessage = ''

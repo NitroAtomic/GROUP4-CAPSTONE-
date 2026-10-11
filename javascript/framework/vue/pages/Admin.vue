@@ -115,6 +115,120 @@
         </div>
       </section>
 
+      <!-- Talaan ng bayad.
+
+           Ito ang sagot sa "paano niyo mapapatunayan na walang
+           nakakakuha ng Premium nang libre". Hindi yung mga bayad na
+           linya ang nagpapatunay niyan -- yung mga naiwang 'pending':
+           umalis papuntang PayMongo, hindi bumalik, at Free pa rin. -->
+      <section class="admin-card">
+        <div class="admin-card-heading">
+          <div>
+            <h2>Payments</h2>
+            <p>Every checkout that was started, and what the account is now.</p>
+          </div>
+          <button
+            type="button"
+            class="admin-secondary-button"
+            :disabled="isLoadingPayments"
+            @click="loadPayments"
+          >
+            Refresh
+          </button>
+        </div>
+
+        <p v-if="paymentError" class="admin-message admin-error" role="alert">{{ paymentError }}</p>
+
+        <!-- Hindi ito dapat mangyari habang test mode. Kung lumabas ito,
+             totoong pera na ang dumadaan. -->
+        <p
+          v-if="paymentSummary && paymentSummary.live > 0"
+          class="admin-message admin-error"
+          role="alert"
+        >
+          {{ paymentSummary.live }} of these are live payments, not test. Real money moved.
+          Check PAYMONGO_SECRET_KEY on Render — it should start with sk_test_.
+        </p>
+
+        <p v-if="isLoadingPayments" class="admin-empty-state" role="status">Loading payments…</p>
+
+        <template v-else>
+          <div v-if="paymentSummary" class="admin-payment-summary">
+            <div>
+              <span class="admin-payment-figure">{{ paymentSummary.total }}</span>
+              <span class="admin-payment-label">Checkouts started</span>
+            </div>
+            <div>
+              <span class="admin-payment-figure">{{ paymentSummary.paid }}</span>
+              <span class="admin-payment-label">Paid</span>
+            </div>
+            <div>
+              <span class="admin-payment-figure">{{ paymentSummary.pending }}</span>
+              <span class="admin-payment-label">Never completed</span>
+            </div>
+            <div>
+              <span class="admin-payment-figure">{{ paymentSummary.collected_display }}</span>
+              <span class="admin-payment-label">Collected</span>
+            </div>
+          </div>
+
+          <p v-if="payments.length === 0" class="admin-empty-state">
+            No checkout has been started yet.
+          </p>
+
+          <div v-else class="admin-table-scroll">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Reference</th>
+                  <th>Account</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Method</th>
+                  <th>Mode</th>
+                  <th>Started</th>
+                  <th>Account is now</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="payment in payments" :key="payment.reference_number">
+                  <td class="admin-table-ref">{{ payment.reference_number }}</td>
+                  <td>
+                    {{ payment.email }}
+                    <span class="admin-table-sub">{{ payment.name }}</span>
+                  </td>
+                  <td>
+                    {{ payment.amount_display }}
+                    <span class="admin-table-sub">{{ payment.billing_period }}</span>
+                  </td>
+                  <td>
+                    <span class="admin-status" :class="statusClass(payment.status)">
+                      {{ payment.status }}
+                    </span>
+                  </td>
+                  <td>{{ payment.payment_method || '—' }}</td>
+                  <td>
+                    <span :class="payment.livemode ? 'admin-status admin-status-failed' : ''">
+                      {{ payment.livemode ? 'LIVE' : 'test' }}
+                    </span>
+                  </td>
+                  <td>
+                    {{ paymentWhen(payment.created_at) }}
+                    <span class="admin-table-sub">
+                      {{ payment.paid_at ? 'paid ' + paymentWhen(payment.paid_at) : 'not paid' }}
+                    </span>
+                  </td>
+                  <td>
+                    {{ payment.subscription_type }}
+                    <span class="admin-table-sub">{{ payment.subscription_status }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </template>
+      </section>
+
       <section v-if="quizModuleId !== null" class="admin-card">
         <div class="admin-card-heading">
           <div>

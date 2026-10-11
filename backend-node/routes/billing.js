@@ -34,7 +34,7 @@ const crypto = require('crypto');
 const pool = require('../config/db');
 const config = require('../config/env');
 const paymongo = require('../config/paymongo');
-const { requireAuth } = require('../middleware/auth');
+const { requireAuth, requireAdmin } = require('../middleware/auth');
 const { settle, reconcilePending } = require('../services/payments');
 
 const router = express.Router();
@@ -276,6 +276,69 @@ router.get('/transactions', requireAuth, async (req, res) => {
   } catch (err) {
     console.error('[billing] transactions failed:', err.message);
     res.status(500).json({ error: 'Could not load your payment history.' });
+  }
+});
+
+// ------------------------------------------------------------
+// GET /api/billing/transactions/all   (admin lang)
+//
+// Buong talaan ng bayad, para sa admin portal.
+//
+// BAKIT ITO ANG PINAKAMAHALAGANG PAHINA SA ADMIN
+//
+// Ang tanong ni sir: paano mapapatunayan na walang nakakakuha ng
+// Premium nang hindi dumadaan sa bayad. Hindi ito nasasagot ng mga
+// bayad na row. Nasasagot ito ng mga 'pending' -- yung mga umalis
+// papuntang PayMongo at hindi na bumalik. Nandito sila, nakatala,
+// at Free pa rin ang account nila.
+//
+// Kaya kasama rito ang katayuan ng account ng bawat isa: makikita sa
+// iisang hanay kung nagbayad ba siya at kung ano siya ngayon.
+//
+// Pati yung livemode. Dapat test lahat habang hindi pa tapos ang
+// pagsusuri. Kung may lumabas na LIVE, totoong pera na yun.
+// ------------------------------------------------------------
+router.get('/transactions/all', requireAdmin, async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT t.reference_number, t.provider, t.billing_period, t.amount_centavos,
+              t.currency, t.status, t.payment_method, t.livemode,
+              t.created_at, t.paid_at,
+              u.user_id, u.first_name, u.last_name, u.email,
+              u.subscription_type, u.subscription_status, u.subscription_expires_at
+         FROM payment_transaction t
+         JOIN user u ON u.user_id = t.user_id
+        ORDER BY t.created_at DESC
+        LIMIT 200`
+    );
+
+    const transactions = rows.map((row) => ({
+      ...row,
+      livemode: Boolean(row.livemode),
+      amount_display: `₱${peso(row.amount_centavos)}`,
+      /* Pinagsasama rito para hindi na kailangang bilangin ng harapan:
+         nagbayad ba, at ano siya ngayon. */
+      name: `${row.first_name} ${row.last_name}`.trim(),
+    }));
+
+    const paid = transactions.filter((t) => t.status === 'paid');
+
+    res.json({
+      transactions,
+      summary: {
+        total: transactions.length,
+        paid: paid.length,
+        pending: transactions.filter((t) => t.status === 'pending').length,
+        failed: transactions.filter((t) => t.status === 'failed').length,
+        cancelled: transactions.filter((t) => t.status === 'cancelled').length,
+        live: transactions.filter((t) => t.livemode).length,
+        collected_centavos: paid.reduce((sum, t) => sum + t.amount_centavos, 0),
+        collected_display: `₱${peso(paid.reduce((sum, t) => sum + t.amount_centavos, 0))}`,
+      },
+    });
+  } catch (err) {
+    console.error('[billing] admin transactions failed:', err.message);
+    res.status(500).json({ error: 'Could not load the payment records.' });
   }
 });
 

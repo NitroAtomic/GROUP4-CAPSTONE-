@@ -143,4 +143,86 @@
     @apply bg-[rgba(245,166,35,0.14)] text-[var(--heading)];
     border: 1px solid rgba(245,166,35,0.4);
   }
+
+  /* =========================
+     Payments
+     Yung talaan ng bayad sa admin portal. Malapad ito, kaya may sariling
+     scroll sa maliit na screen sa halip na itulak ang buong pahina.
+     ========================= */
+
+  .admin-payment-summary {
+    @apply mb-4 grid grid-cols-4 gap-px overflow-hidden rounded-lg border max-[700px]:grid-cols-2;
+    border-color: var(--border);
+    background: var(--border);
+  }
+
+  .admin-payment-summary > div {
+    @apply flex flex-col gap-0.5 p-3;
+    background: var(--card-bg);
+  }
+
+  .admin-payment-figure {
+    @apply text-xl font-bold tabular-nums;
+    color: var(--heading);
+  }
+
+  .admin-payment-label {
+    @apply text-xs;
+    color: var(--muted);
+  }
+
+  .admin-table-scroll {
+    @apply -mx-5 overflow-x-auto px-5;
+  }
+
+  .admin-table {
+    @apply w-full min-w-[820px] border-collapse text-left text-sm;
+  }
+
+  .admin-table th {
+    @apply whitespace-nowrap border-b py-2 pr-4 text-xs font-bold uppercase tracking-wide;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+
+  .admin-table td {
+    @apply border-b py-3 pr-4 align-top;
+    border-color: var(--border);
+    color: var(--text);
+  }
+
+  .admin-table tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .admin-table-ref {
+    @apply whitespace-nowrap font-mono text-xs;
+    color: var(--muted);
+  }
+
+  .admin-table-sub {
+    @apply mt-0.5 block text-xs;
+    color: var(--muted);
+  }
+
+  .admin-status {
+    @apply inline-block rounded-full border px-2 py-0.5 text-xs font-semibold capitalize;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+
+  .admin-status-paid {
+    @apply border-[var(--ok-border)] bg-[var(--ok-bg)] text-[var(--ok-text)];
+  }
+
+  .admin-status-pending {
+    @apply text-[var(--warn-text)];
+    border-color: rgba(245, 166, 35, 0.5);
+    background: rgba(245, 166, 35, 0.14);
+  }
+
+  .admin-status-failed,
+  .admin-status-cancelled {
+    @apply border-[var(--bad-border)] bg-[var(--bad-bg)] text-[var(--bad-text)];
+  }
 }
