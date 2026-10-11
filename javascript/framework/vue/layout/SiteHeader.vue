@@ -15,9 +15,19 @@
         <template v-else>
           <router-link to="/" class="nav-link">Home</router-link>
           <router-link to="/about" class="nav-link">About</router-link>
-          <router-link v-if="isAuthenticated && !isAdmin" to="/dashboard" class="nav-link">Dashboard</router-link>
-          <router-link v-if="isPremium && !isAdmin" to="/modules/premium" class="nav-link">Role-based</router-link>
-          <router-link v-if="isPremium && !isAdmin" to="/assessment/question" class="nav-link">Assessment</router-link>
+          <!-- Nakatago dati ang tatlong ito sa admin, para hindi magulo
+               ang itaas. Pero ang admin ay may sariling account din: may
+               progreso, may resulta ng assessment, at wala siyang
+               anumang link papunta roon. Nakakulong siya sa labas ng
+               sariling dashboard.
+
+               Hiwalay na ngayon ang dalawang bagay: sa loob ng admin,
+               walang nav (nasa itaas, isAdminPage); sa labas nito,
+               nakikita niya ang parehong link na nakikita ng iba, dahil
+               naaabot naman talaga niya silang lahat. -->
+          <router-link v-if="isAuthenticated" to="/dashboard" class="nav-link">Dashboard</router-link>
+          <router-link v-if="isPremium" to="/modules/premium" class="nav-link">Role-based</router-link>
+          <router-link v-if="isPremium" to="/assessment/question" class="nav-link">Assessment</router-link>
           <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin Portal</router-link>
         </template>
       </div>
