@@ -90,8 +90,12 @@
                 {{ module.module_type }}
               </span>
               <button type="button" class="admin-secondary-button" @click="editModule(module)">Edit</button>
+              <!-- Nakapangalan dati rito ang isang module, para itago ang
+                   pindutan sa module na walang pagsusulit. Pero dito mismo
+                   dapat makadagdag ng unang tanong ang admin, kaya ang
+                   pagtatago ay siyang humahadlang. May sariling sabi na ang
+                   editor kapag wala pang laman. -->
               <button
-                v-if="module.slug !== 'essential-safe-practices-remote-environments'"
                 type="button"
                 class="admin-secondary-button"
                 @click="manageQuiz(module)"
@@ -123,7 +127,9 @@
         <p v-if="isLoadingQuestions" class="admin-empty-state" role="status">Loading questions…</p>
         <template v-else-if="quizId !== null">
           <p v-if="questionError" class="admin-message admin-error" role="alert">{{ questionError }}</p>
-          <p v-if="questions.length === 0" class="admin-empty-state">No questions found.</p>
+          <p v-if="questions.length === 0" class="admin-empty-state">
+            No questions in this bank yet. Add the first one below.
+          </p>
           <div v-else class="admin-module-list">
             <article v-for="question in questions" :key="question.question_id" class="admin-module-row">
               <div class="admin-module-details">

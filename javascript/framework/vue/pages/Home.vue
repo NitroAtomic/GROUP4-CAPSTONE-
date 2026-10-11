@@ -20,7 +20,11 @@
       <div class="home-content">
         <div class="section-heading">
           <h2>Free modules</h2>
-          <p>The six core attack types, each with a short quiz at the end.</p>
+          <!-- Lima ang paraan ng pag-atake, hindi anim: yung pang-anim ay
+               tungkol sa tamang gawi, at wala itong pagsusulit. Dati
+               "anim... bawat isa ay may pagsusulit" ang nakasulat, na
+               dalawang beses na mali. -->
+          <p>Five core attack types, each with a short quiz, plus the everyday practices that stop them.</p>
         </div>
 
         <div class="modules-grid">
