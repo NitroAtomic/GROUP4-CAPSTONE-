@@ -296,8 +296,11 @@
     @apply grid grid-cols-4 py-5 max-[700px]:grid-cols-2 max-[700px]:gap-y-4;
   }
 
+  /* Nasa gitna ng sariling hati ang bawat bilang, hindi nakatapat sa
+     kaliwang guhit. Pantay ang puwang sa magkabilang gilid, kaya ang
+     mga guhit ay nagiging hati at hindi pasimula. */
   .admin-payment-summary > div {
-    @apply flex flex-col gap-0.5 border-l pl-4 first:border-l-0 first:pl-0 max-[700px]:first:border-l max-[700px]:first:pl-4 max-[700px]:[&:nth-child(3)]:border-l-0 max-[700px]:[&:nth-child(3)]:pl-0;
+    @apply flex flex-col items-center gap-0.5 border-l px-4 text-center first:border-l-0 max-[700px]:[&:nth-child(3)]:border-l-0;
     border-color: var(--border);
   }
 
