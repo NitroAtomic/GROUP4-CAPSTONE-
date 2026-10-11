@@ -158,12 +158,16 @@ export default {
       return STATUS_CLASS[status] || ''
     },
 
+    /* "Oct 10, 2026, 06:22 AM" ang dati. Sa makitid na hanay, apat na
+       linya ito, kaya tumataas ang bawat hilera nang wala namang
+       nadadagdag. Ganito mas maikli, isang linya, at walang duda kung
+       alin ang buwan at alin ang araw. */
     paymentWhen(value) {
       if (!value) return '—'
-      return new Date(value).toLocaleString([], {
-        year: 'numeric', month: 'short', day: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-      })
+      const d = new Date(value)
+      const pad = (n) => String(n).padStart(2, '0')
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` +
+             ` ${pad(d.getHours())}:${pad(d.getMinutes())}`
     },
 
     async loadModules() {

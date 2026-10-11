@@ -317,7 +317,29 @@
   }
 
   .admin-table {
-    @apply w-full min-w-[860px] border-collapse text-left text-[13.5px];
+    @apply w-full min-w-[800px] border-collapse text-left text-[13.5px];
+  }
+
+  .admin-table-when {
+    @apply whitespace-nowrap tabular-nums;
+  }
+
+  /* Huling hanay ang mga pindutan, kaya sila ang unang nawawala kapag
+     kailangang i-scroll ang talahanayan. Nakadikit sila ngayon sa
+     kanan, para laging maabot. */
+  .admin-table th:last-child,
+  .admin-table td:last-child {
+    @apply sticky right-0;
+    background: var(--card-bg);
+    box-shadow: -1px 0 0 var(--border);
+  }
+
+  .admin-table th:last-child {
+    background: var(--surface-2);
+  }
+
+  .admin-table tbody tr:hover td:last-child {
+    background: var(--surface-2);
   }
 
   .admin-table th {

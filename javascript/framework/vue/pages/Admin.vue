@@ -243,7 +243,7 @@
                       {{ payment.livemode ? 'LIVE' : 'test' }}
                     </span>
                   </td>
-                  <td>
+                  <td class="admin-table-when">
                     {{ paymentWhen(payment.created_at) }}
                     <span class="admin-table-sub">
                       {{ payment.paid_at ? 'paid ' + paymentWhen(payment.paid_at) : 'not paid' }}
