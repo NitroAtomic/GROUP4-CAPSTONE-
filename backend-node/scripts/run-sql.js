@@ -23,16 +23,62 @@ const ALREADY_DONE = new Set([
   'ER_TABLE_EXISTS_ERROR',
 ]);
 
-function statements(sql) {
-  // Tinatanggal muna yung mga komento, para hindi mabasag yung paghahati
-  // ng mga pangungusap.
-  const cleaned = sql
-    .split('\n')
-    .filter((line) => !line.trim().startsWith('--'))
-    .join('\n');
+/* Hinahati ang file sa mga pangungusap.
 
-  return cleaned
-    .split(';')
+   Dati `sql.split(';')` lang ito, at mali yun: may tanong sa 05 na may
+   tuldok-kuwit sa loob mismo ng teksto --
+
+     'Spear phishers only target executives; entry-level contractors...'
+
+   -- kaya nahahati yung INSERT sa gitna ng salita, at ER_PARSE_ERROR ang
+   kinalabasan. Sinusundan na ngayon kung nasa loob ba ng panipi, ng
+   backtick, o ng komento: doon lang, hindi hati ang tuldok-kuwit. */
+function statements(sql) {
+  const out = [];
+  let buf = '';
+  let quote = null;      // ', " o ` kapag nasa loob tayo ng isa sa mga ito
+  let lineComment = false;
+  let blockComment = false;
+
+  for (let i = 0; i < sql.length; i++) {
+    const ch = sql[i];
+    const next = sql[i + 1];
+
+    if (lineComment) {
+      if (ch === '\n') { lineComment = false; buf += ch; }
+      continue;
+    }
+
+    if (blockComment) {
+      if (ch === '*' && next === '/') { blockComment = false; i++; }
+      continue;
+    }
+
+    if (!quote) {
+      if (ch === '-' && next === '-') { lineComment = true; i++; continue; }
+      if (ch === '#') { lineComment = true; continue; }
+      if (ch === '/' && next === '*') { blockComment = true; i++; continue; }
+
+      if (ch === "'" || ch === '"' || ch === '`') { quote = ch; buf += ch; continue; }
+
+      if (ch === ';') { out.push(buf); buf = ''; continue; }
+
+      buf += ch;
+      continue;
+    }
+
+    // Nasa loob ng panipi. Dalawang paraan ng pag-escape sa MySQL:
+    // doble ('') at backslash (\').
+    if (ch === '\\' && quote !== '`') { buf += ch + (next || ''); i++; continue; }
+    if (ch === quote && next === quote) { buf += ch + next; i++; continue; }
+    if (ch === quote) { quote = null; buf += ch; continue; }
+
+    buf += ch;
+  }
+
+  out.push(buf);
+
+  return out
     .map((s) => s.trim())
     .filter(Boolean)
     /* Nilalaktawan yung USE. Nakaturo na yung koneksyon sa tamang database
@@ -61,27 +107,42 @@ function statements(sql) {
   let ran = 0;
   let skipped = 0;
 
-  for (const sql of list) {
-    // Unang linya lang ang ipinapakita, para mabasa pa rin kahit mahaba
-    // yung CREATE TABLE.
-    const label = sql.split('\n')[0].slice(0, 68);
-    try {
-      await pool.query(sql);
-      console.log(`  ok      ${label}`);
-      ran++;
-    } catch (err) {
-      if (ALREADY_DONE.has(err.code)) {
-        console.log(`  already ${label}`);
-        skipped++;
-        continue;
-      }
-      console.error(`\n  FAILED  ${label}`);
-      console.error(`          ${err.code}: ${err.message}\n`);
-      await pool.end();
-      process.exit(1);
-    }
-  }
+  /* Iisang koneksyon para sa buong file.
 
-  console.log(`\n${ran} applied, ${skipped} already in place.\n`);
-  await pool.end();
+     Dati `pool.query` bawat pangungusap, kaya walang katiyakan na iisa
+     ang koneksyon -- at kapag ganoon, yung START TRANSACTION sa itaas ng
+     file ay maaaring nasa ibang koneksyon kaysa sa mga INSERT na
+     sumusunod, kaya wala itong silbi. */
+  const conn = await pool.getConnection();
+
+  try {
+    for (const sql of list) {
+      // Unang linya lang ang ipinapakita, para mabasa pa rin kahit mahaba
+      // yung CREATE TABLE.
+      const label = sql.split('\n')[0].slice(0, 68);
+      try {
+        await conn.query(sql);
+        console.log(`  ok      ${label}`);
+        ran++;
+      } catch (err) {
+        if (ALREADY_DONE.has(err.code)) {
+          console.log(`  already ${label}`);
+          skipped++;
+          continue;
+        }
+        console.error(`\n  FAILED  ${label}`);
+        console.error(`          ${err.code}: ${err.message}\n`);
+        // Binabawi muna bago umalis, para walang kalahating naisulat.
+        await conn.query('ROLLBACK').catch(() => {});
+        conn.release();
+        await pool.end();
+        process.exit(1);
+      }
+    }
+
+    console.log(`\n${ran} applied, ${skipped} already in place.\n`);
+  } finally {
+    conn.release();
+    await pool.end();
+  }
 })();
