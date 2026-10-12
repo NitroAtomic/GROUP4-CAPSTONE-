@@ -10,7 +10,7 @@ export default {
       // explicit pick is written to storage and to the data-theme attribute.
       theme: null,
       modules: [
-        { id: 1, title: 'Quishing', link: '/modules/quishing' },
+        { id: 1, title: 'Phishing', link: '/modules/phishing' },
         { id: 2, title: 'Spear Phishing', link: '/modules/spear-phishing' },
         { id: 3, title: 'Smishing', link: '/modules/smishing' },
         { id: 4, title: 'Vishing', link: '/modules/vishing' },

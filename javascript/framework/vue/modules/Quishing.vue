@@ -1371,7 +1371,11 @@ onBeforeRouteLeave((to) => {
 .guided-secondary-button {
   border: 1px solid var(--guided-border);
   background: var(--guided-surface);
-  color: inherit;
+  /* `inherit` ang dati. Sa loob ng quiz card -- na laging madilim at
+     puti ang teksto -- puti ang namamana nito, habang ang sarili nitong
+     likod ay --card-bg: puti sa maliwanag na tema. Puti sa puti, kaya
+     nawawala ang "Back to Homepage". */
+  color: var(--text);
 }
 
 .guided-example-tabs {

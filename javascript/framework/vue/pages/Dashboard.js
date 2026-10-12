@@ -12,8 +12,8 @@ import { apiFetch } from '../lib/api.js'
    Kapareho ng mga katumbas na nasa backend (routes/dashboard.js):
    "phishing" ang itinatala ng assessment, pero "quishing" ang module. */
 const TOPIC_MODULE_PATH = {
-  'phishing': '/modules/quishing',
-  'quishing': '/modules/quishing',
+  'phishing': '/modules/phishing',
+  'quishing': '/modules/phishing',
   'spear-phishing': '/modules/spear-phishing',
   'smishing': '/modules/smishing',
   'vishing': '/modules/vishing',
@@ -23,8 +23,8 @@ const TOPIC_MODULE_PATH = {
 }
 
 const TOPIC_MODULE_TITLE = {
-  'phishing': 'Quishing',
-  'quishing': 'Quishing',
+  'phishing': 'Phishing',
+  'quishing': 'Phishing',
   'spear-phishing': 'Spear Phishing',
   'smishing': 'Smishing',
   'vishing': 'Vishing',
@@ -37,7 +37,7 @@ const MODULE_ROUTE_BY_SLUG = {
   // Slug ang ipinapadala ng API, hindi category. Dati 'phishing' at
   // 'safety-practices' ang nakasulat dito -- category at maling baybay --
   // kaya hindi sila tumatama kahit kailan.
-  'quishing': '/modules/quishing',
+  'quishing': '/modules/phishing',
   'spear-phishing': '/modules/spear-phishing',
   'smishing': '/modules/smishing',
   'vishing': '/modules/vishing',
