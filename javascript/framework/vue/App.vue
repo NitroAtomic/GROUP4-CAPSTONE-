@@ -30,7 +30,9 @@
         </p>
       </div>
       <p class="site-footer-legal">
-        &copy; 2026 SE-AWARE &middot; Group 4, S3102 &middot; Capstone project, for academic use.
+        &copy; 2026 SE-AWARE &middot; Group 4, A4102 &middot;
+        Abrasaldo, Anicete, Dente, Estanislao, Ricohermozo
+        &middot; Capstone project, for academic use.
       </p>
     </div>
   </footer>
