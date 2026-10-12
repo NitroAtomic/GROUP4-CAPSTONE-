@@ -19,7 +19,7 @@
         <div class="guided-module-metadata">
           <span>Module 1 of 6</span>
           <span class="guided-module-badge">FREE MODULE</span>
-          <span>6–8 min read</span>
+          <span>8–11 min total (includes video)</span>
         </div>
       </div>
     </header>
@@ -78,7 +78,7 @@
         </div>
 
         <p class="guided-sidebar-description">
-          6–8 min read · 7 short steps
+          8–11 min total · includes video · 7 short steps
         </p>
 
         <nav aria-label="Module steps">
@@ -198,7 +198,7 @@
                 <p>
                   In an office your computer sits behind a company firewall, an
                   intrusion prevention system (<button type="button" class="guided-definition-term" @click="openDefinition('IPS')">IPS</button>), and a monitored Security
-                  Email Gateway (SEG).
+                  Email Gateway (<button type="button" class="guided-definition-term" @click="openDefinition('SEG')">SEG</button>).
                 </p>
               </div>
 
@@ -217,7 +217,42 @@
               attacks arrive dressed as the tools you open daily.
             </p>
 
-            <h3>Domain tricks</h3>
+            <!-- Video lesson: introduces Domain tricks -->
+            <section class="guided-video-lesson" aria-labelledby="phishing-video-heading">
+              <div class="guided-video-heading-row">
+                <h3 id="phishing-video-heading">What is Phishing? — Video</h3>
+                <span class="guided-video-duration" aria-label="Video duration: 2 minutes and 10 seconds">◷ Watch time: 2 min 10 sec</span>
+              </div>
+              <p class="guided-video-prompt">
+                Watch this video for a visual introduction to phishing. As you watch,
+                think about how an attacker might imitate a trusted message or website.
+              </p>
+              <div class="guided-video-frame">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/WG8V1_Sj5g0"
+                  title="What is Phishing? — Educational video"
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="guided-video-summary">
+                <strong>Quick Summary</strong>
+                <p>
+                  Phishing uses deceptive messages or websites to trick people into revealing sensitive information or
+                  taking unsafe actions. Attackers often create a sense of urgency to pressure people into responding
+                  without thinking. Always check the sender, verify website addresses, and use trusted channels before
+                  responding to unexpected requests.
+                </p>
+              </div>
+              <p class="guided-video-attribution">
+                Video: <a href="https://www.youtube.com/watch?v=WG8V1_Sj5g0" target="_blank" rel="noopener noreferrer">What is Phishing? on YouTube</a>
+              </p>
+            </section>
+
+
+            <h3 class="guided-domain-tricks-heading">Domain tricks</h3>
 
             <div class="guided-comparison-grid">
               <div class="guided-information-card guided-warning-card">
@@ -259,6 +294,7 @@
                 An HTTPS padlock alone does not prove a website is legitimate.
               </p>
             </div>
+
           </template>
 
           <!-- STEP 3: QR CODE SCAMS -->
@@ -621,6 +657,16 @@
             <strong>Official Technical Guide:</strong>
             <a href="https://www.cisa.gov/resources-tools/resources/phishing-guidance-stopping-attack-cycle-phase-one" target="_blank" rel="noopener noreferrer">
               CISA, NSA, FBI, &amp; MS-ISAC — Phishing Guidance: Stopping the Attack Cycle at Phase One
+            </a>
+          </li>
+          <li>
+            <strong>Video Source:</strong>
+            <a
+              href="https://www.youtube.com/watch?v=WG8V1_Sj5g0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Topic Simple — "What is Phishing?" on YouTube
             </a>
           </li>
           <li>
@@ -1903,5 +1949,87 @@ onBeforeRouteLeave((to) => {
   }
 }
 
+
+
+/* Phishing Basics embedded educational video */
+.guided-video-lesson {
+  margin: 32px 0 12px;
+  padding: clamp(18px, 3vw, 26px);
+  border: 1px solid var(--guided-border);
+  border-radius: 16px;
+  background: var(--guided-surface);
+}
+.guided-video-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-bottom: 10px;
+}
+.guided-lesson-step .guided-video-heading-row h3 {
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(18px, 2.1vw, 21px);
+}
+.guided-video-duration {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  border: 1px solid var(--guided-border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+.guided-lesson-step .guided-video-prompt {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+.guided-video-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #0b2545;
+}
+.guided-video-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.guided-video-summary {
+  margin-top: 18px;
+  padding: 17px 19px;
+  border-left: 4px solid var(--teal, #2bb3a6);
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+.guided-video-summary strong { color: var(--heading); font-size: 15px; }
+.guided-lesson-step .guided-video-summary p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.guided-lesson-step .guided-video-attribution {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.guided-video-attribution a { color: var(--accent-text, #2bb3a6); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 620px) { .guided-video-lesson { padding: 16px; } }
+
+
+/* Distinct subtopic heading following the video */
+.guided-lesson-step .guided-domain-tricks-heading {
+  font-size: clamp(22px, 2.4vw, 26px);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--heading);
+  margin: 34px 0 16px;
+  letter-spacing: -0.015em;
+}
 
 </style>

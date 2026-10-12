@@ -2,14 +2,37 @@
   <main class="guided-module-page">
     <header class="guided-module-header"><div class="guided-module-container">
       <nav aria-label="Breadcrumb"><button type="button" class="guided-home-link" @click="requestLeaveModule"><span aria-hidden="true">⌂</span> Home</button></nav>
-      <h1>Vishing: Phishing by Phone</h1><div class="guided-module-metadata"><span>Module 4 of 6</span><span class="guided-module-badge">FREE MODULE</span><span>9–12 min read</span></div>
+      <h1>Vishing: Phishing by Phone</h1><div class="guided-module-metadata"><span>Module 4 of 6</span><span class="guided-module-badge">FREE MODULE</span><span>13–16 min total (includes video)</span></div>
     </div></header>
     <div class="guided-module-progress" role="group" aria-label="Vishing module progress"><div class="guided-progress-container"><div class="guided-progress-heading"><span class="guided-progress-title">📖 Vishing Module Progress</span><span class="guided-progress-step" aria-live="polite">Step {{ currentStep }} of {{ lessonSteps.length }}</span></div><div class="guided-progress-track" role="progressbar" :aria-valuenow="currentStep" :aria-valuemin="1" :aria-valuemax="lessonSteps.length" :aria-valuetext="`Step ${currentStep} of ${lessonSteps.length}`" aria-label="Lesson progress"><div class="guided-progress-fill" :style="{ width: `${currentStep / lessonSteps.length * 100}%` }"></div></div></div></div>
     <div class="guided-module-layout" :class="{ 'guided-sidebar-hidden': !sidebarVisible }">
-      <aside v-if="sidebarVisible" class="guided-module-sidebar" aria-label="Lesson navigation"><div class="guided-sidebar-heading"><strong>IN THIS MODULE</strong><span class="guided-module-badge">FREE</span></div><p class="guided-sidebar-description">9–12 min read · 7 short steps</p><nav aria-label="Module steps"><button v-for="(step, index) in lessonSteps" :key="step.id" type="button" class="guided-step-link" :class="{ 'guided-step-active': currentStep === index + 1 }" :aria-current="currentStep === index + 1 ? 'step' : undefined" @click="goToStep(index + 1)"><span>{{ String(index + 1).padStart(2, '0') }} · {{ step.name }}</span><span v-if="completedSteps.includes(index + 1)" class="guided-completed-mark" aria-label="Visited">✓</span></button></nav><div class="guided-sidebar-progress"><p>Step {{ currentStep }} of {{ lessonSteps.length }}</p><div class="guided-sidebar-progress-track"><div class="guided-sidebar-progress-fill" :style="{ width: `${currentStep / lessonSteps.length * 100}%` }"></div></div></div><button type="button" class="guided-hide-menu-button" @click="sidebarVisible = false">‹ Hide menu</button></aside>
+      <aside v-if="sidebarVisible" class="guided-module-sidebar" aria-label="Lesson navigation"><div class="guided-sidebar-heading"><strong>IN THIS MODULE</strong><span class="guided-module-badge">FREE</span></div><p class="guided-sidebar-description">13–16 min total (includes video) · 7 short steps</p><nav aria-label="Module steps"><button v-for="(step, index) in lessonSteps" :key="step.id" type="button" class="guided-step-link" :class="{ 'guided-step-active': currentStep === index + 1 }" :aria-current="currentStep === index + 1 ? 'step' : undefined" @click="goToStep(index + 1)"><span>{{ String(index + 1).padStart(2, '0') }} · {{ step.name }}</span><span v-if="completedSteps.includes(index + 1)" class="guided-completed-mark" aria-label="Visited">✓</span></button></nav><div class="guided-sidebar-progress"><p>Step {{ currentStep }} of {{ lessonSteps.length }}</p><div class="guided-sidebar-progress-track"><div class="guided-sidebar-progress-fill" :style="{ width: `${currentStep / lessonSteps.length * 100}%` }"></div></div></div><button type="button" class="guided-hide-menu-button" @click="sidebarVisible = false">‹ Hide menu</button></aside>
       <div class="guided-module-content"><section :key="currentStep" ref="activeStepSection" class="guided-lesson-step" aria-labelledby="guided-current-step-heading"><p class="guided-step-eyebrow" aria-live="polite">STEP {{ currentStep }} OF {{ lessonSteps.length }} · {{ lessonSteps[currentStep - 1].name.toUpperCase() }}</p>
         <template v-if="currentStep === 1"><div class="guided-introduction-card"><p class="guided-audience"><strong>Who this is for:</strong> remote workers in client support, sales, phone-based operations, executive support, and administrative roles.</p><h2 id="guided-current-step-heading">By the end of this module you can:</h2><ul class="guided-learning-outcomes"><li>Explain how <button type="button" class="guided-definition-term" @click="openDefinition('caller ID spoofing')">caller ID spoofing</button> and <button type="button" class="guided-definition-term" @click="openDefinition('VoIP')">VoIP</button> can make an unknown caller appear legitimate.</li><li>Recognize how live conversations use urgency, authority, and pressure to influence decisions.</li><li>Identify fake IT helpdesk calls, bank fraud alerts, and requests to install remote-access software.</li><li>Protect your <button type="button" class="guided-definition-term" @click="openDefinition('MFA')">MFA</button> approvals, verify callers independently, and report suspicious calls.</li></ul><div class="guided-helpful-tip"><span class="guided-helpful-tip-icon" aria-hidden="true">💡</span><div class="guided-helpful-tip-content"><strong>Helpful tip</strong><p>Click highlighted, dotted-underlined terms to learn what they mean. Try “caller ID spoofing” above.</p></div></div><div class="guided-introduction-footer"><h3>You'll cover:</h3><div class="guided-topic-tags"><span>Caller ID tricks</span><span>Fake support calls</span><span>MFA push fatigue</span><span>Safe callbacks</span></div><button type="button" class="guided-primary-button" @click="goToStep(2)">Start the lesson →</button></div></div></template>
-        <template v-else-if="currentStep === 2"><h2 id="guided-current-step-heading">What makes a phone call dangerous?</h2><p><button type="button" class="guided-definition-term" @click="openDefinition('vishing')">Vishing</button> is voice phishing: an attacker uses a phone call or internet-based voice service to trick someone into revealing sensitive information, transferring money, or granting access to a device.</p><div class="guided-comparison-grid"><div class="guided-information-card"><h3>Email phishing</h3><p>A written message can be reread, checked, and forwarded for verification.</p></div><div class="guided-information-card guided-warning-card"><h3>Vishing</h3><p>A caller responds immediately to your hesitation, adds pressure, and may discourage you from hanging up.</p></div></div><h3>How callers disguise their identity</h3><div class="guided-comparison-grid"><div v-for="item in phoneRisks" :key="item.title" class="guided-information-card"><h3>{{ item.title }}</h3><p>{{ item.description }}</p></div></div><div class="guided-plain-language-intro"><strong>Imagine this:</strong> Your phone displays a familiar bank name. The caller claims your account is under attack and asks you to approve a login. Does the caller ID prove the call is real?</div><div class="guided-takeaway"><strong>Key takeaway</strong><p>A caller's name, number, or professional tone is not proof of identity. You can end the call and verify through a number you independently trust.</p></div></template>
+        <template v-else-if="currentStep === 2"><h2 id="guided-current-step-heading">What makes a phone call dangerous?</h2><p><button type="button" class="guided-definition-term" @click="openDefinition('vishing')">Vishing</button> is voice phishing: an attacker uses a phone call or internet-based voice service to trick someone into revealing sensitive information, transferring money, or granting access to a device.</p><div class="guided-comparison-grid"><div class="guided-information-card"><h3>Email phishing</h3><p>A written message can be reread, checked, and forwarded for verification.</p></div><div class="guided-information-card guided-warning-card"><h3>Vishing</h3><p>A caller responds immediately to your hesitation, adds pressure, and may discourage you from hanging up.</p></div></div><!-- Educational video: Vishing Basics -->
+<section class="guided-video-lesson" aria-labelledby="vishing-video-heading">
+  <div class="guided-video-heading-row">
+    <h3 id="vishing-video-heading">What is Vishing? — Video</h3>
+    <span class="guided-video-duration" aria-label="Video watch time: 4 minutes 16 seconds">◷ Watch time: 4 min 16 sec</span>
+  </div>
+  <p class="guided-video-prompt">Watch this video to learn how scammers use phone calls to impersonate trusted organizations. Pay attention to the warning signs and how to verify a caller safely.</p>
+  <div class="guided-video-frame">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/DysFLnOf4Nw"
+      title="What is vishing? Understanding this high-tech phone scam"
+      loading="lazy"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <div class="guided-video-summary">
+    <strong>Quick Summary</strong>
+    <p>Vishing is a phone-based scam in which attackers pretend to be trusted people or organizations to obtain sensitive information or money. They may create urgency or use a convincing caller identity to pressure you. Hang up and verify unexpected requests using an official number you find independently.</p>
+  </div>
+  <p class="guided-video-attribution">Video: <a href="https://www.youtube.com/watch?v=DysFLnOf4Nw" target="_blank" rel="noopener noreferrer">What is vishing? Understanding this high-tech phone scam on YouTube</a></p>
+</section>
+<h3 class="guided-basics-subtopic">How callers disguise their identity</h3><div class="guided-comparison-grid"><div v-for="item in phoneRisks" :key="item.title" class="guided-information-card"><h3>{{ item.title }}</h3><p>{{ item.description }}</p></div></div><div class="guided-plain-language-intro"><strong>Imagine this:</strong> Your phone displays a familiar bank name. The caller claims your account is under attack and asks you to approve a login. Does the caller ID prove the call is real?</div><div class="guided-takeaway"><strong>Key takeaway</strong><p>A caller's name, number, or professional tone is not proof of identity. You can end the call and verify through a number you independently trust.</p></div></template>
         <template v-else-if="currentStep === 3"><h2 id="guided-current-step-heading">The stories scammers use on calls</h2><p>A caller may use a familiar organization, an urgent problem, or an authoritative title to win your cooperation. Select a scenario to see the underlying tactic.</p><div class="guided-comparison-grid"><div v-for="lure in lures" :key="lure.id" class="guided-information-card guided-warning-card"><h3>{{ lure.title }}</h3><p>{{ lure.message }}</p><button type="button" class="guided-example-next" :aria-pressed="selectedLure === lure.id" @click="selectedLure = lure.id">Inspect this call ⊕</button></div></div><div class="guided-clue-explanation" role="status" aria-live="polite"><template v-if="selectedLure"><span class="guided-clue-label">HOW THE SCAM WORKS</span><h4>{{ lures.find(item => item.id === selectedLure)?.title }}</h4><p>{{ lures.find(item => item.id === selectedLure)?.explanation }}</p></template><p v-else>Select a call scenario above to reveal the attacker's goal.</p></div><h3>Why live pressure works</h3><p><strong>Manufactured urgency:</strong> “Your account will be locked in five minutes.” <strong>Borrowed authority:</strong> “I'm calling from IT Security.” <strong>No thinking room:</strong> “Stay on the line and do exactly what I say.” A skilled scammer may adapt their script based on your reaction.</p><div class="guided-takeaway"><strong>Key takeaway</strong><p>Urgency and authority are claims, not evidence. End the call before responding to an unexpected request involving money, codes, or device access.</p></div></template>
         <template v-else-if="currentStep === 4"><h2 id="guided-current-step-heading">Four warning signs during a call</h2><p>Tap a red flag to understand why it matters.</p><div class="guided-comparison-grid"><div v-for="flag in redFlags" :key="flag.id" class="guided-information-card guided-warning-card"><h3>{{ flag.title }}</h3><p>{{ flag.example }}</p><button type="button" class="guided-example-next" :aria-pressed="selectedFlag === flag.id" @click="selectedFlag = flag.id">Explain this red flag ⊕</button></div></div><div class="guided-clue-explanation" role="status" aria-live="polite"><template v-if="selectedFlag"><span class="guided-clue-label">WARNING SIGN</span><h4>{{ redFlags.find(item => item.id === selectedFlag)?.title }}</h4><p>{{ redFlags.find(item => item.id === selectedFlag)?.explanation }}</p></template><p v-else>Choose a red flag to see what makes the request unsafe.</p></div><div class="guided-information-card"><h3>What if the caller ID looks correct?</h3><p><button type="button" class="guided-definition-term" @click="openDefinition('caller ID spoofing')">Caller ID spoofing</button> can display a familiar number or name. Even a call appearing to come from a bank, coworker, or internal extension must be verified when it makes an unusual request.</p></div><div class="guided-takeaway"><strong>Key takeaway</strong><p>Requests for passwords, MFA approval, remote-control software, or immediate payment are reasons to hang up and independently verify.</p></div></template>
         <template v-else-if="currentStep === 5"><h2 id="guided-current-step-heading">Investigate suspicious calls</h2><p>These fictional call simulations use familiar workplace and financial services. Nothing here initiates a real call or installs software.</p><div class="guided-example-tabs" role="tablist" aria-label="Vishing examples"><button v-for="example in exampleTabs" :key="example.id" :id="`guided-tab-${example.id}`" type="button" role="tab" :aria-selected="activeExampleTab === example.id" :aria-controls="`guided-panel-${example.id}`" :tabindex="activeExampleTab === example.id ? 0 : -1" :class="{ 'guided-tab-selected': activeExampleTab === example.id }" @click="selectExample(example.id)" @keydown="handleTabKeydown($event, example.id)">{{ example.label }}</button></div><div :id="`guided-panel-${activeExampleTab}`" role="tabpanel" :aria-labelledby="`guided-tab-${activeExampleTab}`" class="guided-example-panel" tabindex="0">
@@ -22,7 +45,7 @@
       </section><nav class="guided-step-navigation" aria-label="Previous and next lesson steps"><button v-if="currentStep > 1" type="button" class="guided-secondary-button" @click="goToStep(currentStep - 1)">← {{ lessonSteps[currentStep - 2].name }}</button><span v-else></span><button v-if="currentStep < lessonSteps.length" type="button" class="guided-primary-button" @click="goToStep(currentStep + 1)">Next: {{ lessonSteps[currentStep].name }} →</button></nav></div>
     </div>
     <button v-if="!sidebarVisible" type="button" class="guided-floating-menu-button" @click="sidebarVisible = true" aria-label="Show module menu">☰ Menu</button>
-    <footer class="guided-module-references"><div class="guided-references-inner"><h2>References used in this module</h2><ul><li><strong>Video Source:</strong> <a href="https://www.youtube.com/watch?v=zE60tK9M1x8" target="_blank" rel="noopener noreferrer">Global Cyber Alliance — What is Vishing? Understanding This High-Tech Phone Scam</a></li><li><strong>Reference Guide:</strong> <a href="https://www.cisco.com/site/us/en/learn/topics/security/what-is-vishing.html" target="_blank" rel="noopener noreferrer">Cisco Security Topics — What is Vishing?</a></li></ul></div></footer>
+    <footer class="guided-module-references"><div class="guided-references-inner"><h2>References used in this module</h2><ul><li><strong>Video Source:</strong> <a href="https://www.youtube.com/watch?v=DysFLnOf4Nw" target="_blank" rel="noopener noreferrer">TECHtalk — "What is vishing? Understanding this high-tech phone scam" on YouTube</a></li><li><strong>Reference Guide:</strong> <a href="https://www.cisco.com/site/us/en/learn/topics/security/what-is-vishing.html" target="_blank" rel="noopener noreferrer">Cisco Security Topics — What is Vishing?</a></li></ul></div></footer>
     <div v-if="activeDefinition" class="guided-dialog-backdrop" @click.self="closeDefinition"><div ref="definitionDialog" class="guided-dialog guided-definition-dialog" role="dialog" aria-modal="true" aria-labelledby="guided-definition-title" aria-describedby="guided-definition-description" @keydown.esc="closeDefinition"><div class="guided-modal-icon guided-modal-icon-info" aria-hidden="true">?</div><p class="guided-modal-eyebrow">QUICK DEFINITION</p><h2 id="guided-definition-title">{{ activeDefinition }}</h2><p id="guided-definition-description">{{ glossaryDefinitions[activeDefinition] }}</p><div class="guided-modal-divider"></div><button type="button" class="guided-primary-button guided-modal-main-action" @click="closeDefinition">Got it ✓</button></div></div>
     <div v-if="showLeaveConfirmation" class="guided-dialog-backdrop" @click.self="showLeaveConfirmation = false"><div ref="leaveDialog" class="guided-dialog" role="dialog" aria-modal="true" aria-labelledby="guided-leave-title" aria-describedby="guided-leave-description" @keydown.esc="showLeaveConfirmation = false"><div class="guided-modal-icon guided-modal-icon-exit" aria-hidden="true">↗</div><p class="guided-modal-eyebrow">LEARNING PROGRESS</p><h2 id="guided-leave-title">Leave this module?</h2><p id="guided-leave-description">You're on step {{ currentStep }} of {{ lessonSteps.length }}. Your progress is saved, so you can pick up where you left off when you return.</p><div class="guided-dialog-actions"><button type="button" class="guided-secondary-button" @click="showLeaveConfirmation = false">Stay here</button><button type="button" class="guided-primary-button" @click="leaveModule">Leave module</button></div></div></div>
     <div v-if="showResumeConfirmation" class="guided-dialog-backdrop"><div ref="resumeDialog" class="guided-dialog" role="dialog" aria-modal="true" aria-labelledby="guided-resume-title" aria-describedby="guided-resume-description"><div class="guided-modal-icon guided-modal-icon-info" aria-hidden="true">↻</div><p class="guided-modal-eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2 id="guided-resume-title">Welcome back!</h2><p id="guided-resume-description">You previously reached Step {{ savedStep }} of {{ lessonSteps.length }}. What would you like to do?</p><div class="guided-resume-actions"><button type="button" class="guided-primary-button" @click="resumeLesson">Continue Progress</button><button type="button" class="guided-secondary-button" @click="restartLesson">Start Over</button><router-link to="/quiz/module-4/question" class="guided-secondary-button">Take/Retake Quiz</router-link></div></div></div>
@@ -1022,5 +1045,67 @@ onMounted(() => { sidebarVisible.value = window.innerWidth > 900; const hasSaved
 .guided-quiz-card .guided-secondary-button:focus-visible { outline: 3px solid #f5a623; outline-offset: 3px; }
 .guided-lesson-step { scroll-margin-top: 105px; }
 @media(max-width:620px) { .guided-phone-frame { border-width: 5px; border-radius: 23px; padding: 7px; } }
+
+
+/* Embedded educational video — matches Phishing / Smishing modules */
+.guided-video-lesson {
+  margin: 32px 0 24px;
+  padding: clamp(18px, 3vw, 26px);
+  border: 1px solid var(--guided-border);
+  border-radius: 16px;
+  background: var(--guided-surface);
+}
+.guided-video-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-bottom: 10px;
+}
+.guided-lesson-step .guided-video-heading-row h3 {
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(20px, 2.3vw, 26px);
+  font-weight: 750;
+}
+.guided-video-duration {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 13px;
+  border: 1px solid var(--guided-border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.guided-lesson-step .guided-video-prompt {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0 0 22px;
+}
+.guided-video-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #0b2545;
+}
+.guided-video-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+.guided-video-summary {
+  margin-top: 18px;
+  padding: 20px 24px;
+  border-left: 4px solid var(--teal, #2bb3a6);
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+.guided-video-summary strong { color: var(--heading); font-size: 16px; }
+.guided-lesson-step .guided-video-summary p { margin: 8px 0 0; font-size: 15px; line-height: 1.8; }
+.guided-lesson-step .guided-video-attribution { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
+.guided-video-attribution a { color: var(--accent-text, #2bb3a6); text-decoration: underline; text-underline-offset: 3px; }
+.guided-lesson-step h3.guided-basics-subtopic { font-size: clamp(20px, 2.3vw, 23px); margin: 32px 0 16px; color: var(--heading); }
+@media (max-width: 620px) { .guided-video-lesson { padding: 16px; } .guided-video-summary { padding: 16px; } }
 
 </style>
