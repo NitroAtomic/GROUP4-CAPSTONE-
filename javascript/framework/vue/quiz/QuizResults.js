@@ -10,7 +10,7 @@ import { apiFetch } from '../lib/api.js'
    QuizQuestion sa resulta bago pa dumating dito. */
 
 const MODULE_PATHS = {
-  'module-1': '/modules/quishing',
+  'module-1': '/modules/phishing',
   'module-2': '/modules/spear-phishing',
   'module-3': '/modules/smishing',
   'module-4': '/modules/vishing',
@@ -129,6 +129,10 @@ export default {
     loadResults() {
       const raw = sessionStorage.getItem(`quiz-results-${this.moduleId}`)
       this.results = raw ? JSON.parse(raw) : null
+
+      if (this.results && this.moduleId === 'module-1') {
+        this.results.moduleName = 'Phishing'
+      }
     },
 
     async recordAttempt() {

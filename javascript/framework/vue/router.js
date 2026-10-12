@@ -98,7 +98,8 @@ const routes = [
   },
   // Module routes
   {
-    path: '/modules/quishing',
+    path: '/modules/phishing',
+    alias: '/modules/quishing',
     name: 'Quishing',
     component: Quishing
   },

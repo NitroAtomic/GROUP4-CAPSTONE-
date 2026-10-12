@@ -66,6 +66,10 @@ export default {
     },
 
     moduleTitle() {
+      if (this.moduleId === 'module-1') {
+        return 'Phishing'
+      }
+
       return this.moduleData ? this.moduleData.moduleName : ''
     },
 

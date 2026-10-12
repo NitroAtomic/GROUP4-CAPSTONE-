@@ -28,10 +28,10 @@
         </div>
 
         <div class="modules-grid">
-          <router-link to="/modules/quishing" class="module-card">
+          <router-link to="/modules/phishing" class="module-card">
             <div>
-              <h3>Quishing</h3>
-              <p>Email Phishing, Fake Login Pages & QR Code Exploits</p>
+              <h3>Phishing</h3>
+              <p>Email Scams, Fake Login Pages & QR Code Phishing (Quishing)</p>
             </div>
             <span class="module-icon-chip" aria-hidden="true">
               <svg class="ui-icon"><use href="#ui-icon-qr" /></svg>
