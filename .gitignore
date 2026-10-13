@@ -1,2 +1,4 @@
 node_modules/
 dist/
+# Lokal na preview ng bayad na aral (npm run preview:premium)
+dist/premium-preview/
