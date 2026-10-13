@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "node backend-node/server.js",
-    "postinstall": "cd backend-node && npm install"
+    "postinstall": "cd backend-node && npm install",
+    "preview:premium": "node scripts/preview-premium.cjs"
   },
   "dependencies": {
     "pinia": "^2.3.1",
