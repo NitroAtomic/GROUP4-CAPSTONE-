@@ -23,7 +23,6 @@ const MODULES = {
 // BEGIN PREMIUM HELPERS
 // These browser-only helpers are also embedded by the local preview script.
 // No paid lesson text is bundled in frontend JavaScript.
-
 function parsePremiumLesson(html) {
   const doc = new DOMParser().parseFromString(html, 'text/html')
   const references = []
@@ -34,15 +33,12 @@ function parsePremiumLesson(html) {
   })
 
   const steps = []
+  const add = (label, content) => steps.push({ label, html: content })
+  const title = node =>
+    node.querySelector('h2,h3,h4')?.textContent.trim() || 'Lesson'
 
-  const add = (label, content) => {
-    steps.push({ label, html: content })
-  }
-
-  const title = node => {
-    return node.querySelector('h2,h3,h4')?.textContent.trim() || 'Lesson'
-  }
-
+  // Explicit step wrappers let curated lessons choose their own sequence.
+  // Legacy lessons are split without dropping their existing content.
   let intro = ''
 
   const flushIntro = () => {
@@ -56,7 +52,6 @@ function parsePremiumLesson(html) {
     if (node.nodeType === 3) {
       if (node.textContent.trim()) {
         flushIntro()
-
         add(
           'Reading',
           node.textContent
@@ -65,7 +60,6 @@ function parsePremiumLesson(html) {
             .replace(/>/g, '&gt;')
         )
       }
-
       return
     }
 
@@ -73,28 +67,18 @@ function parsePremiumLesson(html) {
 
     if (node.hasAttribute('data-lesson-step')) {
       flushIntro()
-
-      add(
-        node.dataset.stepLabel || title(node),
-        node.outerHTML
-      )
-    } else if (
-      node.matches('.module-key-details,.learning-objectives')
-    ) {
+      add(node.dataset.stepLabel || title(node), node.outerHTML)
+    } else if (node.matches('.module-key-details,.learning-objectives')) {
       intro += node.outerHTML
     } else if (
       node.matches('.module-awareness-guide') &&
       node.querySelector(':scope > article')
     ) {
       flushIntro()
-
       let reading = ''
 
       Array.from(node.childNodes).forEach(child => {
-        if (
-          child.nodeType === 1 &&
-          child.matches('article')
-        ) {
+        if (child.nodeType === 1 && child.matches('article')) {
           add(
             title(child),
             '<section class="module-awareness-guide">' +
@@ -102,14 +86,10 @@ function parsePremiumLesson(html) {
               child.outerHTML +
               '</section>'
           )
-
           reading = ''
         } else if (child.nodeType === 1) {
           reading += child.outerHTML
-        } else if (
-          child.nodeType === 3 &&
-          child.textContent.trim()
-        ) {
+        } else if (child.nodeType === 3 && child.textContent.trim()) {
           reading += child.textContent
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -119,9 +99,7 @@ function parsePremiumLesson(html) {
       if (reading.trim()) {
         add(
           'More reading',
-          '<section class="module-awareness-guide">' +
-            reading +
-            '</section>'
+          '<section class="module-awareness-guide">' + reading + '</section>'
         )
       }
     } else {
@@ -141,72 +119,57 @@ function parsePremiumLesson(html) {
 function renderPremiumStep(html, answers, tabs) {
   const doc = new DOMParser().parseFromString(html, 'text/html')
 
-  doc.querySelectorAll('.scenario-decision').forEach(
-    (decision, index) => {
-      const list = decision.querySelector(':scope > ul')
-      if (!list) return
+  // Enhance original curated A/B decisions and newly authored practice.
+  doc.querySelectorAll('.scenario-decision').forEach((decision, index) => {
+    const list = decision.querySelector(':scope > ul')
+    if (!list) return
 
-      const question = doc.createElement('div')
-      question.className = 'premium-question'
-      question.dataset.question = 'legacy-' + index
+    const question = doc.createElement('div')
+    question.className = 'premium-question'
+    question.dataset.question = 'legacy-' + index
 
-      Array.from(list.children).forEach((item, choiceIndex) => {
-        const button = doc.createElement('button')
+    Array.from(list.children).forEach((item, choiceIndex) => {
+      const button = doc.createElement('button')
+      button.type = 'button'
+      button.className = 'premium-choice'
+      button.dataset.choice = String(choiceIndex)
+      button.dataset.correct = /\(Correct\)/i.test(item.textContent)
+        ? 'true'
+        : 'false'
 
-        button.type = 'button'
-        button.className = 'premium-choice'
-        button.dataset.choice = String(choiceIndex)
+      button.dataset.feedback = button.dataset.correct === 'true'
+        ? 'Correct. ' + item.textContent
+            .replace(/\(Correct\)/i, '')
+            .replace(/^\s*[A-Z]:\s*/, '')
+            .trim()
+        : 'This choice follows the unverified request. Pause and verify independently. Review the safer response below.'
 
-        button.dataset.correct = /\(Correct\)/i.test(
-          item.textContent
-        )
-          ? 'true'
-          : 'false'
+      button.innerHTML = item.innerHTML
+        .replace(/<em>\s*\(Correct\)\s*<\/em>/gi, '')
+        .replace(/\(Correct\)/gi, '')
 
-        button.dataset.feedback =
-          button.dataset.correct === 'true'
-            ? 'Correct. ' +
-              item.textContent
-                .replace(/\(Correct\)/i, '')
-                .replace(/^\s*[A-Z]:\s*/, '')
-                .trim()
-            : 'This choice follows the unverified request. Pause and verify independently. Review the safer response below.'
+      question.appendChild(button)
+    })
 
-        button.innerHTML = item.innerHTML
-          .replace(
-            /<em>\s*\(Correct\)\s*<\/em>/gi,
-            ''
-          )
-          .replace(/\(Correct\)/gi, '')
-
-        question.appendChild(button)
-      })
-
-      list.replaceWith(question)
-    }
-  )
+    list.replaceWith(question)
+  })
 
   doc.querySelectorAll('[data-question]').forEach(question => {
     const id = question.dataset.question
-
     const choices = Array.from(
       question.querySelectorAll('button[data-choice]')
     )
-
     const selected = answers[id]
 
     choices.forEach(button => {
       const active = selected === button.dataset.choice
 
       button.setAttribute('aria-pressed', String(active))
-
       button.classList.toggle('is-selected', active)
-
       button.classList.toggle(
         'is-correct',
         active && button.dataset.correct === 'true'
       )
-
       button.classList.toggle(
         'is-incorrect',
         active && button.dataset.correct !== 'true'
@@ -214,37 +177,25 @@ function renderPremiumStep(html, answers, tabs) {
     })
 
     if (selected !== undefined) {
-      const picked = choices.find(
-        button => button.dataset.choice === selected
-      )
-
+      const picked = choices.find(button => button.dataset.choice === selected)
       if (!picked) return
 
       const correct = picked.dataset.correct === 'true'
       const feedback = doc.createElement('div')
 
       feedback.className =
-        'premium-feedback ' +
-        (correct ? 'is-correct' : 'is-incorrect')
-
+        'premium-feedback ' + (correct ? 'is-correct' : 'is-incorrect')
       feedback.setAttribute('role', 'status')
-
-      feedback.textContent =
-        picked.dataset.feedback ||
-        (
-          correct
-            ? 'Correct.'
-            : 'Try again and consider the warning signs.'
-        )
+      feedback.textContent = picked.dataset.feedback || (
+        correct
+          ? 'Correct.'
+          : 'Try again and consider the warning signs.'
+      )
 
       if (!correct) {
-        const safer = choices.find(
-          button => button.dataset.correct === 'true'
-        )
-
+        const safer = choices.find(button => button.dataset.correct === 'true')
         if (safer) {
-          feedback.textContent +=
-            ' Safer response: ' + safer.textContent.trim()
+          feedback.textContent += ' Safer response: ' + safer.textContent.trim()
         }
       }
 
@@ -253,17 +204,11 @@ function renderPremiumStep(html, answers, tabs) {
   })
 
   doc.querySelectorAll('[data-tab-group]').forEach(group => {
-    const buttons = Array.from(
-      group.querySelectorAll('button[data-tab]')
-    )
-
-    const selected =
-      tabs[group.dataset.tabGroup] ||
-      buttons[0]?.dataset.tab
+    const buttons = Array.from(group.querySelectorAll('button[data-tab]'))
+    const selected = tabs[group.dataset.tabGroup] || buttons[0]?.dataset.tab
 
     buttons.forEach(button => {
       const active = button.dataset.tab === selected
-
       button.classList.toggle('is-active', active)
       button.setAttribute('aria-pressed', String(active))
     })
@@ -283,7 +228,6 @@ function premiumInteraction(event, scope, answers, tabs) {
 
   if (choice && scope.contains(choice)) {
     const question = choice.closest('[data-question]')
-
     if (question) {
       answers[question.dataset.question] = choice.dataset.choice
       return true
@@ -294,7 +238,6 @@ function premiumInteraction(event, scope, answers, tabs) {
 
   if (tab && scope.contains(tab)) {
     const group = tab.closest('[data-tab-group]')
-
     if (group) {
       tabs[group.dataset.tabGroup] = tab.dataset.tab
       return true
@@ -320,30 +263,19 @@ function premiumEstimate(steps) {
     '[data-question],.scenario-decision'
   ).length
 
-  const low = Math.max(
-    1,
-    Math.ceil(words / 200 + practice * 0.5)
-  )
+  const low = Math.max(1, Math.ceil(words / 200 + practice * 0.5))
 
-  return (
-    low +
-    '–' +
-    (low + 4) +
-    ' min total (includes interactive scenarios)'
-  )
+  return low + '–' + (low + 4) + ' min total (includes interactive scenarios)'
 }
 
 function premiumReadProgress(storage, key, steps) {
   if (!key) return null
 
   try {
-    const saved = JSON.parse(
-      storage.getItem(key) || 'null'
-    )
+    const saved = JSON.parse(storage.getItem(key) || 'null')
 
-    const signature = JSON.stringify(
-      steps.map(step => step.label)
-    )
+    // Invalidate when section labels/order change.
+    const signature = JSON.stringify(steps.map(step => step.label))
 
     if (
       !saved ||
@@ -354,33 +286,17 @@ function premiumReadProgress(storage, key, steps) {
     }
 
     return {
-      activeStep: Math.max(
-        0,
-        Math.min(saved.activeStep, steps.length)
-      ),
-
-      reviewed: [
-        ...new Set(
-          (
-            Array.isArray(saved.reviewed)
-              ? saved.reviewed
-              : []
-          ).filter(
-            index =>
-              Number.isInteger(index) &&
-              index >= 0 &&
-              index < steps.length
-          )
-        ),
-      ],
-
+      activeStep: Math.max(0, Math.min(saved.activeStep, steps.length)),
+      reviewed: [...new Set(
+        (Array.isArray(saved.reviewed) ? saved.reviewed : [])
+          .filter(i => Number.isInteger(i) && i >= 0 && i < steps.length)
+      )],
       answers:
         saved.answers &&
         typeof saved.answers === 'object' &&
         !Array.isArray(saved.answers)
           ? saved.answers
           : {},
-
       tabs:
         saved.tabs &&
         typeof saved.tabs === 'object' &&
@@ -397,22 +313,15 @@ function premiumWriteProgress(storage, key, steps, progress) {
   if (!key) return false
 
   try {
-    storage.setItem(
-      key,
-      JSON.stringify({
-        signature: JSON.stringify(
-          steps.map(step => step.label)
-        ),
-        ...progress,
-      })
-    )
-
+    storage.setItem(key, JSON.stringify({
+      signature: JSON.stringify(steps.map(step => step.label)),
+      ...progress,
+    }))
     return true
   } catch {
     return false
   }
 }
-
 // END PREMIUM HELPERS
 
 // Local progress never grants access or records assessment completion.
@@ -428,13 +337,12 @@ async function progressKey(auth, slug) {
   if (!owner && auth.token) {
     try {
       const part = auth.token.split('.')[1]
-
-      const normalized = part
-        .replace(/-/g, '+')
-        .replace(/_/g, '/')
-        .padEnd(Math.ceil(part.length / 4) * 4, '=')
-
-      const payload = JSON.parse(atob(normalized))
+      const payload = JSON.parse(atob(
+        part
+          .replace(/-/g, '+')
+          .replace(/_/g, '/')
+          .padEnd(Math.ceil(part.length / 4) * 4, '=')
+      ))
 
       owner =
         payload.sub ??
@@ -464,12 +372,7 @@ async function progressKey(auth, slug) {
     .map(byte => byte.toString(16).padStart(2, '0'))
     .join('')
 
-  return (
-    'se-aware:premium-progress:v2:' +
-    fingerprint +
-    ':' +
-    slug
-  )
+  return 'se-aware:premium-progress:v2:' + fingerprint + ':' + slug
 }
 
 export default {
@@ -482,25 +385,18 @@ export default {
       message: '',
       steps: [],
       references: '',
-
       activeStep: 0,
       reviewed: [],
       answers: {},
       tabs: {},
       menuOpen: true,
       requestId: 0,
-
       storageKey: '',
       savedProgress: null,
       progressSaved: false,
-
       dialogKind: '',
-      definition: {
-        term: '',
-        text: '',
-      },
+      definition: { term: '', text: '' },
       leaveDestination: '',
-
       focusBeforeDialog: null,
       focusReturnTerm: '',
       pendingRouteDecision: null,
@@ -514,10 +410,7 @@ export default {
     },
 
     meta() {
-      return MODULES[this.slug] || {
-        title: 'Premium module',
-        intro: '',
-      }
+      return MODULES[this.slug] || { title: 'Premium module', intro: '' }
     },
 
     totalSteps() {
@@ -529,19 +422,13 @@ export default {
     },
 
     lessonComplete() {
-      return (
-        this.steps.length > 0 &&
-        this.steps.every(
-          (_, index) => this.reviewed.includes(index)
-        )
-      )
+      return this.steps.length > 0 &&
+        this.steps.every((_, index) => this.reviewed.includes(index))
     },
 
     progressPercent() {
       return this.steps.length
-        ? Math.round(
-            this.reviewed.length / this.steps.length * 100
-          )
+        ? Math.round(this.reviewed.length / this.steps.length * 100)
         : 0
     },
 
@@ -576,11 +463,11 @@ export default {
   },
 
   beforeRouteLeave(to, from, next) {
-    // Catch Dashboard/Modules links and browser Back.
-    // Authentication redirects and assessment routes are not intercepted.
+    // Also catch shared-header links and browser Back.
+    // Auth redirects and assessment routes are not intercepted.
     if (
       this.state !== 'ready' ||
-      !['/dashboard', '/premium-list', '/'].includes(to.path) ||
+      !['/dashboard', '/modules/premium', '/'].includes(to.path) ||
       this.confirmedNavigation
     ) {
       this.confirmedNavigation = false
@@ -595,7 +482,6 @@ export default {
 
     this.leaveDestination = to.fullPath || to.path
     this.pendingRouteDecision = next
-
     this.saveProgress()
     this.openDialog('leave')
   },
@@ -607,9 +493,7 @@ export default {
   beforeUnmount() {
     this.saveProgress()
     this.requestId++
-
     window.removeEventListener('pagehide', this.saveProgress)
-
     this.$refs.progressDialog?.close()
   },
 
@@ -626,24 +510,20 @@ export default {
       this.message = ''
       this.steps = []
       this.references = ''
-
       this.activeStep = 0
       this.reviewed = []
       this.answers = {}
       this.tabs = {}
       this.menuOpen = true
-
       this.storageKey = ''
       this.savedProgress = null
       this.progressSaved = false
 
       try {
         const auth = useAuthStore()
-
-        const data = await apiFetch(
-          `/api/modules/${slug}/content`,
-          { token: auth.token }
-        )
+        const data = await apiFetch(`/api/modules/${slug}/content`, {
+          token: auth.token,
+        })
 
         if (requestId !== this.requestId) return
 
@@ -656,7 +536,6 @@ export default {
         }
 
         const lesson = parsePremiumLesson(this.html)
-
         this.steps = lesson.steps
         this.references = lesson.references
 
@@ -667,8 +546,7 @@ export default {
         }
 
         // Restore only after the protected content request succeeds.
-        const key = await progressKey(auth, slug)
-          .catch(() => '')
+        const key = await progressKey(auth, slug).catch(() => '')
 
         if (requestId !== this.requestId) return
 
@@ -701,7 +579,6 @@ export default {
         if (requestId !== this.requestId) return
 
         this.message = error.message || 'Please try again.'
-
         this.state = /Premium subscription/i.test(this.message)
           ? 'locked'
           : 'error'
@@ -772,12 +649,8 @@ export default {
           previousFocus.focus?.({ preventScroll: true })
         } else if (term) {
           const replacement = Array.from(
-            this.$refs.lessonContent?.querySelectorAll(
-              'button[data-term]'
-            ) || []
-          ).find(
-            button => button.dataset.term === term
-          )
+            this.$refs.lessonContent?.querySelectorAll('button[data-term]') || []
+          ).find(button => button.dataset.term === term)
 
           replacement?.focus({ preventScroll: true })
         }
@@ -786,7 +659,7 @@ export default {
       this.focusBeforeDialog = null
       this.focusReturnTerm = ''
 
-      // Escape on Welcome back resumes the saved visit.
+      // Escape on Welcome back resumes instead of overwriting saved progress.
       if (kind === 'resume' && this.savedProgress) {
         this.applySavedProgress()
       }
@@ -813,7 +686,6 @@ export default {
     startOver() {
       this.savedProgress = null
       this.closeDialog()
-
       this.activeStep = 0
       this.reviewed = []
       this.answers = {}
@@ -828,13 +700,10 @@ export default {
       if (!heading) return
 
       heading.focus({ preventScroll: true })
-
-      const reducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches
-
       heading.scrollIntoView({
-        behavior: reducedMotion ? 'auto' : 'smooth',
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'auto'
+          : 'smooth',
         block: 'start',
       })
     },
@@ -850,10 +719,7 @@ export default {
     },
 
     nextStep() {
-      if (
-        !this.isAssessment &&
-        !this.reviewed.includes(this.activeStep)
-      ) {
+      if (!this.isAssessment && !this.reviewed.includes(this.activeStep)) {
         this.reviewed.push(this.activeStep)
       }
 
@@ -867,7 +733,6 @@ export default {
       }
 
       this.leaveDestination = destination
-
       this.saveProgress()
       this.openDialog('leave')
     },
@@ -877,7 +742,6 @@ export default {
       const decision = this.pendingRouteDecision
 
       this.pendingRouteDecision = null
-
       this.saveProgress()
       this.closeDialog()
 
@@ -899,60 +763,32 @@ export default {
           term: term.dataset.term || term.textContent,
           text: term.dataset.definition || '',
         }
-
         this.openDialog('definition', term)
         return
       }
 
       const index = this.activeStep
-
-      const answers = {
-        ...(this.answers[index] || {}),
-      }
-
-      const tabs = {
-        ...(this.tabs[index] || {}),
-      }
-
+      const answers = { ...(this.answers[index] || {}) }
+      const tabs = { ...(this.tabs[index] || {}) }
       const clickedButton = event.target.closest('button')
       const focusKey = clickedButton?.dataset
-
       const questionId = clickedButton
         ?.closest('[data-question]')
         ?.dataset.question
 
-      if (
-        premiumInteraction(
-          event,
-          this.$refs.lessonContent,
-          answers,
-          tabs
-        )
-      ) {
-        this.answers = {
-          ...this.answers,
-          [index]: answers,
-        }
-
-        this.tabs = {
-          ...this.tabs,
-          [index]: tabs,
-        }
-
+      if (premiumInteraction(event, this.$refs.lessonContent, answers, tabs)) {
+        this.answers = { ...this.answers, [index]: answers }
+        this.tabs = { ...this.tabs, [index]: tabs }
         this.saveProgress()
 
         this.$nextTick(() => {
-          const buttons =
-            this.$refs.lessonContent?.querySelectorAll(
-              'button'
-            ) || []
-
-          for (const button of buttons) {
+          for (
+            const button of this.$refs.lessonContent?.querySelectorAll('button') || []
+          ) {
             const sameChoice =
               focusKey?.choice !== undefined &&
               button.dataset.choice === focusKey.choice &&
-              button.closest('[data-question]')
-                ?.dataset.question === questionId
+              button.closest('[data-question]')?.dataset.question === questionId
 
             const sameTab =
               focusKey?.tab &&
@@ -973,12 +809,9 @@ export default {
       }
 
       this.saveProgress()
-
       this.$router.push({
         name: 'QuizQuestion',
-        params: {
-          moduleId: this.slug,
-        },
+        params: { moduleId: this.slug },
       })
     },
   },

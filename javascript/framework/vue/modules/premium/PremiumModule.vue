@@ -5,7 +5,7 @@
         <button type="button" class="premium-location-button" @click="requestLeave('/dashboard')">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" /></svg>Dashboard
         </button>
-        <button type="button" class="premium-location-button" @click="requestLeave('/premium-list')">
+        <button type="button" class="premium-location-button" @click="requestLeave('/modules/premium')">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7l2 2 2-2h7v16h-7l-2 2-2-2H3zM12 6v16" /></svg>Modules
         </button>
       </nav>
@@ -29,7 +29,7 @@
         <div class="premium-step-main">
           <h2 ref="stepHeading" class="premium-step-eyebrow" tabindex="-1">Step {{ activeStep + 1 }} of {{ totalSteps }} · {{ currentLabel }}</h2>
           <div v-if="!isAssessment" :key="activeStep" ref="lessonContent" class="premium-module-body premium-step-content" @click="onLessonClick" v-html="renderedStep"></div>
-          <section v-else class="module-quiz-section premium-assessment-card"><h2>Course Assessment</h2><p>Test your knowledge with the 10-question assessment for this course.</p><div class="premium-assessment-actions"><button type="button" class="take-quiz-button" @click="startQuiz">Take Assessment</button><button type="button" class="module-home-button" @click="requestLeave('/premium-list')">Back to Modules</button></div></section>
+          <section v-else class="module-quiz-section premium-assessment-card"><h2>Course Assessment</h2><p>Test your knowledge with the 10-question assessment for this course.</p><div class="premium-assessment-actions"><button type="button" class="take-quiz-button" @click="startQuiz">Take Assessment</button><button type="button" class="module-home-button" @click="requestLeave('/modules/premium')">Back to Modules</button></div></section>
           <p v-if="isAssessment && lessonComplete" class="premium-completion-note" role="status">✓ All learning sections reviewed</p>
           <div class="premium-step-navigation"><button v-if="activeStep > 0" type="button" class="premium-previous" @click="goToStep(activeStep - 1)">← {{ steps[activeStep - 1].label }}</button><button v-if="!isAssessment" type="button" class="premium-next" @click="nextStep">Next: {{ activeStep + 1 === steps.length ? 'Assessment' : steps[activeStep + 1].label }} →</button></div>
         </div>
