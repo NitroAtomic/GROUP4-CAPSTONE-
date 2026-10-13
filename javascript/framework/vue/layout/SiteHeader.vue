@@ -1,32 +1,20 @@
 <template>
   <header class="site-header">
     <nav class="navbar">
-
       <div class="nav-left">
-        <!-- Sa loob ng admin, wala nang Home at About.
-
-             Hindi ito para sa bumibisita: ito yung likod ng bahay. Yung
-             "Back to site" na nasa pahina mismo ang labasan, kaya yung
-             Home sa itaas ay pangalawang pinto papunta sa iisang lugar,
-             at yung About ay walang kinalaman sa trabaho rito.
-
-             Pangalan na lang ang naiiwan, para malinaw kung nasaan ka. -->
         <span v-if="isAdminPage" class="nav-admin-brand">SE-AWARE Admin</span>
         <template v-else>
           <router-link to="/" class="nav-link">Home</router-link>
           <router-link to="/about" class="nav-link">About</router-link>
-          <!-- Nakatago dati ang tatlong ito sa admin, para hindi magulo
-               ang itaas. Pero ang admin ay may sariling account din: may
-               progreso, may resulta ng assessment, at wala siyang
-               anumang link papunta roon. Nakakulong siya sa labas ng
-               sariling dashboard.
 
-               Hiwalay na ngayon ang dalawang bagay: sa loob ng admin,
-               walang nav (nasa itaas, isAdminPage); sa labas nito,
-               nakikita niya ang parehong link na nakikita ng iba, dahil
-               naaabot naman talaga niya silang lahat. -->
+          <span
+            v-if="isPremium"
+            class="nav-premium-divider"
+            aria-hidden="true"
+          ></span>
+
           <router-link v-if="isAuthenticated" to="/dashboard" class="nav-link">Dashboard</router-link>
-          <router-link v-if="isPremium" to="/modules/premium" class="nav-link">Role-based</router-link>
+          <router-link v-if="isPremium" to="/modules/premium" class="nav-link">Modules</router-link>
           <router-link v-if="isPremium" to="/assessment/question" class="nav-link">Assessment</router-link>
           <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin Portal</router-link>
         </template>
@@ -88,9 +76,27 @@
           <router-link v-if="!isMinimalNav" to="/premium-subscription" class="btn btn-premium">Go Premium</router-link>
         </template>
       </div>
-
     </nav>
   </header>
 </template>
 
 <script src="./SiteHeader.js"></script>
+
+<style scoped>
+.nav-premium-divider {
+  display: inline-block;
+  flex: 0 0 2px;
+  align-self: center;
+  width: 2px;
+  height: 36px;
+  margin: 0 8px;
+  border-radius: 2px;
+  background: rgba(245, 166, 35, 0.65);
+}
+
+@media (max-width: 620px) {
+  .nav-premium-divider {
+    display: none;
+  }
+}
+</style>
