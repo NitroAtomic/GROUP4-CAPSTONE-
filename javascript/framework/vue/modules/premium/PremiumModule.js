@@ -224,6 +224,9 @@ export default {
   beforeRouteLeave(to, from, next) {
     // Also catch Dashboard/Modules links in the shared app header or browser Back.
     // Auth redirects and assessment routes are not intercepted.
+    // Natapos ang Premium (PremiumExpiryNotice): walang "Stay here" na
+    // maibibigay, kaya isinasave lang ang puwesto at tuloy.
+    if (to.query && to.query.premium === 'ended') { this.saveProgress(); next(); return }
     if (this.state !== 'ready' || !['/dashboard', '/modules/premium', '/'].includes(to.path) || this.confirmedNavigation) {
       this.confirmedNavigation = false; next(); return
     }

@@ -42,6 +42,7 @@
        ibabaw ng trabaho. -->
   <ChatbotWidget v-if="!isAdminRoute" />
   <BackToTop />
+  <PremiumExpiryNotice />
 </template>
 
 <script>
@@ -49,13 +50,15 @@ import SiteHeader from './layout/SiteHeader.vue'
 import ChatbotWidget from './layout/ChatbotWidget.vue'
 import BackToTop from './layout/BackToTop.vue'
 import UiIconSprite from './components/UiIconSprite.vue'
+import PremiumExpiryNotice from './components/PremiumExpiryNotice.vue'
 
 export default {
   components: {
     SiteHeader,
     ChatbotWidget,
     BackToTop,
-    UiIconSprite
+    UiIconSprite,
+    PremiumExpiryNotice
   },
   computed: {
     /* Yung route na mismo ang nagsasabi: naka-adminOnly na ang /admin. */

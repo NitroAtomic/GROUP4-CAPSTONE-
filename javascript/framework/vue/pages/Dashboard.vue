@@ -21,7 +21,7 @@
               <p v-if="cancelError" class="form-error-message" role="alert">{{ cancelError }}</p>
             </template>
             <template v-else>
-              <p v-if="expiryDateLabel">Paid through <strong>{{ expiryDateLabel }}</strong></p>
+              <p v-if="expiryDateLabel">Premium access ends <strong>{{ expiryDateLabel }}</strong></p>
               <button v-if="canCancelSubscription" ref="cancelButton" type="button" class="dashboard-button is-muted" :disabled="Boolean(refreshWarning)" @click="openCancellation">Cancel subscription</button>
             </template>
           </div>

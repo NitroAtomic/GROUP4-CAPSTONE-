@@ -210,6 +210,16 @@ const router = createRouter({
 const isTestRoute = (path) =>
   /^\/quiz\/[^/]+\/question/.test(path) || path.startsWith('/assessment/question')
 
+/* Kailangan ba ng Premium ang route na ito? Isang sagot lang, para pareho
+   ang ginagamit ng guard sa baba at ng paalala kapag natapos ang Premium
+   (components/PremiumExpiryNotice.vue). */
+export function routeNeedsPremium(route) {
+  if (!route) return false
+  if (route.meta && route.meta.requiresPremium) return true
+  return String(route.path || '').startsWith('/quiz/') &&
+    PREMIUM_QUIZ_MODULE_IDS.has(String(route.params && route.params.moduleId))
+}
+
 router.beforeEach((to, from) => {
   if (isTestRoute(from.path) && !isTestRoute(to.path) && examLock.isActive()) {
     if (!to.path.includes('/results')) {
@@ -226,7 +236,7 @@ router.beforeEach((to, from) => {
   const isPremiumQuizRoute =
     to.path.startsWith('/quiz/') && PREMIUM_QUIZ_MODULE_IDS.has(String(to.params.moduleId))
   const requiresAuth = to.meta.requiresAuth || isPremiumQuizRoute
-  const requiresPremium = to.meta.requiresPremium || isPremiumQuizRoute
+  const requiresPremium = routeNeedsPremium(to)
 
   if (requiresAuth && !authStore.isAuthenticated) {
     return { name: 'Login', query: { redirect: to.fullPath } }

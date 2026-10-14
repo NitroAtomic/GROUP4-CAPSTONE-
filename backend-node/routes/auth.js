@@ -141,6 +141,26 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Incorrect email or password.' });
     }
 
+    /* Tapos na ang binayaran habang naka-logout siya: Free na, bago pa
+       pagpasyahan kung kailangan ng OTP. Kung hindi, hihingan pa siya ng
+       code na pang-Premium kahit wala na siyang Premium. Kapareho ng
+       ginagawa ng GET /me. */
+    if (user.subscription_type === 'Premium' &&
+        user.subscription_expires_at &&
+        new Date(user.subscription_expires_at) <= new Date()) {
+      await pool.query(
+        `UPDATE user
+            SET subscription_type = 'Free',
+                subscription_status = 'inactive'
+          WHERE user_id = ?
+            AND subscription_type = 'Premium'
+            AND subscription_expires_at <= NOW()`,
+        [user.user_id]
+      );
+      user.subscription_type = 'Free';
+      user.subscription_status = 'inactive';
+    }
+
     if (user.subscription_type === 'Premium') {
       const sent = await issueOtp(user);
 
