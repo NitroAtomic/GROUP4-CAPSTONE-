@@ -1,0 +1,61 @@
+@layer components {
+  /* Paalala kapag natapos ang Premium. Kapareho ng hugis ng cancel dialog
+     sa dashboard, para iisang pamilya ang dalawang mensahe tungkol sa
+     subscription. */
+  .premium-expiry-dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: calc(100% - 32px);
+    max-width: 460px;
+    height: fit-content;
+    padding: 30px 28px 26px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--card-bg);
+    color: var(--text);
+  }
+
+  .premium-expiry-dialog:not([open]) { display: none; }
+  .premium-expiry-dialog::backdrop { background: rgba(4, 12, 25, .72); backdrop-filter: blur(6px); }
+
+  .premium-expiry-eyebrow {
+    @apply text-[12px] font-bold uppercase tracking-[0.12em];
+    color: var(--muted);
+  }
+
+  .premium-expiry-dialog h2 {
+    @apply mt-2 text-[24px] font-extrabold leading-tight;
+    color: var(--heading);
+  }
+
+  .premium-expiry-dialog > p:not(.premium-expiry-eyebrow) {
+    @apply mt-3 text-[15px] leading-relaxed;
+    color: var(--muted);
+  }
+
+  .premium-expiry-dialog strong { color: var(--heading); }
+
+  .premium-expiry-actions {
+    @apply mt-6 flex justify-end gap-2.5 max-[420px]:flex-col-reverse;
+  }
+
+  .premium-expiry-primary,
+  .premium-expiry-secondary {
+    @apply rounded-lg border py-2.5 px-4 text-[14px] font-bold;
+  }
+
+  .premium-expiry-primary {
+    @apply border-transparent;
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+  }
+
+  .premium-expiry-secondary {
+    border-color: var(--border);
+    background: transparent;
+    color: var(--heading);
+  }
+
+  .premium-expiry-secondary:hover { background: var(--surface-2); }
+}

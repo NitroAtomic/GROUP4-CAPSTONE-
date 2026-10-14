@@ -34,6 +34,7 @@
 @import './modules/premium.css';
 @import './chatbot/chatbot-tailwind.css';
 @import './layout/back-to-top.css';
+@import './layout/premium-expiry.css';
 
 
 @tailwind base;
