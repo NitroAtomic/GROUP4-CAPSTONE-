@@ -1,7 +1,7 @@
 # Backend and Database Documentation
 
 **Web-Based Social Engineering Awareness Platform for Remote Workers**
-Group 4 · MO-IT200D1 · Capstone 2
+Group 4 · MO-IT200D2 · Capstone 2 · BSIT A4102
 
 **Backend and authentication:** Juan Paolo Dente
 **Database schema:** Jyan Estanislao
