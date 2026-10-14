@@ -60,8 +60,15 @@ export default {
     subscriptionHeading() { return this.hasPaidSubscription ? 'Your subscription' : this.isAdmin ? 'Your access' : 'Your plan' },
     expiryDateLabel() { return formatDate(this.authStore.user?.subscription_expires_at) },
     canCancelSubscription() {
-      return !this.isAdmin && this.authStore.user?.subscription_type === 'Premium' && this.authStore.user?.subscription_status === 'active'
+      return !this.isAdmin && this.authStore.isPremium && this.authStore.user?.subscription_status === 'active'
     },
+    /* Naka-cancel pero bayad pa: Premium hanggang sa petsa, at puwede pang
+       bawiin ("Keep Premium"). Ginagamit ng Dashboard.vue. */
+    isCancelledButActive() {
+      return !this.isAdmin && this.authStore.isPremium && this.authStore.user?.subscription_status === 'cancelled'
+    },
+    // Lumang demo account na walang petsa: agad na Free kapag na-cancel.
+    cancelEndsNow() { return !this.authStore.user?.subscription_expires_at },
     hasAssessment() { return Boolean(this.assessment) },
     assessmentPath() { return this.canTakeAssessment ? '/assessment/question' : '/premium-subscription' },
     assessmentLinkLabel() { return this.canTakeAssessment ? (this.hasAssessment ? 'Retake assessment' : 'Take assessment') : 'Unlock with Premium' },
@@ -166,11 +173,23 @@ export default {
       if (this.cancelBusy || !this.canCancelSubscription) return
       this.cancelBusy = true; this.cancelError = ''
       try {
-        await this.authStore.cancelSubscription()
+        const result = await this.authStore.cancelSubscription()
         this.$refs.cancelDialog.close()
-        this.subscriptionMessage = 'Subscription cancelled. Your account is now on the Free plan.'
+        this.subscriptionMessage = result.subscription_status === 'cancelled'
+          ? `Subscription cancelled. You keep Premium until ${formatDate(result.subscription_expires_at)}, then your account moves to Free.`
+          : 'Subscription cancelled. Your account is now on the Free plan.'
         await this.loadDashboardData()
       } catch (error) { this.cancelError = error.message || 'Cancellation failed. Please try again.' }
+      finally { this.cancelBusy = false }
+    },
+    // "Keep Premium": binabawi ang cancel habang hindi pa tapos ang petsa.
+    async resumeSubscription() {
+      if (this.cancelBusy || !this.isCancelledButActive) return
+      this.cancelBusy = true; this.cancelError = ''; this.subscriptionMessage = ''
+      try {
+        await this.authStore.resumeSubscription()
+        this.subscriptionMessage = 'Your Premium subscription will continue.'
+      } catch (error) { this.cancelError = error.message || 'Could not resume. Please try again.' }
       finally { this.cancelBusy = false }
     },
   },
