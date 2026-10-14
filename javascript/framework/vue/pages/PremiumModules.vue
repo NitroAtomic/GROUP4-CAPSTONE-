@@ -12,6 +12,13 @@
         <div class="catalog-resume-copy"><p class="catalog-eyebrow">Last opened module</p><h2 id="catalog-resume-title">{{ resumeCourse.title }}</h2><p class="catalog-resume-position">{{ resumeDetails.title }}</p><p>{{ resumeDetails.copy }}</p></div>
         <router-link :to="resumeDetails.destination" class="catalog-button is-teal">{{ resumeDetails.action }} <span aria-hidden="true">→</span></router-link>
       </section>
+      <section v-else class="catalog-resume catalog-resume-empty" aria-labelledby="catalog-resume-empty-title">
+        <div class="catalog-resume-copy">
+          <p class="catalog-eyebrow">Last opened module</p>
+          <h2 id="catalog-resume-empty-title">{{ progressState === 'loading' ? 'Looking for saved progress…' : 'Ready to start learning?' }}</h2>
+          <p>{{ progressState === 'loading' ? 'Your courses are listed below while we check your progress.' : 'Open a course below. Your last opened module will appear here when you return; saved Premium steps stay in this browser.' }}</p>
+        </div>
+      </section>
       <p v-if="progressState === 'unavailable'" class="catalog-progress-note" role="status">Courses are available below. Account progress could not be loaded; any saved lesson position shown is local to this browser.</p>
 
       <section id="catalog-premium" class="catalog-track is-premium" aria-labelledby="catalog-premium-title">
@@ -35,9 +42,10 @@
           </router-link>
         </div>
       </section>
-      <nav class="catalog-footer-navigation" aria-label="Page navigation"><router-link to="/dashboard" class="catalog-button">← Back to Dashboard</router-link><router-link to="/" class="catalog-button">Home</router-link></nav>
+      <nav class="catalog-footer-navigation" aria-label="Page navigation"><router-link to="/dashboard" class="catalog-button">← Back to Dashboard</router-link><router-link to="/" class="catalog-button">Back to Homepage</router-link></nav>
     </div>
     <!-- Shared navbar, footer, AI widget and back-to-top remain in the app shell. -->
   </main>
 </template>
+
 <script src="./PremiumModules.js"></script>

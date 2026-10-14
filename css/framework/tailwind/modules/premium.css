@@ -1622,6 +1622,10 @@
 
 /* Combined course catalog. Scoped away from Premium lesson pages. */
 .premium-catalog-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
   --catalog-card: var(--card-bg, #101c2e);
   --catalog-text: var(--heading, #f4f7fc);
   --catalog-muted: var(--muted, #9cafc9);
@@ -1697,3 +1701,8 @@
   .premium-catalog-page .catalog-course-card { transition: none; }
   .premium-catalog-page .catalog-course-card:hover, .premium-catalog-page .catalog-course-card:focus-visible { transform: none; }
 }
+
+/* Keep legacy listing constraints from narrowing the combined catalog. */
+.premium-list-page.premium-catalog-page { width:100%; max-width:none; margin:0; }
+.premium-catalog-page .catalog-container { width:min(1376px,100%); max-width:1376px; margin-inline:auto; }
+.premium-catalog-page .catalog-footer-navigation { justify-content:flex-start; }
