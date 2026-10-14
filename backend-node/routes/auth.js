@@ -324,6 +324,27 @@ router.get('/me', requireAuth, async (req, res) => {
        Sa hindi pa Premium lang tumatakbo, kaya walang dagdag na trabaho
        para sa mga bayad na. Hindi rin ito humahadlang: kung hindi maabot
        ang PayMongo, naitatala sa log at tuloy pa rin ang pag-load. */
+    /* Tapos na ang binayarang panahon: Free na siya.
+
+       Hindi ito ang nagbabantay ng access -- ang middleware/premium.js
+       na ang tumitingin sa petsa. Ito ay para tama ang nakikita: hindi
+       na "Premium, cancelled" sa dashboard at admin kahit lampas na.
+       Hindi binubura ang expiry; talaan iyon kung kailan natapos. */
+    if (rows[0].subscription_type === 'Premium' &&
+        rows[0].subscription_expires_at &&
+        new Date(rows[0].subscription_expires_at) <= new Date()) {
+      await pool.query(
+        `UPDATE user
+            SET subscription_type = 'Free',
+                subscription_status = 'inactive'
+          WHERE user_id = ?
+            AND subscription_type = 'Premium'
+            AND subscription_expires_at <= NOW()`,
+        [req.user.user_id]
+      );
+      [rows] = await pool.query(SELECT_ME, [req.user.user_id]);
+    }
+
     if (rows[0].subscription_type !== 'Premium') {
       await reconcilePending(req.user.user_id);
       [rows] = await pool.query(SELECT_ME, [req.user.user_id]);
@@ -366,25 +387,92 @@ router.patch('/me/subscription', requireAuth, async (req, res) => {
     });
   }
 
-  // Natitira: pag-cancel. Walang kailangang bayad para bumaba, at
-  // sinasara rin nito yung expiry para hindi na siya ituring na Premium.
+  /* Natitira: pag-cancel.
+
+     Dati, Free agad pagpindot, at binubura pa yung expiry -- kaya kahit
+     kakabayad lang ng isang taon, nawawala lahat sa isang click. Ngayon,
+     gaya ng Netflix/Spotify: 'cancelled' lang ang status. Premium pa rin
+     siya hanggang subscription_expires_at, tapos saka babalik sa Free
+     (tingnan ang middleware/premium.js at yung GET /me sa itaas).
+
+     Isang kaso lang ang agad na bumababa: walang petsa o lampas na. Wala
+     na kasing binayarang panahon na itutuloy -- mga lumang demo account
+     ang mga iyon, ginawa bago pa nagkaroon ng bayad. */
   try {
-    await pool.query(
+    const [cancelled] = await pool.query(
       `UPDATE user
-          SET subscription_type = 'Free',
-              subscription_status = 'inactive',
-              subscription_expires_at = NULL
-        WHERE user_id = ?`,
+          SET subscription_status = 'cancelled'
+        WHERE user_id = ?
+          AND subscription_type = 'Premium'
+          AND subscription_status = 'active'
+          AND subscription_expires_at > NOW()`,
       [req.user.user_id]
     );
+
+    if (cancelled.affectedRows === 0) {
+      // Hindi ginagalaw ang naka-cancel na: dalawang pindot ay isang cancel.
+      await pool.query(
+        `UPDATE user
+            SET subscription_type = 'Free',
+                subscription_status = 'inactive'
+          WHERE user_id = ?
+            AND NOT (subscription_status = 'cancelled' AND subscription_expires_at > NOW())`,
+        [req.user.user_id]
+      );
+    }
+
+    const [rows] = await pool.query(
+      'SELECT subscription_type, subscription_status, subscription_expires_at FROM user WHERE user_id = ?',
+      [req.user.user_id]
+    );
+    const plan = rows[0] || {};
+
     res.json({
-      message: 'Subscription cancelled.',
-      subscription_type: 'Free',
-      subscription_status: 'inactive',
+      message: plan.subscription_status === 'cancelled'
+        ? 'Subscription cancelled. Premium stays until the end of the paid period.'
+        : 'Subscription cancelled.',
+      subscription_type: plan.subscription_type,
+      subscription_status: plan.subscription_status,
+      subscription_expires_at: plan.subscription_expires_at,
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to update plan.' });
+  }
+});
+
+/* Pagbawi ng cancel ("Keep Premium").
+
+   Para lang sa naka-cancel na may natitira pang bayad na araw. Walang
+   bagong bayad na kailangan -- binabalik lang sa 'active' yung dati na.
+   Hindi ito daan para maging Premium ang hindi pa nagbabayad: kailangan
+   Premium na at may petsang hindi pa lumilipas, nakasulat mismo sa SQL. */
+router.post('/me/subscription/resume', requireAuth, async (req, res) => {
+  try {
+    const [result] = await pool.query(
+      `UPDATE user
+          SET subscription_status = 'active'
+        WHERE user_id = ?
+          AND subscription_type = 'Premium'
+          AND subscription_status = 'cancelled'
+          AND subscription_expires_at > NOW()`,
+      [req.user.user_id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(409).json({
+        error: 'There is no cancelled subscription to resume. If your Premium has ended, subscribe again.',
+      });
+    }
+
+    const [rows] = await pool.query(
+      'SELECT subscription_type, subscription_status, subscription_expires_at FROM user WHERE user_id = ?',
+      [req.user.user_id]
+    );
+    res.json({ message: 'Premium will continue.', ...rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to resume plan.' });
   }
 });
 

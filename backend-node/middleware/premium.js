@@ -16,7 +16,7 @@ const pool = require('../config/db');
 /* Tatlong kondisyon, hindi dalawa:
 
      1. Premium yung type
-     2. 'active' yung status
+     2. 'active' yung status (o 'cancelled' pero bayad pa -- tingnan sa baba)
      3. hindi pa lampas sa petsa ng pagtatapos
 
    Yung pangatlo ang bago. Yung NULL na expiry ay itinuturing na walang
@@ -28,10 +28,21 @@ const PREMIUM_SQL = `
     FROM user
    WHERE user_id = ?`;
 
+/* Yung 'cancelled' ay hindi pa tapos.
+
+   Gaya ng Netflix o Spotify: kapag nag-cancel ka, hindi na lang ito
+   magre-renew, pero bayad ka na hanggang sa petsa ng pagtatapos, kaya
+   tuloy pa rin ang access hanggang doon. Kailangan lang may petsa --
+   ang 'cancelled' na walang expiry ay walang binayarang panahon na
+   puwedeng ituloy, kaya sarado. */
 function isActivePremium(row) {
   if (!row) return false;
   if (row.subscription_type !== 'Premium') return false;
-  if (row.subscription_status !== 'active') return false;
+
+  const status = row.subscription_status;
+  if (status !== 'active' && status !== 'cancelled') return false;
+  if (status === 'cancelled' && !row.subscription_expires_at) return false;
+
   if (row.subscription_expires_at && new Date(row.subscription_expires_at) <= new Date()) {
     return false;
   }

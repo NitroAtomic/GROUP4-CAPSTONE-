@@ -13,10 +13,17 @@
             <p>Here's your progress so far</p>
             <span class="dashboard-status-pill" :class="{ 'dashboard-status-pill-plan': canTakeAssessment }">{{ planLabel }}</span>
           </div>
-          <div v-if="!isAdmin && (expiryDateLabel || canCancelSubscription)" class="dashboard-subscription">
+          <div v-if="!isAdmin && canTakeAssessment && (expiryDateLabel || canCancelSubscription || isCancelledButActive)" class="dashboard-subscription">
             <p class="dashboard-summary-label">Your subscription</p>
-            <p v-if="expiryDateLabel">Premium access ends <strong>{{ expiryDateLabel }}</strong></p>
-            <button v-if="canCancelSubscription" ref="cancelButton" type="button" class="dashboard-button is-muted" :disabled="Boolean(refreshWarning)" @click="openCancellation">Cancel subscription</button>
+            <template v-if="isCancelledButActive">
+              <p>Cancelled. Premium until <strong>{{ expiryDateLabel }}</strong>, then Free.</p>
+              <button type="button" class="dashboard-button is-muted" :disabled="cancelBusy || Boolean(refreshWarning)" @click="resumeSubscription">{{ cancelBusy ? 'Saving…' : 'Keep Premium' }}</button>
+              <p v-if="cancelError" class="form-error-message" role="alert">{{ cancelError }}</p>
+            </template>
+            <template v-else>
+              <p v-if="expiryDateLabel">Paid through <strong>{{ expiryDateLabel }}</strong></p>
+              <button v-if="canCancelSubscription" ref="cancelButton" type="button" class="dashboard-button is-muted" :disabled="Boolean(refreshWarning)" @click="openCancellation">Cancel subscription</button>
+            </template>
           </div>
         </header>
         <p v-if="subscriptionMessage" class="dashboard-notice" role="status">{{ subscriptionMessage }}</p>
@@ -98,7 +105,7 @@
       </template>
     </section>
     <dialog ref="cancelDialog" class="dashboard-cancel-dialog" aria-labelledby="dashboard-cancel-title" aria-describedby="dashboard-cancel-description" @cancel="cancelBusy && $event.preventDefault()">
-      <p class="dashboard-summary-label">Your subscription</p><div class="dashboard-cancel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 17h.01"/></svg></div><h2 id="dashboard-cancel-title">Are you sure you want to cancel Premium?</h2><p id="dashboard-cancel-description">Cancelling switches your account to Free immediately. You will lose access to Premium courses and the Awareness Assessment now, even if your displayed access end date is later.</p><div class="dashboard-cancel-warning"><strong>No refund is issued by this action.</strong><p>Your current cancellation ends Premium access immediately. It does not preserve access until the displayed end date.</p></div><p>Your completed module quizzes remain recorded.</p><p v-if="cancelError" class="form-error-message" role="alert">{{ cancelError }}</p><div class="dashboard-dialog-actions"><button type="button" class="dashboard-button is-muted" :disabled="cancelBusy" autofocus @click="closeCancellation">Keep Premium</button><button type="button" class="dashboard-button is-gold" :disabled="cancelBusy" @click="confirmCancellation">{{ cancelBusy ? 'Cancelling…' : 'Yes, cancel Premium' }}</button></div>
+      <p class="dashboard-summary-label">Your subscription</p><div class="dashboard-cancel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 17h.01"/></svg></div><h2 id="dashboard-cancel-title">Are you sure you want to cancel Premium?</h2><p v-if="cancelEndsNow" id="dashboard-cancel-description">This account has no paid period on record, so cancelling switches it to Free right away. You will lose access to Premium courses and the Awareness Assessment now.</p><p v-else id="dashboard-cancel-description">You keep Premium until <strong>{{ expiryDateLabel }}</strong>. After that, your account moves to Free and you won't be charged again.</p><div class="dashboard-cancel-warning"><strong>No refund is issued by this action.</strong><p v-if="cancelEndsNow">Premium access ends as soon as you confirm.</p><p v-else>You can change your mind any time before {{ expiryDateLabel }} with "Keep Premium" on your dashboard.</p></div><p>Your completed module quizzes remain recorded.</p><p v-if="cancelError" class="form-error-message" role="alert">{{ cancelError }}</p><div class="dashboard-dialog-actions"><button type="button" class="dashboard-button is-muted" :disabled="cancelBusy" autofocus @click="closeCancellation">Keep Premium</button><button type="button" class="dashboard-button is-gold" :disabled="cancelBusy" @click="confirmCancellation">{{ cancelBusy ? 'Cancelling…' : 'Yes, cancel Premium' }}</button></div>
     </dialog>
   </main>
 </template>

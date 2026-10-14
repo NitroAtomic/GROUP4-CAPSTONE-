@@ -41,4 +41,4 @@
   </main>
 </template>
 
-<script src="./PremiumModules.js"></script>
+<script src="./PremiumModule.js"></script>

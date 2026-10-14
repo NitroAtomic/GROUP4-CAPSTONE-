@@ -181,8 +181,22 @@ export default {
 
     canCancelSubscription() {
       return !this.isAdmin &&
-        this.authStore.user?.subscription_type === 'Premium' &&
+        this.authStore.isPremium &&
         this.authStore.user?.subscription_status === 'active'
+    },
+
+    /* Naka-cancel pero bayad pa: Premium pa rin hanggang sa petsa, at
+       puwede pang bawiin ang cancel. */
+    isCancelledButActive() {
+      return !this.isAdmin &&
+        this.authStore.isPremium &&
+        this.authStore.user?.subscription_status === 'cancelled'
+    },
+
+    /* Lumang demo account na walang petsa: wala itong binayarang panahon,
+       kaya agad na Free kapag na-cancel. Iba ang babala para sa kanila. */
+    cancelEndsNow() {
+      return !this.authStore.user?.subscription_expires_at
     },
 
     hasAssessment() {
@@ -511,15 +525,33 @@ export default {
       this.cancelError = ''
 
       try {
-        await this.authStore.cancelSubscription()
+        const result = await this.authStore.cancelSubscription()
 
         this.$refs.cancelDialog.close()
-        this.subscriptionMessage =
-          'Subscription cancelled. Your account is now on the Free plan.'
+        this.subscriptionMessage = result.subscription_status === 'cancelled'
+          ? `Subscription cancelled. You keep Premium until ${formatDate(result.subscription_expires_at)}, then your account moves to Free.`
+          : 'Subscription cancelled. Your account is now on the Free plan.'
 
         await this.loadDashboardData()
       } catch (error) {
         this.cancelError = error.message || 'Cancellation failed. Please try again.'
+      } finally {
+        this.cancelBusy = false
+      }
+    },
+
+    async resumeSubscription() {
+      if (this.cancelBusy || !this.isCancelledButActive) return
+
+      this.cancelBusy = true
+      this.cancelError = ''
+      this.subscriptionMessage = ''
+
+      try {
+        await this.authStore.resumeSubscription()
+        this.subscriptionMessage = 'Your Premium subscription will continue.'
+      } catch (error) {
+        this.cancelError = error.message || 'Could not resume. Please try again.'
       } finally {
         this.cancelBusy = false
       }

@@ -52,7 +52,11 @@ export const useAuthStore = defineStore('auth', {
          administrator ng site na bumili ng subscription. */
       if (user.role === 'admin') return true
       if (user.subscription_type !== 'Premium') return false
-      if (user.subscription_status !== 'active') return false
+      /* Kapareho ng middleware/premium.js: ang naka-cancel ay Premium pa
+         rin hanggang matapos ang binayaran niya. */
+      const status = user.subscription_status
+      if (status !== 'active' && status !== 'cancelled') return false
+      if (status === 'cancelled' && !user.subscription_expires_at) return false
       if (user.subscription_expires_at &&
           new Date(user.subscription_expires_at) <= new Date()) return false
       return true
@@ -172,22 +176,37 @@ export const useAuthStore = defineStore('auth', {
 
     // Pag-cancel. Pababa lang ang dinadaanan nito; ang pagtaas ay dumadaan
     // sa bayad.
+    /* Ang server ang nagsasabi kung ano na ang plano pagkatapos. Dati,
+       dito pinipilit na Free at walang expiry -- hula iyon, at mali na
+       ngayon: Premium pa rin siya hanggang sa petsa. */
     async cancelSubscription() {
       const data = await apiFetch('/api/auth/me/subscription', {
         method: 'PATCH',
         token: this.token,
         body: { subscription_type: 'Free' }
       })
-      if (this.user) {
-        this.user = {
-          ...this.user,
-          subscription_type: 'Free',
-          subscription_status: 'inactive',
-          subscription_expires_at: null
-        }
-        sessionStorage.setItem(USER_KEY, JSON.stringify(this.user))
-      }
+      this._applyPlan(data)
       return data
+    },
+
+    async resumeSubscription() {
+      const data = await apiFetch('/api/auth/me/subscription/resume', {
+        method: 'POST',
+        token: this.token
+      })
+      this._applyPlan(data)
+      return data
+    },
+
+    _applyPlan(data) {
+      if (!this.user || !data) return
+      this.user = {
+        ...this.user,
+        subscription_type: data.subscription_type,
+        subscription_status: data.subscription_status,
+        subscription_expires_at: data.subscription_expires_at ?? null
+      }
+      sessionStorage.setItem(USER_KEY, JSON.stringify(this.user))
     },
 
     async logout() {
