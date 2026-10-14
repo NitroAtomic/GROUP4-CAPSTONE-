@@ -159,8 +159,9 @@
   }
 
   /* Pangalan lang, hindi link: nandito ka na. */
+  /* Puti, hindi var(--heading): laging madilim ang header, pero navy ang
+     --heading sa light mode -- kaya nawawala ang pangalan doon. */
   .nav-admin-brand {
-    @apply text-[17px] font-bold tracking-[0.02em];
-    color: var(--heading);
+    @apply text-[17px] font-bold tracking-[0.02em] text-white;
   }
 }

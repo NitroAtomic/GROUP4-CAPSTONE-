@@ -323,14 +323,38 @@ router.get('/transactions/all', requireAdmin, async (req, res) => {
 
     const paid = transactions.filter((t) => t.status === 'paid');
 
+    /* Pag-cancel at pagbawi. Hiwalay na listahan dahil walang perang
+       gumagalaw dito. Kapag wala pa ang table (hindi pa napatakbo ang
+       sql/07), walang laman lang -- hindi pumapalya ang buong pahina. */
+    let subscriptionEvents = [];
+    try {
+      const [events] = await pool.query(
+        `SELECT e.event_id, e.event_type, e.access_until, e.created_at,
+                u.user_id, u.first_name, u.last_name, u.email,
+                u.subscription_type, u.subscription_status, u.subscription_expires_at
+           FROM subscription_event e
+           JOIN user u ON u.user_id = e.user_id
+          ORDER BY e.created_at DESC, e.event_id DESC
+          LIMIT 200`
+      );
+      subscriptionEvents = events.map((row) => ({
+        ...row,
+        name: `${row.first_name} ${row.last_name || ''}`.trim(),
+      }));
+    } catch (err) {
+      console.error('[billing] subscription events unavailable:', err.message);
+    }
+
     res.json({
       transactions,
+      subscription_events: subscriptionEvents,
       summary: {
         total: transactions.length,
         paid: paid.length,
         pending: transactions.filter((t) => t.status === 'pending').length,
         failed: transactions.filter((t) => t.status === 'failed').length,
         cancelled: transactions.filter((t) => t.status === 'cancelled').length,
+        subscriptions_cancelled: subscriptionEvents.filter((e) => e.event_type === 'cancelled').length,
         live: transactions.filter((t) => t.livemode).length,
         collected_centavos: paid.reduce((sum, t) => sum + t.amount_centavos, 0),
         collected_display: `₱${peso(paid.reduce((sum, t) => sum + t.amount_centavos, 0))}`,

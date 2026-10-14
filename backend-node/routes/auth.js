@@ -357,6 +357,24 @@ router.get('/me', requireAuth, async (req, res) => {
   }
 });
 
+/* Itinatala ang pag-cancel at pagbawi sa subscription_event, para
+   makita sa Payments ng admin.
+
+   Hindi ito dapat makasira ng mismong pag-cancel: kung wala pa ang
+   table (hindi pa napatakbo ang sql/07), naitatala lang sa log at tuloy
+   ang lahat. Ang pagbabago sa account ang mahalaga; ang talaan ay
+   kasunod lang. */
+async function recordSubscriptionEvent(userId, eventType, accessUntil) {
+  try {
+    await pool.query(
+      'INSERT INTO subscription_event (user_id, event_type, access_until) VALUES (?, ?, ?)',
+      [userId, eventType, accessUntil || null]
+    );
+  } catch (err) {
+    console.error('[subscription] could not record event:', err.message);
+  }
+}
+
 /* Dati, dito nakukuha ang Premium nang libre.
 
    Tinatanggap nito yung subscription_type mula mismo sa request body, kaya
@@ -399,6 +417,13 @@ router.patch('/me/subscription', requireAuth, async (req, res) => {
      na kasing binayarang panahon na itutuloy -- mga lumang demo account
      ang mga iyon, ginawa bago pa nagkaroon ng bayad. */
   try {
+    // Ano siya bago pumindot -- para malaman kung may itatala.
+    const [beforeRows] = await pool.query(
+      'SELECT subscription_type, subscription_status FROM user WHERE user_id = ?',
+      [req.user.user_id]
+    );
+    const before = beforeRows[0] || {};
+
     const [cancelled] = await pool.query(
       `UPDATE user
           SET subscription_status = 'cancelled'
@@ -426,6 +451,17 @@ router.patch('/me/subscription', requireAuth, async (req, res) => {
       [req.user.user_id]
     );
     const plan = rows[0] || {};
+
+    /* Itinatala lang kung may totoong nagbago: Premium siya na hindi pa
+       naka-cancel. Ang pangalawang pindot, o ang Free na pumindot, ay
+       walang bagong nangyari. */
+    if (before.subscription_type === 'Premium' && before.subscription_status !== 'cancelled') {
+      await recordSubscriptionEvent(
+        req.user.user_id,
+        'cancelled',
+        plan.subscription_status === 'cancelled' ? plan.subscription_expires_at : null
+      );
+    }
 
     res.json({
       message: plan.subscription_status === 'cancelled'
@@ -469,6 +505,7 @@ router.post('/me/subscription/resume', requireAuth, async (req, res) => {
       'SELECT subscription_type, subscription_status, subscription_expires_at FROM user WHERE user_id = ?',
       [req.user.user_id]
     );
+    await recordSubscriptionEvent(req.user.user_id, 'resumed', rows[0]?.subscription_expires_at);
     res.json({ message: 'Premium will continue.', ...rows[0] });
   } catch (err) {
     console.error(err);

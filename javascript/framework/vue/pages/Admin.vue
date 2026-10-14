@@ -280,6 +280,59 @@
         </template>
       </section>
 
+      <!-- Pag-cancel at pagbawi ng subscription. Walang perang gumagalaw,
+           kaya hiwalay sa talaan ng bayad sa itaas. -->
+      <section v-if="activeTab === 'payments' && !isLoadingPayments" class="admin-card">
+        <div class="admin-card-heading">
+          <div>
+            <h2>Subscription changes</h2>
+            <p>
+              Every cancel and every "Keep Premium". A cancelled account keeps
+              Premium until the date shown, then moves to Free.
+            </p>
+          </div>
+        </div>
+
+        <p v-if="subscriptionEvents.length === 0" class="admin-empty-state">
+          No cancellations yet.
+        </p>
+
+        <div v-else class="admin-table-scroll">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th scope="col">When</th>
+                <th scope="col">Account</th>
+                <th scope="col">Change</th>
+                <th scope="col">Premium until</th>
+                <th scope="col">Account now</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="event in subscriptionEvents" :key="event.event_id">
+                <td class="admin-table-when">{{ paymentWhen(event.created_at) }}</td>
+                <td>
+                  {{ event.email }}
+                  <span class="admin-table-sub">{{ event.name }}</span>
+                </td>
+                <td>
+                  <span class="admin-status" :class="eventClass(event.event_type)">
+                    {{ eventLabel(event.event_type) }}
+                  </span>
+                </td>
+                <td class="admin-table-when">
+                  {{ event.access_until ? paymentWhen(event.access_until) : 'Ended at once' }}
+                </td>
+                <td>
+                  {{ event.subscription_type }}
+                  <span class="admin-table-sub">{{ event.subscription_status }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section v-if="activeTab === 'modules' && quizModuleId !== null" class="admin-card">
         <div class="admin-card-heading">
           <div>

@@ -32,6 +32,17 @@ const STATUS_CLASS = {
   cancelled: 'admin-status-cancelled'
 }
 
+/* Ganoon din dito: buong pangalan ng klase, hindi pinagdugtong. */
+const EVENT_CLASS = {
+  cancelled: 'admin-status-cancelled',
+  resumed: 'admin-status-paid'
+}
+
+const EVENT_LABEL = {
+  cancelled: 'Cancelled',
+  resumed: 'Kept Premium'
+}
+
 const authRequest = (path, options = {}) => {
   const { token } = useAuthStore()
   return apiFetch(path, { ...options, token })
@@ -62,6 +73,7 @@ export default {
       // naibigay nang walang bayad.
       activeTab: 'modules',
       payments: [],
+      subscriptionEvents: [],
       paymentSummary: null,
       isLoadingPayments: false,
       busyReference: null,
@@ -98,10 +110,12 @@ export default {
       try {
         const data = await authRequest('/api/billing/transactions/all')
         this.payments = data.transactions || []
+        this.subscriptionEvents = data.subscription_events || []
         this.paymentSummary = data.summary || null
       } catch (error) {
         this.paymentError = error.message
         this.payments = []
+        this.subscriptionEvents = []
         this.paymentSummary = null
       } finally {
         this.isLoadingPayments = false
@@ -152,6 +166,14 @@ export default {
       } finally {
         this.busyReference = null
       }
+    },
+
+    eventClass(type) {
+      return EVENT_CLASS[type] || ''
+    },
+
+    eventLabel(type) {
+      return EVENT_LABEL[type] || type
     },
 
     statusClass(status) {
