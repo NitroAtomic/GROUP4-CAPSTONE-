@@ -37,7 +37,7 @@
           </article>
           <article class="dashboard-summary-card">
             <p class="dashboard-summary-label">Average quiz score</p><p id="average-quiz-score" class="dashboard-summary-value" :class="scoreClass(quizHistoryRows.length ? parseFloat(averageQuizScoreLabel) : null)">{{ averageQuizScoreLabel }}</p>
-            <p class="dashboard-summary-note">{{ quizHistoryRows.length ? quizHistoryRows.length + ' recorded quiz attempts' : 'Complete a module quiz to get started' }}</p>
+            <p class="dashboard-summary-note">{{ quizHistoryRows.length ? quizHistoryRows.length + (quizHistoryRows.length === 1 ? ' recorded quiz attempt' : ' recorded quiz attempts') : 'Complete a module quiz to get started' }}</p>
           </article>
           <article class="dashboard-summary-card">
             <p class="dashboard-summary-label">Awareness level</p><p id="awareness-level" class="dashboard-summary-value dashboard-summary-value-word">{{ awarenessLabel }}</p>
@@ -50,33 +50,44 @@
         </section>
 
         <div class="dashboard-learning-grid">
-          <section class="dashboard-recommendations" aria-labelledby="dashboard-recommendations-title">
-            <div class="dashboard-section-heading dashboard-section-heading-row">
-              <div><h2 id="dashboard-recommendations-title">Recommended for you</h2><p>{{ hasAssessment ? 'Based on your assessment results' : 'Suggested starting points for your learning' }}</p></div>
-              <router-link :to="assessmentPath" class="dashboard-button is-gold"><svg v-if="canTakeAssessment && hasAssessment" class="dashboard-retry-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" /></svg>{{ assessmentLinkLabel }}</router-link>
-            </div>
-            <ol v-if="recommendations.length" class="dashboard-recommendations-list">
-              <li v-for="(module, index) in recommendations" :key="module.module_id || module.slug" class="dashboard-recommendation-card" :class="{ 'is-first': index === 0 }">
-                <span class="dashboard-recommendation-number" aria-hidden="true">{{ index + 1 }}</span>
-                <div class="dashboard-recommendation-copy"><span class="dashboard-recommended-label">{{ hasAssessment ? 'Recommended' : 'Suggested' }}{{ index === 0 ? ' · Start here' : '' }}</span><h3>{{ module.module_title }}</h3><p v-if="recommendationKind(module)">{{ recommendationKind(module) }}</p></div>
-                <router-link v-bind="recommendationBind(module)" class="dashboard-button" :class="{ 'is-teal': index === 0 }">Start module <span aria-hidden="true">→</span></router-link>
-              </li>
-            </ol>
-            <div v-else class="dashboard-state-card"><p class="dashboard-empty-copy">{{ hasAssessment ? 'No recommended modules yet. Complete a quiz to get additional suggestions.' : 'Browse the modules below, or take the Awareness Assessment for personalised recommendations.' }}</p></div>
-            <router-link to="/modules/premium" class="dashboard-button dashboard-browse-button is-teal">Browse all 10 modules <span aria-hidden="true">→</span></router-link>
-          </section>
-
-          <section class="dashboard-assessment-panel" aria-labelledby="dashboard-assessment-title">
-            <p class="dashboard-summary-label">Cybersecurity awareness assessment</p><h2 id="dashboard-assessment-title">Your awareness level</h2>
-            <div class="dashboard-assessment-result">
-              <div class="dashboard-score-ring" :class="scoreClass(assessmentPercent)" :style="{ '--score-progress': (assessmentPercent || 0) + '%' }" :aria-label="hasAssessment ? 'Assessment score: ' + assessmentScoreLabel : 'Not assessed'"><strong>{{ assessmentScoreLabel }}</strong></div>
-              <div><h3>{{ awarenessLabel }}</h3><p v-if="hasAssessment">Scored {{ assessmentScoreLabel }}<span v-if="assessmentDateLabel"> on {{ assessmentDateLabel }}</span></p><p v-else>Discover where to focus next</p></div>
-            </div>
-            <p class="dashboard-assessment-copy">{{ awarenessCopy }}</p>
-            <dl v-if="hasAssessment" class="dashboard-assessment-details"><div><dt>Assessment score</dt><dd :class="scoreClass(assessmentPercent)">{{ assessmentPercent == null ? 'Unavailable' : assessmentPercent + '%' }}</dd></div><div><dt>Topics to review</dt><dd>{{ weakAreas.length }}</dd></div><div><dt>Topics mastered</dt><dd>{{ masteredCount }}</dd></div></dl>
-            <div v-else class="dashboard-assessment-details"><p>Realistic scenarios</p><p>Immediate results</p><p>Personalised recommendations</p></div>
-            <div v-if="hasAssessment && recommendations.length" class="dashboard-assessment-next"><p class="dashboard-summary-label">Next recommended module</p><strong>{{ recommendations[0].module_title }}</strong><p>Review this topic, then retake the assessment to check your progress.</p></div><div class="dashboard-assessment-cta"><router-link :to="assessmentPath" class="dashboard-button is-gold"><svg v-if="canTakeAssessment && hasAssessment" class="dashboard-retry-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" /></svg>{{ assessmentLinkLabel }}</router-link><p>10 scenario-based questions<span v-if="!canTakeAssessment"> · Premium feature</span></p></div>
-          </section>
+          <div class="dashboard-column">
+            <section class="dashboard-recommendations" aria-labelledby="dashboard-recommendations-title">
+              <div class="dashboard-section-heading"><h2 id="dashboard-recommendations-title">Recommended for you</h2><p>{{ hasAssessment ? 'Based on your assessment results' : 'Suggested starting points for your learning' }}</p></div>
+              <ol v-if="recommendations.length" class="dashboard-recommendations-list">
+                <li v-for="(module, index) in recommendations" :key="module.module_id || module.slug" class="dashboard-recommendation-card" :class="{ 'is-first': index === 0 }">
+                  <span class="dashboard-recommendation-number" aria-hidden="true">{{ index + 1 }}</span>
+                  <div class="dashboard-recommendation-copy"><span class="dashboard-recommended-label">{{ hasAssessment ? 'Recommended' : 'Suggested' }}{{ index === 0 ? ' · Start here' : '' }}</span><h3>{{ module.module_title }}</h3><p v-if="recommendationKind(module)">{{ recommendationKind(module) }}</p></div>
+                  <router-link v-bind="recommendationBind(module)" class="dashboard-button" :class="{ 'is-teal': index === 0 }">Start module <span aria-hidden="true">→</span></router-link>
+                </li>
+              </ol>
+              <div v-else class="dashboard-state-card"><p class="dashboard-empty-copy">{{ hasAssessment ? 'No recommended modules yet. Complete a quiz to get additional suggestions.' : 'Browse the modules below, or take the Awareness Assessment for personalised recommendations.' }}</p></div>
+              <router-link to="/modules/premium" class="dashboard-button dashboard-browse-button is-teal">Browse all 10 modules <span aria-hidden="true">→</span></router-link>
+            </section>
+            <section aria-labelledby="dashboard-topics-title">
+              <div class="dashboard-section-heading"><h2 id="dashboard-topics-title">{{ masteredCount ? 'Your topic progress' : 'Your weak areas' }}</h2><p>Topics to focus on next</p></div>
+              <template v-if="hasAssessment && topicResults.length"><p class="dashboard-notice">{{ topicSummary }}</p><ul class="dashboard-weak-areas-list"><li v-for="area in topicResults" :key="area.slug" class="dashboard-weak-area" :class="area.statusClass"><div class="dashboard-weak-area-main"><div class="dashboard-topic-heading"><h3>{{ area.topic }}</h3><span class="dashboard-topic-status">{{ area.status }}</span></div><p class="dashboard-weak-area-score">{{ area.scoreLabel }}</p></div><div v-if="area.percent != null" class="dashboard-meter" role="progressbar" :aria-valuenow="area.percent" aria-valuemin="0" aria-valuemax="100" :aria-label="area.topic + ' assessment score'"><span :style="{ width: area.percent + '%' }"></span></div><router-link v-if="area.modulePath" :to="area.modulePath" class="dashboard-button dashboard-weak-area-action">{{ area.status === 'Mastered' ? 'Revisit topic' : 'Review topic' }} <span aria-hidden="true">→</span></router-link></li></ul></template>
+              <p v-else-if="hasAssessment" class="dashboard-empty-copy">No topic results recorded yet.</p>
+              <div v-else class="dashboard-state-card"><p class="dashboard-empty-copy">Topic results come from the Awareness Assessment, separately from your module quizzes.</p><router-link :to="assessmentPath" class="dashboard-button is-teal">{{ assessmentLinkLabel }}</router-link></div>
+            </section>
+          </div>
+          <div class="dashboard-column">
+            <section class="dashboard-assessment-panel" aria-labelledby="dashboard-assessment-title">
+              <p class="dashboard-summary-label">Cybersecurity awareness assessment</p><h2 id="dashboard-assessment-title">Your awareness level</h2>
+              <div class="dashboard-assessment-result">
+                <div class="dashboard-score-ring" :class="scoreClass(assessmentPercent)" :style="{ '--score-progress': (assessmentPercent || 0) + '%' }" :aria-label="hasAssessment ? 'Assessment score: ' + assessmentScoreLabel : 'Not assessed'"><strong>{{ assessmentScoreLabel }}</strong></div>
+                <div><h3>{{ awarenessLabel }}</h3><p v-if="hasAssessment">Scored {{ assessmentScoreLabel }}<span v-if="assessmentDateLabel"> on {{ assessmentDateLabel }}</span></p><p v-else>Discover where to focus next</p></div>
+              </div>
+              <p class="dashboard-assessment-copy">{{ awarenessCopy }}</p>
+              <dl v-if="hasAssessment" class="dashboard-assessment-details"><div><dt>Assessment score</dt><dd :class="scoreClass(assessmentPercent)">{{ assessmentPercent == null ? 'Unavailable' : assessmentPercent + '%' }}</dd></div><div><dt>Topics to review</dt><dd>{{ weakAreas.length }}</dd></div><div><dt>Topics mastered</dt><dd>{{ masteredCount }}</dd></div></dl>
+              <div v-else class="dashboard-assessment-details"><p>Realistic scenarios</p><p>Immediate results</p><p>Personalised recommendations</p></div>
+              <div v-if="hasAssessment && recommendations.length" class="dashboard-assessment-next"><p class="dashboard-summary-label">Next recommended module</p><strong>{{ recommendations[0].module_title }}</strong><p>Review this topic, then retake the assessment to check your progress.</p></div><div class="dashboard-assessment-cta"><router-link :to="assessmentPath" class="dashboard-button is-gold"><svg v-if="canTakeAssessment && hasAssessment" class="dashboard-retry-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" /></svg>{{ assessmentLinkLabel }}</router-link><p>10 scenario-based questions<span v-if="!canTakeAssessment"> · Premium feature</span></p></div>
+            </section>
+            <section aria-labelledby="dashboard-history-title">
+              <div class="dashboard-section-heading"><h2 id="dashboard-history-title">Quiz history</h2><p>Your module quiz scores</p><p class="dashboard-score-legend"><span class="score-strong">90–100% Strong</span><span class="score-developing">70–89% Developing</span><span class="score-needs-work">Below 70% Needs work</span></p></div>
+              <ol v-if="quizHistoryRows.length" class="dashboard-quiz-history"><li v-for="row in quizHistoryRows" :key="row.key" class="dashboard-quiz-history-row"><div><h3>{{ row.title }}</h3><p>{{ row.scoreLabel }}</p><router-link v-if="row.modulePath" :to="row.modulePath" class="dashboard-history-link">Review module <span aria-hidden="true">→</span></router-link></div><strong :class="scoreClass(row.percentage)">{{ row.percentageLabel }}</strong></li></ol>
+              <div v-else class="dashboard-state-card dashboard-history-empty"><span class="dashboard-history-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h10l4 4v16H5zM15 2v5h4M8 11h8M8 15h8M8 19h5" /></svg></span><p>No quiz attempts yet. Complete a module quiz to see your scores here.</p><router-link to="/modules/premium" class="dashboard-button is-teal">Browse modules</router-link></div>
+            </section>
+          </div>
         </div>
 
         <section class="dashboard-premium-section" aria-labelledby="dashboard-premium-title">
@@ -89,19 +100,6 @@
           </div>
         </section>
 
-        <div class="dashboard-review-grid">
-          <section aria-labelledby="dashboard-topics-title">
-            <div class="dashboard-section-heading"><h2 id="dashboard-topics-title">{{ masteredCount ? 'Your topic progress' : 'Your weak areas' }}</h2><p>Topics to focus on next</p></div>
-            <template v-if="hasAssessment && topicResults.length"><p class="dashboard-notice">{{ topicSummary }}</p><ul class="dashboard-weak-areas-list"><li v-for="area in topicResults" :key="area.slug" class="dashboard-weak-area" :class="area.statusClass"><div class="dashboard-weak-area-main"><div class="dashboard-topic-heading"><h3>{{ area.topic }}</h3><span class="dashboard-topic-status">{{ area.status }}</span></div><p class="dashboard-weak-area-score">{{ area.scoreLabel }}</p></div><div v-if="area.percent != null" class="dashboard-meter" role="progressbar" :aria-valuenow="area.percent" aria-valuemin="0" aria-valuemax="100" :aria-label="area.topic + ' assessment score'"><span :style="{ width: area.percent + '%' }"></span></div><router-link v-if="area.modulePath" :to="area.modulePath" class="dashboard-button dashboard-weak-area-action">{{ area.status === 'Mastered' ? 'Revisit topic' : 'Review topic' }} <span aria-hidden="true">→</span></router-link></li></ul></template>
-            <p v-else-if="hasAssessment" class="dashboard-empty-copy">No topic results recorded yet.</p>
-            <div v-else class="dashboard-state-card"><p class="dashboard-empty-copy">Topic results come from the Awareness Assessment, separately from your module quizzes.</p><router-link :to="assessmentPath" class="dashboard-button is-teal">{{ assessmentLinkLabel }}</router-link></div>
-          </section>
-          <section aria-labelledby="dashboard-history-title">
-            <div class="dashboard-section-heading"><h2 id="dashboard-history-title">Quiz history</h2><p>Your module quiz scores</p><p class="dashboard-score-legend"><span class="score-strong">90–100% Strong</span><span class="score-developing">70–89% Developing</span><span class="score-needs-work">Below 70% Needs work</span></p></div>
-            <ol v-if="quizHistoryRows.length" class="dashboard-quiz-history"><li v-for="row in quizHistoryRows" :key="row.key" class="dashboard-quiz-history-row"><div><h3>{{ row.title }}</h3><p>{{ row.scoreLabel }}</p><router-link v-if="row.modulePath" :to="row.modulePath" class="dashboard-history-link">Review module <span aria-hidden="true">→</span></router-link></div><strong :class="scoreClass(row.percentage)">{{ row.percentageLabel }}</strong></li></ol>
-            <div v-else class="dashboard-state-card dashboard-history-empty"><span class="dashboard-history-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h10l4 4v16H5zM15 2v5h4M8 11h8M8 15h8M8 19h5" /></svg></span><p>No quiz attempts yet. Complete a module quiz to see your scores here.</p><router-link to="/modules/premium" class="dashboard-button is-teal">Browse modules</router-link></div>
-          </section>
-        </div>
       </template>
     </section>
     <dialog ref="cancelDialog" class="dashboard-cancel-dialog" aria-labelledby="dashboard-cancel-title" aria-describedby="dashboard-cancel-description" @cancel="cancelBusy && $event.preventDefault()">

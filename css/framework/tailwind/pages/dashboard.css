@@ -23,6 +23,8 @@
   .dashboard-summary-card .dashboard-meter { margin-top: 12px; }
   .dashboard-learning-grid, .dashboard-review-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 22px; margin-top: 34px; align-items: stretch; }
   .dashboard-learning-grid > *, .dashboard-review-grid > * { min-width: 0; }
+  .dashboard-column { display: flex; flex-direction: column; gap: 34px; min-width: 0; }
+  .dashboard-column > .dashboard-assessment-panel { height: auto; }
   .dashboard-section { margin-top: 34px; }
   .dashboard-section-heading h2, .dashboard-premium-heading h2 { color: var(--dash-text); font-size: 26px; font-weight: 800; line-height: 1.25; }
   .dashboard-section-heading p, .dashboard-premium-heading p { margin-top: 4px; color: var(--dash-muted); font-size: 16px; line-height: 1.6; }
@@ -49,7 +51,7 @@
   .dashboard-assessment-result { display: flex; align-items: center; gap: 18px; margin-top: 20px; }
   .dashboard-score-ring { flex-shrink: 0; display: grid; place-items: center; position: relative; isolation: isolate; width: 82px; height: 82px; border-radius: 50%; background: conic-gradient(var(--score-color, var(--dash-gold)) var(--score-progress), var(--surface-2, #22314d) 0); }
   .dashboard-score-ring::before { position: absolute; content: ''; inset: 9px; background: var(--dash-card); border-radius: inherit; z-index: -1; }
-  .dashboard-score-ring strong { font-size: 23px; font-weight: 800; }
+  .dashboard-score-ring strong { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
   .dashboard-assessment-result h3 { font-size: 23px; font-weight: 800; overflow-wrap: anywhere; }
   .dashboard-assessment-result p { margin-top: 4px; font-size: 14px; line-height: 1.7; color: var(--dash-muted); }
   .dashboard-assessment-copy { margin-top: 20px; font-size: 16px; line-height: 1.8; color: var(--dash-muted); }
@@ -149,7 +151,12 @@
   }
 
   .dashboard-recommendation-card > .dashboard-button { grid-column: 2; justify-self: start; }
-  .dashboard-page { --dash-green: #58d890; --dash-red: #ff7392; }
+  /* Light ang default, gaya ng main.css. Dati baligtad: gumagana lang
+     ang light na kulay kapag pinindot ang toggle, kaya ang naka-light na
+     device ay nakakakita ng mapusyaw na berde sa puting background. */
+  .dashboard-page { --dash-green: #147744; --dash-red: #b72f50; }
+  :root[data-theme='dark'] .dashboard-page { --dash-green: #58d890; --dash-red: #ff7392; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme]) .dashboard-page { --dash-green: #58d890; --dash-red: #ff7392; } }
   .dashboard-page .score-strong { --score-color: var(--dash-green); color: var(--dash-green); }
   .dashboard-page .score-developing { --score-color: var(--warn-text, #f5a623); color: var(--warn-text, #f5a623); }
   .dashboard-page .score-needs-work { --score-color: var(--dash-red); color: var(--dash-red); }
@@ -171,7 +178,7 @@
   .dashboard-cancel-warning strong { color:var(--warn-text,#f5a623); font-size:18px; }
   .dashboard-cancel-warning p { margin-top:8px; font-size:15px; line-height:1.7; }
   @media (max-width: 480px) { .dashboard-summary-grid { grid-template-columns:minmax(0,1fr); } .dashboard-score-ring { width:76px; height:76px; } }
-  [data-theme='light'] .dashboard-page { --dash-green:#147744; --dash-red:#b72f50; }
+
 
   /* Existing SiteHeader.vue hooks: preserve their original rules. */
   .dashboard-user-area { @apply flex items-center gap-2 text-[19px]; }

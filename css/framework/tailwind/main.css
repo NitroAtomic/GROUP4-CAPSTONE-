@@ -301,7 +301,9 @@
     padding-top: 16px;
     border-top: 1px solid rgba(255, 255, 255, 0.14);
     color: rgba(255, 255, 255, 0.64);
-    white-space: nowrap;
+    /* Hindi nowrap: sa phone, itinutulak nito ang buong site nang 300px
+       pakanan. Sa desktop, kasya pa rin sa isang linya. */
+    text-wrap: balance;
   }
 
   @media (min-width: 761px) {
