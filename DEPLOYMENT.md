@@ -126,9 +126,23 @@ passes through a chat or a commit.
 | `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | from your MySQL provider |
 | `DB_SSL` | `true` |
 | `CORS_ORIGINS` | the deployed URL, e.g. `https://se-aware.onrender.com` |
+| `BREVO_API_KEY` | from Brevo, for the one-time login codes |
+| `MAIL_FROM` | the address verified with Brevo |
+| `PAYMONGO_SECRET_KEY` | the **test** secret key from PayMongo, `sk_test_...` |
+| `PAYMONGO_METHODS` | optional, defaults to `card,gcash` |
 
 `CORS_ORIGINS` must match the deployed URL exactly, scheme included. If it is
-wrong the site loads but every API call is refused.
+wrong the site loads but every API call is refused. It is also where the
+payment return URL comes from, so a wrong value sends people back to the
+wrong place after paying. Set `PUBLIC_URL` if the two ever need to differ.
+
+Paste the PayMongo key straight from their dashboard into Render. It is a
+secret key: anyone holding it can charge through your account, so it does not
+belong in a commit, a screenshot or a group chat.
+
+If `PAYMONGO_SECRET_KEY` is missing the checkout route answers 503 and says
+payment is unavailable. It deliberately does **not** fall back to granting
+Premium — that fallback is the exact hole this replaced.
 
 ### 4. Check it
 

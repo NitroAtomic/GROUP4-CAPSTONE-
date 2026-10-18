@@ -34,6 +34,7 @@
 @import './modules/premium.css';
 @import './chatbot/chatbot-tailwind.css';
 @import './layout/back-to-top.css';
+@import './layout/premium-expiry.css';
 
 
 @tailwind base;
@@ -48,16 +49,109 @@
    ========================= */
 
 @layer base {
+  /* ----------------------------------------------------------------------
+     Theme tokens
+
+     --navy is the brand colour and stays navy in both themes: it is what the
+     header, the footer and the hero band are painted with, and those are dark
+     either way. Heading TEXT needed its own token, because in a dark theme it
+     has to go light while those bands stay dark. --navy was doing both jobs.
+
+     Anything that changes between themes is a token here. A colour written
+     directly into a rule cannot follow the theme, which is how a dark page
+     ends up with white cards sitting on it.
+     ---------------------------------------------------------------------- */
   :root {
-    --navy: #0B2545;
+    --navy: #0B2545;              /* brand; same in both themes */
     --teal: #1B7F79;
     --orange: #F5A623;
-    --bg: #F7F9FC;
-    --card-bg: #ffffff;
-    --border: #DFE5EE;
-    --text: #10233d;
-    --muted: #5e6a7a;
+
+    /* The page sits a clear step below the cards. It used to be #F7F9FC,
+       which is so close to white that a white card on it had no visible
+       edge - the cards looked like they were floating. The border was
+       #DFE5EE and too faint to rescue it. Cards stay white rather than
+       going grey themselves: the card is where the reading happens, so it
+       should be the cleanest surface on the page. */
+    --bg: #EAEFF6;                /* page */
+    --card-bg: #ffffff;           /* cards and panels */
+    --surface-2: #F2F5FA;         /* sunken rows, table stripes */
+    --border: #C8D3E3;
+    --heading: #0B2545;           /* heading text */
+    --text: #10233d;              /* body text */
+    --muted: #5e6a7a;             /* secondary text */
+    --field-bg: #ffffff;          /* inputs */
+    --accent-text: #1B7F79;       /* teal used as TEXT on a card */
+    --warn-text:   #B45309;       /* amber used as TEXT on a card */
     --shadow-soft: 0 2px 10px rgba(11, 37, 69, 0.07);
+
+    /* Solidong pindutan. Dati gradient ito (135deg, teal -> navy), na
+       walang ibig sabihin at siyang unang nakikita kapag mukhang
+       hindi tao ang gumawa ng pahina. */
+    --btn-bg: #156B64;
+    --btn-fg: #FFFFFF;
+
+    --ok-bg: #F0FDF4;             /* correct answers, success states */
+    --ok-border: #16A34A;
+    --ok-text: #166534;           /* green used as TEXT */
+    --bad-bg: #FEF2F2;            /* wrong answers, errors */
+    --bad-border: #DC2626;
+    --bad-text: #991B1B;          /* red used as TEXT */
+  }
+
+  /* Dark values live in one place. Applied when the person has chosen dark,
+     and when they have chosen nothing and their system asks for it. The
+     :not([data-theme]) guard matters - without it, the system preference
+     would override someone who explicitly picked light. */
+  :root[data-theme="dark"] {
+    --bg: #0A1220;
+    --card-bg: #121D2E;
+    --surface-2: #16233A;
+    --border: #28374F;
+    --heading: #E8EEF7;
+    --text: #DCE4F0;
+    --muted: #94A3B8;
+    --field-bg: #0F1A2B;
+    --accent-text: #5EEAD4;
+    --warn-text:   #FBBF24;
+    --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+    --btn-bg: #5EEAD4;
+    --btn-fg: #06211E;
+
+    --ok-bg: #112A1C;
+    --ok-border: #2E9E5B;
+    /* Hindi yung #166534 na ginagamit sa light. Sa ibabaw ng #112A1C,
+       2.15:1 lang yun -- halos hindi na mabasa. Ito ay 8.79:1. */
+    --ok-text: #4ADE80;
+    --bad-bg: #2C1618;
+    --bad-border: #D4504F;
+    --bad-text: #F87171;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --bg: #0A1220;
+      --card-bg: #121D2E;
+      --surface-2: #16233A;
+      --border: #28374F;
+      --heading: #E8EEF7;
+      --text: #DCE4F0;
+      --muted: #94A3B8;
+      --field-bg: #0F1A2B;
+    --accent-text: #5EEAD4;
+    --warn-text:   #FBBF24;
+      --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+      --btn-bg: #5EEAD4;
+      --btn-fg: #06211E;
+
+      --ok-bg: #112A1C;
+      --ok-border: #2E9E5B;
+      --ok-text: #4ADE80;
+      --bad-bg: #2C1618;
+      --bad-border: #D4504F;
+      --bad-text: #F87171;
+    }
   }
 
   * {
@@ -98,7 +192,7 @@
   }
 
   .se-card {
-    @apply rounded-[12px] border bg-white;
+    @apply rounded-[12px] border bg-[var(--card-bg)];
     border-color: var(--border);
     box-shadow: 0 2px 10px rgba(11, 37, 69, 0.07);
   }
@@ -139,14 +233,18 @@
     border-color: rgba(255, 255, 255, 0.16);
   }
 
+  /* Dating naka-cap sa 420px tapos may translateX(-60px) sa desktop, kaya
+     nakasiksik sa kaliwa yung buong footer at parang naligaw yung laman.
+     Ngayon, normal na container na naka-gitna, kapareho ng lapad ng
+     nilalaman ng page sa taas nito. */
   .site-footer-inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    width: min(420px, calc(100% - 40px));
+    align-items: flex-start;
+    gap: 14px;
+    width: min(1120px, calc(100% - 40px));
     margin: 0 auto;
-    padding: 32px 0 88px;
+    padding: 36px 0 88px;
   }
 
   .site-footer-brand {
@@ -189,57 +287,34 @@
     max-width: 100%;
   }
 
-  .site-footer-nav {
-    @apply text-sm;
-    padding-top: 1px;
-  }
-
-  .site-footer-nav ul {
-    @apply flex flex-col items-start gap-2 list-none;
-  }
-
-  .site-footer-nav li {
-    @apply leading-relaxed;
-  }
-
-  .site-footer-nav a {
-    color: rgba(255, 255, 255, 0.86);
-    text-decoration: none;
-    transition: color 150ms ease, text-decoration-color 150ms ease;
-  }
-
-  .site-footer-nav a:hover {
-    color: #fff;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .site-footer-nav a:focus-visible {
-    border-radius: 2px;
-    outline: 2px solid var(--orange);
-    outline-offset: 4px;
-  }
-
   .site-footer-note {
     @apply text-sm leading-relaxed;
-    flex: 0 1 21rem;
+    flex: 1 1 auto;
     min-width: 0;
-    max-width: 21rem;
+    max-width: 100%;
     color: rgba(255, 255, 255, 0.76);
+  }
+
+  .site-footer-legal {
+    @apply text-xs leading-relaxed;
+    width: 100%;
+    margin-top: 6px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.64);
+    /* Hindi nowrap: sa phone, itinutulak nito ang buong site nang 300px
+       pakanan. Sa desktop, kasya pa rin sa isang linya. */
+    text-wrap: balance;
   }
 
   @media (min-width: 761px) {
     .site-footer-inner {
-      width: fit-content;
-      max-width: calc(100% - 40px);
-      padding: 60px 0;
-      transform: translateX(-60px);
+      padding: 56px 0;
     }
 
     .site-footer-content {
       width: 100%;
       max-width: 100%;
-      margin-inline: auto;
       gap: clamp(16px, 1.25vw, 24px);
     }
 
@@ -257,21 +332,8 @@
       gap: 0.75em;
     }
 
-    .site-footer-nav {
-      font-size: 1em;
-    }
-
-    .site-footer-nav ul {
-      gap: 0.5em;
-    }
-
-    .site-footer-nav {
-      padding-top: 0.0625em;
-    }
-
     .site-footer-note {
-      flex: 0 1 clamp(21rem, 71vw, 72rem);
-      max-width: clamp(21rem, 71vw, 72rem);
+      max-width: 100%;
       font-size: 1em;
     }
   }
@@ -300,21 +362,17 @@
 
   @media (max-width: 760px) {
     .site-footer-inner {
-      gap: 20px;
-      width: min(100% - 32px, 560px);
+      gap: 16px;
+      width: calc(100% - 32px);
       padding-top: 28px;
       padding-bottom: 88px;
     }
 
     .site-footer-content {
-      flex-direction: row;
-      align-items: start;
-      gap: clamp(10px, 3vw, 20px);
       width: 100%;
     }
 
     .site-footer-note {
-      flex: 1 1 auto;
       max-width: 100%;
     }
   }
@@ -326,5 +384,60 @@
       transition: none;
       transform: none !important;
     }
+  }
+
+  /* =========================
+     404
+
+     Walang catch-all dati, kaya yung maling address ay blangkong pahina
+     na walang paraan pabalik. Ito yung nakikita ngayon.
+     ========================= */
+
+  .notfound-page {
+    @apply flex items-center justify-center px-5 py-16;
+    min-height: 60vh;
+  }
+
+  .notfound-panel {
+    @apply w-full max-w-[34rem] rounded-xl border px-8 py-10 text-center max-[620px]:px-5;
+    background: var(--card-bg);
+    border-color: var(--border);
+  }
+
+  .notfound-code {
+    @apply text-[2.75rem] font-bold leading-none tracking-tight;
+    color: var(--accent-text);
+  }
+
+  .notfound-panel h1 {
+    @apply mt-3 text-[1.6rem] leading-tight;
+    color: var(--heading);
+  }
+
+  .notfound-panel p:not(.notfound-code) {
+    @apply mx-auto mt-3 max-w-[28rem] text-[15px] leading-relaxed;
+    color: var(--text);
+  }
+
+  .notfound-actions {
+    @apply mt-7 flex flex-wrap items-center justify-center gap-3;
+  }
+
+  .notfound-primary {
+    @apply inline-flex min-h-[44px] items-center rounded-[11px] border px-5 text-[15px];
+    background: linear-gradient(135deg, var(--teal), var(--navy));
+    border-color: transparent;
+    color: #fff;
+  }
+
+  .notfound-secondary {
+    @apply inline-flex min-h-[44px] items-center rounded-[11px] border px-5 text-[15px];
+    background: var(--card-bg);
+    border-color: var(--border);
+    color: var(--heading);
+  }
+
+  .notfound-secondary:hover {
+    background: var(--bg);
   }
 }

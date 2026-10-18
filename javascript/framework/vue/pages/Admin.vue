@@ -3,7 +3,6 @@
     <section class="admin-container">
       <header class="admin-heading">
         <div>
-          <p class="admin-eyebrow">Administration</p>
           <h1>Admin Portal</h1>
           <p>Manage learning modules, quiz questions, and Free or Premium availability.</p>
         </div>
@@ -13,7 +12,31 @@
       <p v-if="errorMessage" class="admin-message admin-error" role="alert">{{ errorMessage }}</p>
       <p v-if="successMessage" class="admin-message admin-success" role="status">{{ successMessage }}</p>
 
-      <section class="admin-card">
+      <!-- Dalawang gawain, dalawang tab. Dati magkakasunod lahat sa isang
+           mahabang pahina, kaya kailangan pang mag-scroll nang malayo bago
+           makita ang talaan ng bayad. -->
+      <nav class="admin-tabs" aria-label="Admin sections">
+        <button
+          type="button"
+          class="admin-tab"
+          :aria-selected="activeTab === 'modules'"
+          @click="activeTab = 'modules'"
+        >
+          Modules
+          <span class="admin-tab-count">{{ modules.length }}</span>
+        </button>
+        <button
+          type="button"
+          class="admin-tab"
+          :aria-selected="activeTab === 'payments'"
+          @click="activeTab = 'payments'"
+        >
+          Payments
+          <span class="admin-tab-count">{{ payments.length }}</span>
+        </button>
+      </nav>
+
+      <section v-if="activeTab === 'modules'" class="admin-card">
         <div class="admin-card-heading">
           <div>
             <h2>{{ formTitle }}</h2>
@@ -65,7 +88,7 @@
         </form>
       </section>
 
-      <section class="admin-card">
+      <section v-if="activeTab === 'modules'" class="admin-card">
         <div class="admin-card-heading">
           <div>
             <h2>Modules</h2>
@@ -90,8 +113,12 @@
                 {{ module.module_type }}
               </span>
               <button type="button" class="admin-secondary-button" @click="editModule(module)">Edit</button>
+              <!-- Nakapangalan dati rito ang isang module, para itago ang
+                   pindutan sa module na walang pagsusulit. Pero dito mismo
+                   dapat makadagdag ng unang tanong ang admin, kaya ang
+                   pagtatago ay siyang humahadlang. May sariling sabi na ang
+                   editor kapag wala pang laman. -->
               <button
-                v-if="module.slug !== 'essential-safe-practices-remote-environments'"
                 type="button"
                 class="admin-secondary-button"
                 @click="manageQuiz(module)"
@@ -111,7 +138,202 @@
         </div>
       </section>
 
-      <section v-if="quizModuleId !== null" class="admin-card">
+      <!-- Talaan ng bayad.
+
+           Ito ang sagot sa "paano niyo mapapatunayan na walang
+           nakakakuha ng Premium nang libre". Hindi yung mga bayad na
+           linya ang nagpapatunay niyan -- yung mga naiwang 'pending':
+           umalis papuntang PayMongo, hindi bumalik, at Free pa rin. -->
+      <section v-if="activeTab === 'payments'" class="admin-card">
+        <div class="admin-card-heading">
+          <div>
+            <h2>Payments</h2>
+            <!-- Dati "what the account is now" lang. Sa isang linyang may
+                 "not paid" sa tabi ng "Premium", pinagdudugtong ito ng
+                 mata: parang nakakuha siya ng Premium nang walang bayad.
+                 Hiwalay ang dalawa, at kailangang sabihin. -->
+            <p>
+              Every checkout that was started. The last column is the account's
+              status today, not the result of that one checkout.
+            </p>
+          </div>
+          <button
+            type="button"
+            class="admin-secondary-button"
+            :disabled="isLoadingPayments"
+            @click="loadPayments"
+          >
+            Refresh
+          </button>
+        </div>
+
+        <p v-if="paymentError" class="admin-message admin-error" role="alert">{{ paymentError }}</p>
+
+        <!-- Hindi ito dapat mangyari habang test mode. Kung lumabas ito,
+             totoong pera na ang dumadaan. -->
+        <p
+          v-if="paymentSummary && paymentSummary.live > 0"
+          class="admin-message admin-error"
+          role="alert"
+        >
+          {{ paymentSummary.live }} of these are live payments, not test. Real money moved.
+          Check PAYMONGO_SECRET_KEY on Render — it should start with sk_test_.
+        </p>
+
+        <p v-if="isLoadingPayments" class="admin-empty-state" role="status">Loading payments…</p>
+
+        <template v-else>
+          <div v-if="paymentSummary" class="admin-payment-summary">
+            <div>
+              <span class="admin-payment-figure">{{ paymentSummary.total }}</span>
+              <span class="admin-payment-label">Checkouts started</span>
+            </div>
+            <div>
+              <span class="admin-payment-figure">{{ paymentSummary.paid }}</span>
+              <span class="admin-payment-label">Paid</span>
+            </div>
+            <div>
+              <span class="admin-payment-figure">{{ paymentSummary.pending }}</span>
+              <span class="admin-payment-label">Never completed</span>
+            </div>
+            <div>
+              <span class="admin-payment-figure">{{ paymentSummary.collected_display }}</span>
+              <span class="admin-payment-label">Collected</span>
+            </div>
+          </div>
+
+          <p v-if="payments.length === 0" class="admin-empty-state">
+            No checkout has been started yet.
+          </p>
+
+          <div v-else class="admin-table-scroll">
+            <table class="admin-table">
+              <thead>
+                <!-- Walo ang hanay dati, kaya hindi kasya sa isang tanawin
+                     at kailangan pang i-scroll pakanan. Pinagsama ang
+                     magkakamag-anak: ang paraan ng bayad ay kasama na ng
+                     halaga, at ang kalagayan ng account ay kasama na ng
+                     katayuan ng bayad. Ang "test" ay hindi na hanay --
+                     lumalabas lang kapag LIVE, na siyang dapat mapansin. -->
+                <tr>
+                  <th>Reference</th>
+                  <th>Account</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Started</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="payment in payments" :key="payment.reference_number">
+                  <td class="admin-table-ref">{{ payment.reference_number }}</td>
+                  <td>
+                    {{ payment.email }}
+                    <span class="admin-table-sub">{{ payment.name }}</span>
+                  </td>
+                  <td>
+                    {{ payment.amount_display }}
+                    <span class="admin-table-sub">
+                      {{ payment.billing_period }}<template v-if="payment.payment_method"> · {{ payment.payment_method }}</template>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="admin-status" :class="statusClass(payment.status)">
+                      {{ payment.status }}
+                    </span>
+                    <span v-if="payment.livemode" class="admin-status admin-status-failed">LIVE</span>
+                    <span class="admin-table-sub">
+                      now {{ payment.subscription_type }}, {{ payment.subscription_status }}
+                    </span>
+                  </td>
+                  <td class="admin-table-when">
+                    {{ paymentWhen(payment.created_at) }}
+                    <span class="admin-table-sub">
+                      {{ payment.paid_at ? 'paid ' + paymentWhen(payment.paid_at) : 'not paid' }}
+                    </span>
+                  </td>
+                  <td class="admin-table-actions">
+                    <button
+                      v-if="canCancel(payment)"
+                      type="button"
+                      class="admin-secondary-button"
+                      :disabled="busyReference !== null"
+                      @click="cancelPayment(payment)"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      v-if="canDelete(payment)"
+                      type="button"
+                      class="admin-delete-button"
+                      :disabled="busyReference !== null"
+                      @click="deletePayment(payment)"
+                    >
+                      Delete
+                    </button>
+                    <span v-if="!canCancel(payment) && !canDelete(payment)" class="admin-table-sub">kept</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </template>
+      </section>
+
+      <!-- Pag-cancel at pagbawi ng subscription. Walang perang gumagalaw,
+           kaya hiwalay sa talaan ng bayad sa itaas. -->
+      <section v-if="activeTab === 'payments' && !isLoadingPayments" class="admin-card">
+        <div class="admin-card-heading">
+          <div>
+            <h2>Subscription changes</h2>
+            <p>
+              Every cancel and every "Keep Premium". A cancelled account keeps
+              Premium until the date shown, then moves to Free.
+            </p>
+          </div>
+        </div>
+
+        <p v-if="subscriptionEvents.length === 0" class="admin-empty-state">
+          No cancellations yet.
+        </p>
+
+        <div v-else class="admin-table-scroll">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th scope="col">When</th>
+                <th scope="col">Account</th>
+                <th scope="col">Change</th>
+                <th scope="col">Premium until</th>
+                <th scope="col">Account now</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="event in subscriptionEvents" :key="event.event_id">
+                <td class="admin-table-when">{{ paymentWhen(event.created_at) }}</td>
+                <td>
+                  {{ event.email }}
+                  <span class="admin-table-sub">{{ event.name }}</span>
+                </td>
+                <td>
+                  <span class="admin-status" :class="eventClass(event.event_type)">
+                    {{ eventLabel(event.event_type) }}
+                  </span>
+                </td>
+                <td class="admin-table-when">
+                  {{ event.access_until ? paymentWhen(event.access_until) : 'Ended at once' }}
+                </td>
+                <td>
+                  {{ event.subscription_type }}
+                  <span class="admin-table-sub">{{ event.subscription_status }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section v-if="activeTab === 'modules' && quizModuleId !== null" class="admin-card">
         <div class="admin-card-heading">
           <div>
             <h2>Quiz questions</h2>
@@ -123,7 +345,9 @@
         <p v-if="isLoadingQuestions" class="admin-empty-state" role="status">Loading questions…</p>
         <template v-else-if="quizId !== null">
           <p v-if="questionError" class="admin-message admin-error" role="alert">{{ questionError }}</p>
-          <p v-if="questions.length === 0" class="admin-empty-state">No questions found.</p>
+          <p v-if="questions.length === 0" class="admin-empty-state">
+            No questions in this bank yet. Add the first one below.
+          </p>
           <div v-else class="admin-module-list">
             <article v-for="question in questions" :key="question.question_id" class="admin-module-row">
               <div class="admin-module-details">

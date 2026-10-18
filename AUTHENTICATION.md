@@ -49,32 +49,72 @@ API calls from `file://` origins.
 | `login.html` | Real login. Premium accounts get a second step (emailed 6-digit code) before a session is issued. |
 | `forgot-password.html` | Full two-step password reset: request a code, then set a new password. |
 | `dashboard.html` | Requires login. Shows the real user's name, completed modules, average quiz score, and weak-area count from the database. |
-| `payment.html` | Simulated checkout. Upgrades the account to Premium without processing any payment, and actively rejects real card numbers. See below. |
+| `/payment` | Real checkout through PayMongo, in test mode. Hands off to PayMongo's hosted page; the account is upgraded only after our server confirms the payment with PayMongo. See below. |
 | Every page with a navbar | Shows "Log in" when signed out; shows the user's name + "Log out" when signed in. Hides "Go Premium" for accounts that already have it. |
 
 ---
 
-## The payment page is a simulation
+## How payment works
 
-FR-10 covers subscription and plan state only, and the paper's Scope and
-Limitations section excludes *"online payment gateway integration, automatic
-billing, or financial transaction processing"*. So `payment.html` records the
-plan change on the account and takes no payment. No card data is transmitted,
-validated against a processor, or stored anywhere.
+Premium is reachable in exactly one way: a payment that PayMongo confirms to
+our server. There is no other route into it.
 
-**Real card numbers are actively refused, not just discouraged.** The page
-carries a prominent "Simulation only" banner, and the form rejects any entry
-that passes the Luhn checksum, which is the algorithm genuine card numbers
-satisfy. Only the documented demo number is accepted:
+### Why this changed
 
-- Card: `4242 4242 4242 4242`
-- Expiry: any future date
-- CVV: any three digits
+The page used to be a simulation. It checked a demo card number in the
+browser and then called `PATCH /api/auth/me/subscription` with
+`{"subscription_type":"Premium"}`, which the server believed. So the card
+form was decoration — one line in devtools did the same thing:
 
-This matters beyond tidiness. During UAT a participant could type a real card
-out of habit, and a platform that spends six modules teaching people to
-distrust convincing payment screens should not ship one of its own without
-saying so.
+```js
+fetch('/api/auth/me/subscription', {
+  method: 'PATCH',
+  headers: { 'content-type': 'application/json', authorization: 'Bearer ' + token },
+  body: JSON.stringify({ subscription_type: 'Premium' })
+})
+```
+
+That endpoint now refuses any upgrade with 403. It only goes downward, for
+cancelling.
+
+### The flow
+
+1. `POST /api/billing/checkout` — the server picks the price (`config/env.js`,
+   never the browser), writes a `pending` row in `payment_transaction`, and
+   asks PayMongo for a hosted checkout session.
+2. The user is sent to PayMongo's own page. **No card number ever touches our
+   server**, so there is no card data for us to leak.
+3. PayMongo returns them to `/payment/confirm?ref=...`.
+4. `POST /api/billing/confirm` asks PayMongo whether that session was paid.
+   The answer comes from PayMongo, not from the fact that the user arrived at
+   the success URL — typing that URL by hand proves nothing and grants
+   nothing.
+5. Only then is the account set to Premium, with an expiry 30 or 365 days out.
+
+### What it refuses
+
+| Attempt | Result |
+|---|---|
+| `PATCH /me/subscription` asking for Premium | 403, no change |
+| Typing the success URL without paying | 402, no change |
+| Confirming a reference belonging to another account | 404, no change |
+| Confirming the same payment repeatedly | Upgraded once, never extended twice |
+| Paying a different amount than we charged | 409, no change, logged |
+| Sending your own price in the checkout request | Ignored; the server charges its own |
+
+Each of these is covered by a test in the billing harness.
+
+### Test mode
+
+The whole thing runs on PayMongo's sandbox, so no real money moves. The
+banner on the page says so, which matters: during UAT a participant could
+type a real card out of habit, and a platform that spends six modules
+teaching people to distrust convincing payment screens should not ship one of
+its own without saying what it is.
+
+- Card: `4343 4343 4343 4345`, any future expiry, any 3-digit CVC
+- Declined card: `4111 1111 1111 1111`
+- GCash: choose **Authorize** on PayMongo's test page to simulate success
 
 ## For the rest of the team
 

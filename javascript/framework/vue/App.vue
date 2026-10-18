@@ -20,21 +20,29 @@
           <strong>Social Engineering Awareness Platform</strong>
         </div>
       </div>
+      <!-- Walang nav links dito. Pareho lang sila ng nasa header, at
+           dalawang nakatayong link sa gilid ng talata ang mukhang
+           naligaw na teksto sa halip na footer menu. Isang lugar lang
+           ang navigation: yung header. -->
       <div class="site-footer-content">
-        <nav class="site-footer-nav" aria-label="Footer navigation">
-          <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/about">About</router-link></li>
-          </ul>
-        </nav>
         <p class="site-footer-note">
           Educational guidance to support awareness and learning. This resource does not replace formal organizational training.
         </p>
       </div>
+      <p class="site-footer-legal">
+        &copy; 2026 SE-AWARE &middot; Group 4, A4102 &middot;
+        Abrasaldo, Anicete, Dente, Estanislao, Ricohermozo
+        &middot; Capstone project, for academic use.
+      </p>
     </div>
   </footer>
-  <ChatbotWidget />
+  <!-- Walang chatbot sa loob ng admin. Para sa natututo ito -- "paano
+       malalaman kung peke ang QR code" -- at walang kinalaman sa
+       pamamahala ng module o sa talaan ng bayad. Lumulutang lang ito sa
+       ibabaw ng trabaho. -->
+  <ChatbotWidget v-if="!isAdminRoute" />
   <BackToTop />
+  <PremiumExpiryNotice />
 </template>
 
 <script>
@@ -42,14 +50,23 @@ import SiteHeader from './layout/SiteHeader.vue'
 import ChatbotWidget from './layout/ChatbotWidget.vue'
 import BackToTop from './layout/BackToTop.vue'
 import UiIconSprite from './components/UiIconSprite.vue'
+import PremiumExpiryNotice from './components/PremiumExpiryNotice.vue'
 
 export default {
   components: {
     SiteHeader,
     ChatbotWidget,
     BackToTop,
-    UiIconSprite
+    UiIconSprite,
+    PremiumExpiryNotice
   },
+  computed: {
+    /* Yung route na mismo ang nagsasabi: naka-adminOnly na ang /admin. */
+    isAdminRoute() {
+      return Boolean(this.$route.meta && this.$route.meta.adminOnly)
+    }
+  },
+
   methods: {
     setFooterMarkDirection(event) {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

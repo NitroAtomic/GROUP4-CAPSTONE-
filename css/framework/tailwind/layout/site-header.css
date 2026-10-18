@@ -48,13 +48,16 @@
     @apply relative max-[900px]:hidden;
   }
 
+  /* Fixed at 305px it crowded the nav between roughly 900 and 1200px, where
+     "Role-based" wrapped onto two lines and the box sat on top of
+     "Assessment". It gives way first now, and still disappears under 900. */
   .search-box input {
-    @apply w-[305px] h-10 py-0 px-[18px] border rounded-lg text-[17px] outline-none bg-white/10 text-white placeholder:text-white/60;
+    @apply w-[305px] max-[1280px]:w-[210px] max-[1050px]:w-[150px] h-10 py-0 px-[18px] border rounded-lg text-[17px] max-[1050px]:text-[15px] outline-none bg-white/10 text-white placeholder:text-white/60;
     border-color: rgba(255, 255, 255, 0.25);
   }
 
   .search-results {
-    @apply absolute top-full left-0 z-20 mt-1 w-full border rounded-lg bg-white overflow-hidden;
+    @apply absolute top-full left-0 z-20 mt-1 w-full border rounded-lg bg-[var(--card-bg)] overflow-hidden;
     border-color: var(--border);
   }
 
@@ -70,7 +73,24 @@
     @apply py-2 px-[18px] text-[15px] text-[var(--muted)];
   }
 
+  /* Sits on the navy header like the other buttons, so it keeps the same
+     translucent-white treatment rather than following the theme tokens. */
+  .btn-theme-toggle {
+    @apply w-10 h-10 p-0 inline-flex items-center justify-center rounded-lg border text-white transition-colors;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  .btn-theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.20);
+  }
+
+  .btn-theme-toggle .ui-icon {
+    @apply w-5 h-5;
+  }
+
   .btn-login {
+    /* white button on the navy header: text stays navy in both themes */
     @apply bg-white text-[var(--navy)] font-semibold border-white;
   }
 
@@ -136,5 +156,12 @@
     .nav-right .btn {
       @apply whitespace-nowrap;
     }
+  }
+
+  /* Pangalan lang, hindi link: nandito ka na. */
+  /* Puti, hindi var(--heading): laging madilim ang header, pero navy ang
+     --heading sa light mode -- kaya nawawala ang pangalan doon. */
+  .nav-admin-brand {
+    @apply text-[17px] font-bold tracking-[0.02em] text-white;
   }
 }

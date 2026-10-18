@@ -11,6 +11,8 @@ import ForgotPasswordConfirmation from './pages/ForgotPasswordConfirmation.vue'
 import PremiumSubscription from './pages/PremiumSubscription.vue'
 import CreateAccount from './pages/CreateAccount.vue'
 import Payment from './pages/Payment.vue'
+import PaymentConfirm from './pages/PaymentConfirm.vue'
+import NotFound from './pages/NotFound.vue'
 import Dashboard from './pages/Dashboard.vue'
 import Admin from './pages/Admin.vue'
 
@@ -71,7 +73,16 @@ const routes = [
     path: '/payment',
     name: 'Payment',
     component: Payment,
-    meta: { minimalNav: true }
+    meta: { minimalNav: true, requiresAuth: true }
+  },
+  {
+    // Dito ibinabalik ng PayMongo yung user. requiresAuth ito kasi ang
+    // pagkumpirma ay nakatali sa account — hindi pwedeng i-confirm ng
+    // isang tao yung bayad ng iba kahit alam pa niya yung reference.
+    path: '/payment/confirm',
+    name: 'PaymentConfirm',
+    component: PaymentConfirm,
+    meta: { minimalNav: true, requiresAuth: true }
   },
   {
     path: '/dashboard',
@@ -87,7 +98,8 @@ const routes = [
   },
   // Module routes
   {
-    path: '/modules/quishing',
+    path: '/modules/phishing',
+    alias: '/modules/quishing',
     name: 'Quishing',
     component: Quishing
   },
@@ -125,30 +137,23 @@ const routes = [
     component: () => import('./pages/PremiumModules.vue'),
     meta: { requiresAuth: true, requiresPremium: true }
   },
-  {
-    path: '/modules/premium/client-impersonation',
-    name: 'ClientImpersonation',
-    component: () => import('./modules/premium/ClientImpersonation.vue'),
-    meta: { requiresAuth: true, requiresPremium: true }
-  },
-  {
-    path: '/modules/premium/client-data',
-    name: 'ClientData',
-    component: () => import('./modules/premium/ClientData.vue'),
-    meta: { requiresAuth: true, requiresPremium: true }
-  },
-  {
-    path: '/modules/premium/fake-recruiters',
-    name: 'FakeRecruiters',
-    component: () => import('./modules/premium/FakeRecruiters.vue'),
-    meta: { requiresAuth: true, requiresPremium: true }
-  },
-  {
-    path: '/modules/premium/invoice-scams',
-    name: 'InvoiceScams',
-    component: () => import('./modules/premium/InvoiceScams.vue'),
-    meta: { requiresAuth: true, requiresPremium: true }
-  },
+  /* Isang component na lang ang apat na role-based module.
+
+     Dati tig-isa sila ng .vue na may buong aral sa loob — at yun ay
+     naipapadala bilang pampublikong JavaScript, kaya mababasa nang
+     walang bayad. Ang moduleSlug na nasa meta ang nagsasabi sa shell
+     kung aling aral ang hihingin sa server. */
+  ...[
+    ['client-impersonation', 'ClientImpersonation'],
+    ['client-data',          'ClientData'],
+    ['fake-recruiters',      'FakeRecruiters'],
+    ['invoice-scams',        'InvoiceScams'],
+  ].map(([slug, name]) => ({
+    path: `/modules/premium/${slug}`,
+    name,
+    component: () => import('./modules/premium/PremiumModule.vue'),
+    meta: { requiresAuth: true, requiresPremium: true, moduleSlug: slug }
+  })),
   // Quiz routes
   {
     path: '/quiz/:moduleId/question',
@@ -172,6 +177,16 @@ const routes = [
     name: 'AssessmentResults',
     component: AssessmentResults,
     meta: { requiresAuth: true, requiresPremium: true }
+  },
+  {
+    /* Dapat ito ang HULI. Kung walang catch-all, yung maling address ay
+       walang tumutugmang route, kaya blangko lang ang <router-view /> --
+       header at footer na walang laman sa gitna, at walang paraan pabalik.
+       Hindi rin ito nahuhuli ng server: lahat ng hindi /api ay binibigyan
+       ng index.html, kaya walang 404 kahit kailan. */
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound
   }
 ]
 
@@ -195,6 +210,16 @@ const router = createRouter({
 const isTestRoute = (path) =>
   /^\/quiz\/[^/]+\/question/.test(path) || path.startsWith('/assessment/question')
 
+/* Kailangan ba ng Premium ang route na ito? Isang sagot lang, para pareho
+   ang ginagamit ng guard sa baba at ng paalala kapag natapos ang Premium
+   (components/PremiumExpiryNotice.vue). */
+export function routeNeedsPremium(route) {
+  if (!route) return false
+  if (route.meta && route.meta.requiresPremium) return true
+  return String(route.path || '').startsWith('/quiz/') &&
+    PREMIUM_QUIZ_MODULE_IDS.has(String(route.params && route.params.moduleId))
+}
+
 router.beforeEach((to, from) => {
   if (isTestRoute(from.path) && !isTestRoute(to.path) && examLock.isActive()) {
     if (!to.path.includes('/results')) {
@@ -211,7 +236,7 @@ router.beforeEach((to, from) => {
   const isPremiumQuizRoute =
     to.path.startsWith('/quiz/') && PREMIUM_QUIZ_MODULE_IDS.has(String(to.params.moduleId))
   const requiresAuth = to.meta.requiresAuth || isPremiumQuizRoute
-  const requiresPremium = to.meta.requiresPremium || isPremiumQuizRoute
+  const requiresPremium = routeNeedsPremium(to)
 
   if (requiresAuth && !authStore.isAuthenticated) {
     return { name: 'Login', query: { redirect: to.fullPath } }

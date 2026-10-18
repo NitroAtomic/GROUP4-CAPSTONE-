@@ -17,6 +17,7 @@ const config = require('./../config/env');
 const retrieval = require('./../config/retrieval');
 const pool = require('../config/db');
 const { optionalAuth } = require('../middleware/auth');
+const { hasPremiumAccess } = require('../middleware/premium');
 
 const router = express.Router();
 
@@ -117,7 +118,7 @@ function findAnswer(message) {
 // na space yung value, binabalik lang yung punctuation sa dulo — kung hihinto
 // sa unang "!" o ".", lumalabas yung dulo ng password, "Qwerty!99" naging
 // "[REDACTED]!99".
-const PASSWORD_PATTERN = /\b(pass(?:word)?|pwd)\b(\s*[:=]|\s+is)\s*["']?(\S{3,}?)["']?(?=[.,!?]*(?:\s|$))/gi;
+const PASSWORD_PATTERN = /\b(pass(?:word)?s?|pwd)\b(\s*[:=]|\s+is)\s*["']?(\S{3,}?)["']?(?=[.,!?]*(?:\s|$))/gi;
 
 function redactSecrets(text) {
   return text.replace(PASSWORD_PATTERN, (match, label, connector) => `${label}${connector} [REDACTED]`);
@@ -256,8 +257,12 @@ router.post('/', optionalAuth, async (req, res) => {
   let plan = 'Free';
   if (req.user) {
     try {
-      const [rows] = await pool.query('SELECT subscription_type FROM user WHERE user_id = ?', [req.user.user_id]);
-      if (rows[0] && rows[0].subscription_type === 'Premium') plan = 'Premium';
+      // Parehong tseke ng modules.js, quizzes.js at assessments.js — iisa na
+      // silang pinagmumulan sa middleware/premium.js. Kung dito lang
+      // maiiwan ang lumang bersyon, ang account na expired na ay
+      // makakakuha pa rin ng bayad na sagot dito samantalang tinatanggihan
+      // siya sa lahat ng iba.
+      if (await hasPremiumAccess(req.user)) plan = 'Premium';
     } catch (err) {
       console.warn('[chat] hindi nakuha yung plan, Free muna:', err.message);
     }

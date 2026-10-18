@@ -1,0 +1,18 @@
+{
+  "invoice-scams": {
+    "title": "Invoice and Payment Fraud",
+    "intro": "How attackers redirect a real payment to their own account &mdash; by changing bank details on an invoice, or a payroll record &mdash; and the two checks that stop it."
+  },
+  "client-data": {
+    "title": "Secure Client Data Handling",
+    "intro": "You hold the client files, the passwords and the access. The usual way all three get exposed is someone posing as your boss &mdash; here is how that works, and the one check that stops it whatever rank is on the message."
+  },
+  "client-impersonation": {
+    "title": "Fake Clients and Escrow Fraud",
+    "intro": "How a fake client takes your login, your work or your money &mdash; and how to check who you are dealing with before you hand anything over."
+  },
+  "fake-recruiters": {
+    "title": "Fake Job Offers",
+    "intro": "How a fake recruiter collects your passport scan, your bank details and your money &mdash; and what to check before you send any of it."
+  }
+}

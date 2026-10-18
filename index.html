@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/images/icons/se-aware-logo-mark.png" />
     <title>Social Engineering Awareness Platform for Remote Workers</title>
+    <!-- Runs before anything is painted. If the theme were applied once Vue had
+         booted, a person who chose dark would get a white flash on every page
+         load, which is worse than no dark mode for the eyes it is meant to
+         spare. No stored choice means follow the operating system, and the
+         stylesheet handles that on its own. -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('se-theme');
+          if (saved === 'dark' || saved === 'light') {
+            document.documentElement.setAttribute('data-theme', saved);
+          }
+        } catch (e) {
+          /* storage blocked: fall through to the system preference */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>

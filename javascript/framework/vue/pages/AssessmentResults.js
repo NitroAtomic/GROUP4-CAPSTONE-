@@ -52,17 +52,23 @@ export default {
     },
 
     byTopic() {
-      const empty = { correct: 0, total: 0 }
+      /* Only the topics this attempt actually covered. Ten questions are
+         drawn from a pool of twenty, so two or three topics get no question
+         at all - and listing those produced rows reading "Vishing 0/0",
+         which looks like the learner scored nothing on vishing rather than
+         never being asked about it. The fixed order is kept so the grid does
+         not rearrange itself between attempts. */
+      const ORDER = [
+        'phishing', 'spear-phishing', 'vishing', 'smishing',
+        'pretexting', 'quishing', 'safe-practices'
+      ]
       const stored = (this.results && this.results.by_topic) || {}
-      return {
-        phishing: stored.phishing || empty,
-        'spear-phishing': stored['spear-phishing'] || empty,
-        vishing: stored.vishing || empty,
-        smishing: stored.smishing || empty,
-        pretexting: stored.pretexting || empty,
-        quishing: stored.quishing || empty,
-        'safe-practices': stored['safe-practices'] || empty
+      const shown = {}
+      for (const topic of ORDER) {
+        const stats = stored[topic]
+        if (stats && stats.total > 0) shown[topic] = stats
       }
+      return shown
     },
 
     reviewItems() {

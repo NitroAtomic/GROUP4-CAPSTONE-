@@ -12,23 +12,9 @@ const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-async function requirePremium(req, res, next) {
-  if (req.user.role === 'admin') return next();
-
-  try {
-    const [rows] = await pool.query(
-      'SELECT subscription_type, subscription_status FROM user WHERE user_id = ?',
-      [req.user.user_id]
-    );
-    if (!rows.length || rows[0].subscription_type !== 'Premium' || rows[0].subscription_status !== 'active') {
-      return res.status(403).json({ error: 'This assessment requires a Premium subscription.' });
-    }
-    next();
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to verify Premium access.' });
-  }
-}
+// Nasa middleware/premium.js na yung panuntunan, iisa na lang siya para sa
+// buong backend.
+const { requirePremium } = require('../middleware/premium');
 
 router.use(requireAuth, requirePremium);
 

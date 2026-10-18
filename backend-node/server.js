@@ -22,6 +22,7 @@ const quizRoutes = require('./routes/quizzes');
 const dashboardRoutes = require('./routes/dashboard');
 const assessmentRoutes = require('./routes/assessments');
 const chatRoutes = require('./routes/chat');
+const billingRoutes = require('./routes/billing');
 
 const app = express();
 
@@ -93,6 +94,9 @@ app.use('/api/auth/reset-password', authLimiter);
 app.use('/api/chat', chatLimiter);
 app.use('/api/auth/verify-otp', otpLimiter);
 app.use('/api/auth/resend-otp', otpLimiter);
+// Bawat checkout ay lumilikha ng session sa PayMongo. May limitasyon para
+// hindi magawang pagawaan ng daan-daang session ang account ng isang tao.
+app.use('/api/billing/checkout', authLimiter);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/modules', moduleRoutes);
@@ -100,6 +104,7 @@ app.use('/api/quizzes', quizRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/assessment', assessmentRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/billing', billingRoutes);
 
 // Sa production, naka-build na yung Vue app papunta sa ../dist, kaya dito na
 // rin sini-serve — same origin, walang CORS hop.

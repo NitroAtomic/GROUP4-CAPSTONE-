@@ -17,6 +17,32 @@ const EMPTY_QUESTION = () => ({
   order_index: 0
 })
 
+/* Buong pangalan ng klase, nakasulat nang buo.
+
+   Hindi puwedeng `'admin-status-' + status` sa template: tinatanggal ng
+   Tailwind ang mga tuntunin sa @layer components kung hindi lumilitaw
+   ang pangalan ng klase sa mga file na sinusuri niya. Pinagdikit lang
+   ang pangalan, kaya hindi niya nakikita -- at tahimik na nawawala ang
+   kulay. Ganito rin ang nangyari sa aral ng bayad noong inilipat sila
+   sa labas ng frontend. */
+const STATUS_CLASS = {
+  paid: 'admin-status-paid',
+  pending: 'admin-status-pending',
+  failed: 'admin-status-failed',
+  cancelled: 'admin-status-cancelled'
+}
+
+/* Ganoon din dito: buong pangalan ng klase, hindi pinagdugtong. */
+const EVENT_CLASS = {
+  cancelled: 'admin-status-cancelled',
+  resumed: 'admin-status-paid'
+}
+
+const EVENT_LABEL = {
+  cancelled: 'Cancelled',
+  resumed: 'Kept Premium'
+}
+
 const authRequest = (path, options = {}) => {
   const { token } = useAuthStore()
   return apiFetch(path, { ...options, token })
@@ -42,7 +68,16 @@ export default {
       isSavingQuestion: false,
       editingQuestionId: null,
       questionForm: EMPTY_QUESTION(),
-      questionError: ''
+      questionError: '',
+      // Talaan ng bayad. Nandito yung patunay na walang Premium na
+      // naibigay nang walang bayad.
+      activeTab: 'modules',
+      payments: [],
+      subscriptionEvents: [],
+      paymentSummary: null,
+      isLoadingPayments: false,
+      busyReference: null,
+      paymentError: ''
     }
   },
 
@@ -63,9 +98,100 @@ export default {
       return
     }
     await this.loadModules()
+    await this.loadPayments()
   },
 
   methods: {
+    /* Hindi pinapatay ang buong pahina kapag pumalya ito -- yung mga
+       module ang pangunahing trabaho dito, hiwalay ang talaan ng bayad. */
+    async loadPayments() {
+      this.isLoadingPayments = true
+      this.paymentError = ''
+      try {
+        const data = await authRequest('/api/billing/transactions/all')
+        this.payments = data.transactions || []
+        this.subscriptionEvents = data.subscription_events || []
+        this.paymentSummary = data.summary || null
+      } catch (error) {
+        this.paymentError = error.message
+        this.payments = []
+        this.subscriptionEvents = []
+        this.paymentSummary = null
+      } finally {
+        this.isLoadingPayments = false
+      }
+    },
+
+    /* Puwedeng isara ang hindi natapos; hindi ang bayad na. */
+    canCancel(payment) {
+      return payment.status === 'pending'
+    },
+
+    /* Basura ng pagsubok lang ang puwedeng burahin. Pareho itong
+       nakasulat sa SQL -- ito ay para itago ang pindutan, hindi ito
+       ang nagbabantay. */
+    canDelete(payment) {
+      return !payment.livemode && payment.status !== 'paid'
+    },
+
+    async cancelPayment(payment) {
+      if (this.busyReference) return
+      if (!window.confirm(`Close checkout ${payment.reference_number} as cancelled? The record stays.`)) return
+      this.busyReference = payment.reference_number
+      this.paymentError = ''
+      try {
+        await authRequest(`/api/billing/transactions/${encodeURIComponent(payment.reference_number)}/cancel`, {
+          method: 'PATCH'
+        })
+        await this.loadPayments()
+      } catch (error) {
+        this.paymentError = error.message
+      } finally {
+        this.busyReference = null
+      }
+    },
+
+    async deletePayment(payment) {
+      if (this.busyReference) return
+      if (!window.confirm(`Remove ${payment.reference_number} from the records? This cannot be undone.`)) return
+      this.busyReference = payment.reference_number
+      this.paymentError = ''
+      try {
+        await authRequest(`/api/billing/transactions/${encodeURIComponent(payment.reference_number)}`, {
+          method: 'DELETE'
+        })
+        await this.loadPayments()
+      } catch (error) {
+        this.paymentError = error.message
+      } finally {
+        this.busyReference = null
+      }
+    },
+
+    eventClass(type) {
+      return EVENT_CLASS[type] || ''
+    },
+
+    eventLabel(type) {
+      return EVENT_LABEL[type] || type
+    },
+
+    statusClass(status) {
+      return STATUS_CLASS[status] || ''
+    },
+
+    /* "Oct 10, 2026, 06:22 AM" ang dati. Sa makitid na hanay, apat na
+       linya ito, kaya tumataas ang bawat hilera nang wala namang
+       nadadagdag. Ganito mas maikli, isang linya, at walang duda kung
+       alin ang buwan at alin ang araw. */
+    paymentWhen(value) {
+      if (!value) return '—'
+      const d = new Date(value)
+      const pad = (n) => String(n).padStart(2, '0')
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` +
+             ` ${pad(d.getHours())}:${pad(d.getMinutes())}`
+    },
+
     async loadModules() {
       this.isLoading = true
       this.errorMessage = ''

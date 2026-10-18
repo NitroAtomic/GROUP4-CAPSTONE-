@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
 const { requireAuth, JWT_SECRET } = require('../middleware/auth');
 const { sendOtpEmail } = require('../config/email');
+// Pang-salo sa mga bayad na hindi nakabalik sa confirm page.
+const { reconcilePending } = require('../services/payments');
 
 const router = express.Router();
 const SALT_ROUNDS = 10;
@@ -74,7 +76,7 @@ function createPendingOtpToken(userId, otpId) {
 
 // FR-09: Registration
 router.post('/register', async (req, res) => {
-  const { first_name, last_name, email, password, subscription_type } = req.body;
+  const { first_name, last_name, email, password } = req.body;
 
   if (!first_name || !email || !password) {
     return res.status(400).json({ error: 'first_name, email, and password are required.' });
@@ -82,7 +84,18 @@ router.post('/register', async (req, res) => {
   if (password.length < 8) {
     return res.status(400).json({ error: 'Password must be at least 8 characters.' });
   }
-  const plan = subscription_type === 'Premium' ? 'Premium' : 'Free';
+
+  /* Laging 'Free' ang bagong account, at hindi na binabasa ang
+     subscription_type sa body. Dati galing doon ito, kaya isang hindi
+     naka-login na POST /api/auth/register na may
+     "subscription_type":"Premium" ay gumagawa agad ng Premium/active na
+     account — libre pala ang buong bayad na tier, kasama ang apat na
+     role-based module, ang assessment at ang Premium na sagot ng chat.
+
+     Walang masisira: 'Free' na rin naman ang ipinapadala ng Vue app dito
+     (stores/auth.js). Ang pinagkaiba, hindi na ang kliyente ang
+     nagdedesisyon — sa /me/subscription dumadaan ang pag-upgrade. */
+  const plan = 'Free';
 
   try {
     const [existing] = await pool.query('SELECT user_id FROM user WHERE email = ?', [email]);
@@ -126,6 +139,26 @@ router.post('/login', async (req, res) => {
     const match = await bcrypt.compare(password, user.password_hash);
     if (!match) {
       return res.status(401).json({ error: 'Incorrect email or password.' });
+    }
+
+    /* Tapos na ang binayaran habang naka-logout siya: Free na, bago pa
+       pagpasyahan kung kailangan ng OTP. Kung hindi, hihingan pa siya ng
+       code na pang-Premium kahit wala na siyang Premium. Kapareho ng
+       ginagawa ng GET /me. */
+    if (user.subscription_type === 'Premium' &&
+        user.subscription_expires_at &&
+        new Date(user.subscription_expires_at) <= new Date()) {
+      await pool.query(
+        `UPDATE user
+            SET subscription_type = 'Free',
+                subscription_status = 'inactive'
+          WHERE user_id = ?
+            AND subscription_type = 'Premium'
+            AND subscription_expires_at <= NOW()`,
+        [user.user_id]
+      );
+      user.subscription_type = 'Free';
+      user.subscription_status = 'inactive';
     }
 
     if (user.subscription_type === 'Premium') {
@@ -226,6 +259,13 @@ router.post('/verify-otp', async (req, res) => {
     }
 
     const [userRows] = await pool.query('SELECT * FROM user WHERE user_id = ?', [payload.user_id]);
+    // Tinitingnan na ito ng /resend-otp sa baba; dito hindi. Kung nabura ang
+    // account sa pagitan ng /login at nito, undefined ang user at sasabog
+    // ang susunod na linya — 500 "Verification failed." pagkatapos nang
+    // masunog na ang isahang gamit na code. 401 ang tamang sagot dito.
+    if (userRows.length === 0) {
+      return res.status(401).json({ error: 'Account not found. Please log in again.' });
+    }
     const user = userRows[0];
     const token = jwt.sign({ user_id: user.user_id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
 
@@ -285,15 +325,51 @@ router.post('/logout', requireAuth, (req, res) => {
   res.json({ message: 'Logged out.' });
 });
 
-// FR-10: Subscription/account management (plan state lang, walang pricing o
-// payment processing, ayon sa requirement).
+// FR-10: Subscription/account management.
 router.get('/me', requireAuth, async (req, res) => {
+  const SELECT_ME =
+    'SELECT user_id, first_name, last_name, email, subscription_type, subscription_status, subscription_expires_at, role, created_at FROM user WHERE user_id = ?';
+
   try {
-    const [rows] = await pool.query(
-      'SELECT user_id, first_name, last_name, email, subscription_type, subscription_status, role, created_at FROM user WHERE user_id = ?',
-      [req.user.user_id]
-    );
+    let [rows] = await pool.query(SELECT_ME, [req.user.user_id]);
     if (rows.length === 0) return res.status(404).json({ error: 'User not found.' });
+
+    /* Yung sumasalo sa isinarang tab.
+
+       Kung may nagbayad tapos hindi na nakabalik sa confirm page, 'pending'
+       pa rin yung bayad niya at Free pa rin siya kahit tanggap na ng
+       PayMongo. Dito yun naaayos: paglo-load ng account niya, tinitingnan
+       kung may naiwan, at kung bayad nga, binibigay na.
+
+       Sa hindi pa Premium lang tumatakbo, kaya walang dagdag na trabaho
+       para sa mga bayad na. Hindi rin ito humahadlang: kung hindi maabot
+       ang PayMongo, naitatala sa log at tuloy pa rin ang pag-load. */
+    /* Tapos na ang binayarang panahon: Free na siya.
+
+       Hindi ito ang nagbabantay ng access -- ang middleware/premium.js
+       na ang tumitingin sa petsa. Ito ay para tama ang nakikita: hindi
+       na "Premium, cancelled" sa dashboard at admin kahit lampas na.
+       Hindi binubura ang expiry; talaan iyon kung kailan natapos. */
+    if (rows[0].subscription_type === 'Premium' &&
+        rows[0].subscription_expires_at &&
+        new Date(rows[0].subscription_expires_at) <= new Date()) {
+      await pool.query(
+        `UPDATE user
+            SET subscription_type = 'Free',
+                subscription_status = 'inactive'
+          WHERE user_id = ?
+            AND subscription_type = 'Premium'
+            AND subscription_expires_at <= NOW()`,
+        [req.user.user_id]
+      );
+      [rows] = await pool.query(SELECT_ME, [req.user.user_id]);
+    }
+
+    if (rows[0].subscription_type !== 'Premium') {
+      await reconcilePending(req.user.user_id);
+      [rows] = await pool.query(SELECT_ME, [req.user.user_id]);
+    }
+
     res.json(rows[0]);
   } catch (err) {
     console.error(err);
@@ -301,25 +377,159 @@ router.get('/me', requireAuth, async (req, res) => {
   }
 });
 
+/* Itinatala ang pag-cancel at pagbawi sa subscription_event, para
+   makita sa Payments ng admin.
+
+   Hindi ito dapat makasira ng mismong pag-cancel: kung wala pa ang
+   table (hindi pa napatakbo ang sql/07), naitatala lang sa log at tuloy
+   ang lahat. Ang pagbabago sa account ang mahalaga; ang talaan ay
+   kasunod lang. */
+async function recordSubscriptionEvent(userId, eventType, accessUntil) {
+  try {
+    await pool.query(
+      'INSERT INTO subscription_event (user_id, event_type, access_until) VALUES (?, ?, ?)',
+      [userId, eventType, accessUntil || null]
+    );
+  } catch (err) {
+    console.error('[subscription] could not record event:', err.message);
+  }
+}
+
+/* Dati, dito nakukuha ang Premium nang libre.
+
+   Tinatanggap nito yung subscription_type mula mismo sa request body, kaya
+   isang linya lang sa devtools ng kahit sinong naka-login:
+
+       fetch('/api/auth/me/subscription', {
+         method: 'PATCH',
+         headers: { 'content-type': 'application/json', ... },
+         body: JSON.stringify({ subscription_type: 'Premium' })
+       })
+
+   at bukas na lahat ng bayad na module. Nasa browser lang kasi yung card
+   form, kaya yung buong "bayad" ay pang-palamuti lang pala.
+
+   Ngayon, pababa lang ang dinadaanan nito. Ang pagtaas ay sa
+   routes/billing.js lang, at doon lang pagkatapos kumpirmahin ng PayMongo
+   na may aktwal na bayad. Hindi ito maaaring pagdaanan. */
 router.patch('/me/subscription', requireAuth, async (req, res) => {
   const { subscription_type } = req.body;
+
   if (!['Free', 'Premium'].includes(subscription_type)) {
     return res.status(400).json({ error: 'subscription_type must be Free or Premium.' });
   }
-  // Sabay binabago yung status, hindi lang yung type. Premium lang yung type
-  // pero hindi 'active' yung status, hindi kumpleto yung upgrade: pumapasa
-  // yung bayad pero hindi nabubuksan yung role-based modules at dashboard,
-  // kasi hinahanap ng frontend yung dalawa bago ka ituring na Premium.
-  const subscription_status = subscription_type === 'Premium' ? 'active' : 'inactive';
+
+  if (subscription_type === 'Premium') {
+    return res.status(403).json({
+      error: 'Premium is granted only after a confirmed payment. Start one at /api/billing/checkout.',
+    });
+  }
+
+  /* Natitira: pag-cancel.
+
+     Dati, Free agad pagpindot, at binubura pa yung expiry -- kaya kahit
+     kakabayad lang ng isang taon, nawawala lahat sa isang click. Ngayon,
+     gaya ng Netflix/Spotify: 'cancelled' lang ang status. Premium pa rin
+     siya hanggang subscription_expires_at, tapos saka babalik sa Free
+     (tingnan ang middleware/premium.js at yung GET /me sa itaas).
+
+     Isang kaso lang ang agad na bumababa: walang petsa o lampas na. Wala
+     na kasing binayarang panahon na itutuloy -- mga lumang demo account
+     ang mga iyon, ginawa bago pa nagkaroon ng bayad. */
   try {
-    await pool.query(
-      'UPDATE user SET subscription_type = ?, subscription_status = ? WHERE user_id = ?',
-      [subscription_type, subscription_status, req.user.user_id]
+    // Ano siya bago pumindot -- para malaman kung may itatala.
+    const [beforeRows] = await pool.query(
+      'SELECT subscription_type, subscription_status FROM user WHERE user_id = ?',
+      [req.user.user_id]
     );
-    res.json({ message: 'Plan updated.', subscription_type, subscription_status });
+    const before = beforeRows[0] || {};
+
+    const [cancelled] = await pool.query(
+      `UPDATE user
+          SET subscription_status = 'cancelled'
+        WHERE user_id = ?
+          AND subscription_type = 'Premium'
+          AND subscription_status = 'active'
+          AND subscription_expires_at > NOW()`,
+      [req.user.user_id]
+    );
+
+    if (cancelled.affectedRows === 0) {
+      // Hindi ginagalaw ang naka-cancel na: dalawang pindot ay isang cancel.
+      await pool.query(
+        `UPDATE user
+            SET subscription_type = 'Free',
+                subscription_status = 'inactive'
+          WHERE user_id = ?
+            AND NOT (subscription_status = 'cancelled' AND subscription_expires_at > NOW())`,
+        [req.user.user_id]
+      );
+    }
+
+    const [rows] = await pool.query(
+      'SELECT subscription_type, subscription_status, subscription_expires_at FROM user WHERE user_id = ?',
+      [req.user.user_id]
+    );
+    const plan = rows[0] || {};
+
+    /* Itinatala lang kung may totoong nagbago: Premium siya na hindi pa
+       naka-cancel. Ang pangalawang pindot, o ang Free na pumindot, ay
+       walang bagong nangyari. */
+    if (before.subscription_type === 'Premium' && before.subscription_status !== 'cancelled') {
+      await recordSubscriptionEvent(
+        req.user.user_id,
+        'cancelled',
+        plan.subscription_status === 'cancelled' ? plan.subscription_expires_at : null
+      );
+    }
+
+    res.json({
+      message: plan.subscription_status === 'cancelled'
+        ? 'Subscription cancelled. Premium stays until the end of the paid period.'
+        : 'Subscription cancelled.',
+      subscription_type: plan.subscription_type,
+      subscription_status: plan.subscription_status,
+      subscription_expires_at: plan.subscription_expires_at,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to update plan.' });
+  }
+});
+
+/* Pagbawi ng cancel ("Keep Premium").
+
+   Para lang sa naka-cancel na may natitira pang bayad na araw. Walang
+   bagong bayad na kailangan -- binabalik lang sa 'active' yung dati na.
+   Hindi ito daan para maging Premium ang hindi pa nagbabayad: kailangan
+   Premium na at may petsang hindi pa lumilipas, nakasulat mismo sa SQL. */
+router.post('/me/subscription/resume', requireAuth, async (req, res) => {
+  try {
+    const [result] = await pool.query(
+      `UPDATE user
+          SET subscription_status = 'active'
+        WHERE user_id = ?
+          AND subscription_type = 'Premium'
+          AND subscription_status = 'cancelled'
+          AND subscription_expires_at > NOW()`,
+      [req.user.user_id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(409).json({
+        error: 'There is no cancelled subscription to resume. If your Premium has ended, subscribe again.',
+      });
+    }
+
+    const [rows] = await pool.query(
+      'SELECT subscription_type, subscription_status, subscription_expires_at FROM user WHERE user_id = ?',
+      [req.user.user_id]
+    );
+    await recordSubscriptionEvent(req.user.user_id, 'resumed', rows[0]?.subscription_expires_at);
+    res.json({ message: 'Premium will continue.', ...rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to resume plan.' });
   }
 });
 
@@ -380,13 +590,21 @@ router.post('/reset-password', async (req, res) => {
     if (new Date(otp.expires_at) < new Date()) {
       return res.status(400).json({ error: 'This reset code has expired. Please request a new one.' });
     }
-    if (otp.attempts >= OTP_MAX_ATTEMPTS) {
-      return res.status(429).json({ error: 'Too many incorrect attempts. Please request a new code.' });
-    }
-
     const match = await bcrypt.compare(code, otp.code_hash);
     if (!match) {
-      await pool.query('UPDATE otpcode SET attempts = attempts + 1 WHERE otp_id = ?', [otp.otp_id]);
+      /* Isang UPDATE na may kundisyon, hindi check-tapos-increment. Dati
+         binabasa muna ang otp.attempts tapos saka dinadagdagan, kaya ang
+         sabay-sabay na request ay pare-parehong nakakabasa ng attempts = 0
+         at pare-parehong nabibigyan ng tsansa — hindi talaga naipapatupad
+         ang limitasyong lima. Ganito na ang ginagawa ng verify-otp sa
+         itaas; pinapantayan lang ito. */
+      const [bump] = await pool.query(
+        'UPDATE otpcode SET attempts = attempts + 1 WHERE otp_id = ? AND used = 0 AND attempts < ?',
+        [otp.otp_id, OTP_MAX_ATTEMPTS]
+      );
+      if (bump.affectedRows === 0) {
+        return res.status(429).json({ error: 'Too many incorrect attempts. Please request a new code.' });
+      }
       return res.status(401).json({ error: 'Incorrect code. Please try again.' });
     }
 

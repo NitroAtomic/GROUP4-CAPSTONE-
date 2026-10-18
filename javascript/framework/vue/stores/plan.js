@@ -26,7 +26,13 @@ function readStoredBilling() {
 
 export const usePlanStore = defineStore('plan', {
   state: () => ({
-    billing: readStoredBilling()
+    billing: readStoredBilling(),
+    // Pinupunan ito ng GET /api/billing/plans. Yung MONTHLY_PRICE at
+    // YEARLY_PRICE sa itaas ay pang-ipakita lang habang hindi pa
+    // sumasagot yung server -- ang server ang may hawak ng totoong
+    // presyo, at siya rin ang naniningil. Walang halaga na galing dito
+    // ang ipinapadala sa checkout.
+    serverPrice: ''
   }),
 
   getters: {
@@ -37,7 +43,9 @@ export const usePlanStore = defineStore('plan', {
     // Payment) reads the same source instead of re-deriving it.
     billingLabel: (state) => (state.billing === 'yearly' ? 'Yearly' : 'Monthly'),
     pricePeriod: (state) => (state.billing === 'yearly' ? '/year' : '/month'),
-    price: (state) => formatPhp(state.billing === 'yearly' ? YEARLY_PRICE : MONTHLY_PRICE),
+    price: (state) =>
+      state.serverPrice ||
+      formatPhp(state.billing === 'yearly' ? YEARLY_PRICE : MONTHLY_PRICE),
     billingDescription: (state) =>
       state.billing === 'yearly'
         ? 'Billed yearly, cancel anytime'
@@ -47,7 +55,14 @@ export const usePlanStore = defineStore('plan', {
   actions: {
     setBilling(billing) {
       this.billing = billing === 'yearly' ? 'yearly' : 'monthly'
+      // Yung presyo galing server ay para sa dating pinili. Binubura ito
+      // pag nagpalit, para hindi maipakita yung presyong hindi na tugma.
+      this.serverPrice = ''
       sessionStorage.setItem(BILLING_KEY, this.billing)
+    },
+
+    setServerPrice(display) {
+      this.serverPrice = display || ''
     }
   }
 })

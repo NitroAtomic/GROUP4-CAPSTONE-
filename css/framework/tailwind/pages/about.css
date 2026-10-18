@@ -1,134 +1,76 @@
 @layer components {
+  .about-page { padding: 0 0 72px; color: var(--text); }
+  .about-container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+  .about-hero { width: 100%; text-align: center; padding: 48px 20px 52px; color: #fff; }
+  .about-hero-inner { width: min(1100px, 100%); margin: 0 auto; }
+  .about-hero-logo-shell { display: grid; place-items: center; width: 86px; height: 86px; margin: 0 auto 12px; border: none; background: transparent; border-radius: 0; }
+  .about-hero-logo-wrap { display: grid; place-items: center; width: 78px; height: 78px; perspective: 420px; touch-action: none; transition: transform 240ms cubic-bezier(.2,.7,.3,1); }
+  .about-hero-logo { width: 78px; height: 78px; object-fit: contain; animation: site-footer-mark-presence 3.6s ease-in-out infinite; transform-origin: center; }
+  .about-eyebrow, .about-section-kicker { color: var(--accent-text); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+  .about-hero .about-eyebrow { color: rgba(255,255,255,.76); }
+  .about-hero h1 { color: #fff; font-size: clamp(36px, 5vw, 54px); line-height: 1.12; font-weight: 800; margin: 8px 0 12px; }
+  .about-hero-description { color: rgba(255,255,255,.85); max-width: 650px; margin: 0 auto; font-size: clamp(16px, 2vw, 19px); line-height: 1.7; }
+  .about-section { margin-top: 72px; }
+  .about-section-heading { text-align: center; margin-bottom: 30px; }
+  .about-section h2 { color: var(--heading); font-size: clamp(27px, 3vw, 35px); font-weight: 800; line-height: 1.2; margin: 9px 0 12px; }
+  .about-section-heading > p:last-child { max-width: 670px; margin: 0 auto; color: var(--muted); line-height: 1.7; }
+  .about-mission-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; align-items: stretch; }
+  .about-mission-copy { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+  .about-mission-copy p:not(.about-section-kicker) { color: var(--muted); font-size: 16px; line-height: 1.8; margin-top: 14px; }
+  .about-mission-features { display: grid; grid-template-rows: 1fr 1fr; gap: 16px; min-width: 0; }
+  .about-feature-card { display: flex; align-items: flex-start; gap: 17px; padding: 25px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-soft); }
+  .about-feature-icon, .about-audience-icon, .about-how-icon { flex-shrink: 0; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 13px; background: color-mix(in srgb, var(--teal) 12%, var(--card-bg)); color: var(--accent-text); }
+  .about-feature-icon svg, .about-audience-icon svg, .about-how-icon svg { display: block; width: 26px; height: 26px; }
+  .about-feature-card h3 { color: var(--heading); font-size: 19px; font-weight: 750; margin-bottom: 7px; }
+  .about-feature-card p { color: var(--muted); line-height: 1.65; font-size: 14px; }
+  .about-audience-grid, .about-how-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .about-audience-card, .about-how-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: var(--shadow-soft); }
+  .about-audience-icon { margin-bottom: 22px; }
+  .about-audience-card h3, .about-how-card h3 { color: var(--heading); font-size: 20px; font-weight: 750; margin-bottom: 9px; }
+  .about-audience-card p, .about-how-card p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+  .about-plans-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .about-plan-card { display: flex; flex-direction: column; align-items: flex-start; padding: 32px; border-radius: 18px; background: var(--card-bg); border: 1px solid var(--border); box-shadow: var(--shadow-soft); }
+  .about-plan-premium { border-color: var(--teal); }
+  .about-plan-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: var(--surface-2); color: var(--accent-text); font-size: 12px; font-weight: 800; letter-spacing: .07em; }
+  .about-plan-premium .about-plan-tag { background: rgba(245,166,35,.14); color: var(--warn-text); }
+  .about-plan-card h3 { color: var(--heading); font-size: 25px; font-weight: 800; margin-top: 18px; }
+  .about-plan-card > p { color: var(--muted); margin-top: 8px; line-height: 1.6; }
+  .about-plan-card ul { list-style: none; display: grid; gap: 16px; margin: 27px 0 32px; padding: 0; width: 100%; }
+  .about-plan-card li { display: flex; gap: 12px; align-items: baseline; line-height: 1.5; }
+  .about-plan-card li::before { content: '✓'; color: var(--accent-text); font-weight: 800; }
+  .about-button { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 46px; padding: 11px 21px; border-radius: 10px; border: 1px solid transparent; font-weight: 750; font-size: 14px; text-align: center; transition: transform .18s ease, background .18s ease; }
+  .about-button:hover { transform: translateY(-2px); }
+  .about-button:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+  .about-plan-card .about-button { width: 100%; margin-top: auto; }
+  .about-button-outline { border-color: var(--border); background: var(--card-bg); color: var(--heading); }
+  .about-button-outline:hover { background: var(--surface-2); }
+  .about-button-orange { background: var(--orange); color: #14253b; }
+  .about-button-orange:hover { background: #ffb63d; }
+  .about-how-card { position: relative; }
+  .about-step-number { position: absolute; top: 22px; right: 24px; color: var(--muted); font-size: 13px; font-weight: 800; }
+  .about-how-icon { margin-bottom: 23px; }
+  .about-cta { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 26px; padding: 30px 34px; background: var(--navy); border-radius: 18px; color: #fff; }
+  .about-cta h3 { font-size: 23px; font-weight: 800; }
+  .about-cta p { color: rgba(255,255,255,.78); font-size: 14px; line-height: 1.6; margin-top: 7px; }
+  .about-cta-actions { display: flex; gap: 12px; flex-shrink: 0; flex-wrap: wrap; }
+  .about-button-light { background: #fff; color: #0b2545; border-color: #fff; }
+  .about-button-light:hover { background: #eaeff6; }
+  #meet-the-team { scroll-margin-top: 95px; }
+  .about-team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
+  .about-team-member { display: flex; flex: 0 1 calc((100% - 44px) / 3); min-width: 0; flex-direction: column; align-items: center; text-align: center; padding: 24px 18px 18px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-soft); }
+  .about-team-member-image { width: 92px; height: 92px; border-radius: 50%; overflow: hidden; border: 3px solid var(--border); margin-bottom: 17px; }
+  .about-team-member-image img { width: 100%; height: 100%; object-fit: cover; }
+  .about-team-member h3 { color: var(--heading); font-size: 17px; font-weight: 800; line-height: 1.35; }
+  .about-team-member p { color: var(--muted); font-size: 13px; line-height: 1.55; margin-top: 8px; }
 
-  /* =========================
-     About Page
-     Converted from css/about.css using the mapping table in
-     FRONTEND_IMPLEMENTATION_PROTOTYPE_DEFENSE_GUIDE.md §4.4.
-     .chatbot-button is skipped — ChatbotWidget.vue already covers it.
-     ========================= */
-
-  .about-page {
-    @apply pt-[30px] px-5 pb-10;
-  }
-
-  .about-container {
-    @apply w-[min(1010px,100%)] my-0 mx-auto;
-  }
-
-
-  /* =========================
-     Page Heading
-     ========================= */
-
-  .about-page-heading {
-    @apply text-center;
-  }
-
-  .about-page-heading h1 {
-    @apply text-[42px] leading-[1.1] font-extrabold max-[700px]:text-[34px];
-    color: var(--navy);
-  }
-
-  .about-page-heading p {
-    @apply mt-3 text-[20px] leading-snug max-[700px]:text-[17px];
-    color: var(--muted);
-  }
-
-
-  /* =========================
-     Mission
-     ========================= */
-
-  .about-mission-section {
-    @apply mt-[18px];
-  }
-
-  .about-mission-section h2 {
-    @apply text-[30px] leading-[1.1];
-    color: var(--navy);
-  }
-
-  .about-mission-section p {
-    @apply mt-0.5 text-[20px] leading-tight max-[700px]:text-[17px];
-    color: var(--muted);
-  }
-
-
-  /* =========================
-     Audience
-     ========================= */
-
-  .about-audience-section {
-    @apply mt-[30px];
-  }
-
-  .about-audience-section h2 {
-    @apply mb-2 text-[30px] leading-[1.1];
-    color: var(--navy);
-  }
-
-  .about-audience-grid {
-    @apply grid grid-cols-3 gap-14 max-[900px]:gap-4 max-[700px]:grid-cols-1;
-  }
-
-  .about-audience-card {
-    @apply min-h-[104px] p-[18px] border rounded-xl flex flex-col justify-between;
-    background: rgba(255,255,255,0.9);
-    border-color: var(--border);
-    box-shadow: 0 10px 20px rgba(11, 37, 69, 0.04);
-  }
-
-  /* Wrapper is the JS/CSS hook — icon assets are temporary (Handoff Notes). */
-  .about-audience-icon {
-    @apply w-10 h-10;
-  }
-
-  .about-audience-icon img {
-    @apply w-full h-full object-contain block;
-  }
-
-  .about-audience-card h3 {
-    @apply text-[20px] leading-[1.1];
-  }
-
-
-  /* =========================
-     Team
-     ========================= */
-
-  .about-team-section {
-    @apply mt-[30px];
-  }
-
-  .about-team-section h2 {
-    @apply text-[30px] leading-[1.1];
-    color: var(--navy);
-  }
-
-  .about-team-grid {
-    @apply mt-[18px] grid grid-cols-5 gap-7 max-[900px]:grid-cols-3 max-[700px]:grid-cols-2 max-[480px]:grid-cols-1;
-  }
-
-  .about-team-member {
-    @apply flex flex-col items-center text-center;
-  }
-
-  .about-team-member-image {
-    @apply w-[68px] h-[68px] mt-0 mx-auto mb-2.5 border-[2px] rounded-full flex items-center justify-center overflow-hidden shrink-0;
-    border-color: var(--border);
-  }
-
-  .about-team-member-image img {
-    @apply w-full h-full object-cover rounded-full;
-  }
-
-  .about-team-member h3 {
-    @apply w-full min-h-[37px] flex items-center justify-center text-[16px] leading-[1.15];
-    color: var(--navy);
-  }
-
-  .about-team-member p {
-    @apply mt-0.5 text-[14px] leading-[1.15];
-    color: var(--muted);
-  }
+  .about-team-roles { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+  .about-team-role { display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 999px; font-size: 12px; line-height: 1.25; color: var(--accent-text); background: color-mix(in srgb, var(--teal) 13%, var(--card-bg)); border: 1px solid color-mix(in srgb, var(--teal) 20%, var(--border)); }
+  .about-team-email { display: inline-flex; justify-content: center; align-items: center; gap: 6px; width: 100%; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); color: var(--accent-text); font-size: 12px; overflow-wrap: anywhere; text-decoration: none; }
+  .about-team-email:hover { text-decoration: underline; }
+  .about-team-email:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+  .about-team-email svg { width: 14px; height: 14px; flex: 0 0 14px; }
+  @media (max-width: 850px) { .about-mission-grid { gap: 24px; } .about-feature-card { padding: 19px; } .about-cta { align-items: flex-start; flex-direction: column; } .about-team-member { flex-basis: calc((100% - 22px) / 2); } }
+  @media (max-width: 700px) { .about-hero { padding: 36px 20px 40px; } .about-section { margin-top: 54px; } .about-mission-grid, .about-plans-grid { grid-template-columns: 1fr; } .about-mission-features { grid-template-rows: auto; } .about-audience-grid, .about-how-grid { grid-template-columns: 1fr; gap: 14px; } .about-cta { padding: 26px 22px; } .about-team-member { flex-basis: calc((100% - 16px) / 2); } .about-team-grid { gap: 16px; } }
+  @media (max-width: 480px) { .about-container { width: calc(100% - 32px); } .about-hero { padding-left: 16px; padding-right: 16px; } .about-hero-logo-shell { width: 76px; height: 76px; } .about-hero-logo-wrap, .about-hero-logo { width: 70px; height: 70px; } .about-plan-card { padding: 25px 20px; } .about-team-member { flex-basis: 100%; } .about-cta-actions { width: 100%; } .about-cta-actions .about-button { width: 100%; } }
+  @media (prefers-reduced-motion: reduce) { .about-hero-logo, .about-hero-logo-wrap { animation: none; transition: none; transform: none !important; } .about-button { transition: none; } .about-button:hover { transform: none; } }
 }

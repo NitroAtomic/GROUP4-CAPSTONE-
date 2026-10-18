@@ -1,18 +1,27 @@
 <template>
   <header class="site-header">
     <nav class="navbar">
-
       <div class="nav-left">
-        <router-link to="/" class="nav-link">Home</router-link>
-        <router-link to="/about" class="nav-link">About</router-link>
-        <router-link v-if="isAuthenticated && !isAdmin" to="/dashboard" class="nav-link">Dashboard</router-link>
-        <router-link v-if="isPremium && !isAdmin" to="/modules/premium" class="nav-link">Role-based</router-link>
-        <router-link v-if="isPremium && !isAdmin" to="/assessment/question" class="nav-link">Assessment</router-link>
-        <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin Portal</router-link>
+        <span v-if="isAdminPage" class="nav-admin-brand">SE-AWARE Admin</span>
+        <template v-else>
+          <router-link to="/" class="nav-link">Home</router-link>
+          <router-link to="/about" class="nav-link">About</router-link>
+
+          <span
+            v-if="isPremium"
+            class="nav-premium-divider"
+            aria-hidden="true"
+          ></span>
+
+          <router-link v-if="isAuthenticated" to="/dashboard" class="nav-link">Dashboard</router-link>
+          <router-link v-if="isPremium" to="/modules/premium" class="nav-link">Modules</router-link>
+          <router-link v-if="isPremium" to="/assessment/question" class="nav-link">Assessment</router-link>
+          <router-link v-if="isAdmin" to="/admin" class="nav-link">Admin Portal</router-link>
+        </template>
       </div>
 
       <div class="nav-right">
-        <div v-if="!isMinimalNav" class="search-box">
+        <div v-if="!isMinimalNav && !isAdminPage" class="search-box">
           <input
             v-model="searchQuery"
             type="text"
@@ -36,6 +45,19 @@
           </div>
         </div>
 
+        <button
+          type="button"
+          class="btn btn-theme-toggle"
+          :aria-pressed="isDark() ? 'true' : 'false'"
+          :title="isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+          @click="toggleTheme"
+        >
+          <svg class="ui-icon" aria-hidden="true">
+            <use :href="isDark() ? '#ui-icon-sun' : '#ui-icon-moon'" />
+          </svg>
+          <span class="sr-only">{{ isDark() ? 'Switch to light mode' : 'Switch to dark mode' }}</span>
+        </button>
+
         <template v-if="isAuthenticated">
           <div class="dashboard-user-area">
             <svg class="dashboard-user-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
@@ -54,9 +76,27 @@
           <router-link v-if="!isMinimalNav" to="/premium-subscription" class="btn btn-premium">Go Premium</router-link>
         </template>
       </div>
-
     </nav>
   </header>
 </template>
 
 <script src="./SiteHeader.js"></script>
+
+<style scoped>
+.nav-premium-divider {
+  display: inline-block;
+  flex: 0 0 2px;
+  align-self: center;
+  width: 2px;
+  height: 36px;
+  margin: 0 8px;
+  border-radius: 2px;
+  background: rgba(245, 166, 35, 0.65);
+}
+
+@media (max-width: 620px) {
+  .nav-premium-divider {
+    display: none;
+  }
+}
+</style>
