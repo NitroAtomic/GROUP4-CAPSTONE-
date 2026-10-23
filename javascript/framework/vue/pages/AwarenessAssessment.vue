@@ -91,10 +91,14 @@
 
         <!-- Navigation Buttons -->
         <div class="quiz-navigation">
+          <!-- Wala sa unang tanong: walang mababalikan, at mukhang sira ang
+               pindutang walang ginagawa (UAT). Mula sa pangalawa, pantingin
+               lang ito sa nakaraang sagot -- naka-lock na yun pagka-check. -->
           <button
+            v-if="currentIndex > 0"
+            type="button"
             class="quiz-nav-button"
             @click="goBack"
-            :disabled="currentIndex === 0"
           >
             Back
           </button>

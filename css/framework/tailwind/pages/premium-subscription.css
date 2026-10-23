@@ -26,6 +26,9 @@
   .premium-tip-bulb { @apply text-[20px] flex-shrink-0; }
   .premium-switch-yearly { @apply ml-1 p-0 font-bold underline underline-offset-2 cursor-pointer; background: transparent; border: 0; color: #4ade80; }
   .premium-switch-yearly:hover { color: #86efac; }
+  /* Pagpalit ng plano sa huling bahagi ng pahina. Kulay ng teksto sa
+     paligid, hindi berde, para mabasa sa light at dark. */
+  .premium-final-switch { @apply ml-2 p-0 font-bold underline underline-offset-2 cursor-pointer; background: transparent; border: 0; color: inherit; }
   .premium-plan-price { @apply flex items-baseline justify-end gap-1 flex-shrink-0 whitespace-nowrap; }
   .premium-plan-price strong { @apply text-[37px] leading-none font-bold tracking-tight; color: var(--heading); }
   .premium-plan-price span { @apply text-[14px]; color: var(--muted); }

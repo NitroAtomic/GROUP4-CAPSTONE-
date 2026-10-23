@@ -202,7 +202,19 @@ const PREMIUM_QUIZ_MODULE_IDS = new Set([
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  /* Laging nasa itaas ang bagong pahina. Dati walang ganito, kaya kung
+     pumindot ka sa ibaba ng isang pahina, sa ibaba ka rin lalapag sa
+     susunod -- sa UAT, napunta ang tester sa "Ready to unlock premium?"
+     nang hindi nakikita ang pagpili ng Monthly/Yearly sa itaas. Ang Back
+     at Forward ay bumabalik pa rin sa dating puwesto, at ang #hash ay
+     dinadala sa mismong bahagi. */
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) return savedPosition
+    if (to.hash) return { el: to.hash, behavior: 'smooth' }
+    if (to.path === from.path) return false
+    return { top: 0 }
+  }
 })
 
 // Babala bago umalis sa gitna ng quiz o assessment. Dati, sapat na ang

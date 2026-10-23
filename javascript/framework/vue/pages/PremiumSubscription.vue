@@ -178,6 +178,7 @@
         Premium plan: {{ planStore.price }}{{ planStore.pricePeriod }}, cancel anytime.
         <template v-if="!planStore.isYearly"> Switch to yearly and <strong class="premium-final-saving">save ₱589.</strong></template>
         <template v-else> <strong class="premium-final-saving">Save ₱589 a year.</strong></template>
+        <button type="button" class="premium-final-switch" @click="planStore.setBilling(planStore.isYearly ? 'monthly' : 'yearly')">{{ planStore.isYearly ? 'Switch to monthly' : 'Switch to yearly' }}</button>
       </p>
       <router-link :to="continueTo" class="premium-final-button">
         {{ continueLabel }}

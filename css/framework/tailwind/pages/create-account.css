@@ -95,6 +95,7 @@
      Selected Plan Summary
      ========================= */
 
+  .selected-plan-change { @apply text-[13px] font-bold underline underline-offset-2 whitespace-nowrap; color: inherit; }
   .selected-plan-summary {
     @apply min-h-[34px] mt-[22px] py-0 px-2.5 border rounded-[7px] flex items-center justify-between text-[14px];
     background: rgba(27, 127, 121, 0.05);

@@ -62,6 +62,7 @@
           <strong>{{ planStore.price }}</strong>
           <small>{{ planStore.pricePeriod }}</small>
         </span>
+        <router-link to="/premium-subscription" class="selected-plan-change">Change plan</router-link>
       </div>
 
 
