@@ -544,7 +544,7 @@
           "text": "False"
         }
       ],
-      "explanation": "False. Attackers routinely target remote employees across personal email, LinkedIn DMs, WhatsApp, and Telegram to bypass enterprise email controls. MODULE 2: Spear Phishing"
+      "explanation": "False. Attackers routinely target remote employees across personal email, LinkedIn DMs, WhatsApp, and Telegram to bypass enterprise email controls."
     }
   ]
 }

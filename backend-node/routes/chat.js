@@ -220,6 +220,17 @@ const FALLBACK =
 const N8N_TIMEOUT_MS = 8000;
 const GEMINI_TIMEOUT_MS = 15000;
 
+/* Kapag pumalya ang n8n, nilalaktawan ito nang 10 minuto.
+
+   Sa live site, naka-set ang N8N_WEBHOOK_URL pero hindi sumasagot ang n8n:
+   bawat tanong ay naghintay ng buong 8 segundo bago pa man subukan si
+   Gemini (nasukat sa Server-Timing: n8n 8000ms timeout, Gemini 1.4 s).
+   Ngayon, isang tanong lang ang magbabayad ng paghihintay; ang mga susunod
+   ay diretso kay Gemini. Pagkalipas ng 10 minuto, sinusubukan ulit ang n8n
+   kung sakaling bumalik na. */
+const N8N_SKIP_MS = 10 * 60 * 1000;
+let n8nSkipUntil = 0;
+
 router.post('/', optionalAuth, async (req, res) => {
   const { message: rawMessage } = req.body;
 
@@ -403,7 +414,9 @@ router.post('/', optionalAuth, async (req, res) => {
 
   // Sariling prompt at knowledge base yung n8n, kaya diretso lang ipapasa
   // yung tanong, hindi na babalutin ng sarili nating prompt.
-  if (n8nUrl) {
+  if (n8nUrl && Date.now() < n8nSkipUntil) {
+    timings.push('n8n;dur=0;desc="skipped"');
+  } else if (n8nUrl) {
     const n8nStarted = Date.now();
     try {
       const upstream = await fetch(n8nUrl, {
@@ -431,9 +444,11 @@ router.post('/', optionalAuth, async (req, res) => {
       if (reply) { timed('n8n', n8nStarted, 'ok'); return send({ reply, source: 'n8n', learnMore }); }
 
       timed('n8n', n8nStarted, 'no-output');
+      n8nSkipUntil = Date.now() + N8N_SKIP_MS;
       console.warn('[chat] n8n replied without "output" or "reply":', JSON.stringify(data).slice(0, 200));
     } catch (err) {
       timed('n8n', n8nStarted, err.name === 'TimeoutError' ? 'timeout' : 'error');
+      n8nSkipUntil = Date.now() + N8N_SKIP_MS;
       console.warn('[chat] n8n unreachable, falling back:', err.name === 'TimeoutError' ? `timed out after ${N8N_TIMEOUT_MS / 1000}s` : err.message);
     }
   }

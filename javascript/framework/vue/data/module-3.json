@@ -542,7 +542,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Demanding credit card details via SMS links for \"unclaimed parcels\" is a standard smishing lure. MODULE 4: Vishing"
+      "explanation": "Demanding credit card details via SMS links for \"unclaimed parcels\" is a standard smishing lure."
     }
   ]
 }
