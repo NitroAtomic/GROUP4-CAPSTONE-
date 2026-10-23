@@ -5,8 +5,14 @@
     border-color: rgba(255, 255, 255, 0.12);
   }
 
+  /* Bumabalot kapag hindi kasya. Dati nakapirmi sa isang hanay, kaya
+     kapag naka-login (mas maraming link, pangalan, badge, Log out) ay
+     dumadausdos ang mga link sa ilalim ng search at ng dark mode -- sa UAT,
+     "nagbabanggaan" ang mga button. Ngayon, kapag kulang ang lapad, bumababa
+     sa pangalawang hanay ang kanang grupo. Walang lapad na magpapatong sa
+     kanila, anumang uri ng account o haba ng pangalan. */
   .navbar {
-    @apply h-16 py-0 px-[22px] flex items-center justify-between max-[620px]:px-3;
+    @apply min-h-16 py-3 px-[22px] flex flex-wrap items-center justify-between gap-x-6 gap-y-3 max-[620px]:px-3;
   }
 
   .nav-left,
@@ -15,11 +21,11 @@
   }
 
   .nav-left {
-    @apply min-w-0;
+    @apply shrink-0;
   }
 
   .nav-right {
-    @apply shrink-0;
+    @apply ml-auto shrink-0;
   }
 
   .nav-link {
@@ -130,6 +136,7 @@
   }
 
   .site-header .dashboard-user-name {
+    @apply inline-block max-w-[16ch] truncate align-middle;
     color: #fff;
   }
 
