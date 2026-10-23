@@ -99,6 +99,20 @@
     @apply mb-0;
   }
 
+  /* Paalala sa bisitang walang account (tingnan ang QuizResults.js). */
+  .quiz-guest-note {
+    @apply mt-10 rounded-xl border px-5 py-4 text-[15px] leading-relaxed;
+    border-color: var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+  }
+
+  .quiz-guest-note strong { color: var(--heading); }
+
+  .quiz-guest-actions {
+    @apply mt-3 flex flex-wrap gap-3;
+  }
+
   .quiz-results-actions {
     @apply mt-[82px] flex items-center justify-between max-[620px]:mt-[54px] max-[620px]:gap-3.5;
   }

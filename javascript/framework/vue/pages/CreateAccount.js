@@ -1,5 +1,6 @@
 // javascript/framework/vue/pages/CreateAccount.js
 import { useAuthStore } from '../stores/auth.js'
+import { safeRedirect } from '../lib/safeRedirect.js'
 import { usePlanStore } from '../stores/plan.js'
 
 export default {
@@ -25,6 +26,24 @@ export default {
   },
 
   computed: {
+    /* Libreng account (?plan=free, galing sa Login o sa resulta ng quiz).
+       Walang plano at walang bayad: diretso sa dashboard o pabalik kung
+       saan siya galing. Ang server ay laging Free ang gawa sa bagong
+       account, kaya walang binabago sa likod. */
+    isFreeSignup() {
+      return this.$route.query.plan === 'free'
+    },
+
+    afterSignupPath() {
+      return safeRedirect(this.$route.query.redirect)
+    },
+
+    loginLink() {
+      return this.$route.query.redirect
+        ? { path: '/login', query: { redirect: this.afterSignupPath } }
+        : '/login'
+    },
+
     // The 5 rules from the Handoff Notes, checked live as the user types.
     // Reuses the exact .password-requirement-valid class the CSS already
     // handles — see css/framework/tailwind/pages/create-account.css.
@@ -82,7 +101,7 @@ export default {
         // Registration signs the user in immediately (backend returns a
         // token — see backend-node/routes/auth.js). Continuing to Payment
         // (Step 3) is next in the documented flow.
-        this.$router.push('/payment')
+        this.$router.push(this.isFreeSignup ? this.afterSignupPath : '/payment')
       } catch (error) {
         this.errorMessage = error.message
       } finally {

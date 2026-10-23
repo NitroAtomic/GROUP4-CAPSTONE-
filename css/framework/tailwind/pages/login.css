@@ -120,6 +120,20 @@
     color: var(--heading);
   }
 
+  .login-premium-line {
+    @apply mt-3 text-center text-[14px];
+    color: var(--muted);
+  }
+
+  .login-premium-line a {
+    @apply font-semibold underline;
+    color: var(--heading);
+  }
+
+  .login-premium-line .inline-crown-icon {
+    @apply mr-1 inline-block align-[-2px];
+  }
+
   .btn-login-create-account .inline-crown-icon {
     @apply mr-1.5;
   }

@@ -69,6 +69,27 @@ export default {
       return this.$route.params.moduleId
     },
 
+    /* Bisitang walang account. Dati tahimik lang na hindi naitatala ang
+       iskor niya -- kaya sa UAT, walang nakitang dahilan para mag-login.
+       Nasa tab pa ang resulta, at itinatala ito pagbalik dito, kaya kung
+       mag-login o gumawa siya ng account ngayon, itong mismong iskor ang
+       mase-save. */
+    isGuest() {
+      return !useAuthStore().isAuthenticated
+    },
+
+    backHere() {
+      return this.$route.fullPath
+    },
+
+    guestSignupLink() {
+      return { path: '/create-account', query: { plan: 'free', redirect: this.backHere } }
+    },
+
+    guestLoginLink() {
+      return { path: '/login', query: { redirect: this.backHere } }
+    },
+
     modulePath() {
       return MODULE_PATHS[this.moduleId] || '/'
     },

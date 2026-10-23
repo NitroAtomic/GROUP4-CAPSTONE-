@@ -7,7 +7,11 @@
            Premium Heading
            ========================= -->
 
-      <div class="account-creation-heading">
+      <div v-if="isFreeSignup" class="account-creation-heading free-signup-heading">
+        <h1>Create a free account</h1>
+        <p class="free-signup-lead">Save your quiz scores and track your progress on your dashboard. You can go premium any time.</p>
+      </div>
+      <div v-else class="account-creation-heading">
         <div class="premium-crown-icon" aria-hidden="true">
           <img src="/images/icons/crown-hero.png" alt="">
         </div>
@@ -19,7 +23,7 @@
            Subscription Progress
            ========================= -->
 
-      <nav class="subscription-progress" aria-label="Sign-up progress">
+      <nav v-if="!isFreeSignup" class="subscription-progress" aria-label="Sign-up progress">
 
         <div class="subscription-progress-step subscription-progress-complete">
           <span class="subscription-progress-number" aria-hidden="true">
@@ -53,7 +57,7 @@
            Account and Payment per the Handoff Notes.
            ========================= -->
 
-      <div class="selected-plan-summary">
+      <div v-if="!isFreeSignup" class="selected-plan-summary">
         <span>
           <svg class="inline-crown-icon ui-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
           Premium plan • {{ planStore.billingLabel }}
@@ -74,7 +78,8 @@
 
         <div class="account-creation-card-heading">
           <h2>Create your account</h2>
-          <p>
+          <p v-if="isFreeSignup">This is the account you'll use to log in.</p>
+          <p v-else>
             This is the account you'll use to log in and access
             premium features
           </p>
@@ -221,7 +226,7 @@
             class="continue-to-payment-button"
             :disabled="!canSubmit || isSubmitting"
           >
-            {{ isSubmitting ? 'Creating account…' : 'Continue to payment' }}
+            {{ isSubmitting ? 'Creating account…' : (isFreeSignup ? 'Create account' : 'Continue to payment') }}
           </button>
 
           <p v-if="errorMessage" class="form-error-message" role="alert">
@@ -234,7 +239,7 @@
 
       <p class="account-login-message">
         Already have an account?
-        <router-link to="/login">Log in instead</router-link>
+        <router-link :to="loginLink">Log in instead</router-link>
       </p>
 
     </section>

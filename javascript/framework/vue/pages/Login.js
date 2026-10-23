@@ -1,4 +1,5 @@
 // javascript/framework/vue/pages/Login.js
+import { safeRedirect } from '../lib/safeRedirect.js'
 import { useAuthStore } from '../stores/auth.js'
 
 export default {
@@ -22,8 +23,15 @@ export default {
 
   computed: {
     postLoginPath() {
-      const redirect = this.$route.query.redirect
-      return typeof redirect === 'string' && redirect.startsWith('/') ? redirect : '/dashboard'
+      return safeRedirect(this.$route.query.redirect)
+    },
+
+    // Libreng account: dala ang redirect, para bumalik siya kung saan siya
+    // galing (hal. sa resulta ng quiz).
+    freeSignupLink() {
+      const query = { plan: 'free' }
+      if (this.$route.query.redirect) query.redirect = this.postLoginPath
+      return { path: '/create-account', query }
     }
   },
 

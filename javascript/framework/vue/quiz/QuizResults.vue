@@ -55,6 +55,14 @@
         </article>
       </section>
 
+      <div v-if="isGuest" class="quiz-guest-note" role="note">
+        <p><strong>Your score isn't saved yet.</strong> Create a free account or log in now, and this score goes into your quiz history and progress.</p>
+        <div class="quiz-guest-actions">
+          <router-link :to="guestSignupLink" class="quiz-results-button quiz-results-primary-button">Create free account</router-link>
+          <router-link :to="guestLoginLink" class="quiz-results-button">Log in</router-link>
+        </div>
+      </div>
+
       <div class="quiz-results-actions">
         <button type="button" class="quiz-results-button" @click="retakeQuiz">
           Retake quiz

@@ -57,10 +57,17 @@
           <span>No account yet?</span>
         </div>
 
-        <router-link to="/create-account" class="btn btn-login-create-account">
-          <svg class="inline-crown-icon ui-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
-          Go premium to create an account
+        <!-- Dati Premium lang ang paraan para magka-account, at diretso sa
+             form (lampas sa pagpili ng plano). Ngayon: libreng account
+             muna, at ang Premium ay dumadaan sa iisang pahina ng plano
+             gaya ng ibang Premium na pindutan. -->
+        <router-link :to="freeSignupLink" class="btn btn-login-create-account">
+          Create a free account
         </router-link>
+        <p class="login-premium-line">
+          <svg class="inline-crown-icon ui-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
+          Want the role-based courses? <router-link to="/premium-subscription">Go premium</router-link>
+        </p>
 
       </template>
 
