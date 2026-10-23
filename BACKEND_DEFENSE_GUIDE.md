@@ -1,4 +1,4 @@
-# Backend and Database Documentation
+# SE-AWARE Backend Defense Guide
 
 **Web-Based Social Engineering Awareness Platform for Remote Workers**
 Group 4 · MO-IT200D2 · Capstone 2 · BSIT A4102
@@ -6,339 +6,487 @@ Group 4 · MO-IT200D2 · Capstone 2 · BSIT A4102
 **Backend and authentication:** Juan Paolo Dente
 **Database schema:** Jyan Estanislao
 
-This is a defence reference. It covers what was built, how to run it, every
-command used in MySQL Workbench, and answers to the questions a panel is
-most likely to ask.
+Checked against the code on **October 23, 2026**. Everything here describes the system as it runs now, at https://se-aware-group.onrender.com. If you change the code, update this guide too, so nobody defends something that is no longer true.
+
+How to use this guide: read sections 1 to 6 once to understand the system. Section 12 is the question bank. Practice saying the answers in your own words. Do not memorize them line by line.
 
 ---
 
-## 1. What the backend does
+## 1. The system in one minute
 
-| Requirement | Implementation |
+SE-AWARE teaches remote workers, freelancers and virtual assistants to recognize social engineering: phishing, smishing, vishing, pretexting and the scams that target client work.
+
+| Part | What it does |
 |---|---|
-| FR-09 | Account creation, login, logout |
-| FR-10 | Subscription and plan management (plan state only, no payment processing) |
-| FR-12 | Personalized Dashboard — `GET /api/dashboard` and `GET /api/dashboard/recommendations`, both Premium-gated server-side (added 2026-09-18; see §7) |
-| — | Two-step email verification (OTP) for Premium accounts — **implementation addition, beyond paper scope**. The Capstone paper's requirements run FR-01–FR-19 only; there is no FR-20, and neither the paper nor the UI/UX mockups (Login/Account Creation) describe an OTP step. It complements FR-09 rather than replacing it, but is not itself a paper requirement, so it is marked "—" like the other non-FR rows below (resolved 2026-09-18, previously mislabeled "FR-20") |
-| — | Password reset by emailed code |
-| — | Role and access checking (user vs admin, Free vs Premium) |
+| Free tier | 6 foundational modules with quizzes, open to everyone. The chatbot is open to everyone too. |
+| Premium tier | 4 role-based courses, a personal dashboard with recommendations, and the awareness assessment. |
+| Payment | PayMongo checkout in test mode. Card and GCash. ₱149 a month or ₱1,199 a year. |
+| Security | Email OTP for Premium logins, bcrypt hashing, rate limits, server-side access checks. |
+| Admin portal | Manage modules and quiz questions, view payments and subscription changes. |
+
+The backend is a Node.js + Express API with a MySQL database. One Render service runs the API and also serves the built Vue frontend.
 
 ---
 
 ## 2. Technology stack, and why
 
-| Choice | Reason |
+| Choice | Why we chose it |
 |---|---|
-| **Node.js + Express** | Matches the stack documented in the paper. Express keeps routing and middleware explicit, which suits a project where access control has to be easy to point at and explain. |
-| **MySQL** | Relational data with clear foreign keys: a user has many quiz results, a module has one quiz. Also what Jyan set up. |
-| **bcrypt** | Passwords are hashed, never stored readable. Deliberately slow by design, which is what makes offline brute-force impractical. |
-| **JWT** | Stateless sessions. The server does not keep a session table; the signed token carries the user ID and role. |
-| **nodemailer** | Sends OTP and password-reset codes. Falls back to printing codes to the server console when no SMTP is configured, so the flow is fully testable without a mail account. |
+| **JavaScript everywhere** | Vue in the browser and Node.js on the server use the same language, so the whole team can read and review all the code. |
+| **Node.js + Express 5** | Fast for many small API requests. Express keeps routes and middleware easy to point at, which matters when you have to explain who can access what. |
+| **MySQL** | The data is relational: a user has many quiz results, a module has one quiz. Foreign keys keep it consistent. It is also what Jyan designed the schema in. |
+| **Vue 3 + Vite + Tailwind** | Frontend. Vite builds it into static files that Express serves. |
+| **Render** | Hosts the app from our GitHub repo. Free tier, so it sleeps after about 15 minutes idle. |
+| **Aiven** | Hosts the MySQL database. The connection uses TLS. |
+| **PayMongo** | Philippine payment gateway that supports card and GCash, with a full test mode. |
+| **Google Gemini** | Powers the CyberWise chatbot. |
 
 ---
 
-## 3. Database
+## 3. Backend libraries
 
-### Schema files, run in order
+| Library | What it does in our system |
+|---|---|
+| `express` | Web server and API routes |
+| `mysql2` | Talks to MySQL. Every query uses `?` placeholders, so user input is never pasted into SQL. |
+| `bcrypt` | Hashes passwords and the one-time codes (cost factor 10) |
+| `jsonwebtoken` | Creates and checks login tokens (JWT), valid for 7 days |
+| `helmet` | Adds security headers to every response |
+| `cors` | Only lets our own site call the API |
+| `express-rate-limit` | Blocks too many attempts in a short time |
+| `nodemailer` | Sends the OTP and password reset emails |
+| `compression` | Makes responses smaller and faster |
+| `dotenv` | Reads secrets (database password, JWT secret, API keys) from `.env`, which is never committed |
+
+`multer` is installed but not used yet. Built-in Node modules we use: `crypto` (secure random codes), `fs` and `path` (serving the frontend and the premium lessons).
+
+---
+
+## 4. How the backend is organized
+
+```
+backend-node/
+  server.js        starts Express, adds helmet, CORS, rate limits, routes, serves the frontend
+  routes/          one file per area: auth, modules, quizzes, assessments, dashboard, billing, chat
+  middleware/      auth.js (logged in? admin?), premium.js (Premium?), rateLimit.js
+  services/        payments.js (settling a PayMongo payment)
+  config/          db.js (MySQL pool + TLS), email.js, env.js
+  content/premium/ the 4 premium lessons, only sent after the Premium check
+  sql/             numbered migration files, run in order
+  scripts/         helper commands (migrations, make admin, show payments, chatbot knowledge base)
+```
+
+One rule runs through all of it: **the server decides access, not the page.** Hiding a button only stops people who don't look. Every protected route checks on the server.
+
+The Premium check lives in one place, `middleware/premium.js`. A person is Premium when the account type is Premium, the status is `active` or `cancelled`, and the end date has not passed. Admins pass automatically.
+
+---
+
+## 5. The main flows, explained simply
+
+### Login with email OTP (Premium accounts)
+
+1. The user enters email and password. The password is checked against the bcrypt hash.
+2. If the account is Premium, the server does not log them in yet. It emails a 6-digit code and gives the browser a short "pending" token.
+3. The user types the code. The server checks it: not expired (5 minutes), not used, fewer than 5 wrong tries, and the bcrypt hash matches.
+4. Only then does the server give the real login token.
+
+Extra protection:
+- The pending token is rejected by every other route, so nobody can skip the code step. This was a real hole we found and closed.
+- Asking for a new code cancels the old one.
+- On top of the 5 tries per code, the server allows 10 verify attempts per 15 minutes from the same network.
+- The code comes from `crypto.randomInt`, which is secure random, not `Math.random`.
+
+Free accounts log in with just the password, on purpose. They have no payment details and no paid content.
+
+### Paying for Premium
+
+1. The user picks monthly or yearly. The server creates a `payment_transaction` row with status `pending` and a reference number, then asks PayMongo for a checkout page.
+2. The user pays on PayMongo's page (test mode: test cards and test GCash only).
+3. PayMongo sends them back to `/payment/confirm`. Our server then asks PayMongo directly whether that checkout was paid. It never trusts what the browser says.
+4. Premium is granted only if PayMongo says paid **and** the amount matches what we charged. The days are added from the later of today or the current end date, so renewing early never loses days.
+5. If the user closed the tab before coming back, the server checks again the next time their account loads (for checkouts from the last two days) and settles it then.
+
+Asking for Premium directly (`PATCH /api/auth/me/subscription` with Premium) is refused with 403. Before we fixed it, anyone could do that from the browser console.
+
+### Cancelling (like Netflix or Spotify)
+
+- Cancel sets the status to `cancelled`. The account stays Premium until the paid end date, then becomes Free.
+- **Keep Premium** undoes the cancel before the date, with no new payment.
+- Old demo accounts that have no end date go Free right away, because there is no paid period to keep.
+- Every cancel and every Keep Premium is recorded in `subscription_event`, and admins see it under Payments, Subscription changes.
+- Cancelling does not refund. There is also no automatic charge to stop: each payment covers one month or one year.
+
+### When Premium ends
+
+- The server checks the end date on every request, so access stops on time even if the user is still logged in.
+- The next time the account loads, or at login, it is switched to Free. The end date is kept as a record.
+- In the browser, a popup says "Your Premium has ended" and takes the user back to the free home page, with a Renew Premium button. They are not logged out, because only the plan changed.
+- Progress and quiz scores are kept.
+
+### Protecting paid content
+
+The 4 premium lessons are **not** inside the public JavaScript. They live on the server in `content/premium/` and are sent by `GET /api/modules/:slug/content` only after the Premium check. A logged-out visitor or a Free account gets 403.
+
+### The admin portal
+
+- Admin routes check `role = 'admin'` on the server.
+- Modules tab: create, edit and delete modules, manage quiz questions. A module with learner progress or quiz history cannot be deleted.
+- Payments tab: summary figures, every checkout, and the subscription changes list.
+- An admin can close an unfinished checkout as cancelled, and delete test records. The SQL itself refuses to delete anything paid or live: `WHERE livemode = 0 AND status <> 'paid'`.
+- There is no button to become admin. Promotion needs direct database access (`npm run user:admin -- email@example.com`).
+
+---
+
+## 6. Security decisions worth defending
+
+- **Passwords are bcrypt-hashed.** Even with full database access, nobody can read them.
+- **SQL injection:** every query uses placeholders.
+- **Brute force:** rate limits per network (per 15 minutes): login, register, forgot and reset password 20; OTP verify and resend 10; checkout 20; chatbot 60; everything else 300.
+- **Premium content, admin routes and payments are all checked on the server.**
+- **Helmet** security headers, and **CORS** only allows our site.
+- **Forgot password** gives the same reply whether or not the email exists, so nobody can test which emails have accounts.
+- **Sessions use `sessionStorage`**, so they end when the tab closes. Good for remote workers on shared computers.
+- **Secrets stay in `.env`**, which is in `.gitignore`. Anyone with the JWT secret could fake a login for any account.
+- **Chatbot replies are escaped** before they are shown, so a reply cannot run scripts in the page.
+- **Payments stay in test mode** (`sk_test_` keys) during school use. Every record stores `livemode`, and the admin page shows a red LIVE warning if a real payment ever appears.
+
+---
+
+## 7. Database
+
+### Migration files, run in order
 
 | File | Purpose |
 |---|---|
-| `01-jyan-base-schema.sql` | Jyan's schema, **unmodified**. The seven ERD entities: `user`, `module`, `quiz`, `quizresult`, `awarenessassessment`, `progress`, `administrator`. |
-| `02-backend-additions.sql` | Columns and tables specific features need. Kept separate so Jyan's original work stays reviewable. |
-| `03-seed.sql` | The ten modules (six free, four premium) and their quiz rows. |
+| `01-jyan-base-schema.sql` | Jyan's schema, unmodified. The ERD entities: `user`, `module`, `quiz`, `quizresult`, `awarenessassessment`, `progress`, `administrator`. |
+| `02-backend-additions.sql` | Columns and tables features need. Kept separate so Jyan's original stays reviewable. |
+| `03-seed.sql` | The 10 modules (6 free, 4 premium) and their quiz rows. |
+| `04-quizquestion-enhancements.sql` | Extra columns for quiz questions. |
+| `05-import-quizquestions.sql` | The quiz question bank. |
+| `06-payment.sql` | `payment_transaction` table and `user.subscription_expires_at`. |
+| `07-subscription-events.sql` | `subscription_event` table: every cancel and Keep Premium. |
+
+Run one with `npm run db:migrate -- sql/<file>.sql`, or open it in MySQL Workbench and press the lightning bolt.
 
 ### What `02-backend-additions.sql` adds, and why
 
-Each of these exists because a feature does not work without it. Be ready to
-justify them individually.
-
 | Addition | Needed for |
 |---|---|
-| `user.role` | Checking admin access on protected routes |
-| `quizresult.total` | The dashboard average. `score` alone cannot distinguish 8/10 from 8/20 |
-| `awarenessassessment.weak_areas`, `.by_topic`, `.total` | FR-15 recommended modules, and the dashboard's weak-areas count |
-| `module.slug` | Linking `modules/phishing.html` to its row without matching on a title an admin can rename |
-| `quizquestion` table | Storing quiz questions in the database so the admin panel can edit them |
-| `otpcode` table | Premium two-step login (implementation addition, beyond paper scope — §1) and password reset |
-| `progress` unique key | Prevents duplicate rows when a module is completed twice |
+| `user.role` | Checking admin access |
+| `quizresult.total` | The dashboard average. `score` alone can't tell 8/10 from 8/20. |
+| `awarenessassessment.weak_areas`, `.by_topic`, `.total` | Recommendations and the weak areas count |
+| `module.slug` | Linking a page to its row without depending on a title an admin can rename |
+| `quizquestion` table | Quiz questions in the database, so admins can edit them |
+| `otpcode` table | Login codes and password reset codes |
+| `progress` unique key | No duplicate rows when a module is completed twice |
 
 ### On the `administrator` table
 
-Jyan's schema includes a separate `administrator` entity, matching the ERD in
-the paper, and **it was left in place unchanged**. The backend checks
-`user.role = 'admin'` instead.
-
-**If asked why:** an administrator still needs to log in, and login is already
-handled for every account through `user`. A second table with its own password
-column would mean maintaining two separate authentication systems, two places a
-password could be mishandled, and two login paths to secure. One system with a
-role flag is both less code and less risk. The ERD is unchanged; the
-implementation resolves the same relationship differently.
+Jyan's schema has a separate `administrator` table, matching the ERD, and it was left in place. The backend checks `user.role = 'admin'` instead. An admin still needs to log in, and login already works for every account through `user`. A second table with its own passwords would mean two login systems to secure. One system with a role is less code and less risk.
 
 ---
 
-## 4. Commands used in MySQL Workbench
+## 8. Commands used in MySQL Workbench
 
-### Setting up the database
-
-Open each file with **File → Open SQL Script**, then run it with the
-lightning bolt (⚡). Order matters: file 2 alters tables that file 1 creates,
-and file 3 inserts into them.
-
-```
-01-jyan-base-schema.sql
-02-backend-additions.sql
-03-seed.sql
-```
-
-### Creating the application's database user
-
-The backend does not connect as `root`. It uses a dedicated account whose
-privileges are limited to this one database.
-
-```sql
-CREATE USER 'seaware'@'localhost' IDENTIFIED BY 'your-password';
-GRANT ALL PRIVILEGES ON awareness_platform.* TO 'seaware'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-**If asked why not root:** if the application's credentials ever leaked, this
-account can only reach `awareness_platform`. Root could reach every database on
-the server.
-
-### Verifying the setup
-
-```sql
--- Confirm all tables exist (expect 9)
-SHOW TABLES FROM awareness_platform;
-
--- Confirm the seed data loaded (expect 10 each)
-SELECT COUNT(*) FROM awareness_platform.module;
-SELECT COUNT(*) FROM awareness_platform.quiz;
-
--- Confirm the user table has every column the backend needs
-DESCRIBE awareness_platform.user;
-```
-
-### Proving passwords are hashed
-
-This is the single most useful query to run in front of a panel.
+### Proving passwords are hashed (the best query to show a panel)
 
 ```sql
 SELECT user_id, first_name, email, subscription_type, role, password_hash
-FROM awareness_platform.user;
+FROM user;
 ```
 
-The `password_hash` column shows something like `$2b$10$Tzae4t4Qvql...`, not
-the password that was typed. `$2b$` identifies bcrypt and `10` is the cost
-factor.
+`password_hash` looks like `$2b$10$Tzae4t4Qvql...`, not the real password. `$2b$` means bcrypt, `10` is the cost factor.
 
-### Promoting an account to administrator
+### Checking someone's plan
 
 ```sql
-UPDATE awareness_platform.user
-SET role = 'admin'
+SELECT email, subscription_type, subscription_status, subscription_expires_at
+FROM user
 WHERE email = 'your@email.com';
 ```
 
-**If asked why this is manual:** there is deliberately no self-service way to
-become an admin. A button or endpoint that grants admin rights would defeat the
-purpose of having them. Promotion requires direct database access.
-
-### Checking that a subscription actually changed
+### Payments and subscription changes
 
 ```sql
-SELECT email, subscription_type, subscription_status
-FROM awareness_platform.user
-WHERE email = 'your@email.com';
+-- Every checkout, newest first
+SELECT reference_number, billing_period, amount_centavos, status, livemode, created_at, paid_at
+FROM payment_transaction ORDER BY created_at DESC;
+
+-- Every cancel and Keep Premium
+SELECT e.created_at, u.email, e.event_type, e.access_until
+FROM subscription_event e JOIN user u ON u.user_id = e.user_id
+ORDER BY e.created_at DESC;
 ```
 
-### Useful during testing
+### Making an account admin
 
 ```sql
--- Remove a test account to re-run a signup
-DELETE FROM awareness_platform.user WHERE email = 'test@test.com';
+UPDATE user SET role = 'admin' WHERE email = 'your@email.com';
+```
 
--- Inspect OTP codes (they are hashed, same as passwords)
+Or from the terminal: `npm run user:admin -- your@email.com`. With no email, it lists the current admins.
+
+### OTP codes (they are hashed too)
+
+```sql
 SELECT otp_id, user_id, purpose, expires_at, used, attempts
-FROM awareness_platform.otpcode ORDER BY otp_id DESC;
+FROM otpcode ORDER BY otp_id DESC;
 ```
 
 ---
 
-## 5. Running the backend
+## 9. Running the system
+
+### On your computer
 
 ```
+npm install            (also installs the backend)
 cd backend-node
-npm install
-npm start
+npm start              (API on port 3000)
 ```
 
-Expect `Group 4 API listening on port 3000`.
+In a second terminal, from the project folder: `npm run dev` (frontend on port 5173).
 
-Then open `index.html` with **Live Server** in VS Code.
+Health check: `http://localhost:3000/api/health` returns `{"status":"ok","database":"connected"}`.
 
-**Important:** opening the HTML by double-clicking will not work. A `file://`
-page is blocked from calling the API, so every request fails. It must be served
-over `http://`.
+### Other commands
 
-### Configuration
+| Command | What it does |
+|---|---|
+| `npm run db:migrate -- sql/<file>.sql` | Apply a SQL file to the database |
+| `npm run user:admin -- email` | Make an account admin |
+| `npm run db:payments` | Print the payment records |
+| `npm run kb:build` | Rebuild the chatbot's knowledge base from the free modules |
+| `npm run preview:premium` | View the premium lessons without a server or a login (project folder) |
 
-`.env` holds the database password and JWT secret. It is excluded from Git by
-`.gitignore`; `.env.example` is the committed template with placeholder values.
+### Before a demo
 
-**If asked why:** committing `.env` would publish the database password and the
-JWT secret. Anyone with the JWT secret could forge a login token for any
-account, including an administrator.
-
-### Health check
-
-```
-http://localhost:3000/api/health
-```
-
-Returns `{"status":"ok"}` when the API is up and the database is reachable.
+Render's free tier sleeps. Open the live site about 15 minutes early. The first request after sleeping takes 30 to 60 seconds.
 
 ---
 
-## 6. API endpoints
+## 10. API endpoints
 
-### Authentication
+All under `/api`, JSON in and out.
 
-| Method | Endpoint | Auth | Purpose |
+### Accounts (`/api/auth`)
+
+| Method | Endpoint | Who | Purpose |
 |---|---|---|---|
-| POST | `/api/auth/register` | — | Create an account |
-| POST | `/api/auth/login` | — | Log in. Premium accounts receive `requiresOtp` instead of a token |
-| POST | `/api/auth/verify-otp` | pending token | Submit the emailed code, receive the real session token |
-| POST | `/api/auth/resend-otp` | pending token | Send a fresh code |
-| POST | `/api/auth/logout` | yes | End the session |
-| GET | `/api/auth/me` | yes | Current account and plan |
-| PATCH | `/api/auth/me/subscription` | yes | Change plan (FR-10) |
-| POST | `/api/auth/forgot-password` | — | Request a reset code |
-| POST | `/api/auth/reset-password` | — | Submit code and new password |
+| POST | `/register` | anyone | Create an account |
+| POST | `/login` | anyone | Log in. Premium gets `requiresOtp` instead of a token. |
+| POST | `/verify-otp` | pending token | Check the emailed code, get the real token |
+| POST | `/resend-otp` | pending token | Send a new code |
+| POST | `/logout` | logged in | End the session |
+| GET | `/me` | logged in | Current account and plan |
+| PATCH | `/me/subscription` | logged in | Cancel only. Asking for Premium is refused (403). |
+| POST | `/me/subscription/resume` | logged in | Keep Premium (undo a cancel) |
+| POST | `/forgot-password` | anyone | Request a reset code |
+| POST | `/reset-password` | anyone | Code + new password |
 
-### Content and progress
+### Learning content
 
-| Method | Endpoint | Auth | Purpose |
+| Method | Endpoint | Who | Purpose |
 |---|---|---|---|
-| GET | `/api/modules` | optional | List modules. Premium ones are withheld unless entitled |
-| GET | `/api/modules/:slug` | optional | One module, 403 if Premium and not entitled |
-| POST/PUT/DELETE | `/api/modules` | **admin** | Module management |
-| GET | `/api/quizzes/by-module/:slug` | optional | Quiz questions, answer key withheld |
-| POST | `/api/quizzes/:quizId/submit` | yes | Submit answers, scored server-side |
-| POST/PUT/DELETE | `/api/quizzes/.../questions` | **admin** | Question management |
-| GET | `/api/dashboard` | yes | Progress, quiz history, latest assessment |
-| GET | `/api/dashboard/recommendations` | yes | Modules based on weak areas |
-| POST | `/api/assessment/submit` | yes | Save an assessment result |
+| GET | `/modules` | anyone | Modules this person may see |
+| GET | `/modules/premium-list` | anyone | Public list of premium course titles |
+| GET | `/modules/:slug` | anyone | One module, 403 if Premium and not allowed |
+| GET | `/modules/:slug/content` | Premium | A premium lesson's content |
+| GET | `/modules/:slug/quiz` | depends on module | That module's quiz |
+| POST, PUT, DELETE | `/modules` | admin | Manage modules |
+| GET | `/quizzes/by-module/:slug` | depends on module | Quiz questions without the answer key |
+| POST | `/quizzes/record-attempt` | logged in | Save a quiz score (checked: whole numbers, 0 to total) |
+| POST | `/quizzes/:quizId/submit` | logged in | Server-side scoring (built, not used by the quiz page yet) |
+| GET, POST, PUT, DELETE | `/quizzes/.../questions` | admin | Manage quiz questions |
+| GET | `/dashboard` | logged in | Progress, quiz history, latest assessment |
+| GET | `/dashboard/recommendations` | logged in | Modules for the weak areas |
+| POST | `/assessment/submit` | Premium | Save an assessment result |
+| GET | `/assessment/latest` | Premium | Latest assessment result |
+| POST | `/chat` | anyone | Ask the CyberWise chatbot |
+
+### Payments (`/api/billing`)
+
+| Method | Endpoint | Who | Purpose |
+|---|---|---|---|
+| GET | `/plans` | anyone | Prices and payment methods |
+| POST | `/checkout` | logged in | Start a PayMongo checkout |
+| POST | `/confirm` | logged in | Ask PayMongo if it was paid, grant Premium if so |
+| GET | `/transactions` | logged in | My own payments |
+| GET | `/transactions/all` | admin | All payments + subscription changes |
+| PATCH | `/transactions/:reference/cancel` | admin | Close an unfinished checkout |
+| DELETE | `/transactions/:reference` | admin | Delete a test record (never paid or live) |
 
 ---
 
-## 7. Security decisions worth defending
+## 11. Honest limits and future work
 
-**Passwords are bcrypt-hashed, never stored in readable form.** Demonstrable
-with the `SELECT ... password_hash` query above. Even with full database
-access, the original passwords cannot be read.
+Say these plainly if asked. Knowing your limits is a strength in a defense.
 
-**Premium content is gated on the server, not just hidden in the interface.**
-A Free account calling `/api/modules/client-impersonation` directly receives
-`403 Forbidden`. Hiding a button only stops people who do not look.
-The same pattern gates `GET /api/dashboard` and `GET /api/dashboard/recommendations`
-(added 2026-09-18) — both call the same `hasPremiumAccess(user)` check
-`modules.js` uses, and 403 a Free account's own token before querying any
-data. Before this fix, `requireAuth` alone (login-only, no plan check)
-protected both routes, so a logged-in Free-tier user could call the API
-directly and receive full Premium dashboard data — the frontend's router
-guard (`meta: { requiresPremium: true }`) stopped normal navigation but not
-a direct API call. FR-12 explicitly scopes the dashboard to Premium users,
-so this closes a real gap between that requirement and what the server
-enforced.
-
-**Admin routes check the role server-side** for the same reason. Reaching the
-admin page in the browser is not the same as being allowed to change anything.
-
-**Quiz answer keys are withheld during an attempt.** `GET /api/quizzes/by-module/:slug`
-returns questions and options but not `correct_option_index`. Scoring happens
-on the server, so the answers are not sitting in the page for anyone who opens
-developer tools.
-
-**Sessions use `sessionStorage`, not `localStorage`,** so they end when the tab
-closes. Appropriate for remote workers who may be on a shared machine.
-
-**OTP and reset codes are hashed, single-use, expire in five minutes, and lock
-out after five wrong attempts.**
-
-**`forgot-password` returns the same response whether or not the email exists.**
-Otherwise it could be used to discover which addresses have accounts.
+| Limit | Why it is like this | Next step |
+|---|---|---|
+| Email OTP, not an authenticator app | Free, and every user already has email | Authenticator app (TOTP) |
+| Quiz answers are checked in the browser | It is a practice quiz with instant feedback, not a graded exam | Switch the quiz page to the server scoring route that already exists |
+| Assessment is scored in the browser, then saved | Same reason; only Premium accounts can save one | Score it on the server |
+| No automatic renewal | Each PayMongo checkout is a one-time payment | Recurring billing |
+| JWT lasts 7 days and can't be revoked early | Normal for token logins | Shorter tokens with refresh tokens |
+| Email address not verified at sign-up | Kept sign-up simple | Verification email |
+| Free hosting sleeps | No budget | Paid instance for real use |
+| Test mode payments only | School project, no real money | Live keys after a security review |
 
 ---
 
-## 8. Scope limits, stated plainly
+## 12. Question bank
 
-**Payment processing is simulated, deliberately.** The paper's Scope and
-Limitations section excludes *"online payment gateway integration, automatic
-billing, or financial transaction processing"*, and FR-10 covers plan state
-only. `payment.html` records the plan change and takes no payment.
+### About the project
 
-The page carries a "Simulation only" banner and **actively rejects real card
-numbers**: anything passing the Luhn checksum, which is the algorithm genuine
-card numbers satisfy, is refused. Only the documented demo card
-`4242 4242 4242 4242` is accepted.
+**What does your system do?**
+It teaches remote workers, freelancers and VAs to spot social engineering. Six free modules cover the basics. Premium adds four role-based courses for client work, a personal dashboard and an awareness assessment.
 
-**If asked why bother rejecting real cards:** labelling a page as a demo is not
-enough on its own. During user testing a participant could type a real card out
-of habit. A platform that spends six modules teaching people to distrust
-convincing payment screens should not ship one of its own that quietly accepts
-card details.
+**Who are your users, and why them?**
+Remote workers, freelancers and virtual assistants. They get targeted by phishing and impersonation, but most never get the security training office employees get.
 
-**Billing period is display-only.** The account records `subscription_type =
-'Premium'` whether Monthly or Yearly was chosen, because there is no billing
-cycle to track without real payment processing.
+**What is the difference between Free and Premium?**
+Free gives the six foundational modules, their quizzes and the chatbot. Premium adds the four role-based courses (Client Impersonation, Invoice and Payment Scams, Fake Job and Recruiter Offers, Secure Client Data Handling), the personal dashboard with recommendations, and the awareness assessment.
 
-### Not implemented
+**What was your role?**
+Backend and authentication: the API, the database connection, login and OTP, payments, cancel and expiry, access control and the admin backend.
 
-- **Rate limiting on login.** No lockout after repeated failures. Acceptable
-  for a local academic deployment, not for public production.
-- **Email verification at registration.** The address is not confirmed.
-- **Quiz page logic.** The quiz pages are static mockups; the logic is separate
-  frontend work. The backend endpoints for recording results exist and are
-  tested.
+### Technology
 
----
+**Why Node.js?**
+Same language as the frontend, so the whole team can read all the code. It handles many small API requests well, and npm has packages for everything we needed: hashing, tokens, rate limits, email.
 
-## 9. Likely panel questions
+**Why MySQL and not a NoSQL database?**
+Our data is relational: users have progress, quiz results and payments; modules have quizzes. Foreign keys keep that consistent, and the schema follows our ERD directly.
 
-**"How do you know passwords are secure?"**
-Run the `SELECT ... password_hash` query. The stored value is a bcrypt hash
-beginning `$2b$10$`, not the password. bcrypt is intentionally slow, which is
-what makes large-scale offline guessing impractical.
+**What libraries did you use?**
+express for the server, mysql2 for the database, bcrypt for hashing, jsonwebtoken for login tokens, helmet and cors for security headers and origins, express-rate-limit against brute force, nodemailer for the emails.
 
-**"Can a free user access premium content by editing the page?"**
-No. The gate is on the server. Calling the API directly with a Free account's
-token returns 403. The interface hiding a link is a convenience, not the
-control.
+**How does the frontend talk to the backend?**
+A REST API. The Vue app sends JSON requests to `/api/...` and gets JSON back. The login token goes in the Authorization header.
 
-**"What happens if someone steals the JWT token?"**
-They could act as that user until it expires. That is inherent to token-based
-sessions. Mitigations here: tokens live in `sessionStorage` and die with the
-tab, and they expire on their own. Shorter expiry with refresh tokens would be
-the next step in a production build.
+**Where is it hosted?**
+Render hosts the app, built from our GitHub repo. Aiven hosts the MySQL database, connected over TLS.
 
-**"Why is the payment fake?"**
-Because the paper says it should be. Scope and Limitations excludes payment
-processing, and FR-10 covers plan state only. We built the full checkout
-experience and simulated the processing step, then went further and made
-entering a real card impossible.
+### Login and OTP
 
-**"Why is there no separate administrator table when the ERD has one?"**
-The ERD is unchanged and the table exists. The backend checks a role on the
-user record instead, because administrators need to log in through the same
-system as everyone else. Two parallel password systems would be more code and
-more risk for no benefit.
+**How does your MFA work?**
+Premium accounts get a 6-digit code by email after the correct password. It expires in 5 minutes, works once, and locks after 5 wrong tries. We store it hashed with bcrypt.
 
-**"What was the hardest part?"**
-Turning the ERD into working access rules. Drawing that a user has many
-progress records is one thing; writing the rule that a user sees only their own
-rows while an admin sees all of them, and making sure it cannot be bypassed
-from the browser, is another. It meant looking at every table and asking what
-the worst thing a malicious user could attempt was, not just what a legitimate
-user needs.
+**Why email OTP and not SMS?**
+Three reasons. Cost: SMS gateways charge per message, email is free. Our users already work with email open on the same laptop. And SMS is not safer: SIM swapping and fake texts are exactly what our Smishing module teaches people to watch for. The weakness is that email OTP is only as safe as the email account; an authenticator app would be the next step.
+
+**Why only Premium gets OTP?**
+Free accounts have no payment details and no paid content, so there is very little to steal. An extra step on every login would push away the learners we want. Premium accounts hold payment history and paid access.
+
+**Can someone guess the code?**
+They get 5 tries per code, 10 attempts per 15 minutes from one network, and the code changes every 5 minutes. That is about 10 guesses out of a million possible codes.
+
+**Can someone skip the OTP page?**
+No. After the password, the server only gives a pending token, and every other route rejects it until the code is verified.
+
+**What if the email doesn't arrive?**
+There's a Resend button. It sends a new code and cancels the old one.
+
+### Passwords and sessions
+
+**How are passwords stored?**
+Hashed with bcrypt, cost factor 10. I can show it in Workbench: the column holds a hash starting with `$2b$10$`, not the password.
+
+**Why bcrypt and not SHA-256?**
+bcrypt is slow on purpose and adds a random salt to each password. That makes guessing billions of passwords offline impractical. SHA-256 is built to be fast, which helps attackers.
+
+**What if someone steals a login token?**
+They could act as that user until it expires, which is true of any token login. We reduce the risk: the token lives in sessionStorage and disappears when the tab closes, and it expires after 7 days. Shorter tokens with refresh tokens would be the next step.
+
+**What happens on forgot password?**
+The user gets a 6-digit code by email, same rules as the login code. The reply is the same whether or not the email exists, so nobody can use it to find out who has an account.
+
+### Payment
+
+**Is the payment real?**
+It is a real PayMongo integration in test mode, as the adviser asked. Test cards and test GCash work exactly like real ones, but no money moves.
+
+**How do you make sure nobody gets Premium without paying?**
+Premium is granted only after our server asks PayMongo directly and PayMongo says the checkout was paid, for the right amount. The old route that let the browser ask for Premium now returns 403.
+
+**What if the user closes the tab after paying?**
+The payment is still recorded as pending. The next time their account loads, within two days, the server checks with PayMongo and grants Premium if it was paid.
+
+**What if they pay twice or renew early?**
+New days are added from the later of today or the current end date, so no days are lost. The same payment can't be counted twice; the update only runs while the payment is still pending.
+
+**How would you switch to real payments?**
+Swap the test keys for live keys in Render's settings. We would do a security review first.
+
+### Subscription
+
+**What happens when a user cancels?**
+Like Netflix: they keep Premium until the end date they paid for, then the account becomes Free. They can press Keep Premium to undo it before the date.
+
+**Do they get a refund?**
+No, cancelling does not refund. It only stops them from continuing after the paid period.
+
+**What happens when Premium ends?**
+The server checks the date on every request, so access stops on time. The user sees a "Your Premium has ended" popup and goes back to the free home page. Their progress and scores are kept, and they can renew any time.
+
+**Is there auto-renewal?**
+No. Each payment is a one-time checkout for a month or a year. Recurring billing is future work.
+
+### Access control and admin
+
+**Can a Free user open premium content by editing the page?**
+No. The lessons are not in the page at all. They come from the server only after the Premium check. A Free account calling the API directly gets 403.
+
+**How does the admin portal stay secure?**
+Every admin route checks the role on the server. There's no button or API to become admin; it takes direct database access.
+
+**Why no separate administrator table like the ERD?**
+The table is still there. We check a role on the user record instead, because admins log in like everyone else. Two login systems would be twice the risk.
+
+**Can an admin delete payment records?**
+Only unpaid test records. The rule is written in the SQL itself, so even a bug in the page can't delete a paid or live payment.
+
+### Security
+
+**Is your system safe from SQL injection?**
+Yes. Every query uses placeholders, so input is sent as data and never becomes part of the SQL command.
+
+**What about brute force attacks?**
+Rate limits per network: 20 login attempts per 15 minutes, 10 OTP attempts, and limits on checkout, the chatbot and the API in general.
+
+**What about XSS?**
+The chatbot's replies are escaped before they are shown, and helmet adds security headers.
+
+**Where are your secrets kept?**
+In environment variables: `.env` locally, Render's settings online. `.env` is never committed to GitHub.
+
+### Quizzes and assessment
+
+**How is the awareness level computed?**
+10 scenario questions per attempt, shuffled. 80 percent and up is Advanced, 60 to 79 is Intermediate, below 60 is Beginner. Topics with wrong answers become weak areas, and each one recommends a module.
+
+**Can a user cheat the quiz?**
+Be honest: the quiz checks answers in the browser, because it's a practice quiz with instant feedback, not a graded exam. The server still validates the score it saves: whole numbers, between 0 and the total. A server scoring route already exists for the next version.
+
+### Chatbot
+
+**How does the chatbot work?**
+CyberWise uses Google Gemini. It answers from a knowledge base built from our six free modules, rebuilt with `npm run kb:build`. It is rate limited to 60 messages per 15 minutes per network.
+
+**What if Gemini is down?**
+The chat shows a plain "could not reach the assistant" message instead of breaking the page.
+
+### Testing
+
+**How did you test the backend?**
+Against a real MySQL database: cancel and Keep Premium, the subscription history, login for expired accounts, and the payment guards. We also checked the live site after every deploy.
+
+**What bugs did you find?**
+Three good examples: anyone could make themselves Premium from the browser console, the OTP step could be skipped with the pending token, and cancelling ended Premium immediately instead of at the end date. All three are fixed and tested.
+
+### The hardest part
+
+**What was the hardest part?**
+Turning the ERD into access rules that can't be bypassed. Drawing that a user has many records is easy. Making sure a user only ever sees their own rows, an admin sees all of them, and none of it can be skipped from the browser meant asking, for every route, what the worst thing someone could try is.
