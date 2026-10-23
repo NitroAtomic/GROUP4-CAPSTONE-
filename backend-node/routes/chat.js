@@ -216,6 +216,10 @@ function learnMoreFor(passage) {
 const FALLBACK =
   "I do not have a prepared answer for that one. I can help with phishing, quishing, spear phishing, smishing, vishing, pretexting, passwords, multi-factor authentication, invoice and payment scams, recruitment scams, and securing a home network.\n\nThe six free modules cover all of these in more depth.";
 
+// Hangganan ng paghihintay sa bawat AI provider bago lumipat sa susunod.
+const N8N_TIMEOUT_MS = 8000;
+const GEMINI_TIMEOUT_MS = 15000;
+
 router.post('/', optionalAuth, async (req, res) => {
   const { message: rawMessage } = req.body;
 
@@ -240,11 +244,27 @@ router.post('/', optionalAuth, async (req, res) => {
   // Kapag may tinanggal, binabalik din yung malinis na bersyon para mapalitan
   // ng widget yung bubble ng user. Kung hindi, nakatengga pa rin sa screen
   // yung password, kita ng kahit sinong nasa likod mo.
-  const send = (body) => res.json({
-    ...body,
-    redacted,
-    ...(redacted ? { redactedMessage: message } : {}),
-  });
+  /* Gaano katagal ang bawat hakbang. Sa UAT, 5 hanggang 8 segundo ang
+     reklamo ng tatlong tester, at 14 hanggang 18 segundo nang sukatin sa
+     live. Hindi makikita kung alin ang mabagal -- n8n o Gemini -- nang
+     walang sukat, kaya kasama na ito sa bawat sagot bilang Server-Timing
+     header (makikita sa Network tab) at sa log ng Render. */
+  const timings = [];
+  const timed = (name, started, outcome) => {
+    timings.push(`${name};dur=${Date.now() - started};desc="${outcome}"`);
+  };
+
+  const send = (body) => {
+    if (timings.length) {
+      res.set('Server-Timing', timings.join(', '));
+      console.log(`[chat] ${body.source || 'reply'}: ${timings.join(' | ')}`);
+    }
+    return res.json({
+      ...body,
+      redacted,
+      ...(redacted ? { redactedMessage: message } : {}),
+    });
+  };
 
   const history = sanitizeHistory(req.body.history);
   const sessionId = typeof req.body.sessionId === 'string' ? req.body.sessionId.slice(0, 64) : undefined;
@@ -384,6 +404,7 @@ router.post('/', optionalAuth, async (req, res) => {
   // Sariling prompt at knowledge base yung n8n, kaya diretso lang ipapasa
   // yung tanong, hindi na babalutin ng sarili nating prompt.
   if (n8nUrl) {
+    const n8nStarted = Date.now();
     try {
       const upstream = await fetch(n8nUrl, {
         method: 'POST',
@@ -394,9 +415,9 @@ router.post('/', optionalAuth, async (req, res) => {
         // malalaman ng workflow kung Free o Premium yung user nang hindi
         // humihingi ng kahit ano sa kanya.
         body: JSON.stringify({ message, history, sessionId, plan }),
-        // May limit na 20 seconds. Kapag nag-hang yung n8n server, hindi
-        // maghihintay forever yung user; lilipat na lang kay Gemini.
-        signal: AbortSignal.timeout(20000),
+        // 8 segundo na lang (dati 20). Kapag mabagal o sira ang n8n, ito
+        // ang buong hinihintay ng user bago pa man subukan si Gemini.
+        signal: AbortSignal.timeout(N8N_TIMEOUT_MS),
       });
       if (!upstream.ok) throw new Error(`HTTP ${upstream.status}`);
       const data = await upstream.json();
@@ -407,15 +428,18 @@ router.post('/', optionalAuth, async (req, res) => {
       // yung chat kahit hindi pala nagamit yung AI ni Shane kahit kailan.
       const payload = Array.isArray(data) ? data[0] : data;
       const reply = payload && (payload.reply || payload.output);
-      if (reply) return send({ reply, source: 'n8n', learnMore });
+      if (reply) { timed('n8n', n8nStarted, 'ok'); return send({ reply, source: 'n8n', learnMore }); }
 
+      timed('n8n', n8nStarted, 'no-output');
       console.warn('[chat] n8n replied without "output" or "reply":', JSON.stringify(data).slice(0, 200));
     } catch (err) {
-      console.warn('[chat] n8n unreachable, falling back:', err.name === 'TimeoutError' ? 'timed out after 20s' : err.message);
+      timed('n8n', n8nStarted, err.name === 'TimeoutError' ? 'timeout' : 'error');
+      console.warn('[chat] n8n unreachable, falling back:', err.name === 'TimeoutError' ? `timed out after ${N8N_TIMEOUT_MS / 1000}s` : err.message);
     }
   }
 
   if (geminiKey) {
+    const geminiStarted = Date.now();
     try {
       // Nagre-retire ng model names si Google paminsan-minsan, tapos 404 na
       // may pangalan ng replacement yung ibabalik ng API. Tignan yung backend
@@ -441,6 +465,9 @@ router.post('/', optionalAuth, async (req, res) => {
               thinkingConfig: { thinkingBudget: 0 },
             },
           }),
+          // Dati walang hangganan: kapag mabagal si Gemini, naghihintay
+          // lang ang user. Pagkalampas, sagot mula sa sariling module text.
+          signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
         }
       );
       const data = await upstream.json();
@@ -449,6 +476,7 @@ router.post('/', optionalAuth, async (req, res) => {
 
       // MAX_TOKENS ibig sabihin naputol yung sagot. Mas okay bumalik sa module
       // text, kumpleto naman kahit paano, kesa ipakita kalahating sentence.
+      timed('gemini', geminiStarted, reply ? 'ok' : (candidate?.finishReason || 'empty'));
       if (candidate?.finishReason === 'MAX_TOKENS') {
         console.warn('[chat] Gemini hit the token limit; falling back to the knowledge base.');
       } else if (reply) {
@@ -461,7 +489,8 @@ router.post('/', optionalAuth, async (req, res) => {
       }
       console.warn('[chat] Gemini returned no text:', JSON.stringify(data).slice(0, 200));
     } catch (err) {
-      console.warn('[chat] Gemini unreachable, falling back:', err.message);
+      timed('gemini', geminiStarted, err.name === 'TimeoutError' ? 'timeout' : 'error');
+      console.warn('[chat] Gemini unreachable, falling back:', err.name === 'TimeoutError' ? `timed out after ${GEMINI_TIMEOUT_MS / 1000}s` : err.message);
     }
   }
 
