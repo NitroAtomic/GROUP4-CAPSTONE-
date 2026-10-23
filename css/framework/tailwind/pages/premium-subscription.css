@@ -11,7 +11,7 @@
   .premium-billing-button { @apply min-h-[42px] px-5 border border-transparent rounded-lg text-[14px] font-semibold cursor-pointer transition-all flex items-center justify-center gap-1.5; background: transparent; color: var(--heading); }
   .premium-billing-button:hover { background: rgba(245, 166, 35, 0.08); }
   .premium-billing-button-active, .premium-billing-button-active:hover { background: var(--orange); color: var(--navy); border-color: var(--orange); }
-  .premium-save-label { @apply inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold whitespace-nowrap; background: rgba(34,197,94,.14); color: #4ade80; border: 1px solid rgba(34,197,94,.35); }
+  .premium-save-label { @apply inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold whitespace-nowrap; background: rgba(34,197,94,.14); color: var(--ok-text); border: 1px solid rgba(34,197,94,.35); }
   .premium-billing-button-active .premium-save-label { background: var(--navy); color: #4ade80; border-color: transparent; }
 
   /* Plan card */
@@ -22,10 +22,10 @@
   .premium-plan-header > div:first-child { min-width: 0; }
   .premium-plan-price { min-width: max-content; }
   .premium-plan-price strong { font-variant-numeric: lining-nums tabular-nums; }
-  .premium-monthly-tip { @apply mt-5 px-4 py-3 rounded-xl flex items-center gap-3 text-[14px] leading-relaxed; color: #4ade80; background: rgba(22,163,114,.13); border: 1px solid rgba(52,211,153,.4); }
+  .premium-monthly-tip { @apply mt-5 px-4 py-3 rounded-xl flex items-center gap-3 text-[14px] leading-relaxed; color: var(--ok-text); background: rgba(22,163,114,.13); border: 1px solid rgba(52,211,153,.4); }
   .premium-tip-bulb { @apply text-[20px] flex-shrink-0; }
-  .premium-switch-yearly { @apply ml-1 p-0 font-bold underline underline-offset-2 cursor-pointer; background: transparent; border: 0; color: #4ade80; }
-  .premium-switch-yearly:hover { color: #86efac; }
+  .premium-switch-yearly { @apply ml-1 p-0 font-bold underline underline-offset-2 cursor-pointer; background: transparent; border: 0; color: var(--ok-text); }
+  .premium-switch-yearly:hover { text-decoration-thickness: 2px; }
   /* Pagpalit ng plano sa huling bahagi ng pahina. Kulay ng teksto sa
      paligid, hindi berde, para mabasa sa light at dark. */
   .premium-final-switch { @apply ml-2 p-0 font-bold underline underline-offset-2 cursor-pointer; background: transparent; border: 0; color: inherit; }
@@ -54,7 +54,7 @@
   /* Free versus Premium comparison */
   .premium-comparison-section { @apply w-[min(960px,100%)] mx-auto mt-20 mb-16; }
   .premium-comparison-heading { @apply mb-8; }
-  .premium-section-eyebrow { @apply block mb-3 text-[13px] font-bold tracking-[0.12em] uppercase; color: var(--teal); }
+  .premium-section-eyebrow { @apply block mb-3 text-[13px] font-bold tracking-[0.12em] uppercase; color: var(--accent-text); }
   .premium-comparison-heading h2 { @apply text-[36px] font-bold tracking-tight; color: var(--heading); }
   .premium-comparison-heading p { @apply mt-2 max-w-[650px] text-[16px] leading-relaxed; color: var(--muted); }
   .premium-comparison-table-wrapper { @apply overflow-x-auto rounded-[18px] border; border-color: var(--border); background: var(--card-bg); }
@@ -72,7 +72,7 @@
   .premium-comparison-table .comparison-unavailable { @apply text-[20px]; color: var(--muted); }
   .comparison-price-row td { @apply font-semibold; }
   .comparison-price-row strong { @apply block text-[15px]; }
-  .comparison-price-row .premium-column small { color: #4ade80; font-weight: 600; }
+  .comparison-price-row .premium-column small { color: var(--ok-text); font-weight: 600; }
 
   /* Final CTA */
   .premium-final-cta { @apply w-[min(960px,100%)] mx-auto mb-12 px-6 py-12 rounded-[22px] text-center border; background: linear-gradient(110deg,#112f53,#0c3e47); border-color: rgba(110,163,194,.18); }

@@ -185,11 +185,15 @@ onMounted(() => { sidebarVisible.value = window.innerWidth > 900; const hasSaved
 
 .guided-module-badge {
   border: 1px solid var(--guided-accent);
-  color: #35d8ca;
+  color: var(--accent-text);
   border-radius: 30px;
   padding: 3px 10px;
   font-size: 11px;
   font-weight: 700;
+}
+/* Nasa madilim na header band ito kahit light mode. */
+.guided-module-metadata .guided-module-badge {
+  color: #5eead4;
 }
 
 .guided-progress-track {
@@ -316,7 +320,7 @@ onMounted(() => { sidebarVisible.value = window.innerWidth > 900; const hasSaved
 .guided-step-eyebrow {
   font-size: 12px;
   font-weight: 700;
-  color: #2bb3a6;
+  color: var(--accent-text);
   letter-spacing: 0.05em;
   margin: 0 0 18px;
 }
@@ -649,7 +653,7 @@ onMounted(() => { sidebarVisible.value = window.innerWidth > 900; const hasSaved
 }
 
 .guided-references-inner a {
-  color: #7eb8ed;
+  color: var(--link-text);
 }
 
 .guided-floating-menu-button {
@@ -722,7 +726,7 @@ onMounted(() => { sidebarVisible.value = window.innerWidth > 900; const hasSaved
   border-bottom: 2px dotted currentColor;
   border-radius: 2px;
   background: rgba(43, 179, 166, 0.14);
-  color: var(--guided-accent);
+  color: var(--accent-text);
   font: inherit;
   font-weight: 700;
   cursor: help;

@@ -1,7 +1,7 @@
 <template>
 <main class="guided-module-page">
 <header class="guided-module-header"><div class="guided-module-container"><nav aria-label="Breadcrumb"><button type="button" class="guided-home-link" @click="requestLeaveModule">⌂ Home</button></nav><h1>Safe Practices for Remote Work</h1><div class="guided-module-metadata"><span>Module 6 of 6</span><span class="guided-module-badge">FREE MODULE</span><span>17–21 min total (includes video)</span></div></div></header>
-<div class="guided-module-progress" role="group" aria-label="Safe practices module progress"><div class="guided-progress-container"><div class="guided-progress-heading"><span class="guided-progress-title">📖 Safe Practices Module Progress</span><span class="guided-progress-step" aria-live="polite">Step {{ currentStep }} of {{ lessonSteps.length }}</span></div><div class="guided-progress-track" role="progressbar" :aria-valuenow="currentStep" :aria-valuemin="1" :aria-valuemax="lessonSteps.length" :aria-valuetext="`Step ${currentStep} of ${lessonSteps.length}`"><div class="guided-progress-fill" :style="{width: `${currentStep / lessonSteps.length * 100}%`}"></div></div></div></div>
+<div class="guided-module-progress" role="group" aria-label="Safe practices module progress"><div class="guided-progress-container"><div class="guided-progress-heading"><span class="guided-progress-title">📖 Safe Practices Module Progress</span><span class="guided-progress-step" aria-live="polite">Step {{ currentStep }} of {{ lessonSteps.length }}</span></div><div class="guided-progress-track" role="progressbar" aria-label="Module progress" :aria-valuenow="currentStep" :aria-valuemin="1" :aria-valuemax="lessonSteps.length" :aria-valuetext="`Step ${currentStep} of ${lessonSteps.length}`"><div class="guided-progress-fill" :style="{width: `${currentStep / lessonSteps.length * 100}%`}"></div></div></div></div>
 <div class="guided-module-layout" :class="{'guided-sidebar-hidden': !sidebarVisible}"><aside v-if="sidebarVisible" class="guided-module-sidebar" aria-label="Lesson navigation"><div class="guided-sidebar-heading"><strong>IN THIS MODULE</strong><span class="guided-module-badge">FREE</span></div><p class="guided-sidebar-description">17–21 min total (includes video) · 8 short steps</p><nav aria-label="Module steps"><button v-for="(step,index) in lessonSteps" :key="step.id" type="button" class="guided-step-link" :class="{'guided-step-active': currentStep === index + 1}" :aria-current="currentStep === index + 1 ? 'step' : undefined" @click="goToStep(index+1)"><span>{{ String(index+1).padStart(2,'0') }} · {{ step.name }}</span><span v-if="completedSteps.includes(index+1)" class="guided-completed-mark" aria-label="Visited">✓</span></button></nav><div class="guided-sidebar-progress"><p>Step {{ currentStep }} of {{ lessonSteps.length }}</p><div class="guided-sidebar-progress-track"><div class="guided-sidebar-progress-fill" :style="{width: `${currentStep / lessonSteps.length * 100}%`}"></div></div></div><button type="button" class="guided-hide-menu-button" @click="sidebarVisible=false">‹ Hide menu</button></aside>
 <div class="guided-module-content"><section :key="currentStep" ref="activeStepSection" class="guided-lesson-step" aria-labelledby="guided-current-step-heading"><p class="guided-step-eyebrow">STEP {{ currentStep }} OF {{ lessonSteps.length }} · {{ lessonSteps[currentStep-1].name.toUpperCase() }}</p>
 <template v-if="currentStep === 1"><div class="guided-introduction-card"><p class="guided-audience"><strong>Who this is for:</strong> everyone working remotely — distributed employees, freelancers, and hybrid staff.</p><h2 id="guided-current-step-heading">By the end of this module you can:</h2><ul class="guided-learning-outcomes"><li>Choose stronger <button type="button" class="guided-definition-term" @click="openDefinition('MFA')">multi-factor authentication (MFA)</button>, including authenticator apps and phishing-resistant security keys.</li><li>Protect your home Wi-Fi, router, and <button type="button" class="guided-definition-term" @click="openDefinition('BYOD')">BYOD</button> devices.</li><li>Verify unexpected requests through a separate, trusted channel.</li><li>Practice updating, password management, and prompt incident reporting.</li></ul><div class="guided-helpful-tip"><span class="guided-helpful-tip-icon">💡</span><div class="guided-helpful-tip-content"><strong>Helpful tip</strong><p>Click dotted-underlined terms to see simple explanations. This final module is a practical reference, not a quiz.</p></div></div><div class="guided-introduction-footer"><h3>You'll cover:</h3><div class="guided-topic-tags"><span>Account security</span><span>Home Wi-Fi</span><span>Trusted verification</span><span>Incident response</span></div><button type="button" class="guided-primary-button" @click="goToStep(2)">Start the lesson →</button></div></div></template>
@@ -164,11 +164,15 @@ onMounted(()=>{sidebarVisible.value=window.innerWidth>900;const saved=readSavedP
 
 .guided-module-badge {
   border: 1px solid var(--guided-accent);
-  color: #35d8ca;
+  color: var(--accent-text);
   border-radius: 30px;
   padding: 3px 10px;
   font-size: 11px;
   font-weight: 700;
+}
+/* Nasa madilim na header band ito kahit light mode. */
+.guided-module-metadata .guided-module-badge {
+  color: #5eead4;
 }
 
 .guided-progress-track {
@@ -295,7 +299,7 @@ onMounted(()=>{sidebarVisible.value=window.innerWidth>900;const saved=readSavedP
 .guided-step-eyebrow {
   font-size: 12px;
   font-weight: 700;
-  color: #2bb3a6;
+  color: var(--accent-text);
   letter-spacing: 0.05em;
   margin: 0 0 18px;
 }
@@ -612,7 +616,7 @@ onMounted(()=>{sidebarVisible.value=window.innerWidth>900;const saved=readSavedP
 }
 
 .guided-references-inner a {
-  color: #7eb8ed;
+  color: var(--link-text);
 }
 
 .guided-floating-menu-button {
@@ -685,7 +689,7 @@ onMounted(()=>{sidebarVisible.value=window.innerWidth>900;const saved=readSavedP
   border-bottom: 2px dotted currentColor;
   border-radius: 2px;
   background: rgba(43, 179, 166, 0.14);
-  color: var(--guided-accent);
+  color: var(--accent-text);
   font: inherit;
   font-weight: 700;
   cursor: help;

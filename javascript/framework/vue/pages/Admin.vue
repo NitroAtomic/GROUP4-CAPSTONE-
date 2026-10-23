@@ -15,9 +15,10 @@
       <!-- Dalawang gawain, dalawang tab. Dati magkakasunod lahat sa isang
            mahabang pahina, kaya kailangan pang mag-scroll nang malayo bago
            makita ang talaan ng bayad. -->
-      <nav class="admin-tabs" aria-label="Admin sections">
+      <div class="admin-tabs" role="tablist" aria-label="Admin sections">
         <button
           type="button"
+          role="tab"
           class="admin-tab"
           :aria-selected="activeTab === 'modules'"
           @click="activeTab = 'modules'"
@@ -27,6 +28,7 @@
         </button>
         <button
           type="button"
+          role="tab"
           class="admin-tab"
           :aria-selected="activeTab === 'payments'"
           @click="activeTab = 'payments'"
@@ -34,7 +36,7 @@
           Payments
           <span class="admin-tab-count">{{ payments.length }}</span>
         </button>
-      </nav>
+      </div>
 
       <section v-if="activeTab === 'modules'" class="admin-card">
         <div class="admin-card-heading">

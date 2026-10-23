@@ -14,7 +14,7 @@ const compression = require('compression');
 
 const config = require('./config/env');
 const pool = require('./config/db');
-const { authLimiter, otpLimiter, chatLimiter, generalLimiter } = require('./middleware/rateLimit');
+const { authLimiter, authIpLimiter, otpLimiter, otpIpLimiter, chatLimiter, generalLimiter, checkoutLimiter } = require('./middleware/rateLimit');
 
 const authRoutes = require('./routes/auth');
 const moduleRoutes = require('./routes/modules');
@@ -87,16 +87,16 @@ app.get('/api/health', async (req, res) => {
 });
 
 // Mas mahigpit na limit sa mga endpoint na pwedeng i-guess (login, register, etc).
-app.use('/api/auth/login', authLimiter);
-app.use('/api/auth/register', authLimiter);
-app.use('/api/auth/forgot-password', authLimiter);
-app.use('/api/auth/reset-password', authLimiter);
+app.use('/api/auth/login', authIpLimiter, authLimiter);
+app.use('/api/auth/register', authIpLimiter, authLimiter);
+app.use('/api/auth/forgot-password', authIpLimiter, authLimiter);
+app.use('/api/auth/reset-password', authIpLimiter, authLimiter);
 app.use('/api/chat', chatLimiter);
-app.use('/api/auth/verify-otp', otpLimiter);
-app.use('/api/auth/resend-otp', otpLimiter);
+app.use('/api/auth/verify-otp', otpIpLimiter, otpLimiter);
+app.use('/api/auth/resend-otp', otpIpLimiter, otpLimiter);
 // Bawat checkout ay lumilikha ng session sa PayMongo. May limitasyon para
 // hindi magawang pagawaan ng daan-daang session ang account ng isang tao.
-app.use('/api/billing/checkout', authLimiter);
+app.use('/api/billing/checkout', checkoutLimiter);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/modules', moduleRoutes);

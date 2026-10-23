@@ -57,7 +57,15 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
+    /* Isang beses kada pag-load ng site: kunin ang totoong plano mula sa
+       server. Dati, sa dashboard lang ito ginagawa, kaya kapag binago ng
+       admin ang plano (hal. ginawang Premium sa Workbench), luma pa rin ang
+       nakikita hanggang buksan ang dashboard. Tahimik kapag pumalya. */
+    const auth = useAuthStore()
+    if (auth.isAuthenticated) {
+      try { await auth.refreshUser() } catch { /* offline: gamitin ang nakatala */ }
+    }
     this.check()
     this.timer = setInterval(this.check, CHECK_EVERY_MS)
     window.addEventListener('focus', this.check)

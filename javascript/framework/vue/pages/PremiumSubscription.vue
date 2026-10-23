@@ -116,7 +116,7 @@
         <h2 id="premium-comparison-title">See what you unlock</h2>
         <p>Start free with the foundational modules. Go premium when you want training built for your work, and a dashboard that shows you where to improve.</p>
       </div>
-      <div class="premium-comparison-table-wrapper">
+      <div class="premium-comparison-table-wrapper" tabindex="0" role="region" aria-label="Free and Premium comparison">
         <table class="premium-comparison-table">
           <thead>
             <tr>
