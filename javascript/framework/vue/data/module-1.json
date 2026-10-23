@@ -43,18 +43,18 @@
         },
         {
           "value": "b",
-          "text": "login.microsoft.com"
+          "text": "login.microsoftonline.com"
         },
         {
           "value": "c",
-          "text": "security-update@micros0ft-verify.com"
+          "text": "login.micros0ft.com"
         },
         {
           "value": "d",
-          "text": "portal.slack.com"
+          "text": "app.slack.com"
         }
       ],
-      "explanation": "micros0ft-verify.com uses a zero ('0') in place of the letter 'o' to trick users into believing it is an official Microsoft communication channel."
+      "explanation": "login.micros0ft.com uses a zero ('0') in place of the letter 'o' so it looks like Microsoft at a glance. The other three are real domains that belong to Google, Microsoft and Slack."
     },
     {
       "id": 3,
