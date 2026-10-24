@@ -56,6 +56,16 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   ssl: sslOptions(),
+  // Lahat ng oras ay UTC, saan man tumatakbo ang server. Dati "local" ang
+  // basa ng driver: kapag magkaiba ang time zone ng server at ng database
+  // (hal. laptop na naka-Asia/Manila, database na UTC), 8 oras na mali ang
+  // basa sa petsa ng pag-expire ng Premium.
+  timezone: 'Z',
+});
+
+// Pati NOW() sa database: UTC kada koneksyon, para tugma sa basa sa itaas.
+pool.on('connection', (connection) => {
+  connection.query("SET time_zone = '+00:00'");
 });
 
 module.exports = pool;
