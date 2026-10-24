@@ -239,6 +239,22 @@
      Form-level status message (new — see login.css note)
      ========================= */
 
+  /* Field-level validation (UAT: mark missing or invalid fields) */
+  .account-form-field input.is-invalid {
+    border-color: var(--bad-text);
+    box-shadow: 0 0 0 1px var(--bad-text);
+  }
+
+  .field-error-message {
+    @apply mt-1.5 text-[13px];
+    color: var(--bad-text);
+  }
+
+  .field-optional {
+    @apply text-[13px];
+    color: var(--muted);
+  }
+
   .form-error-message {
     @apply mt-4 py-2 px-3 border rounded-lg text-[14px] text-center;
     background: rgba(220, 38, 38, 0.06);

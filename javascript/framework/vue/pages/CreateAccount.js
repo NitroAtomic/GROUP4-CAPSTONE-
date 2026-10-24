@@ -21,7 +21,11 @@ export default {
       showPassword: false,
       showConfirmPassword: false,
       isSubmitting: false,
-      errorMessage: ''
+      errorMessage: '',
+      // Ipinapakita lang ang mali kapag na-alis na ang cursor sa field o
+      // pinindot na ang button, para hindi pula agad ang bagong form.
+      touched: {},
+      submitAttempted: false
     }
   },
 
@@ -66,24 +70,48 @@ export default {
       return this.password.length > 0 && this.password === this.confirmPassword
     },
 
+    // Isang mensahe kada field (UAT: markahan ang kulang o maling field).
+    fieldErrors() {
+      const email = this.email.trim()
+      return {
+        firstName: this.firstName.trim() ? '' : 'Enter your first name.',
+        email: !email
+          ? 'Enter your email address.'
+          : (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Enter a valid email, like name@email.com.'),
+        password: !this.password
+          ? 'Create a password.'
+          : (this.allPasswordRulesValid ? '' : 'Your password does not meet all the requirements below.'),
+        confirmPassword: !this.confirmPassword
+          ? 'Re-enter your password.'
+          : (this.passwordsMatch ? '' : "Passwords don't match.")
+      }
+    },
+
     canSubmit() {
-      return (
-        this.firstName.trim().length > 0 &&
-        this.email.trim().length > 0 &&
-        this.allPasswordRulesValid &&
-        this.passwordsMatch
-      )
+      return Object.values(this.fieldErrors).every((message) => !message)
     }
   },
 
   methods: {
+    fieldError(field) {
+      return (this.submitAttempted || this.touched[field]) ? this.fieldErrors[field] : ''
+    },
+
+    markTouched(field) {
+      this.touched = { ...this.touched, [field]: true }
+    },
+
     async submit() {
       this.errorMessage = ''
+      this.submitAttempted = true
 
-      // Belt-and-suspenders: the button is already disabled until
-      // canSubmit is true, but a submit can still fire via Enter.
+      // Hindi na naka-disable ang button: kapag may kulang, ipinapakita
+      // kung alin, at doon inilalagay ang cursor.
       if (!this.canSubmit) {
-        this.errorMessage = 'Please fill out every field and meet all password requirements.'
+        const ids = { firstName: 'first-name', email: 'email', password: 'password', confirmPassword: 'confirm-password' }
+        const first = Object.keys(ids).find((field) => this.fieldErrors[field])
+        this.errorMessage = 'Please fix the highlighted fields.'
+        this.$nextTick(() => document.getElementById(ids[first])?.focus())
         return
       }
 

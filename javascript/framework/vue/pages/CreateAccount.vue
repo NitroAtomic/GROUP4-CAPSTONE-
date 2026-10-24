@@ -99,11 +99,16 @@
                 autocomplete="given-name"
                 placeholder="Juan"
                 required
+                :class="{ 'is-invalid': fieldError('firstName') }"
+                :aria-invalid="fieldError('firstName') ? 'true' : 'false'"
+                aria-describedby="first-name-error"
+                @blur="markTouched('firstName')"
               >
+              <p v-if="fieldError('firstName')" id="first-name-error" class="field-error-message">{{ fieldError('firstName') }}</p>
             </div>
 
             <div class="account-form-field">
-              <label for="last-name">Last Name</label>
+              <label for="last-name">Last Name <span class="field-optional">(optional)</span></label>
               <input
                 id="last-name"
                 v-model.trim="lastName"
@@ -127,7 +132,12 @@
               autocomplete="email"
               placeholder="name@email.com"
               required
+              :class="{ 'is-invalid': fieldError('email') }"
+              :aria-invalid="fieldError('email') ? 'true' : 'false'"
+              aria-describedby="email-error"
+              @blur="markTouched('email')"
             >
+            <p v-if="fieldError('email')" id="email-error" class="field-error-message">{{ fieldError('email') }}</p>
           </div>
 
 
@@ -144,6 +154,10 @@
                 autocomplete="new-password"
                 placeholder="Create a password"
                 required
+                :class="{ 'is-invalid': fieldError('password') }"
+                :aria-invalid="fieldError('password') ? 'true' : 'false'"
+                aria-describedby="password-error"
+                @blur="markTouched('password')"
               >
 
               <button
@@ -158,6 +172,8 @@
                 >
               </button>
             </div>
+
+            <p v-if="fieldError('password')" id="password-error" class="field-error-message">{{ fieldError('password') }}</p>
 
             <div class="password-requirements">
 
@@ -199,6 +215,10 @@
                 autocomplete="new-password"
                 placeholder="Re-enter your password"
                 required
+                :class="{ 'is-invalid': fieldError('confirmPassword') || (confirmPassword && !passwordsMatch) }"
+                :aria-invalid="fieldError('confirmPassword') ? 'true' : 'false'"
+                aria-describedby="confirm-password-error"
+                @blur="markTouched('confirmPassword')"
               >
 
               <button
@@ -214,8 +234,8 @@
               </button>
             </div>
 
-            <p v-if="confirmPassword && !passwordsMatch" class="form-error-message">
-              Passwords don't match.
+            <p v-if="fieldError('confirmPassword') || (confirmPassword && !passwordsMatch)" id="confirm-password-error" class="field-error-message">
+              {{ fieldError('confirmPassword') || "Passwords don't match." }}
             </p>
 
           </div>
@@ -224,7 +244,7 @@
           <button
             type="submit"
             class="continue-to-payment-button"
-            :disabled="!canSubmit || isSubmitting"
+            :disabled="isSubmitting"
           >
             {{ isSubmitting ? 'Creating account…' : (isFreeSignup ? 'Create account' : 'Continue to payment') }}
           </button>

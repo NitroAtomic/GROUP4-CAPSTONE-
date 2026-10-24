@@ -25,13 +25,15 @@
             autocomplete="email"
             placeholder="name@email.com"
             required
+            :class="{ 'is-invalid': errorMessage && !isEmailValid }"
+            :aria-invalid="errorMessage && !isEmailValid ? 'true' : 'false'"
           >
         </div>
 
         <button
           type="submit"
           class="forgot-password-submit-button"
-          :disabled="!isEmailValid || isSubmitting"
+          :disabled="isSubmitting"
         >
           {{ isSubmitting ? 'Sending…' : 'Send reset code' }}
         </button>
