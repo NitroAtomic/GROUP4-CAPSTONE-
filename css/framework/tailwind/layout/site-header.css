@@ -146,6 +146,17 @@
     color: #fff;
   }
 
+  .site-header .dashboard-premium-link {
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .site-header .dashboard-premium-link:hover,
+  .site-header .dashboard-premium-link:focus-visible {
+    border-color: rgba(245, 166, 35, 0.7);
+    background: rgba(245, 166, 35, 0.18);
+  }
+
   @media (max-width: 620px) {
     .navbar {
       @apply h-auto min-h-16 flex-wrap gap-y-2 py-2;

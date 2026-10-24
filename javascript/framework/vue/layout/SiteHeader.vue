@@ -64,10 +64,10 @@
             <span class="dashboard-user-name">Hi, {{ firstName }}</span>
           </div>
           <span v-if="isAdmin" class="dashboard-premium-badge">Administrator</span>
-          <span v-else-if="isPremium" class="dashboard-premium-badge">
+          <router-link v-else-if="isPremium" to="/modules/premium" class="dashboard-premium-badge dashboard-premium-link" title="Open your premium courses">
             <svg class="inline-crown-icon ui-icon" aria-hidden="true"><use href="#ui-icon-crown" /></svg>
             Premium
-          </span>
+          </router-link>
           <router-link v-if="!isPremium && !isAdmin && !isMinimalNav" to="/premium-subscription" class="btn btn-premium">Go Premium</router-link>
           <button type="button" class="btn btn-logout" @click="logout">Log out</button>
         </template>
