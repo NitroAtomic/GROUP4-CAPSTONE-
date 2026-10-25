@@ -45,15 +45,20 @@
             v-model="newPassword"
             type="password"
             autocomplete="new-password"
-            placeholder="At least 8 characters"
+            placeholder="Create a new password"
             required
+            aria-describedby="new-password-rules"
+            :class="{ 'is-invalid': errorMessage && !passwordOk }"
           >
+          <p id="new-password-rules" class="password-rules-hint" :class="{ 'password-rules-ok': passwordOk }">
+            At least 8 characters, with an uppercase letter, a lowercase letter, a number and a special character.
+          </p>
         </div>
 
         <button
           type="submit"
           class="forgot-password-submit-button"
-          :disabled="!canSubmit || isSubmitting"
+          :disabled="isSubmitting"
         >
           {{ isSubmitting ? 'Resetting…' : 'Reset password' }}
         </button>

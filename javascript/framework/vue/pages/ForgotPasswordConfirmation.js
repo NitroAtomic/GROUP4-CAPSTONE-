@@ -23,8 +23,14 @@ export default {
       return this.$route.query.email || ''
     },
 
+    // Parehong patakaran ng sign-up at ng server (routes/auth.js).
+    passwordOk() {
+      const p = this.newPassword
+      return p.length >= 8 && /[a-z]/.test(p) && /[A-Z]/.test(p) && /[0-9]/.test(p) && /[^A-Za-z0-9]/.test(p)
+    },
+
     canSubmit() {
-      return this.code.length > 0 && this.newPassword.length >= 8
+      return this.code.length > 0 && this.passwordOk
     }
   },
 
@@ -38,7 +44,9 @@ export default {
         return
       }
       if (!this.canSubmit) {
-        this.errorMessage = 'Enter the code and a new password of at least 8 characters.'
+        this.errorMessage = this.code.length === 0
+          ? 'Enter the code from your email.'
+          : 'Your new password needs at least 8 characters, with an uppercase letter, a lowercase letter, a number and a special character.'
         return
       }
 

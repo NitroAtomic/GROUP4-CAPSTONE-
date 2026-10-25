@@ -15,6 +15,22 @@ const SALT_ROUNDS = 10;
 const OTP_TTL_MINUTES = 5;
 const OTP_MAX_ATTEMPTS = 5;
 
+/* Parehong patakaran ng form sa CreateAccount (8+ karakter, may maliit at
+   malaking titik, numero at espesyal na karakter). Dati 8 karakter lang ang
+   tinitingnan dito, kaya ang tumawag nang diretso sa API ay nakakagawa ng
+   account na "aaaaaaaa" ang password. Ang server ang huling hadlang. */
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function passwordProblem(password) {
+  if (typeof password !== 'string') return 'Password is required.';
+  if (password.length < 8) return 'Password must be at least 8 characters.';
+  if (password.length > 72) return 'Password must be at most 72 characters.';
+  if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/[^A-Za-z0-9]/.test(password)) {
+    return 'Password must include an uppercase letter, a lowercase letter, a number and a special character.';
+  }
+  return null;
+}
+
 function generateOtpCode() {
   return String(randomInt(0, 1000000)).padStart(6, '0');
 }
@@ -81,8 +97,16 @@ router.post('/register', async (req, res) => {
   if (!first_name || !email || !password) {
     return res.status(400).json({ error: 'first_name, email, and password are required.' });
   }
-  if (password.length < 8) {
-    return res.status(400).json({ error: 'Password must be at least 8 characters.' });
+  if (typeof first_name !== 'string' || !first_name.trim() || first_name.length > 100 ||
+      (last_name != null && (typeof last_name !== 'string' || last_name.length > 100))) {
+    return res.status(400).json({ error: 'Please enter a valid name.' });
+  }
+  if (typeof email !== 'string' || email.length > 254 || !EMAIL_PATTERN.test(email.trim())) {
+    return res.status(400).json({ error: 'Please enter a valid email address.' });
+  }
+  const problem = passwordProblem(password);
+  if (problem) {
+    return res.status(400).json({ error: problem });
   }
 
   /* Laging 'Free' ang bagong account, at hindi na binabasa ang
@@ -567,8 +591,9 @@ router.post('/reset-password', async (req, res) => {
   if (!email || !code || !newPassword) {
     return res.status(400).json({ error: 'Email, code, and new password are required.' });
   }
-  if (newPassword.length < 8) {
-    return res.status(400).json({ error: 'Password must be at least 8 characters.' });
+  const problem = passwordProblem(newPassword);
+  if (problem) {
+    return res.status(400).json({ error: problem });
   }
 
   try {
