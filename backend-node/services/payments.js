@@ -47,43 +47,61 @@ async function settle(userId, transaction) {
     return { granted: false, status: transaction.status, reason: 'amount_mismatch' };
   }
 
-  const [update] = await pool.query(
-    `UPDATE payment_transaction
-        SET status = 'paid',
-            paid_at = NOW(),
-            provider_payment_id = ?,
-            payment_method = ?,
-            livemode = ?
-      WHERE transaction_id = ? AND user_id = ? AND status = 'pending'`,
-    [
-      session.paymentId,
-      session.paymentMethod,
-      session.livemode ? 1 : 0,
-      transaction.transaction_id,
-      userId,
-    ]
-  );
-
-  // Naunahan na tayo ng ibang request (dalawang tab, halimbawa). Bayad pa
-  // rin siya, pero hindi na natin uulitin yung pagdagdag ng araw.
-  if (update.affectedRows === 0) {
-    return { granted: false, status: 'paid', reason: 'already_settled' };
-  }
-
   const plan = config.payment.prices[transaction.billing_period];
 
-  /* Mula sa mas huli sa dalawa: ngayon, o yung dati niyang expiry. Kaya
-     kung mag-renew siya bago pa mag-expire, nadadagdagan -- hindi
-     nawawala -- yung natitira niyang araw. */
-  await pool.query(
-    `UPDATE user
-        SET subscription_type = 'Premium',
-            subscription_status = 'active',
-            subscription_expires_at =
-              DATE_ADD(GREATEST(NOW(), COALESCE(subscription_expires_at, NOW())), INTERVAL ? DAY)
-      WHERE user_id = ?`,
-    [plan.days, userId]
-  );
+  /* Isang database transaction para sa dalawang UPDATE: kapag pumalya ang
+     pangalawa (hal. naputol ang koneksyon), binabawi rin ang una. Kaya
+     hindi kailanman magiging "paid" ang bayad habang Free pa ang account;
+     nananatiling 'pending' at susubukan ulit sa susunod na pag-load ng
+     account (reconcilePending). */
+  const connection = await pool.getConnection();
+  try {
+    await connection.beginTransaction();
+
+    const [update] = await connection.query(
+      `UPDATE payment_transaction
+          SET status = 'paid',
+              paid_at = NOW(),
+              provider_payment_id = ?,
+              payment_method = ?,
+              livemode = ?
+        WHERE transaction_id = ? AND user_id = ? AND status = 'pending'`,
+      [
+        session.paymentId,
+        session.paymentMethod,
+        session.livemode ? 1 : 0,
+        transaction.transaction_id,
+        userId,
+      ]
+    );
+
+    // Naunahan na tayo ng ibang request (dalawang tab, halimbawa). Bayad pa
+    // rin siya, pero hindi na natin uulitin yung pagdagdag ng araw.
+    if (update.affectedRows === 0) {
+      await connection.rollback();
+      return { granted: false, status: 'paid', reason: 'already_settled' };
+    }
+
+    /* Mula sa mas huli sa dalawa: ngayon, o yung dati niyang expiry. Kaya
+       kung mag-renew siya bago pa mag-expire, nadadagdagan -- hindi
+       nawawala -- yung natitira niyang araw. */
+    await connection.query(
+      `UPDATE user
+          SET subscription_type = 'Premium',
+              subscription_status = 'active',
+              subscription_expires_at =
+                DATE_ADD(GREATEST(NOW(), COALESCE(subscription_expires_at, NOW())), INTERVAL ? DAY)
+        WHERE user_id = ?`,
+      [plan.days, userId]
+    );
+
+    await connection.commit();
+  } catch (err) {
+    await connection.rollback().catch(() => {});
+    throw err;
+  } finally {
+    connection.release();
+  }
 
   return { granted: true, status: 'paid', reason: null };
 }
