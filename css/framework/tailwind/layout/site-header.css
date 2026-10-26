@@ -182,4 +182,138 @@
   .nav-admin-brand {
     @apply text-[17px] font-bold tracking-[0.02em] text-white;
   }
+
+  /* =========================
+     Menu sa maliit na screen (naka-login)
+     Sa ilalim ng 1180px, 3 hanggang 4 na hanay ang header kapag naka-login
+     (173px sa telepono). Ngayon isang hanay: Menu, dark mode at ang badge.
+     Nasa Menu ang mga link, search, pangalan at Log out.
+     ========================= */
+  .nav-menu-toggle {
+    @apply hidden h-10 px-3 items-center gap-2 rounded-lg border text-[15px] font-semibold text-white cursor-pointer;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  .nav-menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.20);
+  }
+
+  .nav-menu-icon {
+    @apply relative inline-block w-[18px] h-[14px];
+  }
+
+  .nav-menu-icon::before,
+  .nav-menu-icon::after,
+  .nav-menu-icon > span {
+    content: '';
+    @apply absolute left-0 w-full h-[2px] rounded-full bg-current;
+    transition: transform 0.15s ease, opacity 0.15s ease, top 0.15s ease;
+  }
+
+  .nav-menu-icon::before { top: 0; }
+  .nav-menu-icon > span { top: 6px; }
+  .nav-menu-icon::after { top: 12px; }
+
+  .nav-menu-icon.is-open::before { top: 6px; transform: rotate(45deg); }
+  .nav-menu-icon.is-open > span { opacity: 0; }
+  .nav-menu-icon.is-open::after { top: 6px; transform: rotate(-45deg); }
+
+  .nav-menu-panel {
+    @apply border-t px-[22px] py-4 max-[620px]:px-3;
+    border-color: rgba(255, 255, 255, 0.12);
+    background: var(--navy);
+  }
+
+  .nav-menu-links {
+    @apply flex flex-col;
+  }
+
+  .nav-menu-link {
+    @apply block py-2.5 px-2 rounded-lg text-[16px] font-medium text-white/85;
+  }
+
+  .nav-menu-link:hover,
+  .nav-menu-link:focus-visible {
+    @apply bg-white/10 text-white;
+  }
+
+  .nav-menu-link.router-link-exact-active {
+    @apply text-white font-bold;
+    box-shadow: inset 3px 0 0 var(--orange);
+  }
+
+  .nav-menu-search {
+    @apply relative mt-3;
+  }
+
+  .nav-menu-search input {
+    @apply w-full h-11 px-4 border rounded-lg text-[16px] outline-none bg-white/10 text-white placeholder:text-white/60;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .nav-menu-search-results {
+    @apply mt-2 flex flex-col;
+  }
+
+  .nav-menu-search-results .search-no-results {
+    @apply text-white/70;
+  }
+
+  .nav-menu-account {
+    @apply mt-4 pt-4 border-t flex flex-wrap items-center justify-between gap-3 text-white;
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .nav-menu-user {
+    @apply inline-flex flex-wrap items-center gap-1.5 text-[15px] min-w-0;
+  }
+
+  .nav-menu-user strong {
+    @apply max-w-[20ch] truncate;
+  }
+
+  .nav-menu-user .ui-icon {
+    @apply w-5 h-5;
+    color: var(--orange);
+  }
+
+  .nav-menu-role {
+    @apply ml-1 py-0.5 px-2 rounded-full border text-[12px] font-semibold;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Kapag sinukat ng SiteHeader.js na hindi kasya ang buong header. */
+  .navbar.navbar-compact {
+    @apply flex-nowrap gap-x-3 py-3;
+  }
+
+  .navbar-compact .nav-menu-toggle {
+    @apply inline-flex shrink-0;
+  }
+
+  .navbar-compact .nav-left .nav-link,
+  .navbar-compact .nav-premium-divider,
+  .navbar-compact .search-box,
+  .navbar-compact .dashboard-user-area,
+  .navbar-compact .dashboard-admin-badge,
+  .navbar-compact .btn-logout {
+    display: none;
+  }
+
+  .navbar-compact .nav-left {
+    @apply order-none w-auto min-w-0 shrink;
+  }
+
+  .navbar-compact .nav-admin-brand {
+    @apply truncate;
+  }
+
+  .navbar-compact .nav-right {
+    @apply order-none w-auto flex-nowrap gap-2.5;
+  }
+
+  .nav-menu-panel {
+    @apply block;
+  }
 }
