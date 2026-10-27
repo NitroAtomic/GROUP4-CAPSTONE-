@@ -14,7 +14,7 @@
       "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Pretexting relies heavily on human psychological traits like helpfulness, politeness, and respect for authority.",
+      "questionText": "A pretext may use a believable identity or story and rely on trust, empathy, or authority to persuade someone.",
       "options": [
         {
           "value": "a",
@@ -25,7 +25,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Attackers exploit natural human social tendencies to manipulate targets."
+      "explanation": "The lesson says believable stories and personas can exploit trust, empathy, authority, and urgency to gain cooperation."
     },
     {
       "id": 2,
@@ -64,7 +64,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What structural control prevents pretexting attempts from compromising internal resources?",
+      "questionText": "How do identity verification and documented procedures help reduce the risk of pretexting?",
       "options": [
         {
           "value": "a",
@@ -72,7 +72,7 @@
         },
         {
           "value": "b",
-          "text": "Enforcing strict adherence to official identity verification and ticketing channels."
+          "text": "They add checks that help confirm identity, authorization, and whether a request follows approved procedures."
         },
         {
           "value": "c",
@@ -83,36 +83,36 @@
           "text": "Disabling all antivirus software."
         }
       ],
-      "explanation": "Formal channels and strict verification neutralize pretexting narratives."
+      "explanation": "The lesson teaches that verification and approved channels add checks that help protect confidential information; they do not guarantee that every pretext will be prevented."
     },
     {
       "id": 4,
       "category": "medium",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "How does pretexting differ from mass phishing?",
+      "questionText": "What distinguishes a pretext from a direct request that simply asks for information or access?",
       "options": [
         {
           "value": "a",
-          "text": "Pretexting uses malicious email attachments exclusively."
+          "text": "A pretext uses a believable identity or story to gain trust before requesting information or access."
         },
         {
           "value": "b",
-          "text": "Pretexting focuses on building a credible narrative and relationship, whereas mass phishing relies on broad, generic lures."
+          "text": "A pretext is always sent to many people in a generic message."
         },
         {
           "value": "c",
-          "text": "Mass phishing only targets phone landlines."
+          "text": "A pretext is trustworthy whenever the person knows a coworker's name."
         },
         {
           "value": "d",
-          "text": "Pretexting is legally permitted in business."
+          "text": "A pretext can only happen in a face-to-face conversation."
         }
       ],
-      "explanation": "Pretexting prioritizes narrative depth and trust over volume."
+      "explanation": "The lesson defines pretexting as using a false identity or convincing story to gain trust and obtain information or access."
     },
     {
       "id": 5,
@@ -122,26 +122,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What role does flattery play in pretexting interactions?",
+      "questionText": "How can an invented identity or story help a pretexter?",
       "options": [
         {
           "value": "a",
-          "text": "It encrypts the user's hard drive."
+          "text": "It proves the caller's identity without requiring verification"
         },
         {
           "value": "b",
-          "text": "It lowers the victim's defenses by making them feel valued and eager to assist."
+          "text": "It can make the request seem believable and help the attacker gain trust"
         },
         {
           "value": "c",
-          "text": "It speeds up internet connection bandwidth."
+          "text": "It confirms that a manager approved the request"
         },
         {
           "value": "d",
-          "text": "It triggers automated firewall logging."
+          "text": "It removes the need to follow the documented approval process"
         }
       ],
-      "explanation": "Flattery creates positive rapport, encouraging the target to comply with requests."
+      "explanation": "The lesson explains that a false identity or believable story can gain trust before an attacker asks for sensitive information or access."
     },
     {
       "id": 6,
@@ -155,32 +155,32 @@
       "options": [
         {
           "value": "a",
-          "text": "IT tickets cost money to create."
+          "text": "A formal request is slower than sending a message"
         },
         {
           "value": "b",
-          "text": "Official tickets trigger administrative logs and security reviews that would expose the fake identity."
+          "text": "Skipping the established process may bypass identity checks and documented approval"
         },
         {
           "value": "c",
-          "text": "IT ticketing systems automatically block phone calls."
+          "text": "A vendor is never allowed to submit an IT request"
         },
         {
           "value": "d",
-          "text": "Scammers prefer using postal mail."
+          "text": "The request is automatically safe if it sounds urgent"
         }
       ],
-      "explanation": "Formal ticketing creates an audit trail that alerts legitimate security personnel."
+      "explanation": "The lesson says urgency does not replace identity checks or documented approval; use the established process or an authorized exception path."
     },
     {
       "id": 7,
       "category": "hard",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Pretexters never target remote workers who do not have executive titles.",
+      "questionText": "The lesson's examples include remote administrators and workers handling HR, customer, or vendor information, not only executives.",
       "options": [
         {
           "value": "a",
@@ -191,7 +191,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Administrative assistants, support staff, and contractors are frequently targeted for their access to directory data and internal processes."
+      "explanation": "The lesson identifies remote workers handling administrative data, HR workflows, customer records, and vendor management as its audience."
     },
     {
       "id": 8,
@@ -201,7 +201,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "You receive a message from a \"new vendor\" asking for internal directory structures so they can \"prepare project integration.\" You have not received any notification from management about a new vendor. What is the correct protocol?",
+      "questionText": "A new vendor asks for a sample customer export to test its system, but Procurement has not confirmed the contract. What should you do?",
       "options": [
         {
           "value": "a",
@@ -209,7 +209,7 @@
         },
         {
           "value": "b",
-          "text": "Do not share internal data; verify the vendor's onboarding status with your internal manager or procurement team."
+          "text": "Do not send records; confirm the contract and approved data-sharing scope with Procurement before sharing anything."
         },
         {
           "value": "c",
@@ -220,7 +220,7 @@
           "text": "Send them dummy data containing real employee passwords."
         }
       ],
-      "explanation": "Unverified third parties must be vetted through management before receiving internal assets."
+      "explanation": "The lesson's new-vendor example says to confirm the contract and approved data-sharing scope because even sample files may contain sensitive information."
     },
     {
       "id": 9,
@@ -251,26 +251,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "A remote worker receives a call from an individual claiming to be a printer technician needing internal Wi-Fi passwords to fix an office printer 500 miles away. Why is this request suspicious?",
+      "questionText": "A WhatsApp message from a new number claims to be a coworker who lost a phone and urgently asks you to forward a customer spreadsheet. What should you do?",
       "options": [
         {
           "value": "a",
-          "text": "Printers do not use electricity."
+          "text": "Send the spreadsheet immediately because the coworker says it is urgent"
         },
         {
           "value": "b",
-          "text": "The scenario lacks logical plausibility, and Wi-Fi credentials should never be shared verbally with external technicians."
+          "text": "Verify the person's identity through established work channels before sharing any records"
         },
         {
           "value": "c",
-          "text": "Technicians only speak French."
+          "text": "Ask the new number to repeat the coworker's name before sending the spreadsheet"
         },
         {
           "value": "d",
-          "text": "Wi-Fi passwords cannot be typed on laptops."
+          "text": "Forward the spreadsheet to a personal address supplied by the new number"
         }
       ],
-      "explanation": "Evaluating the logical plausibility of a request helps spot flawed pretexts."
+      "explanation": "The lesson's coworker example uses an unknown WhatsApp number and a request for customer records; verify the person's identity through established work channels before sharing records."
     },
     {
       "id": 11,
@@ -330,26 +330,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Someone claiming to be an \"External ISO Auditor\" contacts a remote worker asking for a complete list of internal server IP addresses. The caller says opening an IT ticket will take too long. What should the worker do?",
+      "questionText": "An external auditor asks for an employee directory or software inventory and says an IT ticket will take too long. What should the worker do?",
       "options": [
         {
           "value": "a",
-          "text": "Email the server IP list immediately."
+          "text": "Send the requested information because the caller claims to be an auditor"
         },
         {
           "value": "b",
-          "text": "Insist on routing the request through official internal ticketing and manager approval channels."
+          "text": "Verify the auditor's identity and route the request through the approved internal process"
         },
         {
           "value": "c",
-          "text": "Post the server IP addresses on social media."
+          "text": "Send a small sample first and verify the request afterward"
         },
         {
           "value": "d",
-          "text": "Give the auditor their home Wi-Fi password."
+          "text": "Use a personal email address to avoid delaying the request"
         }
       ],
-      "explanation": "Never bypass formal verification and ticketing procedures for external inquiries."
+      "explanation": "The lesson's process-bypass guidance says to verify identity and authorization and not skip documented approval for an external request."
     },
     {
       "id": 14,
@@ -370,7 +370,7 @@
         },
         {
           "value": "b",
-          "text": "A distressed remote contractor needing file access due to an \"emergency.\""
+          "text": "A new vendor asking for a sample customer-record export before Procurement confirms the contract."
         },
         {
           "value": "c",
@@ -381,7 +381,7 @@
           "text": "A physical hardware firewall appliance."
         }
       ],
-      "explanation": "Pretexters assume roles that invoke authority (auditor) or empathy (distressed colleague)."
+      "explanation": "The lesson describes an external auditor requesting an employee directory and software inventory, and a new-vendor persona requesting a sample customer export before Procurement confirms the contract."
     },
     {
       "id": 15,
@@ -391,7 +391,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "A pretexter will never use public information from LinkedIn to build their fake story.",
+      "questionText": "A LinkedIn message claims to be from HR and uses a plausible job title. Does that alone prove the sender is genuine?",
       "options": [
         {
           "value": "a",
@@ -402,7 +402,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Pretexters extensively use OSINT from LinkedIn and company sites to make their scenarios believable."
+      "explanation": "The lesson's fictional LinkedIn HR example shows that a plausible title and friendly conversation do not verify identity or authorization."
     },
     {
       "id": 16,
@@ -412,7 +412,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What term describes an attacker engaging a victim in casual conversation over several days to establish a sense of normal friendship before executing a scam?",
+      "questionText": "A pretext begins with casual conversation over several days before the attacker makes an unusual request. What is the attacker building during that time?",
       "options": [
         {
           "value": "a",
@@ -420,7 +420,7 @@
         },
         {
           "value": "b",
-          "text": "Trust-Building / Slow-Burn Pretexting"
+          "text": "Credibility and trust through a plausible persona and story"
         },
         {
           "value": "c",
@@ -431,7 +431,7 @@
           "text": "Zero-Day Exploit"
         }
       ],
-      "explanation": "Slow-burn pretexting grooms the victim over time to lower security vigilance."
+      "explanation": "The lesson explains that a pretext can build trust over time or unfold across days, but a friendly tone does not establish authorization."
     },
     {
       "id": 17,
@@ -502,26 +502,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What should you do if an external party claiming to be an auditor asks for employee home addresses?",
+      "questionText": "An external auditor asks for employee home addresses. What should you do?",
       "options": [
         {
           "value": "a",
-          "text": "Send the addresses in a plain text file."
+          "text": "Send the addresses after the auditor repeats the request"
         },
         {
           "value": "b",
-          "text": "Refuse and escalate the inquiry to your company's official legal or HR department."
+          "text": "Do not provide them; verify the request through a known HR contact and follow the approved process"
         },
         {
           "value": "c",
-          "text": "Ask for $10 per address."
+          "text": "Remove employee names but send the addresses to the external contact"
         },
         {
           "value": "d",
-          "text": "Guess the addresses and send random data."
+          "text": "Ask the auditor to confirm approval through the same message thread"
         }
       ],
-      "explanation": "Personally Identifiable Information (PII) disclosures must be handled exclusively by authorized departments."
+      "explanation": "The lesson treats employee records as sensitive and directs workers to verify requests through established HR and approval channels."
     },
     {
       "id": 20,
@@ -531,7 +531,7 @@
       "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Pretexting can occur over email, phone calls, social media, or messaging apps.",
+      "questionText": "The lesson demonstrates pretexts through a LinkedIn HR message, a work-chat vendor request, and a WhatsApp coworker message.",
       "options": [
         {
           "value": "a",
@@ -542,7 +542,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Pretexting is medium-agnostic and occurs across any communication channel."
+      "explanation": "Those examples show that an invented identity or story can appear in more than one communication channel; verify the person and their authorization."
     }
   ]
 }

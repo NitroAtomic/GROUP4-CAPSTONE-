@@ -123,10 +123,10 @@
       "category": "medium",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Spear phishers only target executives; entry-level remote contractors are never targeted because they lack system permissions.",
+      "questionText": "Spear phishing can target remote staff based on their system access, administrative privileges, financial responsibilities, or public profile; it is not limited to executives.",
       "options": [
         {
           "value": "a",
@@ -137,7 +137,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Entry-level contractors are frequently targeted as initial access points to pivot deeper into enterprise networks or harvest credentials."
+      "explanation": "The lesson identifies remote staff with system access, administrative privileges, financial responsibilities, or public profiles as its audience."
     },
     {
       "id": 6,
@@ -147,7 +147,7 @@
       "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "You've been posting detailed updates about your work travel, conference attendance, and current projects on your public social media accounts. Does reducing this kind of detailed operational information lower your exposure to OSINT reconnaissance used in spear phishing?",
+      "questionText": "Public details on LinkedIn, GitHub, or social media can be combined to personalize a spear-phishing lure.",
       "options": [
         {
           "value": "a",
@@ -158,7 +158,7 @@
           "text": "False"
         }
       ],
-      "explanation": "True. Practicing digital footprint hygiene limits the intelligence attackers can use to build spear phishing lures."
+      "explanation": "The lesson explains that attackers combine publicly available profile, project, and social-media details to make a lure more personal."
     },
     {
       "id": 7,
@@ -172,22 +172,22 @@
       "options": [
         {
           "value": "a",
-          "text": "Click the link and enter your Social Security Number."
+          "text": "Follow the link after checking that the message mentions HR."
         },
         {
           "value": "b",
-          "text": "Hover over the link, identify the external domain, do not click, and report it to security/HR."
+          "text": "Do not click; verify the request with HR through a known work contact or official channel, then report it."
         },
         {
           "value": "c",
-          "text": "Email your password to HR to check for you."
+          "text": "Reply and ask the sender to confirm your employee ID before using the link."
         },
         {
           "value": "d",
-          "text": "Ignore all future HR emails forever."
+          "text": "Forward the link to a coworker and ask them to test it."
         }
       ],
-      "explanation": "Identifying external, non-company domain names by hovering over links helps detect phishing portals before entering credentials."
+      "explanation": "The lesson recommends verifying unusual requests independently through a trusted contact method rather than relying on a message link."
     },
     {
       "id": 8,
@@ -218,26 +218,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What step should you take before opening a password-protected .zip file from an external party?",
+      "questionText": "What should you do before opening an unexpected password-protected archive from an external party?",
       "options": [
         {
           "value": "a",
-          "text": "Open it on a personal device to protect work systems."
+          "text": "Open it on a personal device because the archive came from an external party."
         },
         {
           "value": "b",
-          "text": "Verify the source out-of-band and inspect unzipped contents in an isolated environment or sandbox."
+          "text": "Confirm the request through a trusted contact method before opening or extracting the archive."
         },
         {
           "value": "c",
-          "text": "Forward the password to your bank."
+          "text": "Ask the sender for the password in the same message thread, then extract the files."
         },
         {
           "value": "d",
-          "text": "Disable your endpoint firewall."
+          "text": "Extract a copy of the archive before verifying who sent it."
         }
       ],
-      "explanation": "Verifying the source through another channel and inspecting files securely prevents payload execution."
+      "explanation": "The lesson warns that password-protected archives may be difficult for scanners to inspect and says to confirm unexpected requests before opening attachments."
     },
     {
       "id": 10,
@@ -255,7 +255,7 @@
         },
         {
           "value": "b",
-          "text": "Programming languages used, active repositories, and collaborator usernames"
+          "text": "Public projects, repositories, programming frameworks, and technologies"
         },
         {
           "value": "c",
@@ -266,7 +266,7 @@
           "text": "Your credit card PIN"
         }
       ],
-      "explanation": "Public GitHub repositories display technical environments, active projects, and peer collaborators."
+      "explanation": "The lesson's GitHub example covers public projects, repositories, programming frameworks, and technologies."
     },
     {
       "id": 11,
@@ -355,7 +355,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Spear phishing attempts only target executive leadership (CEOs/CFOs), never entry-level remote contractors or virtual assistants.",
+      "questionText": "A message that mentions a real project or travel detail is safe to trust because the detail is accurate.",
       "options": [
         {
           "value": "a",
@@ -366,7 +366,7 @@
           "text": "False"
         }
       ],
-      "explanation": "False. Attackers regularly target contractors, virtual assistants, and junior personnel as initial footholds to access corporate networks or facilitate payment fraud."
+      "explanation": "Public information can make a spear-phishing lure convincing. The lesson advises verifying unusual requests using a trusted contact method."
     },
     {
       "id": 15,
@@ -375,31 +375,30 @@
       "answerType": "multiple",
       "correctAnswer": [
         "a",
-        "b",
         "d"
       ],
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What operating system settings and user habits help defend against weaponized spear phishing attachments? (Select ALL that apply)",
+      "questionText": "Which practices match the attachment-safety guidance taught in this lesson? (Select ALL that apply)",
       "options": [
         {
           "value": "a",
-          "text": "Disabling \"Hide extensions for known file types\" in OS file settings"
+          "text": "Check the full filename and watch for a double extension such as report.pdf.exe"
         },
         {
           "value": "b",
-          "text": "Keeping Microsoft Office \"Block macros from running in Office files from the Internet\" enabled"
+          "text": "Enable unexpected macros so you can inspect the document content"
         },
         {
           "value": "c",
-          "text": "Always opening untrusted email attachments using Administrator rights"
+          "text": "Run an unexpected attachment with administrator privileges to see what it contains"
         },
         {
           "value": "d",
-          "text": "Verifying unexpected file transfers with the sender via an independent communication channel"
+          "text": "Do not enable unexpected macros, and verify an unexpected file transfer with the sender through a trusted channel"
         }
       ],
-      "explanation": "Revealing full file extensions, blocking Office macros, and out-of-band verification mitigate attachment risks. Running untrusted files as Administrator increases security risks."
+      "explanation": "The lesson warns about disguised double extensions and unexpected macros and recommends confirming unexpected files through a trusted channel."
     },
     {
       "id": 16,
@@ -430,26 +429,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What technical feature makes MITRE ATT&CK Technique T1566.001 particularly dangerous to enterprise endpoint security?",
+      "questionText": "An unexpected attachment asks you to enable macros before you can read it. What should you do?",
       "options": [
         {
           "value": "a",
-          "text": "It uses physical USB drives dropped in parking lots"
+          "text": "Enable the macros because the document says they are required"
         },
         {
           "value": "b",
-          "text": "It relies on user execution of attached files to run malware inside the local user environment"
+          "text": "Do not enable them; verify the request with the sender through a trusted contact method"
         },
         {
           "value": "c",
-          "text": "It automatically changes home router DNS addresses without user interaction"
+          "text": "Forward the file to a personal account and open it there"
         },
         {
           "value": "d",
-          "text": "It turns off laptop Wi-Fi adapters permanently"
+          "text": "Rename the attachment and open it without checking with the sender"
         }
       ],
-      "explanation": "Technique T1566.001 relies on social engineering to trick the user into executing malicious attachments locally."
+      "explanation": "The lesson says not to enable unexpected macros and to confirm an unexpected attachment with the sender before opening it."
     },
     {
       "id": 18,
@@ -457,31 +456,31 @@
       "questionType": "standard",
       "answerType": "multiple",
       "correctAnswer": [
-        "b",
-        "c"
+        "a",
+        "b"
       ],
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Which of the following indicate that a project brief attachment might be a spear-phishing payload? *(Select TWO)*",
+      "questionText": "Which attachment clues match risks taught in this lesson? (Select TWO)",
       "options": [
         {
           "value": "a",
-          "text": "The attachment is a .pdf file under 500 KB."
+          "text": "The filename ends in .pdf.exe, making an executable look like a PDF"
         },
         {
           "value": "b",
-          "text": "The attachment is an .xlsm file requiring macro activation to view text."
+          "text": "An .xlsm document asks you to enable macros before viewing its contents"
         },
         {
           "value": "c",
-          "text": "The file name ends in .docx.iso."
+          "text": "The file is a plain PDF and does not ask you to take an unexpected action"
         },
         {
           "value": "d",
-          "text": "The file was downloaded directly from the company's official Google Drive."
+          "text": "The sender is verified and the file is confirmed through an approved company channel"
         }
       ],
-      "explanation": "Macro-enabled files (.xlsm) and disk image archives (.iso) disguised as documents are common malicious delivery formats."
+      "explanation": "The lesson specifically warns about disguised double extensions and unexpected macro-enabled Office files."
     },
     {
       "id": 19,
@@ -491,26 +490,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "A freelancer receives a high-paying offer on Upwork. The client insists on sending an .iso file containing \"project assets\" before contract signing. Why is this suspicious?",
+      "questionText": "A freelancer receives an unexpected file named Project_Brief.pdf.exe and is urged to open it immediately. What makes this attachment suspicious?",
       "options": [
         {
           "value": "a",
-          "text": ".iso files are standard image files that cannot contain text."
+          "text": "The familiar project wording proves it came from an approved client folder"
         },
         {
           "value": "b",
-          "text": "An .iso file is a disk image that can bypass basic scanner checks and mount an executable drive on Windows/Mac."
+          "text": "The final .exe extension indicates it is an executable, so do not open it before verifying the request"
         },
         {
           "value": "c",
-          "text": "Freelancers are legally prohibited from receiving .iso files."
+          "text": "The file is suspicious only because it is being sent to a freelancer"
         },
         {
           "value": "d",
-          "text": ".iso files automatically delete the operating system upon opening."
+          "text": "Changing its filename would remove the executable content"
         }
       ],
-      "explanation": "ISO files are container formats used by attackers to deliver malware while evading basic security filters."
+      "explanation": "The lesson uses names such as report.pdf.exe to show how a double extension can disguise an executable as a document."
     },
     {
       "id": 20,
@@ -520,26 +519,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What term describes altering sender details so an email appears to come from a legitimate internal colleague?",
+      "questionText": "An email claims to be from HR, but its sender address uses an unrelated external domain. What should you do?",
       "options": [
         {
           "value": "a",
-          "text": "Port forwarding"
+          "text": "Trust the message because its display name matches the HR department"
         },
         {
           "value": "b",
-          "text": "Email Header Spoofing"
+          "text": "Do not follow the link; verify the request through a known HR contact or official work channel"
         },
         {
           "value": "c",
-          "text": "Hard drive partitioning"
+          "text": "Reply to the message and ask the sender to repeat your employee details"
         },
         {
           "value": "d",
-          "text": "Disk defragmentation"
+          "text": "Open the link in a private browser window before deciding whether it is genuine"
         }
       ],
-      "explanation": "Email spoofing manipulates header fields (From:) to impersonate legitimate contacts."
+      "explanation": "The lesson teaches independent verification of unusual requests and warns that a message's apparent identity does not make its request trustworthy."
     }
   ]
 }

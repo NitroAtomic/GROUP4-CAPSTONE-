@@ -43,7 +43,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "You get an unsolicited promotional text from an unknown sender and reply \"STOP,\" expecting to be removed from their list. Will this safely unsubscribe you from a smishing scammer's messages?",
+      "questionText": "You receive an unexpected text in a familiar bank-message thread. Does the existing thread or familiar sender ID prove that the new text is genuine?",
       "options": [
         {
           "value": "a",
@@ -54,7 +54,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Replying to a scam text confirms to the attacker that your phone number is active, leading to more targeted attacks."
+      "explanation": "Sender IDs can be spoofed, including in an existing message thread. Verify an unexpected request using the bank's official app, website, or published phone number."
     },
     {
       "id": 3,
@@ -119,10 +119,10 @@
       "category": "medium",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Legitimate banks routinely send text messages asking customers to directly text back their full PIN or password.",
+      "questionText": "You should never send a one-time verification code to someone who asks for it in a text message.",
       "options": [
         {
           "value": "a",
@@ -133,7 +133,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Financial institutions explicitly prohibit requesting sensitive passwords, PINs, or OTPs via text."
+      "explanation": "The lesson says verification codes protect accounts and should not be shared with someone who asks for them."
     },
     {
       "id": 6,
@@ -172,26 +172,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "You receive a WhatsApp text from an unknown international number displaying your company logo: \"Hi, I am John from Corporate IT. We are updating mobile profiles. Click this link to install our security certificate.\" How should you respond?",
+      "questionText": "An unknown WhatsApp contact claims to be from your company's IT team and sends an unexpected work-access link. How should you respond?",
       "options": [
         {
           "value": "a",
-          "text": "Install the certificate immediately."
+          "text": "Install it immediately because the message displays the company logo"
         },
         {
           "value": "b",
-          "text": "Ignore and report the WhatsApp message; IT does not deploy security certificates via unsolicited WhatsApp texts."
+          "text": "Do not follow the link; verify the request through a known work contact and report the message"
         },
         {
           "value": "c",
-          "text": "Send the sender your personal national ID card."
+          "text": "Reply and ask the sender to send a second link that looks more familiar"
         },
         {
           "value": "d",
-          "text": "Ask the sender to call your personal home phone."
+          "text": "Call a number supplied in the unexpected message to confirm the request"
         }
       ],
-      "explanation": "Corporate IT security profiles are deployed through formal Mobile Device Management (MDM) tools, never random instant messages."
+      "explanation": "The lesson advises verifying unexpected work-access messages through known work channels instead of following unsolicited links."
     },
     {
       "id": 8,
@@ -201,7 +201,7 @@
       "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Advanced smishing kits can deploy mobile malware that automatically reads incoming SMS verification codes and forwards them to a remote C2 server.",
+      "questionText": "An attacker may trigger a real one-time code and then send a text asking you to share that code.",
       "options": [
         {
           "value": "a",
@@ -212,7 +212,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Malicious mobile applications (e.g., infected APKs) can request SMS permissions to intercept and exfiltrate OTPs."
+      "explanation": "The lesson's OTP-grab example explains that an attacker can trigger a real code and then ask the recipient to send it."
     },
     {
       "id": 9,
@@ -337,11 +337,11 @@
       "options": [
         {
           "value": "a",
-          "text": "An SMS prompting you to click a link to claim an unexpected lottery prize."
+          "text": "A text says a package cannot be delivered and asks you to follow a shortened link to update your address."
         },
         {
           "value": "b",
-          "text": "A text from your official IT desk asking you to reply with a 6-digit MFA login code."
+          "text": "A text claiming to be from the IT desk asks you to reply with a 6-digit MFA code."
         },
         {
           "value": "c",
@@ -352,7 +352,7 @@
           "text": "An internal Slack message from a verified colleague."
         }
       ],
-      "explanation": "Unsolicited prize claims and requests to text back MFA tokens are key smishing indicators."
+      "explanation": "The lesson shows a fake parcel-delivery text with a shortened link and warns never to share an MFA code requested by text."
     },
     {
       "id": 14,
@@ -438,29 +438,29 @@
       "category": "hard",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "a",
+      "correctAnswer": "c",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Which mobile security practice best protects against smishing attacks seeking to compromise work accounts?",
+      "questionText": "What should you do if a text asks you to provide a one-time code for a work account?",
       "options": [
         {
           "value": "a",
-          "text": "Transitioning from SMS-based MFA to mobile authenticator apps (TOTP) or hardware keys."
+          "text": "Reply only if the text displays your company's logo"
         },
         {
           "value": "b",
-          "text": "Disabling screen auto-lock."
+          "text": "Open the link in the message to check whether the request is real"
         },
         {
           "value": "c",
-          "text": "Saving all passwords in plain text notes on the phone."
+          "text": "Do not share the code; verify the request through an official app or known work channel"
         },
         {
           "value": "d",
-          "text": "Connecting to open public Wi-Fi networks without encryption."
+          "text": "Forward the code to a coworker to check whether it is valid"
         }
       ],
-      "explanation": "Authenticator apps generate time-based codes locally, rendering SMS interception attacks useless."
+      "explanation": "The lesson warns not to share one-time codes and recommends checking unexpected work-account requests through trusted channels."
     },
     {
       "id": 18,
@@ -489,7 +489,7 @@
           "text": "Text the number back asking for the caller's name."
         }
       ],
-      "explanation": "Phone numbers in smishing texts often lead directly to vishing agents; always use official contact numbers."
+      "explanation": "The lesson recommends verifying a bank alert through a published number or the bank's official site rather than relying on contact details in an unexpected text."
     },
     {
       "id": 19,
@@ -502,11 +502,11 @@
       ],
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Why do attackers target mobile devices rather than desktop computers in smishing campaigns? *(Select TWO)*",
+      "questionText": "Which TWO risks can make a smishing link harder to assess on a personal phone than on a company-managed laptop?",
       "options": [
         {
           "value": "a",
-          "text": "Mobile devices generally lack enterprise web filters and EDR protection."
+          "text": "Personal phones may not have the same web filtering or endpoint protection as company-managed laptops."
         },
         {
           "value": "b",
@@ -514,14 +514,14 @@
         },
         {
           "value": "c",
-          "text": "Users tend to respond faster to SMS notifications due to habitual mobile phone checking."
+          "text": "Small screens or in-app browsers can make the actual link destination harder to inspect."
         },
         {
           "value": "d",
           "text": "SMS messages are encrypted with zero-trust protocols by default."
         }
       ],
-      "explanation": "Mobile devices combine rapid user response habits with weaker endpoint monitoring compared to managed corporate desktops."
+      "explanation": "The lesson notes that personal phones may have less web filtering or endpoint protection, and that small screens or in-app browsers can make destinations harder to inspect."
     },
     {
       "id": 20,

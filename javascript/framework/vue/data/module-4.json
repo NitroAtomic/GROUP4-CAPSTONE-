@@ -11,10 +11,10 @@
       "category": "easy",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Caller ID information displayed on a smartphone screen can be easily spoofed by attackers using web VoIP services.",
+      "questionText": "A caller can make a call display a different name or number from their actual identity.",
       "options": [
         {
           "value": "a",
@@ -25,7 +25,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Caller ID metadata can be modified by outbound VoIP gateways to show fake names and numbers."
+      "explanation": "The lesson explains that caller ID can display a familiar name or number even when the caller is an impostor."
     },
     {
       "id": 2,
@@ -85,26 +85,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "While on a call with someone claiming to be from IT, you accidentally approve a fraudulent MFA push prompt they triggered. What should you do next?",
+      "questionText": "While on a call with someone claiming to be from IT, you accidentally approve an MFA prompt they triggered. What should you do next?",
       "options": [
         {
           "value": "a",
-          "text": "Keep quiet and hope no one notices."
+          "text": "Stay on the call and approve any remaining prompts while asking IT for help"
         },
         {
           "value": "b",
-          "text": "Immediately report the incident to security, trigger an account password reset, and revoke active sessions."
+          "text": "End the call and report the incident to your organization's security team through an official channel"
         },
         {
           "value": "c",
-          "text": "Turn off the computer and throw it away."
+          "text": "Change the password but do not report the unexpected approval"
         },
         {
           "value": "d",
-          "text": "Send a text to the scammer asking them to log out."
+          "text": "Call back using the number displayed on the phone"
         }
       ],
-      "explanation": "Swift incident reporting enables security teams to isolate compromised sessions before lateral movement occurs."
+      "explanation": "The lesson teaches ending unexpected calls and reporting suspicious requests through trusted organizational channels."
     },
     {
       "id": 5,
@@ -132,10 +132,10 @@
       "category": "medium",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Interactive Voice Response (IVR) robocall systems are only used by legitimate companies and cannot be set up by cybercriminals.",
+      "questionText": "Scammers can imitate an automated bank phone menu, such as a prompt to press 1 for support.",
       "options": [
         {
           "value": "a",
@@ -146,7 +146,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Attackers frequently create automated IVR phone trees to imitate official bank menus before transferring victims to live scammers."
+      "explanation": "The lesson explains that scammers can imitate automated phone menus and bank-call experiences."
     },
     {
       "id": 7,
@@ -156,7 +156,7 @@
       "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Generative AI tools now allow vishing attackers to clone an executive's voice using short audio samples taken from public videos or webinars.",
+      "questionText": "If an unexpected caller's identity or caller ID seems familiar, you should still verify unusual requests using a number you independently trust.",
       "options": [
         {
           "value": "a",
@@ -167,7 +167,7 @@
           "text": "False"
         }
       ],
-      "explanation": "AI voice cloning enables realistic synthetic audio impersonation of targeted individuals."
+      "explanation": "The lesson explains that caller ID can be spoofed and recommends independently verifying unusual requests."
     },
     {
       "id": 8,
@@ -206,26 +206,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "A caller claims to be from the internal finance team: \"I am processing your remote equipment reimbursement, but the system is throwing an error. What is your full bank account and routing number?\" How should you respond?",
+      "questionText": "A caller claims to be from your bank and asks for a one-time code to stop a suspicious transfer. What is the safest response?",
       "options": [
         {
           "value": "a",
-          "text": "Provide the numbers verbally."
+          "text": "Read the code because the caller knows your name"
         },
         {
           "value": "b",
-          "text": "Decline to share bank details over the phone and direct the inquiry to the official HR/Finance portal."
+          "text": "End the call and contact the bank using a number from your card or its official site"
         },
         {
           "value": "c",
-          "text": "Give your credit card CVV number instead."
+          "text": "Ask the caller to confirm the code they sent, then continue the call"
         },
         {
           "value": "d",
-          "text": "Hang up and delete your operating system."
+          "text": "Call back using the number displayed in the unexpected call"
         }
       ],
-      "explanation": "Financial distribution updates must follow encrypted, formal portal workflows rather than verbal disclosures."
+      "explanation": "The lesson's bank-call example warns not to share a verification code and recommends independently contacting the bank through an official number."
     },
     {
       "id": 10,
@@ -325,7 +325,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Why is voice interaction (vishing) particularly effective at tricking targets compared to email?",
+      "questionText": "Which vishing tactic can pressure a target to act before verifying an unexpected request?",
       "options": [
         {
           "value": "a",
@@ -333,7 +333,7 @@
         },
         {
           "value": "b",
-          "text": "Real-time vocal conversations create high cognitive pressure and leave little time for independent verification."
+          "text": "A caller may interrupt questions, insist on immediate action, and leave little time to think."
         },
         {
           "value": "c",
@@ -344,7 +344,7 @@
           "text": "Voice calls automatically bypass password controls."
         }
       ],
-      "explanation": "Live dialogue creates urgency and emotional pressure, making critical analysis difficult."
+      "explanation": "The lesson describes callers using real-time pressure by interrupting questions and insisting on immediate action."
     },
     {
       "id": 14,
@@ -354,7 +354,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What term describes repeated, automated MFA push prompts sent to a user’s phone to force them into tapping \"Approve\" out of frustration?",
+      "questionText": "What term describes repeated MFA prompts that may pressure a user into approving an attacker’s sign-in?",
       "options": [
         {
           "value": "a",
@@ -362,7 +362,7 @@
         },
         {
           "value": "b",
-          "text": "MFA Fatigue / Push Bombing"
+          "text": "MFA fatigue"
         },
         {
           "value": "c",
@@ -373,7 +373,7 @@
           "text": "SQL Injection"
         }
       ],
-      "explanation": "Push bombing bombards targets with MFA prompts until they accidentally or reactively accept one."
+      "explanation": "MFA fatigue uses repeated prompts, sometimes paired with a convincing call, to pressure a user into approving an attacker’s sign-in."
     },
     {
       "id": 15,
@@ -387,32 +387,32 @@
       "options": [
         {
           "value": "a",
-          "text": "To upgrade the computer's monitor resolution."
+          "text": "To provide verbal instructions without connecting to or viewing the device"
         },
         {
           "value": "b",
-          "text": "To establish an active remote control session to exfiltrate files and pivot into corporate networks."
+          "text": "To let the caller view or control the device, which may expose files or information shown on screen"
         },
         {
           "value": "c",
-          "text": "To improve local Wi-Fi speeds."
+          "text": "To let verified IT install an approved update without viewing the screen"
         },
         {
           "value": "d",
-          "text": "To automatically clear browser cache."
+          "text": "To test whether the internet connection supports video calls"
         }
       ],
-      "explanation": "Remote administration tools grant full desktop GUI control to the adversary."
+      "explanation": "The lesson explains that remote-access software can let another person view or control a device; use it only after verifying an approved IT request."
     },
     {
       "id": 16,
       "category": "medium",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Vishing attacks only target personal landline phones and cannot be conducted over corporate VoIP applications like Microsoft Teams or Zoom.",
+      "questionText": "Vishing can occur through internet-based voice services, not only traditional phone lines.",
       "options": [
         {
           "value": "a",
@@ -423,7 +423,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Attackers can initiate vishing via corporate VoIP, direct web calls, or messaging applications."
+      "explanation": "The lesson explains that attackers may misuse internet-based voice services (VoIP) to impersonate trusted callers."
     },
     {
       "id": 17,
@@ -462,11 +462,11 @@
       "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "You receive an unexpected call: *\"This is Executive Assistant Claire calling on behalf of CEO Mark. He needs you to purchase five digital gift cards right now for a client meeting.\"* What red flag is present?",
+      "questionText": "An unexpected caller claims to be an executive and urgently asks you to provide a one-time code to resolve an account problem. What red flag is present?",
       "options": [
         {
           "value": "a",
-          "text": "Requests for digital gift cards combined with executive authority impersonation and urgency."
+          "text": "An authority claim and urgency are being used to pressure you for a sensitive code"
         },
         {
           "value": "b",
@@ -481,7 +481,7 @@
           "text": "The caller knew the CEO's name."
         }
       ],
-      "explanation": "Requesting gift cards under executive pressure is a classic social engineering financial scam."
+      "explanation": "The lesson identifies authority and urgency as pressure tactics and warns callers may request MFA approval or codes."
     },
     {
       "id": 19,

@@ -1,6 +1,6 @@
 {
   "moduleId": "module-1",
-  "moduleName": "Quishing",
+  "moduleName": "Phishing",
   "totalQuestions": 20,
   "questionsPerAttempt": 10,
   "standardCount": 13,
@@ -151,7 +151,7 @@
       "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Before clicking a hyperlinked \"Verify Account\" button in an email, you hover your mouse over it without clicking. Does this let you preview the actual destination URL before you click?",
+      "questionText": "When an unexpected email asks you to verify an account, the lesson recommends opening the official site independently rather than following the message link.",
       "options": [
         {
           "value": "a",
@@ -162,7 +162,7 @@
           "text": "False"
         }
       ],
-      "explanation": "True. Hovering over a hyperlink reveals the true underlying web destination address in the browser or mail client status bar."
+      "explanation": "The lesson recommends using a trusted bookmark or entering the official address yourself instead of following an unexpected email link."
     },
     {
       "id": 7,
@@ -172,7 +172,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "You scan a QR code from a vendor PDF. It opens a Google Sign-In page asking you to \"Grant Full OAuth Permissions to App XYZ.\" Granting access is safe because the URL starts with accounts.google.com.",
+      "questionText": "A QR code from an unexpected vendor document opens a familiar sign-in or OAuth page. Is the familiar sign-in brand alone enough reason to proceed without verifying the request?",
       "options": [
         {
           "value": "a",
@@ -183,7 +183,7 @@
           "text": "False"
         }
       ],
-      "explanation": "False. Malicious OAuth applications use real Google/Microsoft sign-in portals to request excessive account permissions. Once granted, the attacker gets persistent cloud access without needing your password."
+      "explanation": "A QR code can conceal the destination of a link. Verify an unexpected request through a trusted channel before entering credentials or granting access."
     },
     {
       "id": 8,
@@ -193,26 +193,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "A virtual assistant receives an email displaying the company CEO's exact name and profile photo. The sender address is ceo-office@exec-mail-corp.com (not the corporate @company.com domain). The message requests an urgent purchase of gift card vouchers for an ongoing client event. What social engineering tactic is being deployed?",
+      "questionText": "A suspicious link uses slack-login-security.net while claiming to be the Slack sign-in page. Which domain trick does this example illustrate?",
       "options": [
         {
           "value": "a",
-          "text": "Mass Ransomware Distribution"
+          "text": "Typosquatting"
         },
         {
           "value": "b",
-          "text": "Executive Spoofing via Combosquatting Phishing"
+          "text": "Combosquatting"
         },
         {
           "value": "c",
-          "text": "Authorized Corporate Expense Request"
+          "text": "A legitimate Slack-owned sign-in domain"
         },
         {
           "value": "d",
-          "text": "Automated Database Synchronization"
+          "text": "Caller-ID spoofing"
         }
       ],
-      "explanation": "The attacker uses executive identity impersonation combined with a combosquatted external domain (exec-mail-corp.com) to trick the assistant into making unauthorized purchases."
+      "explanation": "Combosquatting adds trusted-sounding words to a familiar brand name. The lesson uses slack-login-security.net as its example."
     },
     {
       "id": 9,
@@ -222,7 +222,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "A remote software engineer receives an email containing a link to a \"Critical Security Patch\" hosted on github-downloads-security.net. What is the most rigorous way to confirm if this patch is legitimate?",
+      "questionText": "You receive an unexpected email asking you to sign in through an included link to view a security update. How should you check the request?",
       "options": [
         {
           "value": "a",
@@ -230,7 +230,7 @@
         },
         {
           "value": "b",
-          "text": "Check official internal engineering channels (e.g., internal Slack/Teams or company repo) and consult the lead system administrator"
+          "text": "Do not use the message link; open the organization's official portal yourself or verify the request through a known official channel"
         },
         {
           "value": "c",
@@ -241,7 +241,7 @@
           "text": "Reply directly asking the sender for their corporate employee ID number"
         }
       ],
-      "explanation": "Internal verification via official out-of-band communication channels is the only reliable way to confirm patch validity."
+      "explanation": "The lesson recommends opening the official site independently or confirming an unexpected request through a known official channel."
     },
     {
       "id": 10,
@@ -250,12 +250,11 @@
       "answerType": "multiple",
       "correctAnswer": [
         "a",
-        "b",
-        "d"
+        "b"
       ],
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "If you realize you entered your corporate credentials into a fake login portal 5 minutes ago, what immediate steps must you execute? (Select ALL that apply)",
+      "questionText": "You realize you entered your password on a fake login page. Which actions are taught in this lesson? (Select ALL that apply)",
       "options": [
         {
           "value": "a",
@@ -263,18 +262,18 @@
         },
         {
           "value": "b",
-          "text": "Revoke active user sessions and alert your organization's IT/Security team"
+          "text": "Report the incident through your organization's trusted IT or security channel"
         },
         {
           "value": "c",
-          "text": "Delete your browser history and turn off your home router for 24 hours"
+          "text": "Clear the browser history and assume this removes a password already entered on the fake page"
         },
         {
           "value": "d",
-          "text": "Check active multi-factor authentication (MFA) devices registered to your account for unauthorized additions"
+          "text": "Wait to see whether the account shows unusual activity before reporting or changing the password"
         }
       ],
-      "explanation": "Resetting credentials, revoking active sessions, alerting IT, and auditing registered MFA devices stops ongoing unauthorized account access. Deleting local browser history does not stop the remote attacker."
+      "explanation": "The lesson advises reporting the incident and changing reused passwords. Clearing local browser history does not address a password already entered on a fake page."
     },
     {
       "id": 11,
@@ -346,7 +345,7 @@
         },
         {
           "value": "b",
-          "text": "Messages requesting urgent multi-factor authentication (MFA) re-verification"
+          "text": "An unexpected message pressures you to act immediately to avoid an account problem"
         },
         {
           "value": "c",
@@ -354,10 +353,10 @@
         },
         {
           "value": "d",
-          "text": "Unsolicited attachments asking you to enable macros to view content"
+          "text": "An unexpected QR code that hides a link to a sign-in page"
         }
       ],
-      "explanation": "Mismatched headers, urgent MFA prompts, and macro-enabled attachments are classic phishing indicators. Digitally signed internal calendar invites are standard workflow items."
+      "explanation": "The lesson identifies sender and domain mismatches, urgency, and QR codes that conceal links as reasons to verify an unexpected message."
     },
     {
       "id": 14,
@@ -400,26 +399,26 @@
       ],
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Which of the following file extensions attached to an unsolicited email should be treated as high-risk? (Select ALL that apply)",
+      "questionText": "Which observations match the domain and QR-code warning signs taught in this lesson? (Select ALL that apply)",
       "options": [
         {
           "value": "a",
-          "text": ".pdf.exe"
+          "text": "micros0ft-verify.com replaces one character in microsoft.com"
         },
         {
           "value": "b",
-          "text": ".docm (Macro-enabled Word document)"
+          "text": "slack-login-security.net adds trusted-sounding words to a familiar brand"
         },
         {
           "value": "c",
-          "text": ".png"
+          "text": "A browser padlock proves the site belongs to the company it names"
         },
         {
           "value": "d",
-          "text": ".vbs (Visual Basic Script)"
+          "text": "An unexpected QR code leading to a sign-in page should be independently verified"
         }
       ],
-      "explanation": "Double extensions (.pdf.exe), macro-enabled documents (.docm), and script files (.vbs) can automatically execute malicious payloads on a host computer."
+      "explanation": "The lesson demonstrates typosquatting, combosquatting, and QR codes that conceal destinations. HTTPS indicates an encrypted connection, not a trustworthy site."
     },
     {
       "id": 16,
@@ -429,7 +428,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "A remote freelancer receives an email with an embedded QR code labeled \"Scan to View Signed Client NDA.\" Scans show the QR code opens http://192.168.1.1/login.html. Is this safe to open?",
+      "questionText": "A QR code in an unexpected document is labeled \"View client agreement\" and opens a sign-in page. Is the label alone enough reason to enter your credentials?",
       "options": [
         {
           "value": "a",
@@ -440,7 +439,7 @@
           "text": "False"
         }
       ],
-      "explanation": "False. Legitimate signed contracts are not hosted on raw local IP addresses or delivered via unencrypted QR codes without prior client agreement."
+      "explanation": "A QR code can hide its destination. Verify the unexpected request with a trusted contact before entering credentials."
     },
     {
       "id": 17,
@@ -470,31 +469,30 @@
       "answerType": "multiple",
       "correctAnswer": [
         "a",
-        "b",
-        "c"
+        "b"
       ],
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What technical security mechanisms can organizations configure to help block spoofed email headers? (Select ALL that apply)",
+      "questionText": "Which statements about an HTTPS padlock are accurate according to the lesson? (Select ALL that apply)",
       "options": [
         {
           "value": "a",
-          "text": "SPF (Sender Policy Framework)"
+          "text": "It indicates an encrypted connection, but does not prove the site belongs to a trustworthy company"
         },
         {
           "value": "b",
-          "text": "DKIM (DomainKeys Identified Mail)"
+          "text": "A counterfeit site can also use a free SSL/TLS certificate and display a padlock"
         },
         {
           "value": "c",
-          "text": "DMARC (Domain-based Message Authentication, Reporting, and Conformance)"
+          "text": "It verifies that the website operator is the company named on the page"
         },
         {
           "value": "d",
-          "text": "Upgrading physical monitor screen resolutions"
+          "text": "Only legitimate websites can use HTTPS"
         }
       ],
-      "explanation": "SPF, DKIM, and DMARC are DNS-based email authentication protocols configured to verify sender domain legitimacy and stop header spoofing."
+      "explanation": "The lesson explains that HTTPS protects the connection, but free SSL/TLS certificates mean a counterfeit site can display the same padlock."
     },
     {
       "id": 19,
@@ -504,36 +502,36 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What is the primary reason threat actors exploit human curiosity or urgency during a phishing attempt?",
+      "questionText": "Why do attackers create urgency in a phishing message?",
       "options": [
         {
           "value": "a",
-          "text": "To test the bandwidth limitations of home routers"
+          "text": "To make mail servers accept larger attachments"
         },
         {
           "value": "b",
-          "text": "To trigger fast, emotional decision-making that bypasses logical identity verification"
+          "text": "To pressure recipients to respond quickly without pausing to verify the request"
         },
         {
           "value": "c",
-          "text": "To force web browsers to automatically clear local cache files"
+          "text": "To give recipients more time to compare the request with an official source"
         },
         {
           "value": "d",
-          "text": "To shorten the length of domain URLs"
+          "text": "To hide the recipient list from other message recipients"
         }
       ],
-      "explanation": "High-pressure emotional triggers (fear, urgency, curiosity) induce cognitive overload, causing targets to act before inspecting sender details or verifying requests."
+      "explanation": "The lesson explains that urgent deadlines pressure recipients to act before checking the request independently."
     },
     {
       "id": 20,
       "category": "hard",
       "questionType": "standard",
       "answerType": "single",
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Phishing attacks targeting remote employees exclusively occur through traditional business email, never through personal email or instant messaging platforms.",
+      "questionText": "This lesson shows that phishing can use deceptive emails and websites as well as QR codes that hide links; it is not limited to business email.",
       "options": [
         {
           "value": "a",
@@ -544,7 +542,7 @@
           "text": "False"
         }
       ],
-      "explanation": "False. Attackers routinely target remote employees across personal email, LinkedIn DMs, WhatsApp, and Telegram to bypass enterprise email controls."
+      "explanation": "The lesson covers deceptive email and website requests and explains how QR codes can conceal links to fake login pages."
     }
   ]
 }
