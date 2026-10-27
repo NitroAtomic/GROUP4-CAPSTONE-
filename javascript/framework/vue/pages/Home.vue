@@ -98,6 +98,76 @@
         </div>
       </div>
     </section>
+
+    <section id="professional-feedback" class="feedback-section" aria-labelledby="feedback-heading">
+      <div class="home-content">
+        <div class="feedback-heading">
+          <span class="feedback-heading-icon" aria-hidden="true">
+            <svg class="ui-icon"><use href="#ui-icon-shield-check" /></svg>
+          </span>
+          <div>
+            <h2 id="feedback-heading">What cybersecurity professionals say about SE-AWARE</h2>
+            <p>Feedback on SE-AWARE’s Free and Premium learning modules, interactive scenarios, and answer explanations.</p>
+          </div>
+        </div>
+        <div class="feedback-grid">
+          <article class="feedback-card feedback-card--featured">
+            <p class="feedback-featured-label">
+              <span>Featured feedback</span>
+            </p>
+            <svg class="feedback-quote-mark" viewBox="0 0 32 28" aria-hidden="true" focusable="false">
+              <path d="M2 25V14C2 6.8 6.1 3 12.5 3v5.1c-3.4.3-5.2 2.2-5.2 5.2h5.2V25H2Zm16 0V14c0-7.2 4.1-11 10.5-11v5.1c-3.4.3-5.2 2.2-5.2 5.2h5.2V25H18Z" />
+            </svg>
+            <blockquote>
+              <p><span class="feedback-quote-delimiter" aria-hidden="true">“</span>One of the system’s greatest strengths is its free learning modules, which make cybersecurity education accessible to users regardless of their technical background or financial capacity. These modules help users understand social engineering techniques, recognize potential cyber threats, avoid common scams, and make safer decisions online. Overall, the platform promotes cybersecurity awareness and empowers users to navigate the digital world more safely and responsibly.<span class="feedback-quote-delimiter" aria-hidden="true">”</span></p>
+            </blockquote>
+            <footer class="feedback-attribution">
+              <svg class="feedback-profile-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
+              <cite>Cybersecurity SOC Engineer</cite>
+            </footer>
+          </article>
+          <article class="feedback-card feedback-card--support-one">
+            <svg class="feedback-quote-mark" viewBox="0 0 32 28" aria-hidden="true" focusable="false">
+              <path d="M2 25V14C2 6.8 6.1 3 12.5 3v5.1c-3.4.3-5.2 2.2-5.2 5.2h5.2V25H2Zm16 0V14c0-7.2 4.1-11 10.5-11v5.1c-3.4.3-5.2 2.2-5.2 5.2h5.2V25H18Z" />
+            </svg>
+            <blockquote>
+              <p><span class="feedback-quote-delimiter" aria-hidden="true">“</span>It is informative, detailed, and user-friendly.<span class="feedback-quote-delimiter" aria-hidden="true">”</span></p>
+            </blockquote>
+            <footer class="feedback-attribution">
+              <svg class="feedback-profile-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
+              <cite>CyberSecurity Researcher, Tech Support Specialist</cite>
+            </footer>
+          </article>
+          <article class="feedback-card feedback-card--support-two">
+            <svg class="feedback-quote-mark" viewBox="0 0 32 28" aria-hidden="true" focusable="false">
+              <path d="M2 25V14C2 6.8 6.1 3 12.5 3v5.1c-3.4.3-5.2 2.2-5.2 5.2h5.2V25H2Zm16 0V14c0-7.2 4.1-11 10.5-11v5.1c-3.4.3-5.2 2.2-5.2 5.2h5.2V25H18Z" />
+            </svg>
+            <blockquote>
+              <p><span class="feedback-quote-delimiter" aria-hidden="true">“</span>It’s great to see projects like this being promoted in colleges and universities. Overall, it’s a great website.<span class="feedback-quote-delimiter" aria-hidden="true">”</span></p>
+            </blockquote>
+            <footer class="feedback-attribution">
+              <svg class="feedback-profile-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
+              <cite>Security Engineer</cite>
+            </footer>
+          </article>
+          <article class="feedback-card feedback-card--full" data-feedback-final-card>
+            <svg class="feedback-quote-mark" viewBox="0 0 32 28" aria-hidden="true" focusable="false">
+              <path d="M2 25V14C2 6.8 6.1 3 12.5 3v5.1c-3.4.3-5.2 2.2-5.2 5.2h5.2V25H2Zm16 0V14c0-7.2 4.1-11 10.5-11v5.1c-3.4.3-5.2 2.2-5.2 5.2h5.2V25H18Z" />
+            </svg>
+            <blockquote>
+              <p><span class="feedback-quote-delimiter" aria-hidden="true">“</span>The training material is well-designed and presented. It effectively explains incorrect answers and provides meaningful feedback, helping users understand why a particular choice is unsafe rather than simply being told that their answer is wrong.</p>
+              <p>The interactive learning approach is another major strength, encouraging users to engage with the material, think through realistic scenarios, and apply the concepts they have learned.</p>
+              <p>The user interface is intuitive, easy to navigate, and aesthetically pleasing, with an overall design that aligns well with the cybersecurity theme.</p>
+              <p>Overall, excellent work on the training material and its presentation.<span class="feedback-quote-delimiter" aria-hidden="true">”</span></p>
+            </blockquote>
+            <footer class="feedback-attribution">
+              <svg class="feedback-profile-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
+              <cite>Vulnerability Analyst</cite>
+            </footer>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 

@@ -154,8 +154,16 @@
 
     <button
       type="button"
+      ref="chatbotTrigger"
       class="chatbot-floating-button"
       aria-label="Open CyberWise learning assistant"
+      :class="{
+        'feedback-control-suppressed': feedbackCardOverlaps && !feedbackControlFocused,
+        'feedback-control-repositioned': feedbackCardOverlaps && feedbackControlFocused
+      }"
+      :style="feedbackCardOverlaps && feedbackControlFocused ? feedbackControlPosition : null"
+      @focus="handleFeedbackControlFocus"
+      @blur="handleFeedbackControlBlur"
       @click="isOpen = !isOpen"
     >
       <span class="chatbot-floating-button-icon">

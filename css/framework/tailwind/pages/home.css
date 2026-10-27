@@ -51,4 +51,68 @@
   .premium-card p { @apply mt-2 text-sm leading-snug; color: var(--muted); }
   .premium-action { @apply flex justify-center mt-6; }
   .btn-upgrade { @apply border-[var(--orange)] bg-[var(--orange)] font-semibold text-[var(--navy)] hover:brightness-95; }
+
+  /* Professional Feedback */
+  .feedback-section { @apply py-10 max-[620px]:py-8; background: var(--bg); border-top: 1px solid var(--border); }
+  .feedback-heading { @apply flex items-start gap-4; }
+  .feedback-heading > div { min-width: 0; }
+  .feedback-heading h2 { @apply text-[32px] leading-[1.1] font-bold tracking-[-0.02em] max-[620px]:text-[27px]; color: var(--heading); overflow-wrap: anywhere; }
+  .feedback-heading p { @apply mt-2 text-base leading-relaxed; color: var(--muted); }
+  .feedback-heading-icon { @apply w-11 h-11 shrink-0 inline-flex items-center justify-center rounded-xl border; background: rgba(27, 127, 121, 0.08); border-color: rgba(27, 127, 121, 0.16); color: var(--teal); }
+  .feedback-heading-icon .ui-icon { @apply w-6 h-6; }
+  .feedback-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr); grid-template-areas: "featured support-one" "featured support-two" "full full"; gap: 16px; margin-top: 20px; }
+  .feedback-card { @apply min-w-0 p-5 border; position: relative; background: var(--card-bg); border-color: var(--border); border-radius: 12px; }
+  .feedback-card--featured { grid-area: featured; }
+  .feedback-card--support-one { grid-area: support-one; }
+  .feedback-card--support-two { grid-area: support-two; }
+  .feedback-card--full { grid-area: full; }
+  .feedback-featured-label { @apply mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide; color: var(--teal); }
+  .feedback-featured-label .ui-icon { @apply w-[18px] h-[18px]; }
+  .feedback-quote-mark { @apply block w-7 h-6 mb-2; color: var(--teal); fill: currentColor; opacity: 0.8; }
+  .feedback-card blockquote { @apply m-0; }
+  .feedback-card blockquote p { @apply text-sm leading-relaxed; margin: 0; color: var(--muted); overflow-wrap: anywhere; }
+  .feedback-card blockquote p + p { margin-top: 0.75rem; }
+  .feedback-quote-delimiter { display: none; }
+  .feedback-attribution { @apply mt-4 pt-3 border-t text-sm font-semibold; display: flex; align-items: center; gap: 8px; border-color: var(--border); color: var(--heading); overflow-wrap: anywhere; }
+  .feedback-attribution .feedback-profile-icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--teal); }
+  .feedback-attribution cite { @apply not-italic; min-width: 0; }
+  .feedback-control-suppressed { opacity: 0 !important; pointer-events: none; transition: none !important; }
+  .feedback-control-repositioned { position: fixed !important; z-index: 1101 !important; right: auto !important; bottom: auto !important; margin: 0 !important; transform: none !important; }
+
+  @media (max-width: 900px) {
+    .feedback-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "featured featured" "support-one support-two" "full full"; }
+  }
+
+  @media (max-width: 620px) {
+    .home-hero h1 { overflow-wrap: anywhere; }
+    .module-card { @apply flex-wrap; }
+    .module-card > div { min-width: 0; }
+    .module-card h3 { overflow-wrap: anywhere; }
+    .premium-card { @apply flex-wrap; }
+    .feedback-heading { @apply gap-3; }
+    .feedback-heading-icon { @apply w-10 h-10; }
+    .feedback-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "featured" "support-one" "support-two" "full"; }
+    .feedback-card { @apply p-5; }
+  }
+
+  @keyframes feedback-arrive {
+    from { opacity: 0.75; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes feedback-icon-arrive {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .feedback-heading-icon { animation: feedback-arrive 420ms ease-out both; }
+    .feedback-card--featured { animation: feedback-arrive 420ms ease-out both; }
+    .feedback-icons-entered .feedback-profile-icon { animation: feedback-icon-arrive 420ms ease-out both; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feedback-heading-icon, .feedback-card--featured, .feedback-profile-icon { animation: none; }
+    .feedback-profile-icon { opacity: 1; transform: none; }
+  }
 }
