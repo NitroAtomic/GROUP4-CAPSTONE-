@@ -66,7 +66,7 @@
   .feedback-card--support-one { grid-area: support-one; }
   .feedback-card--support-two { grid-area: support-two; }
   .feedback-card--full { grid-area: full; }
-  .feedback-featured-label { @apply mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide; color: var(--teal); }
+  .feedback-featured-label { @apply mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide; color: var(--accent-text); }
   .feedback-featured-label .ui-icon { @apply w-[18px] h-[18px]; }
   .feedback-quote-mark { @apply block w-7 h-6 mb-2; color: var(--teal); fill: currentColor; opacity: 0.8; }
   .feedback-card blockquote { @apply m-0; }
