@@ -123,7 +123,7 @@
             </blockquote>
             <footer class="feedback-attribution">
               <svg class="feedback-profile-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
-              <cite>Cybersecurity SOC Engineer</cite>
+              <cite><span class="feedback-name">Miguel B.</span><span class="feedback-job-title">Cybersecurity SOC Engineer</span></cite>
             </footer>
           </article>
           <article class="feedback-card feedback-card--support-one">
@@ -135,7 +135,7 @@
             </blockquote>
             <footer class="feedback-attribution">
               <svg class="feedback-profile-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
-              <cite>CyberSecurity Researcher, Tech Support Specialist</cite>
+              <cite><span class="feedback-name">Paul I.</span><span class="feedback-job-title">CyberSecurity Researcher, Tech Support Specialist</span></cite>
             </footer>
           </article>
           <article class="feedback-card feedback-card--support-two">
@@ -147,7 +147,7 @@
             </blockquote>
             <footer class="feedback-attribution">
               <svg class="feedback-profile-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
-              <cite>Security Engineer</cite>
+              <cite><span class="feedback-name">JM C.</span><span class="feedback-job-title">Security Engineer</span></cite>
             </footer>
           </article>
           <article class="feedback-card feedback-card--full" data-feedback-final-card>
@@ -162,7 +162,7 @@
             </blockquote>
             <footer class="feedback-attribution">
               <svg class="feedback-profile-icon ui-icon" aria-hidden="true"><use href="#ui-icon-user" /></svg>
-              <cite>Vulnerability Analyst</cite>
+              <cite><span class="feedback-name">Ronn T.</span><span class="feedback-job-title">Vulnerability Analyst</span></cite>
             </footer>
           </article>
         </div>
