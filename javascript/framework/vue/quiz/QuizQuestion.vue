@@ -36,6 +36,9 @@
         <h2 class="quiz-question-text">
           {{ currentQuestion.questionText }}
         </h2>
+        <p v-if="currentQuestion.answerType === 'multiple'" class="quiz-multi-hint">
+          More than one answer is correct. Tick every one that applies.
+        </p>
 
         <!-- Single-answer question: radio buttons -->
         <div v-if="currentQuestion.answerType === 'single'" class="quiz-answer-list">

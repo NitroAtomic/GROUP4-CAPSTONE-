@@ -143,26 +143,26 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "What shortcode number can users in many regions forward spam or smishing texts to for reporting?",
+      "questionText": "You receive a smishing text on your Philippine mobile number. What is the best way to report it?",
       "options": [
         {
           "value": "a",
-          "text": "911"
+          "text": "Reply STOP to the sender"
         },
         {
           "value": "b",
-          "text": "7726 (SPAM)"
+          "text": "Report it through your network's official spam channel (such as Globe's #StopSpam page or Smart or DITO support), or call the CICC hotline 1326"
         },
         {
           "value": "c",
-          "text": "411"
+          "text": "Call the number back to complain"
         },
         {
           "value": "d",
-          "text": "0000"
+          "text": "Forward it to all your contacts as a warning"
         }
       ],
-      "explanation": "Forwarding spam texts to 7726 (SPAM) alerts carriers to investigate and block malicious sender numbers."
+      "explanation": "Report scam texts through your mobile network's official spam reporting channel or the CICC anti-scam hotline 1326, then block the sender. Replying or calling back confirms your number is active, and forwarding the text spreads the scam. The 7726 (SPAM) shortcode used in some other countries is not the standard reporting number in the Philippines."
     },
     {
       "id": 7,
@@ -402,7 +402,7 @@
           "text": "False"
         }
       ],
-      "explanation": "Personal BYOD devices operate on commercial cellular networks or home Wi-Fi, bypassing corporate perimeter firewalls."
+      "explanation": "Personal BYOD phones usually connect through mobile data or home Wi-Fi, so traffic does not pass through the office firewall. Unless the company manages the phone (for example with mobile device management or a VPN), it may not have the same protection as a work laptop."
     },
     {
       "id": 16,

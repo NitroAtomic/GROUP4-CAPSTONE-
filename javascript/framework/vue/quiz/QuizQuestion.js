@@ -2,6 +2,7 @@
 import examLock from '../lib/examLock.js'
 import { useAuthStore } from '../stores/auth.js'
 import { apiFetch } from '../lib/api.js'
+import { shuffleEachQuestionsOptions } from '../lib/shuffleOptions.js'
 // Vite bundles .json imports automatically — no extra config needed.
 import module1 from '../data/module-1.json'
 import module2 from '../data/module-2.json'
@@ -181,7 +182,9 @@ export default {
 
       this.moduleData = data
       const count = data.questionsPerAttempt || 10
-      this.shuffledQuestions = selectRandomQuestions(data.questions, count)
+      // Ginugulo na rin ang pagkakasunod ng mga pagpipilian, hindi lang ng
+      // mga tanong (lib/shuffleOptions.js).
+      this.shuffledQuestions = shuffleEachQuestionsOptions(selectRandomQuestions(data.questions, count))
       this.currentIndex = 0
       this.answers = {}
       this.checkedIds = {}

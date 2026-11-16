@@ -12,6 +12,15 @@
         </p>
       </div>
 
+      <!-- Malinaw na tagubilin (puna ng expert review: hindi malinaw kung
+           paano sasagutin at paano binibilang ang weak areas). -->
+      <p v-if="currentIndex === 0" class="quiz-instructions">
+        There are {{ totalQuestions }} questions, three on each topic. Choose an answer, then press
+        <strong>Check Answer</strong> to see if you are right before moving on. Some questions say
+        <strong>Select ALL that apply</strong>: tick every correct option, not just one. A topic is listed
+        as a weak area when you get one or none of its three questions right.
+      </p>
+
       <!-- Progress Bar -->
       <div class="quiz-progress-container">
         <div class="quiz-progress-bar" :style="{ width: progressPercent + '%' }"></div>
@@ -27,6 +36,9 @@
         <h2 class="quiz-question-text">
           {{ currentQuestion.questionText }}
         </h2>
+        <p v-if="currentQuestion.answerType === 'multiple'" class="quiz-multi-hint">
+          More than one answer is correct. Tick every one that applies.
+        </p>
 
         <!-- Single-answer question: radio buttons -->
         <div v-if="currentQuestion.answerType === 'single'" class="quiz-answer-list">

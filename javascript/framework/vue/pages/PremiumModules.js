@@ -7,7 +7,7 @@ const COURSES = [
   { slug: 'client-impersonation', title: 'Client Impersonation', summary: 'Fake clients, portfolio scams and escrow fraud aimed at freelancers.', icon: 'user-shield', premium: true },
   { slug: 'invoice-scams', title: 'Invoice and Payment Scams', summary: 'Business email compromise, invoice manipulation and vendor account changes.', icon: 'invoice-warning', premium: true },
   { slug: 'fake-recruiters', title: 'Fake Job and Recruiter Offers', summary: 'Recruitment and onboarding scams that harvest identity documents.', icon: 'recruiter', premium: true },
-  { slug: 'client-data', title: 'Secure Client Data Handling', summary: 'Protecting client data, passwords and files from exposure.', icon: 'client-data', premium: true },
+  { slug: 'client-data', title: 'Executive Impersonation and Client Data', summary: 'Spotting fake boss or executive requests for client files, passwords and access.', icon: 'client-data', premium: true },
   { slug: 'quishing', title: 'Phishing', summary: 'Email phishing, fake login pages and QR code exploits.', icon: 'qr', path: '/modules/phishing' },
   { slug: 'spear-phishing', title: 'Spear Phishing', summary: 'Targeted attacks using real details about you or your work.', icon: 'target-mail' },
   { slug: 'vishing', title: 'Vishing', summary: 'Voice phishing and social engineering calls.', icon: 'phone' },

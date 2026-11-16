@@ -52,11 +52,11 @@ export default {
     },
 
     byTopic() {
-      /* Only the topics this attempt actually covered. Ten questions are
-         drawn from a pool of twenty, so two or three topics get no question
-         at all - and listing those produced rows reading "Vishing 0/0",
-         which looks like the learner scored nothing on vishing rather than
-         never being asked about it. The fixed order is kept so the grid does
+      /* Only the topics this attempt actually covered. Every topic now gets
+         three questions, but older saved results (ten random questions)
+         can still have topics with none - and listing those produced rows
+         reading "Vishing 0/0", which looks like the learner scored nothing
+         on vishing rather than never being asked about it. The fixed order is kept so the grid does
          not rearrange itself between attempts. */
       const ORDER = [
         'phishing', 'spear-phishing', 'vishing', 'smishing',

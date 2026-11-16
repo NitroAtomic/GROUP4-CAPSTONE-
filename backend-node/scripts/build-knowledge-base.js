@@ -167,21 +167,37 @@ if (fs.existsSync(modulesDir)) {
 
 // 2. Role-based (Premium) module pages. Parehong paraan sa Free modules, pero
 //    naka-marka bilang Premium para masala sila para sa Free na user.
-const premiumDir = path.join(modulesDir, 'premium');
-if (fs.existsSync(premiumDir)) {
-  for (const file of fs.readdirSync(premiumDir).filter((f) => f.endsWith('.vue'))) {
-    const sfc = fs.readFileSync(path.join(premiumDir, file), 'utf8');
-    const templateMatch = sfc.match(/<template>([\s\S]*)<\/template>/i);
-    if (!templateMatch) continue;
-    const html = templateMatch[1];
-
-    const h1Match = html.match(/<h1[^>]*>([^<]*)<\/h1>/i);
-    const moduleName = (h1Match ? h1Match[1] : file.replace(/\.vue$/, '')).trim();
-    const route = PREMIUM_ROUTES[file] || null;
+//
+//    Nasa backend-node/content/premium/*.html na ang mga aral (hindi na sa
+//    .vue), para hindi sila kasama sa pampublikong bundle. Dati dito pa rin
+//    tumitingin ang builder, kaya apat na walang-laman na "{{ meta.title }}"
+//    lang ang napupunta sa knowledge base at walang Premium na aral.
+const premiumContentDir = path.join(__dirname, '..', 'content', 'premium');
+const premiumIndexPath = path.join(premiumContentDir, 'index.json');
+const premiumIndex = fs.existsSync(premiumIndexPath)
+  ? JSON.parse(fs.readFileSync(premiumIndexPath, 'utf8'))
+  : {};
+// Iisang pangalan ng course sa "Learn more": yung nasa listahan ng courses
+// (kapareho ng moduleName ng quiz), hindi yung ibang pamagat sa index.json.
+// Kapag magkaiba, akala ng tao maling module ang binuksan ng link.
+function premiumCourseName(slug) {
+  const quizPath = path.join(premiumContentDir, 'quiz', `${slug}.json`);
+  if (fs.existsSync(quizPath)) {
+    const name = JSON.parse(fs.readFileSync(quizPath, 'utf8')).moduleName;
+    if (name) return name;
+  }
+  return (premiumIndex[slug] && premiumIndex[slug].title) || slug;
+}
+if (fs.existsSync(premiumContentDir)) {
+  for (const file of fs.readdirSync(premiumContentDir).filter((f) => f.endsWith('.html'))) {
+    const slug = file.replace(/\.html$/, '');
+    const html = fs.readFileSync(path.join(premiumContentDir, file), 'utf8');
+    const moduleName = premiumCourseName(slug);
+    const route = `/modules/premium/${slug}`;
 
     for (const part of html.split(/<h[23][^>]*>/i)) {
       const headingEnd = part.indexOf('<');
-      const heading = headingEnd > 0 ? part.slice(0, headingEnd).trim() : null;
+      const heading = headingEnd > 0 ? textFromHtml(part.slice(0, headingEnd)) : null;
       const bodyText = textFromHtml(headingEnd > 0 ? part.slice(headingEnd) : part);
       if (!bodyText) continue;
 
@@ -189,6 +205,24 @@ if (fs.existsSync(premiumDir)) {
 
       const label = heading && heading.length < 90 ? `${moduleName}: ${heading}` : moduleName;
       entries.push(...chunk(bodyText, label, 'role-based modules', route));
+    }
+  }
+
+  // Premium quiz explanations, nasa content/premium/quiz/<slug>.json.
+  const premiumQuizDir = path.join(premiumContentDir, 'quiz');
+  if (fs.existsSync(premiumQuizDir)) {
+    for (const file of fs.readdirSync(premiumQuizDir).filter((f) => f.endsWith('.json'))) {
+      const slug = file.replace(/\.json$/, '');
+      const data = JSON.parse(fs.readFileSync(path.join(premiumQuizDir, file), 'utf8'));
+      for (const q of data.questions || []) {
+        if (!q.explanation) continue;
+        entries.push({
+          title: premiumCourseName(slug),
+          source: 'role-based modules',
+          route: `/modules/premium/${slug}`,
+          text: `${q.questionText} ${q.explanation}`,
+        });
+      }
     }
   }
 }

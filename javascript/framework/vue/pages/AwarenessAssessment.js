@@ -1,5 +1,6 @@
-import assessmentData from '../data/assessment-data.js'
+import assessmentData, { ASSESSMENT_TOPICS } from '../data/assessment-data.js'
 import examLock from '../lib/examLock.js'
+import { shuffleEachQuestionsOptions } from '../lib/shuffleOptions.js'
 
 // Fisher-Yates shuffle — randomizes ORDER only.
 function shuffleOrder(array) {
@@ -11,10 +12,36 @@ function shuffleOrder(array) {
   return shuffled
 }
 
-// Select N random questions from the pool
-function selectRandomQuestions(array, count) {
-  const shuffled = shuffleOrder(array)
-  return shuffled.slice(0, count)
+/* Pare-parehong bilang ng tanong bawat paksa, hindi basta random.
+
+   Dati 10 ang hinuhugot nang random sa buong pool, kaya may paksang
+   isang tanong lang ang lumalabas, o wala pa. Isang maling sagot doon at
+   "weak area" na ang buong paksa (puna ni Pena sa expert review). Ngayon
+   kumukuha ng `perTopic` mula sa bawat paksa, tapos ginugulo ang ayos. */
+export function selectQuestionsByTopic(questions, perTopic) {
+  const picked = []
+  for (const topic of ASSESSMENT_TOPICS) {
+    const pool = questions.filter((question) => question.topic === topic)
+    picked.push(...shuffleOrder(pool).slice(0, perTopic))
+  }
+  return shuffleOrder(picked)
+}
+
+/* Weak area kapag isa o wala ang tama sa tatlong tanong ng paksa.
+   Kailangan din ng kahit dalawang tanong sa paksa bago ito husgahan, para
+   hindi na mauulit na isang tanong lang ang batayan. */
+export const WEAK_AREA_MIN_QUESTIONS = 2
+export const WEAK_AREA_MAX_CORRECT_RATIO = 1 / 3
+
+export function findWeakAreas(byTopic) {
+  const weakAreas = []
+  for (const [topic, stats] of Object.entries(byTopic)) {
+    if (stats.total >= WEAK_AREA_MIN_QUESTIONS
+        && stats.correct / stats.total <= WEAK_AREA_MAX_CORRECT_RATIO) {
+      weakAreas.push(topic)
+    }
+  }
+  return weakAreas
 }
 
 export default {
@@ -106,8 +133,10 @@ export default {
   methods: {
     loadAssessment() {
       this.assessmentData = assessmentData
-      const questionsPerAttempt = assessmentData.questionsPerAttempt || 10
-      this.shuffledQuestions = selectRandomQuestions(assessmentData.questions, questionsPerAttempt)
+      const perTopic = assessmentData.questionsPerTopic || 3
+      this.shuffledQuestions = shuffleEachQuestionsOptions(
+        selectQuestionsByTopic(assessmentData.questions, perTopic)
+      )
       this.currentIndex = 0
       this.answers = {}
       this.checkedIds = {}
@@ -183,50 +212,21 @@ export default {
     },
 
     submitAssessment() {
-      const typeTotals = {
-        phishing: { correct: 0, total: 0 },
-        'spear-phishing': { correct: 0, total: 0 },
-        vishing: { correct: 0, total: 0 },
-        smishing: { correct: 0, total: 0 },
-        pretexting: { correct: 0, total: 0 },
-        quishing: { correct: 0, total: 0 },
-        'safe-practices': { correct: 0, total: 0 }
-      }
+      const typeTotals = Object.fromEntries(
+        ASSESSMENT_TOPICS.map((topic) => [topic, { correct: 0, total: 0 }])
+      )
 
       let correctCount = 0
       const review = []
 
-      // Topic mapping based on question ID ranges
-      const topicMap = {
-        'assessment-1': 'phishing',
-        'assessment-2': 'phishing',
-        'assessment-16': 'phishing',
-        'assessment-3': 'spear-phishing',
-        'assessment-4': 'spear-phishing',
-        'assessment-17': 'spear-phishing',
-        'assessment-5': 'vishing',
-        'assessment-6': 'vishing',
-        'assessment-18': 'vishing',
-        'assessment-7': 'smishing',
-        'assessment-8': 'smishing',
-        'assessment-19': 'smishing',
-        'assessment-9': 'pretexting',
-        'assessment-10': 'pretexting',
-        'assessment-20': 'pretexting',
-        'assessment-11': 'quishing',
-        'assessment-12': 'quishing',
-        'assessment-13': 'safe-practices',
-        'assessment-14': 'safe-practices',
-        'assessment-15': 'safe-practices'
-      }
-
+      // Nasa bawat tanong na ang paksa nito (assessment-data.js).
       for (const question of this.shuffledQuestions) {
-        const topic = topicMap[question.id] || 'standard'
-        typeTotals[topic].total += 1
+        const topic = typeTotals[question.topic] ? question.topic : null
+        if (topic) typeTotals[topic].total += 1
         const selectedAnswer = this.answers[question.id]
         const isCorrect = this.answersMatch(question.correctAnswer, selectedAnswer)
         if (isCorrect) {
-          typeTotals[topic].correct += 1
+          if (topic) typeTotals[topic].correct += 1
           correctCount += 1
         }
 
@@ -258,19 +258,12 @@ export default {
         levelKey = 'intermediate'
       }
 
-      // Weak areas: topics scoring < 70%. Stored as plain topic slugs —
-      // the backend's recommendations endpoint binds this array directly
-      // against module.category, so objects would never match. Per-topic
-      // percentages stay available in by_topic for display.
-      const weakAreas = []
-      for (const [topic, stats] of Object.entries(typeTotals)) {
-        if (stats.total > 0) {
-          const topicPercent = Math.round((stats.correct / stats.total) * 100)
-          if (topicPercent < 70) {
-            weakAreas.push(topic)
-          }
-        }
-      }
+      // Weak areas: 1 or 0 correct out of 3 in a topic (findWeakAreas sa
+      // itaas). Stored as plain topic slugs — the backend's recommendations
+      // endpoint binds this array directly against module.category, so
+      // objects would never match. Per-topic percentages stay available in
+      // by_topic for display.
+      const weakAreas = findWeakAreas(typeTotals)
 
       const results = {
         score: correctCount,
