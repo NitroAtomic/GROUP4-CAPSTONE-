@@ -210,8 +210,15 @@ function findAnswer(message) {
 
 // "Learn more" ng curated na sagot: sariling module nito. Premium na module
 // ay para lang sa Premium; sa iba, ang Premium plans page.
-function curatedLearnMore(entry, plan) {
+const JOB_WORDS = /\b(job|jobs|recruit\w*|hiring|employer|onboarding|interview|applicant|application)\b/i;
+
+function curatedLearnMore(entry, plan, message = '') {
   if (!entry || !entry.route) return null;
+  // Upfront fee para sa trabaho: Fake Job and Recruiter Offers ang tamang
+  // aralin, hindi Client Impersonation (live retest, Nobyembre 16).
+  if (entry.route === '/modules/premium/client-impersonation' && JOB_WORDS.test(message)) {
+    entry = { ...entry, route: '/modules/premium/fake-recruiters', title: 'Fake Job and Recruiter Offers (Premium)' };
+  }
   if (entry.premiumTopic && plan !== 'Premium') return { title: 'Premium plans', path: '/premium-subscription' };
   return { title: entry.title, path: entry.route };
 }
@@ -539,7 +546,7 @@ router.post('/', optionalAuth, async (req, res) => {
   const linkWorthy = (p) => p.score >= MIN_LINK_SCORE && p.vocabCoverage >= MIN_LINK_COVERAGE;
   const linkPassage = passages.find((p) => linkWorthy(p) && learnMoreFor(p)) || null;
   // Kapag may curated na sagot, ang sarili nitong module ang link.
-  const learnMore = (curatedEntry && curatedLearnMore(curatedEntry, plan))
+  const learnMore = (curatedEntry && curatedLearnMore(curatedEntry, plan, message))
     || (linkPassage ? learnMoreFor(linkPassage) : null);
 
   // Kasama ang curated na sagot bilang dagdag na reference, para may
@@ -702,7 +709,7 @@ router.post('/', optionalAuth, async (req, res) => {
   // bilang direktang sagot.
   if (curatedNote) {
     // Link lang kapag malakas ang tugma ng passage, para hindi maling module.
-    return send({ reply: curatedNote, source: 'local', learnMore: curatedLearnMore(curatedEntry, plan) });
+    return send({ reply: curatedNote, source: 'local', learnMore: curatedLearnMore(curatedEntry, plan, message) });
   }
 
   // Kung hindi, sagutin galing sa nakuhang passage mismo. Module text talaga
