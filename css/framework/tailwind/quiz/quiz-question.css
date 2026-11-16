@@ -61,6 +61,18 @@
     color: var(--heading);
   }
 
+  /* Tagubilin sa itaas ng assessment, at paalala sa mga tanong na higit
+     sa isa ang tamang sagot. */
+  .quiz-instructions {
+    @apply mb-6 text-base leading-relaxed;
+    color: var(--muted);
+  }
+
+  .quiz-multi-hint {
+    @apply -mt-6 mb-6 text-sm font-semibold;
+    color: var(--muted);
+  }
+
   /* =========================
      Answer Choices
      ========================= */
