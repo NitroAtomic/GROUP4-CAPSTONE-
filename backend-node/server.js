@@ -143,6 +143,18 @@ app.use((err, req, res, next) => {
 app.listen(config.port, () => {
   console.log(`Group 4 API listening on port ${config.port}`);
   if (!config.isProduction) console.log('Running in development mode.');
+
+  /* Kapareho ng sql/08-rename-client-data.sql, pinapatakbo sa pag-start para
+     hindi na kailangan ng hiwalay na access sa database. Ligtas ulitin: ang
+     lumang pangalan lang ang pinapalitan. */
+  pool.query(
+    `UPDATE module
+        SET module_title = 'Executive Impersonation and Client Data',
+            description  = 'Spotting fake boss or executive requests for client files, passwords and access.'
+      WHERE slug = 'client-data' AND module_title = 'Secure Client Data Handling'`
+  ).then(([result]) => {
+    if (result && result.affectedRows) console.log('[startup] client-data course renamed in the database.');
+  }).catch((err) => console.warn('[startup] course rename skipped:', err.message));
 });
 
 module.exports = app;

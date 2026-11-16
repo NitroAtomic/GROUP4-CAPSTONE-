@@ -339,8 +339,10 @@ const FALLBACK =
   "I do not have a prepared answer for that one. I can help with phishing, quishing, spear phishing, smishing, vishing, pretexting, passwords, multi-factor authentication, invoice and payment scams, recruitment scams, and securing a home network.\n\nThe six free modules cover all of these in more depth.";
 
 // Hangganan ng paghihintay sa bawat AI provider bago lumipat sa susunod.
-const N8N_TIMEOUT_MS = 8000;
-const GEMINI_TIMEOUT_MS = 15000;
+// Ibinaba (Nobyembre 16): sa live retest, may sagot na umabot ng 15 s dahil
+// hinintay ang buong Gemini limit. Mas mabuti ang mabilis na module text.
+const N8N_TIMEOUT_MS = 3000;
+const GEMINI_TIMEOUT_MS = 6000;
 
 /* Kapag pumalya ang n8n, nilalaktawan ito nang 10 minuto.
 
