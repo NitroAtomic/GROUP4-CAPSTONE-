@@ -7,7 +7,7 @@ const MODULES = {
     intro: 'How attackers redirect a real payment to their own account — by changing bank details on an invoice, or a payroll record — and the two checks that stop it.',
   },
   'client-data': {
-    title: 'Secure Client Data Handling',
+    title: 'Executive Impersonation and Client Data',
     intro: 'You hold the client files, the passwords and the access. The usual way all three get exposed is someone posing as your boss — here is how that works, and the one check that stops it whatever rank is on the message.',
   },
   'client-impersonation': {

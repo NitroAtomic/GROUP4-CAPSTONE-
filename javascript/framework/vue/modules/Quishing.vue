@@ -146,7 +146,7 @@
                 </li>
                 <li>
                   Explain how a link hidden in a QR code — <button type="button" class="guided-definition-term" @click="openDefinition('quishing')">quishing</button>
-                  — slips past a Security Email Gateway (<button type="button" class="guided-definition-term" @click="openDefinition('SEG')">SEG</button>).
+                  — can slip past a Security Email Gateway (<button type="button" class="guided-definition-term" @click="openDefinition('SEG')">SEG</button>) that mainly checks text links.
                 </li>
                 <li>
                   Run the same three checks before clicking a link, scanning
@@ -258,7 +258,7 @@
               <div class="guided-information-card guided-warning-card">
                 <p>
                   The fake sites lean on domain tricks. <button type="button" class="guided-definition-term" @click="openDefinition('Typosquatting')">Typosquatting</button> swaps one
-                  character: <code>micros0ft-verify.com</code> for
+                  character: <code>micros0ft.com</code> for
                   <code>microsoft.com</code>.
                 </p>
               </div>
@@ -312,26 +312,26 @@
               />
               <figcaption>
                 Traditional phishing sends a clickable link the gateway can scan.
-                Quishing hides it in a QR code image the gateway cannot read,
-                opened on an unmonitored personal phone.
+                Quishing hides it in a QR code image that many gateways do not read,
+                often opened on a personal phone with less protection.
               </figcaption>
             </figure>
 
             <p>
-              Email filters read text — the written HTML and any
-              plain-text URL. They rarely run <button type="button" class="guided-definition-term" @click="openDefinition('OCR')">OCR</button> (optical character
-              recognition) on an image, or decode a picture inside a PDF
-              attachment. A Quick Response (<button type="button" class="guided-definition-term" @click="openDefinition('QR code')">QR</button>) code is an image, so the link
-              inside it is invisible to them. That is why quishing keeps
+              Many email filters mainly read text: the written HTML and any
+              plain-text URL. Some newer gateways can run <button type="button" class="guided-definition-term" @click="openDefinition('OCR')">OCR</button> (optical character
+              recognition) or decode QR codes in images and PDF attachments,
+              but many do not, and none catch every one. A Quick Response (<button type="button" class="guided-definition-term" @click="openDefinition('QR code')">QR</button>) code is an image, so the link
+              inside it can go unchecked. That is why quishing keeps
               growing against distributed staff.
             </p>
 
             <p>
               The email claims to be an “<button type="button" class="guided-definition-term" @click="openDefinition('MFA')">MFA</button> Security Update” or
-              an “HR Employee Handbook Review,” so the gateway
-              lets it through. You scan it with your phone camera. The
-              session moves off your monitored work computer onto an
-              unmonitored personal device, landing on a <button type="button" class="guided-definition-term" @click="openDefinition('credential harvesting')">credential-harvesting</button>
+              an “HR Employee Handbook Review,” and the gateway
+              may let it through. You scan it with your phone camera. The
+              session moves off your work computer onto a personal phone
+              that may not have the same protection, landing on a <button type="button" class="guided-definition-term" @click="openDefinition('credential harvesting')">credential-harvesting</button>
               web form, or an <button type="button" class="guided-definition-term" @click="openDefinition('OAuth')">OAuth</button> page asking you to grant consent.
             </p>
 
@@ -825,7 +825,7 @@ const selectedExampleClue = ref(null)
 const selectedLoginClue = ref(null)
 const selectedQrClue = ref(null)
 const fakeLoginSites = [
-  { id: 'microsoft', brand: 'Microsoft 365', address: 'micros0ft-verify.com/login', buttonLabel: 'Sign in', title: 'Typosquatting: a zero replaces the letter O', explanation: 'Look closely at micros0ft. The character before “ft” is the number 0, not the letter o. The extra “-verify” also tries to sound official. Even with HTTPS and a padlock, this is not microsoft.com.' },
+  { id: 'microsoft', brand: 'Microsoft 365', address: 'micros0ft.com/login', buttonLabel: 'Sign in', title: 'Typosquatting: a zero replaces the letter O', explanation: 'Look closely at micros0ft. The character before “ft” is the number 0, not the letter o. Even with HTTPS and a padlock, this is not microsoft.com.' },
   { id: 'slack', brand: 'Slack', address: 'slack-login-security.net', buttonLabel: 'Continue', title: 'Combosquatting: extra trustworthy-sounding words', explanation: 'This address includes “slack”, “login”, and “security”, but those words do not make it an official Slack website. A familiar brand name inside a longer domain is not enough to establish trust.' }
 ]
 const qrClues = {

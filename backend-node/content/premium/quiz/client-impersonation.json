@@ -203,7 +203,7 @@
       "correctAnswer": "b",
       "pointsCorrect": 1,
       "pointsIncorrect": -1,
-      "questionText": "Which domain name represents a typosquatted domain designed to trick a freelancer using Figma for client design reviews?",
+      "questionText": "Which domain name is a combosquatted lookalike designed to trick a freelancer using Figma for client design reviews?",
       "options": [
         {
           "value": "a",
@@ -222,7 +222,7 @@
           "text": "community.figma.com"
         }
       ],
-      "explanation": "Adding words like -verify-review.net creates a lookalike domain to capture OAuth credentials."
+      "explanation": "figma-verify-review.net is combosquatting: it adds trusted-sounding words to the Figma brand on a domain Figma does not own, to capture your login. The other three are real Figma addresses. Typosquatting is different: it changes a character, such as figrna.com."
     },
     {
       "id": 9,

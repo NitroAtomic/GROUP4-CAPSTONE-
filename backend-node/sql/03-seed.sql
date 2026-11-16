@@ -24,7 +24,7 @@ INSERT INTO `module` (module_title, slug, description, module_type, category) VA
   ('Client Impersonation', 'client-impersonation', 'Someone posing as your real client mid-project.', 'Premium', 'role-based'),
   ('Invoice and Payment Scams', 'invoice-scams', 'Spoofed payment confirmations and redirected invoices.', 'Premium', 'role-based'),
   ('Fake Job and Recruiter Offers', 'fake-recruiters', 'Recruitment scams targeting freelancers and VAs.', 'Premium', 'role-based'),
-  ('Secure Client Data Handling', 'client-data', 'Protecting client data, passwords, and files from exposure.', 'Premium', 'role-based');
+  ('Executive Impersonation and Client Data', 'client-data', 'Spotting fake boss or executive requests for client files, passwords and access.', 'Premium', 'role-based');
 
 -- One quiz per module. number_of_questions starts at 0 and is updated
 -- whenever questions are added through the admin panel.

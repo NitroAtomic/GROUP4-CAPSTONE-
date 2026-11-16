@@ -295,14 +295,14 @@
         },
         {
           "value": "c",
-          "text": "Using malicious QR codes to conceal phishing URLs and bypass security filters"
+          "text": "Using malicious QR codes to hide phishing URLs from email filters that only check text links"
         },
         {
           "value": "d",
           "text": "Encrypting databases using ransomware"
         }
       ],
-      "explanation": "Quishing stands for QR code phishing, where malicious links are embedded in image files to bypass textual email filters."
+      "explanation": "Quishing stands for QR code phishing. The malicious link is placed inside an image, which can get past email filters that mainly check text links."
     },
     {
       "id": 12,
@@ -323,7 +323,7 @@
           "text": "False"
         }
       ],
-      "explanation": "False. Traditional SEGs primarily scan textual and HTML links. Image-based QR codes often bypass standard filters because the URL is hidden inside the graphic payload."
+      "explanation": "False. Many email gateways mainly check text and HTML links. A QR code is an image, so its link can slip past filters that do not decode images. Some newer gateways can read QR codes, but none catch every one, so treat unexpected QR codes with caution."
     },
     {
       "id": 13,
@@ -403,7 +403,7 @@
       "options": [
         {
           "value": "a",
-          "text": "micros0ft-verify.com replaces one character in microsoft.com"
+          "text": "micros0ft.com replaces one character in microsoft.com"
         },
         {
           "value": "b",
@@ -418,7 +418,7 @@
           "text": "An unexpected QR code leading to a sign-in page should be independently verified"
         }
       ],
-      "explanation": "The lesson demonstrates typosquatting, combosquatting, and QR codes that conceal destinations. HTTPS indicates an encrypted connection, not a trustworthy site."
+      "explanation": "The lesson shows typosquatting (micros0ft.com swaps the letter o for a zero), combosquatting (slack-login-security.net adds trusted-sounding words to a brand), and QR codes that hide where they lead. HTTPS means the connection is encrypted, not that the site is genuine."
     },
     {
       "id": 16,

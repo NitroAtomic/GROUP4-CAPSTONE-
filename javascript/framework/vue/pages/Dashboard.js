@@ -24,7 +24,7 @@ const COURSES = [
   { slug: 'client-impersonation', title: 'Client Impersonation', summary: 'Fake clients, portfolio scams and escrow fraud aimed at freelancers.', icon: 'identity', premium: true },
   { slug: 'invoice-scams', title: 'Invoice and Payment Scams', summary: 'Business email compromise, invoice manipulation and vendor account changes.', icon: 'invoice', premium: true },
   { slug: 'fake-recruiters', title: 'Fake Job and Recruiter Offers', summary: 'Recruitment and onboarding scams that harvest identity documents.', icon: 'recruiter', premium: true },
-  { slug: 'client-data', title: 'Secure Client Data Handling', summary: 'Protecting client data, passwords and files from exposure.', icon: 'data-lock', premium: true },
+  { slug: 'client-data', title: 'Executive Impersonation and Client Data', summary: 'Spotting fake boss or executive requests for client files, passwords and access.', icon: 'data-lock', premium: true },
 ].map(course => ({ ...course, iconPath: ICONS[course.icon], path: course.path || `/modules/${course.premium ? 'premium/' : ''}${course.slug}` }))
 const TOPIC_SLUGS = { phishing: 'quishing', quishing: 'quishing', 'safe-practices': 'essential-safe-practices-remote-environments', 'safety-practices': 'essential-safe-practices-remote-environments' }
 function courseFor(slug) { return COURSES.find(course => course.slug === (TOPIC_SLUGS[slug] || slug)) }
